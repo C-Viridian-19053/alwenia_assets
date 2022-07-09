@@ -35,6 +35,7 @@ on open hexagon. so let's talk about the assets first.
 -font assets-
 
 OH v19.2, v2 RC1, v2 release build 06.16.2020 users >>>
+
 `imagine.ttf` -- imagine font replaced into Morxemplum's Open Square font...nothing special.
 
 OH v2.0 release build 06.29.2020 (non-steam release), v2.x.x+ steam release/compiled new version of OH users >>>
