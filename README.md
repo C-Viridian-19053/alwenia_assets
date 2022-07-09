@@ -21,6 +21,7 @@ openHexagon.ogg, go.ogg, levelUp.ogg, & gameOver.ogg -- inspired from Jenn Frank
 -graphics-
 
 -= this assets now used from Open Square font (Courtesy of Morxemplum) =-
+
 epilepsyWarning.png -- add some epilepsy warning message to make more accurate/elegant, and warning sign replaced to...shocked bowser...? maybe not
 titleBar.png -- is now added w/ // (depressed Marchionne (belongs to CorpseSyndrome | Team ARI) + creating some LeaF's MARENOL design * hexagon logical) * now minimalist design //
 bottomBar.png, creditsBar1.png, creditsBar2.png, creditsBar2b.png, and creditsBar2c.png -- is now transperent to 50%
