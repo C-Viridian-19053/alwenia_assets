@@ -36,33 +36,33 @@ on open hexagon. so let's talk about the assets first.
 
 OH v19.2, v2 RC1, v2 release build 06.16.2020 users >>>
 
-`imagine.ttf` -- imagine font replaced into Morxemplum's Open Square font...nothing special.
+`imagine.ttf` -- **imagine** font replaced into **Morxemplum's Open Square** font...nothing special.
 
 OH v2.0 release build 06.29.2020 (non-steam release), v2.x.x+ steam release/compiled new version of OH users >>>
-`forcedsquare.ttf` & `OpenSquare-Bold.ttf` -- FORCED SQUARE & Open Square Bold replaced into
-Nintendo's/aruanticus' MARIO Font v3.2 Solid font (like ***accurate/legit*** Super Mario logo's new era) - includes katana and etc...
+`forcedsquare.ttf` & `OpenSquare-Bold.ttf` -- **FORCED SQUARE** & **Open Square Bold** replaced into
+Nintendo's/aruanticus' **MARIO Font v3.2 Solid** font (like ***accurate/legit*** Super Mario logo's new era) - includes katana and etc...
 
 oh and this font IS my favorite and i like this font but eh...
 
 "i like nintendo, i like mario, mario is a great community..." -Puz, 2019
 
-`OpenSquare-Regular.ttf` -- Open Square Regular replaced into PopHappinessStd-EB font (belongs to Fontworks Inc.),
+`OpenSquare-Regular.ttf` -- **Open Square Regular** replaced into **PopHappinessStd-EB** font (belongs to Fontworks Inc.),
 btw - also...this font had no katana glyph in it (same as delfino font from
-super mario sunshine & galaxy ui font) because attempting to import .otf file from glyphr studio with
+super mario sunshine & galaxy ui font) because attempting to import `.otf` file from glyphr studio with
 katana glyph...IT TOOK TOO LONG TO LOAD and MY BROWSER PAGE SUDDENLY DIDN'T RESPONDING for me ;_; (rip katana glyph)
 
-about my <Mario font on Open Hexagon 2.x.x+ steam release> - .otf to .ttf converter plan >>>
+about my <Mario font on Open Hexagon 2.x.x+ steam release> - `.otf` to `.ttf` converter plan >>>
 - i downloaded the mario font from yell0wsuit's github page in it
-- i deciding to convert .otf to .ttf file... but the otf conversion doesn't feel good
-- deciding plan B, glyphr studio. i decide to IMPORT font w/ ACTUAL .otf file correctly so that i can convert .otf to .ttf correctly... 
-- decidng to load .otf font file (w/ correctly from glyphr studio), loaded normally and yes
+- i deciding to convert `.otf` to `.ttf` file... but the otf conversion *doesn't* feel good
+- deciding plan B, **glyphr studio**. i decide to IMPORT font w/ ACTUAL `.otf` file correctly so that i can convert `.otf` to `.ttf` correctly... 
+- decidng to load `.otf` font file (w/ correctly from **glyphr studio**), loaded normally and yes
 - it's looks like the font size was too big, so i normalize this font to accurate size instead
 - ...and this one too. space glyph. deciding to repairing it.
 - repairing the glyph shape to how accurate glyph was, such as digit numbers one and three.
-- generate font to .ttf, sudden this is happened how, but it works.
+- generate font to `.ttf`, sudden this is happened how, but it works.
 
 *but unfortunately, the title screen & level selection had some weird going on about
- text y-height misalignment since OH 2.0.5 public beta/early access for some reason...*
+text y-height misalignment since OH 2.0.5 public beta/early access for some reason...*
 [DISCLAIMER - This font BELONGS to Nintendo and Fontworks Inc....and I DO NOT OWN OF ANY FONT AND OWNERSHIP]
 ...and plus, SHOUTOUTS TO purifiedh20/aruanticus/yell0wsuit to HOW ACCURATE THE MARIO FONT WAS
 
@@ -95,27 +95,27 @@ my patterns in order >>>
 random barrage non-repeats, random barrage non-distance, full whirlwind, full whirlwind prototype, random barrage non-distance tunnel, double barrage spiral across tunnel patterns are made by me (March31onne)
 
 other patterns credits in order >>>
-customized vorta barrage (as known as vortex & barrel inspired from OH steam release's Inflorescence pack) belongs to Kodhiper
+- customized vorta barrage (as known as vortex & barrel inspired from OH steam release's Inflorescence pack) belongs to Kodhiper
 
-wall displacer pattern belongs to AlphaPromethium
+- wall displacer pattern belongs to AlphaPromethium
 
-double-holed barrage variants, one-hole to two-holed barrage, jumble, odd & even alternating barrage, alternating half & trap barrage, random spiral, alternating barrage & random barrage & jumble tunnel, growing barrage, and diamond belongs to babadrake
+- double-holed barrage variants, one-hole to two-holed barrage, jumble, odd & even alternating barrage, alternating half & trap barrage, random spiral, alternating barrage & random barrage & jumble tunnel, growing barrage, and diamond belongs to babadrake
 
-spray barrage belongs to syyrion
+- spray barrage belongs to syyrion
 
-random walls, snake barrage, & middle cut spiral as known as novel patterns and pattern maker/constructor belongs inspired from OH steam release's Inflorescence pack belongs to kodhiper
+- random walls, snake barrage, & middle cut spiral as known as novel patterns and pattern maker/constructor belongs inspired from OH steam release's Inflorescence pack belongs to kodhiper
 
-abstract barrage inspired from OH v1.92's takarazed, cubic, & zicronium pack and xer barrage inspired from OH v1.92's takarazed pack belongs to KawaiiKayden/KenseMartinez
+- abstract barrage inspired from OH v1.92's takarazed, cubic, & zicronium pack and xer barrage inspired from OH v1.92's takarazed pack belongs to KawaiiKayden/KenseMartinez
 
-side tunnel/barrage spiral tunnel belongs to Quoz/RNBW
+- side tunnel/barrage spiral tunnel belongs to Quoz/RNBW
 
-trap barrage tunnel belongs to trollbreeder
+- trap barrage tunnel belongs to trollbreeder
 
-trap around/*accurate* wrap around belongs to Exschwaison, (accurate design belongs to Terry)
+- trap around/*accurate* wrap around belongs to Exschwaison, (accurate design belongs to Terry)
 
-wall extra filler spiral, *accurate* bat, left-right spiral tunnel short belongs to Hexadorsip, (accurate bat design belongs to Terry)
+- wall extra filler spiral, *accurate* bat, left-right spiral tunnel short belongs to Hexadorsip, (accurate bat design belongs to Terry)
 
-double barrage spiral across & back and forth tunnel (as known as double tunnel) type variants belongs to ~ VioletDraggy ~ / Spyro
+- double barrage spiral across & back and forth tunnel (as known as double tunnel) type variants belongs to ~ VioletDraggy ~ / Spyro
 
 # replacing assets
 
@@ -124,11 +124,11 @@ double barrage spiral across & back and forth tunnel (as known as double tunnel)
   and don't forget to add bottomBar.png -- click on bottom bar folder which resolution is fit, select version what do you want
 - for bonus assets: it is possible to replacing the font from `.../[ assets ]/-fonts-/`
 
-"If you mean the font 'forced square' or 'open square' instead, open the game's folder,
-(Located in your steam folder, at steamapps/common/Open Hexagon)
+"If you mean the font '**forced square**' or '**open square**' instead, open the game's folder,
+(Located in your steam folder, at `../steamapps/common/Open Hexagon/`)
 head into assets, then do whatever with `forcedsquare.ttf` or even `OpenSquare-Bold.ttf` and `OpenSquare-Regular.ttf`"
 
-"or if you don't feel like going exploring with windows explorer, open steam,
+"or if you don't feel like going exploring with **windows explorer**, open steam,
 right click 'open hexagon' in your library, click properties, click local files,
 click browse local files to get to the game's folder"
 
@@ -149,8 +149,6 @@ for OH v2.0.4+ steam release/compiled latest version of OH users >>>
 - add these dependency script on `.../[ scripts ]/` directory on 'marchionne's base scripts' folder to `.../Open Hexagon/Packs/`,
   and don't forget to make sure your pack has a dependency in it (with good JSON syntax), see example: `.../Open Hexagon/Packs/cube/pack.json`,
   if you don't have any directories or the pack you saw the dependencies can't be found, you can see the github's Open Hexagon page, see example: `.../_RELEASE/Packs/cube/pack.json` -- for OH steam/compiled game users
-
-current version: v2.0.0 (stable)
 
 S E L A M A T   M E N C O B A .
 
