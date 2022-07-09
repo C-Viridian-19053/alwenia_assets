@@ -5,7 +5,7 @@ My assets from Open Hexagon.
 (sry for my bad english/english mistakes because i didn't remember for you how to use it ;_;)
 
 hello.
-thanks for downloading my OH resource pack called: < -_alwenia_- >
+thanks for downloading my OH resource pack called: < -alwenia- >
 
 today i going to show you how to change your OH assets and adding the scripts of levelpackers
 on open hexagon. so let's talk about the assets first.
@@ -13,6 +13,7 @@ on open hexagon. so let's talk about the assets first.
 # assets.
 
 -sounds-
+
 beep.ogg, select.ogg, death.ogg, restart.ogg -- taken from Hexagon Evolved - belongs to Richman stewart
 error.ogg -- this sound effect file i recorded from nintendo switch's error bullshiet sound effect... and yea
 openHexagon.ogg, go.ogg, levelUp.ogg, & gameOver.ogg -- inspired from Jenn Frank's super hexagon announcer sound effect - belongs to Terry
@@ -21,11 +22,12 @@ openHexagon.ogg, go.ogg, levelUp.ogg, & gameOver.ogg -- inspired from Jenn Frank
 
 -= this assets now used from Open Square font (Courtesy of Morxemplum) =-
 epilepsyWarning.png -- add some epilepsy warning message to make more accurate/elegant, and warning sign replaced to...shocked bowser...? maybe not
-titleBar.png -- is now added w/ [(depressed Marchionne (belongs to CorpseSyndrome | Team ARI) + creating some LeaF's MARENOL design * hexagon logical) * now minimalist design]
+titleBar.png -- is now added w/ // (depressed Marchionne (belongs to CorpseSyndrome | Team ARI) + creating some LeaF's MARENOL design * hexagon logical) * now minimalist design //
 bottomBar.png, creditsBar1.png, creditsBar2.png, creditsBar2b.png, and creditsBar2c.png -- is now transperent to 50%
 creditsBar2d.png -- set transperent to 50% too, removed game & discord donation message, now adding resource pack & inspiration infomation
 
 -font assets-
+
 OH v19.2, v2 RC1, v2 release build 06.16.2020 users >>>
 imagine.ttf -- imagine font replaced into Morxemplum's Open Square font...nothing special.
 
@@ -60,15 +62,18 @@ about my <Mario font on Open Hexagon 2.x.x+ steam release> - .otf to .ttf conver
 # scripts.
 
 -utils-
+
 getChance(), getDelayWalls(), getDelaySides(), getDelayAngle(), getDelayWallAndSides() and etc. belongs to Kodhiper
 getRebootPatternSide(), getRebootPatternHalfSide(), getPolygonExcept(), and getSpeedDelay() belongs to The Sun XIX
 customizePatternThickness(), customizePatternDelay() and other baba's functions belongs to babadrake
 and other bunch of main/inspiration/modification utility suggestions by me (March31onne) 
 
 -commons-
+
 rWallExFlip(), cBarrageNGap(), cBarrageNBlock() taken from Kodhiper's Inflorescence OH pack, credit to him...
 
 -patterns-
+
 pMarch31osTrapAround() - belongs to Exschwaison, now accurate design (belongs to Terry)
 pMarch31osAccurateBat() - belongs to Hexadorsip, now accurate design (belongs to Terry, too)
 
