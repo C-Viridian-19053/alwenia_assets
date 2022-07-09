@@ -1,5 +1,5 @@
 # alwenia_assets
-My assets from [Open Hexagon](https://github.com/vittorioromeo/SSVOpenHexagon).
+My """resource pack""" from [Open Hexagon](https://github.com/vittorioromeo/SSVOpenHexagon).
 
 
 (sry for my bad english/english mistakes because i didn't remember for you how to use it ;_;)
@@ -64,20 +64,19 @@ katana glyph...IT TOOK TOO LONG TO LOAD and MY BROWSER PAGE SUDDENLY DIDN'T RESP
 
 *but unfortunately, the title screen & level selection had some weird going on about
 text y-height misalignment since OH 2.0.5 public beta/early access for some reason...*
-[DISCLAIMER - This font BELONGS to Nintendo and Fontworks Inc....and I DO NOT OWN OF ANY FONT AND OWNERSHIP]
-...and plus, SHOUTOUTS TO [purifiedh20/aruanticus/yell0wsuit](https://github.com/yell0wsuit) to HOW ACCURATE THE MARIO FONT WAS
+
+**[DISCLAIMER - This font BELONGS to Nintendo and Fontworks Inc....and I DO NOT OWN OF ANY FONT AND OWNERSHIP]
+...and plus, SHOUTOUTS TO [purifiedh20/aruanticus/yell0wsuit](https://github.com/yell0wsuit) to HOW ACCURATE THE MARIO FONT WAS**
 
 # scripts.
 
 **-utils-**
 
-`getChance()`, `getDelayWalls()`, `getDelaySides()`, `getDelayAngle()`, `getDelayWallAndSides()` and etc. belongs to **Kodhiper**
+- `getChance()`, `getDelayWalls()`, `getDelaySides()`, `getDelayAngle()`, `getDelayWallAndSides()` and etc. belongs to **Kodhiper**
+- `getRebootPatternSide()`, `getRebootPatternHalfSide()`, `getPolygonExcept()`, and `getSpeedDelay()` belongs to **The Sun XIX**
+- `customizePatternThickness()`, `customizePatternDelay()` and other baba's functions belongs to **babadrake**
 
-`getRebootPatternSide()`, `getRebootPatternHalfSide()`, `getPolygonExcept()`, and `getSpeedDelay()` belongs to **The Sun XIX**
-
-`customizePatternThickness()`, `customizePatternDelay()` and other baba's functions belongs to **babadrake**
-
-and other bunch of main/inspiration/modification utility suggestions by **me (March31onne)**
+- and other bunch of **main/inspiration/modification** utility suggestions by **me (March31onne)**
 
 **-commons-**
 
@@ -97,14 +96,11 @@ as i say...
 - random barrage non-repeats, random barrage non-distance, full whirlwind, full whirlwind prototype, random barrage non-distance tunnel, double barrage spiral across tunnel patterns are made by **me (March31onne)**
 
 **other patterns credits in order >>>**
+
 - customized vorta barrage (as known as vortex & barrel inspired from OH steam release's Inflorescence pack) belongs to **Kodhiper**
-
-- wall displacer pattern belongs to AlphaPromethium
-
+- wall displacer pattern belongs to **AlphaPromethium**
 - double-holed barrage variants, one-hole to two-holed barrage, jumble, odd & even alternating barrage, alternating half & trap barrage, random spiral, alternating barrage & random barrage & jumble tunnel, growing barrage, and diamond belongs to **babadrake**
-
 - spray barrage belongs to syyrion
-
 - random walls, snake barrage, & middle cut spiral as known as novel patterns and pattern maker/constructor belongs inspired from **OH steam release's Inflorescence pack** belongs to **kodhiper**
 
 - abstract barrage inspired from OH v1.92's takarazed, cubic, & zicronium pack and xer barrage inspired from OH v1.92's takarazed pack belongs to **KawaiiKayden/KenseMartinez**
@@ -112,11 +108,8 @@ as i say...
 - side tunnel/barrage spiral tunnel belongs to **Quoz/RNBW**
 
 - trap barrage tunnel belongs to **trollbreeder**
-
 - trap around/*accurate* wrap around belongs to **Exschwaison**, (accurate design belongs to Terry)
-
 - wall extra filler spiral, *accurate* bat, left-right spiral tunnel short belongs to **Hexadorsip**, (accurate bat design belongs to Terry)
-
 - double barrage spiral across & back and forth tunnel (as known as double tunnel) type variants belongs to **~ VioletDraggy ~ / Spyro**
 
 # replacing assets
