@@ -103,11 +103,11 @@ as i say...
 - spray barrage belongs to **syyrion**
 - random walls, snake barrage, & middle cut spiral as known as novel patterns and pattern maker/constructor belongs inspired from **OH steam release's Inflorescence pack** belongs to **kodhiper**
 - abstract barrage inspired from OH v1.92's takarazed, cubic, & zicronium pack and xer barrage inspired from OH v1.92's takarazed pack belongs to **KawaiiKayden/KenseMartinez**
-- side tunnel/barrage spiral tunnel belongs to **Quoz/RNBW**
+- side tunnel/barrage spiral tunnel belongs to **Quoz | RNBW**
 - trap barrage tunnel belongs to **trollbreeder**
 - trap around/*accurate* wrap around belongs to **Exschwaison**, (accurate design belongs to Terry)
 - wall extra filler spiral, *accurate* bat, left-right spiral tunnel short belongs to **Hexadorsip**, (accurate bat design belongs to Terry)
-- double barrage spiral across & back and forth tunnel (as known as double tunnel) type variants belongs to **~ VioletDraggy ~ / Spyro**
+- double barrage spiral across & back and forth tunnel (as known as double tunnel) type variants belongs to **VioletDraggy | Spyro**
 
 # replacing assets
 
