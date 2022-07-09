@@ -12,7 +12,7 @@ on open hexagon. so let's talk about the assets first.
 
 # assets.
 
--sounds-
+**-sounds-**
 
 `beep.ogg`, `select.ogg`, `death.ogg`, `restart.ogg` -- taken from Hexagon Evolved - belongs to Richman stewart
 
@@ -20,7 +20,7 @@ on open hexagon. so let's talk about the assets first.
 
 `openHexagon.ogg`, `go.ogg`, `levelUp.ogg`, & `gameOver.ogg` -- inspired from Jenn Frank's super hexagon announcer sound effect - belongs to Terry
 
--graphics-
+**-graphics-**
 
 -= this assets now used from Open Square font (Courtesy of Morxemplum) =-
 
@@ -32,7 +32,7 @@ on open hexagon. so let's talk about the assets first.
 
 `creditsBar2d.png` -- set transperent to 50% too, removed game & discord donation message, now adding resource pack & inspiration infomation
 
--font assets-
+**-font assets-**
 
 OH v19.2, v2 RC1, v2 release build 06.16.2020 users >>>
 
@@ -51,7 +51,7 @@ btw - also...this font had no katana glyph in it (same as delfino font from
 super mario sunshine & galaxy ui font) because attempting to import `.otf` file from glyphr studio with
 katana glyph...IT TOOK TOO LONG TO LOAD and MY BROWSER PAGE SUDDENLY DIDN'T RESPONDING for me ;_; (rip katana glyph)
 
-about my <Mario font on Open Hexagon 2.x.x+ steam release> - `.otf` to `.ttf` converter plan >>>
+**about my <Mario font on Open Hexagon 2.x.x+ steam release> - `.otf` to `.ttf` converter plan >>>**
 - i downloaded the mario font from yell0wsuit's github page in it
 - i deciding to convert `.otf` to `.ttf` file... but the otf conversion *doesn't* feel good
 - deciding plan B, **glyphr studio**. i decide to IMPORT font w/ ACTUAL `.otf` file correctly so that i can convert `.otf` to `.ttf` correctly... 
@@ -68,7 +68,7 @@ text y-height misalignment since OH 2.0.5 public beta/early access for some reas
 
 # scripts.
 
--utils-
+**-utils-**
 
 `getChance()`, `getDelayWalls()`, `getDelaySides()`, `getDelayAngle()`, `getDelayWallAndSides()` and etc. belongs to Kodhiper
 
@@ -78,11 +78,11 @@ text y-height misalignment since OH 2.0.5 public beta/early access for some reas
 
 and other bunch of main/inspiration/modification utility suggestions by me (March31onne) 
 
--commons-
+**-commons-**
 
 `rWallExFlip()`, `cBarrageNGap()`, `cBarrageNBlock()` taken from Kodhiper's Inflorescence OH pack, credit to him...
 
--patterns-
+**-patterns-**
 
 `pMarch31osTrapAround()` - belongs to Exschwaison, now accurate design (belongs to Terry)
 
@@ -91,10 +91,11 @@ and other bunch of main/inspiration/modification utility suggestions by me (Marc
 `pMarc31osTunnel()` - this pattern was too hard to code the customized tunnel pattern, such as double tunnel, even back and forth tunnel.
 
 as i say...
-my patterns in order >>>
-random barrage non-repeats, random barrage non-distance, full whirlwind, full whirlwind prototype, random barrage non-distance tunnel, double barrage spiral across tunnel patterns are made by me (March31onne)
+**my patterns in order >>>**
 
-other patterns credits in order >>>
+- random barrage non-repeats, random barrage non-distance, full whirlwind, full whirlwind prototype, random barrage non-distance tunnel, double barrage spiral across tunnel patterns are made by me (March31onne)
+
+**other patterns credits in order >>>**
 - customized vorta barrage (as known as vortex & barrel inspired from OH steam release's Inflorescence pack) belongs to Kodhiper
 
 - wall displacer pattern belongs to AlphaPromethium
@@ -142,14 +143,14 @@ rename it to `forcedsquare.ttf` or even `OpenSquare-Bold.ttf` and `OpenSquare-Re
 
 # adding lua scripts
 
-for OH v1.92 & v2 non steam release users >>>
+**for OH v1.92 & v2 non steam release users >>>**
 - add these script on `.../[ scripts ]/marchionne's base scripts/Scripts/` directory to `.../Open Hexagon/Packs/[pack_name]/Scripts/`
 
-for OH v2.0.4+ steam release/compiled latest version of OH users >>>
+**for OH v2.0.4+ steam release/compiled latest version of OH users >>>**
 - add these dependency script on `.../[ scripts ]/` directory on 'marchionne's base scripts' folder to `.../Open Hexagon/Packs/`,
   and don't forget to make sure your pack has a dependency in it (with good JSON syntax), see example: `.../Open Hexagon/Packs/cube/pack.json`,
   if you don't have any directories or the pack you saw the dependencies can't be found, you can see the github's Open Hexagon page, see example: `.../_RELEASE/Packs/cube/pack.json` -- for OH steam/compiled game users
 
-S E L A M A T   M E N C O B A .
+**S E L A M A T   M E N C O B A .**
 
-E N J O Y Y Y Y . . .
+**E N J O Y Y Y Y . . .**
