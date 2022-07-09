@@ -100,13 +100,10 @@ as i say...
 - customized vorta barrage (as known as vortex & barrel inspired from OH steam release's Inflorescence pack) belongs to **Kodhiper**
 - wall displacer pattern belongs to **AlphaPromethium**
 - double-holed barrage variants, one-hole to two-holed barrage, jumble, odd & even alternating barrage, alternating half & trap barrage, random spiral, alternating barrage & random barrage & jumble tunnel, growing barrage, and diamond belongs to **babadrake**
-- spray barrage belongs to syyrion
+- spray barrage belongs to **syyrion**
 - random walls, snake barrage, & middle cut spiral as known as novel patterns and pattern maker/constructor belongs inspired from **OH steam release's Inflorescence pack** belongs to **kodhiper**
-
 - abstract barrage inspired from OH v1.92's takarazed, cubic, & zicronium pack and xer barrage inspired from OH v1.92's takarazed pack belongs to **KawaiiKayden/KenseMartinez**
-
 - side tunnel/barrage spiral tunnel belongs to **Quoz/RNBW**
-
 - trap barrage tunnel belongs to **trollbreeder**
 - trap around/*accurate* wrap around belongs to **Exschwaison**, (accurate design belongs to Terry)
 - wall extra filler spiral, *accurate* bat, left-right spiral tunnel short belongs to **Hexadorsip**, (accurate bat design belongs to Terry)
