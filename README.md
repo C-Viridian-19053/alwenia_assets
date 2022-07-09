@@ -33,13 +33,13 @@ today i going to show you how to change your OH assets and adding the scripts of
 
 **-font assets-**
 
-**OH v19.2, v2 RC1, v2 release build 06.16.2020 users >>>**
+**OH v19.2, v2 RC1, v2 release build 06.16.2020/06.29.2020 (non-steam release) users >>>**
 
 `imagine.ttf` -- **imagine** font replaced into **Morxemplum's Open Square** font...nothing special.
 
-**OH v2.0 release build 06.29.2020 (non-steam release), v2.x.x+ steam release/compiled new version of OH users >>>**
-
 `forcedsquare.ttf` -- **FORCED SQUARE** font replaced into Nintendo's/aruanticus' **[MARIO Font v3.2 Solid](https://github.com/yell0wsuit/MARIOFont)** font (like ***accurate/legit*** Super Mario logo's new era) - includes katana and etc...
+
+**OH v2.0 release build 06.29.2020 (non-steam release), v2.x.x+ steam release/compiled new version of OH users >>>**
 
 `OpenSquare-Bold.ttf` -- **Open Square Bold** font replaced into Nintendo's **NinMarioFontTest1** font thingy (same as Nintendo's/aruanticus' **MARIO Font v3.2 Solid**)
 
