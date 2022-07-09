@@ -39,7 +39,9 @@ today i going to show you how to change your OH assets and adding the scripts of
 
 **OH v2.0 release build 06.29.2020 (non-steam release), v2.x.x+ steam release/compiled new version of OH users >>>**
 
-`forcedsquare.ttf` & `OpenSquare-Bold.ttf` -- **FORCED SQUARE** & **Open Square Bold** replaced into Nintendo's **NinMarioFontTest1** font thingy (*instead of* Nintendo's/aruanticus' **[MARIO Font v3.2 Solid](https://github.com/yell0wsuit/MARIOFont)** font) // (like ***accurate/legit*** Super Mario logo's new era) - includes katana and etc...
+`forcedsquare.ttf` -- **FORCED SQUARE** font replaced into Nintendo's/aruanticus' **[MARIO Font v3.2 Solid](https://github.com/yell0wsuit/MARIOFont)** font (like ***accurate/legit*** Super Mario logo's new era) - includes katana and etc...
+
+`OpenSquare-Bold.ttf` -- **Open Square Bold** font replaced into Nintendo's **NinMarioFontTest1** font thingy (same as Nintendo's/aruanticus' **MARIO Font v3.2 Solid**)
 
 oh and this font IS my favorite and i like this font but eh...
 
@@ -47,7 +49,7 @@ oh and this font IS my favorite and i like this font but eh...
 
 **EDIT 2022-07-09:** :holyshit: freck me tought i chek n search "mario font" on twitter, and i [found](https://twitter.com/bluwolfblitz/status/1341193228163436544) it, ***HE*** has datamined the **Super Nintendo World** application and found the ***o f f i c i a l*** mario font within the files...it has a `.ttf` file in it, called "**[NinMarioFontTest1](https://drive.google.com/file/d/1HzYF1QeFIrS7XmuA-pT8e2TmdkTfg6FJ/view)**" :tragedy:
 
-so, i changed this font file (because it has a lastest version of this font). :disappointedVee:
+so, i changed this (`OpenSquare-Bold.ttf`) file (because it has a lastest version of this font). :disappointedVee:
 
 `OpenSquare-Regular.ttf` -- **Open Square Regular** replaced into **PopHappinessStd-EB** font (belongs to Fontworks Inc.), btw - also...this font had no katana glyph in it (same as delfino font from super mario sunshine & galaxy ui font) because attempting to import `.otf` file from glyphr studio with katana glyph...IT TOOK TOO LONG TO LOAD and MY BROWSER PAGE SUDDENLY DIDN'T RESPONDING for me ;_; (rip katana glyph)
 
