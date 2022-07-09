@@ -7,8 +7,7 @@ My """resource pack""" from [Open Hexagon](https://github.com/vittorioromeo/SSVO
 hello.
 thanks for downloading my OH resource pack called: `-_alwenia_-`
 
-today i going to show you how to change your OH assets and adding the scripts of levelpackers
-on open hexagon. so let's talk about the assets first.
+today i going to show you how to change your OH assets and adding the scripts of levelpackers on open hexagon. so let's talk about the assets first.
 
 # assets.
 
@@ -40,19 +39,19 @@ on open hexagon. so let's talk about the assets first.
 
 **OH v2.0 release build 06.29.2020 (non-steam release), v2.x.x+ steam release/compiled new version of OH users >>>**
 
-`forcedsquare.ttf` & `OpenSquare-Bold.ttf` -- **FORCED SQUARE** & **Open Square Bold** replaced into
-Nintendo's/aruanticus' **[MARIO Font v3.2 Solid](https://github.com/yell0wsuit/MARIOFont)** font (like ***accurate/legit*** Super Mario logo's new era) - includes katana and etc...
+`forcedsquare.ttf` & `OpenSquare-Bold.ttf` -- **FORCED SQUARE** & **Open Square Bold** replaced into Nintendo's **NinMarioFontTest1** font thingy (*instead of* Nintendo's/aruanticus' **[MARIO Font v3.2 Solid](https://github.com/yell0wsuit/MARIOFont)** font) // (like ***accurate/legit*** Super Mario logo's new era) - includes katana and etc...
 
 oh and this font IS my favorite and i like this font but eh...
 
 "i like nintendo, i like mario, mario is a great community..." -Puz, 2019
 
-`OpenSquare-Regular.ttf` -- **Open Square Regular** replaced into **PopHappinessStd-EB** font (belongs to Fontworks Inc.),
-btw - also...this font had no katana glyph in it (same as delfino font from
-super mario sunshine & galaxy ui font) because attempting to import `.otf` file from glyphr studio with
-katana glyph...IT TOOK TOO LONG TO LOAD and MY BROWSER PAGE SUDDENLY DIDN'T RESPONDING for me ;_; (rip katana glyph)
+**EDIT 2022-07-09:** :holyshit: freck me tought i chek n search "mario font" on twitter, and i [found](https://twitter.com/bluwolfblitz/status/1341193228163436544) it, ***HE*** has datamined the **Super Nintendo World** application and found the ***o f f i c i a l*** mario font within the files...it has a `.ttf` file in it, called "**[NinMarioFontTest1](https://drive.google.com/file/d/1HzYF1QeFIrS7XmuA-pT8e2TmdkTfg6FJ/view)**" :tragedy:
 
-**about my <Mario font on Open Hexagon 2.x.x+ steam release> - `.otf` to `.ttf` converter plan >>>**
+so, i changed this font file (because it has a lastest version of this font). :disappointedVee:
+
+`OpenSquare-Regular.ttf` -- **Open Square Regular** replaced into **PopHappinessStd-EB** font (belongs to Fontworks Inc.), btw - also...this font had no katana glyph in it (same as delfino font from super mario sunshine & galaxy ui font) because attempting to import `.otf` file from glyphr studio with katana glyph...IT TOOK TOO LONG TO LOAD and MY BROWSER PAGE SUDDENLY DIDN'T RESPONDING for me ;_; (rip katana glyph)
+
+**about my <Mario font on Open Hexagon 2.x.x+ steam release> - `.otf` to `.ttf` converter plan since 2021 August >>>**
 - i downloaded the mario font from yell0wsuit's github page in it
 - i deciding to convert `.otf` to `.ttf` file... but the otf conversion *doesn't* feel good
 - deciding plan B, **glyphr studio**. i decide to IMPORT font w/ ACTUAL `.otf` file correctly so that i can convert `.otf` to `.ttf` correctly... 
@@ -62,11 +61,10 @@ katana glyph...IT TOOK TOO LONG TO LOAD and MY BROWSER PAGE SUDDENLY DIDN'T RESP
 - repairing the glyph shape to how accurate glyph was, such as digit numbers one and three.
 - generate font to `.ttf`, sudden this is happened how, but it works.
 
-*but unfortunately, the title screen & level selection had some weird going on about
-text y-height misalignment since OH 2.0.5 public beta/early access for some reason...*
+*but unfortunately, the title screen & level selection had some weird going on about text y-height misalignment since OH 2.0.5 public beta/early access for some reason...*
 
 **[DISCLAIMER - This font BELONGS to Nintendo and Fontworks Inc....and I DO NOT OWN OF ANY FONT AND OWNERSHIP]
-...and plus, SHOUTOUTS TO [purifiedh20/aruanticus/yell0wsuit](https://github.com/yell0wsuit) to HOW ACCURATE THE MARIO FONT WAS**
+...and plus, SHOUTOUTS TO [purifiedh20/aruanticus/yell0wsuit](https://github.com/yell0wsuit) to HOW ACCURATE THE MARIO FONT WAS SINCE 2021 AUGUST**
 
 # scripts.
 
@@ -111,26 +109,18 @@ as i say...
 
 # replacing assets
 
-- dump the assets from `.../[ assets ]/-graphics-/` & `.../[ assets ]/-sounds-/` of inner .zip file to `.../Open Hexagon/Assets/`,
-  of course you can unzip it on your folder directory, for example: adding your folder, etc.
-  and don't forget to add `bottomBar.png` -- click on bottom bar folder which resolution is fit, select version what do you want
+- dump the assets from `.../[ assets ]/-graphics-/` & `.../[ assets ]/-sounds-/` of inner .zip file to `.../Open Hexagon/Assets/`,  of course you can unzip it on your folder directory, for example: adding your folder, etc. and don't forget to add `bottomBar.png` -- click on bottom bar folder which resolution is fit, select version what do you want
 - for bonus assets: it is possible to replacing the font from `.../[ assets ]/-fonts-/`
 
-"If you mean the font '**forced square**' or '**open square**' instead, open the game's folder,
-(Located in your steam folder, at `../steamapps/common/Open Hexagon/`)
-head into assets, then do whatever with `forcedsquare.ttf` or even `OpenSquare-Bold.ttf` and `OpenSquare-Regular.ttf`"
+"If you mean the font '**forced square**' or '**open square**' instead, open the game's folder, (Located in your steam folder, at `../steamapps/common/Open Hexagon/`) head into assets, then do whatever with `forcedsquare.ttf` or even `OpenSquare-Bold.ttf` and `OpenSquare-Regular.ttf`"
 
-"or if you don't feel like going exploring with **windows explorer**, open steam,
-right click 'open hexagon' in your library, click properties, click local files,
-click browse local files to get to the game's folder"
+"or if you don't feel like going exploring with **windows explorer**, open steam, right click 'open hexagon' in your library, click properties, click local files, click browse local files to get to the game's folder"
 
 -Trollbreeder, 2020
 
-"just rename for `forcedsquare.ttf` or even `OpenSquare-Bold.ttf` and `OpenSquare-Regular.ttf` to `[current_font_name]_o.ttf`
-then copypaste the current ones from `.../[ assets ]/-graphics-/` into assets and
-rename it to `forcedsquare.ttf` or even `OpenSquare-Bold.ttf` and `OpenSquare-Regular.ttf`"
+"just rename for `forcedsquare.ttf` or even `OpenSquare-Bold.ttf` and `OpenSquare-Regular.ttf` to `[current_font_name]_o.ttf` then copypaste the current ones from `.../[ assets ]/-graphics-/` into assets and rename it to `forcedsquare.ttf` or even `OpenSquare-Bold.ttf` and `OpenSquare-Regular.ttf`"
 
--Trollbreeder, 2021-01-16
+-Trollbreeder from changing OH's default font for babadrake, 2021-01-16
 
 # adding lua scripts
 
