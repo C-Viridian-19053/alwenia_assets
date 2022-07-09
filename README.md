@@ -113,7 +113,7 @@ as i say...
 
 - dump the assets from `.../[ assets ]/-graphics-/` & `.../[ assets ]/-sounds-/` of inner .zip file to `.../Open Hexagon/Assets/`,
   of course you can unzip it on your folder directory, for example: adding your folder, etc.
-  and don't forget to add bottomBar.png -- click on bottom bar folder which resolution is fit, select version what do you want
+  and don't forget to add `bottomBar.png` -- click on bottom bar folder which resolution is fit, select version what do you want
 - for bonus assets: it is possible to replacing the font from `.../[ assets ]/-fonts-/`
 
 "If you mean the font '**forced square**' or '**open square**' instead, open the game's folder,
