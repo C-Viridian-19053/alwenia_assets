@@ -5,7 +5,7 @@ My assets from Open Hexagon.
 (sry for my bad english/english mistakes because i didn't remember for you how to use it ;_;)
 
 hello.
-thanks for downloading my OH resource pack called: < -alwenia- >
+thanks for downloading my OH resource pack called: `-_alwenia_-`
 
 today i going to show you how to change your OH assets and adding the scripts of levelpackers
 on open hexagon. so let's talk about the assets first.
@@ -14,36 +14,38 @@ on open hexagon. so let's talk about the assets first.
 
 -sounds-
 
-beep.ogg, select.ogg, death.ogg, restart.ogg -- taken from Hexagon Evolved - belongs to Richman stewart
-error.ogg -- this sound effect file i recorded from nintendo switch's error bullshiet sound effect... and yea
-openHexagon.ogg, go.ogg, levelUp.ogg, & gameOver.ogg -- inspired from Jenn Frank's super hexagon announcer sound effect - belongs to Terry
+`beep.ogg`, `select.ogg`, `death.ogg`, `restart.ogg` -- taken from Hexagon Evolved - belongs to Richman stewart
+
+`error.ogg` -- this sound effect file i recorded from nintendo switch's error bullshiet sound effect... and yea
+
+`openHexagon.ogg`, `go.ogg`, `levelUp.ogg`, & `gameOver.ogg` -- inspired from Jenn Frank's super hexagon announcer sound effect - belongs to Terry
 
 -graphics-
 
 -= this assets now used from Open Square font (Courtesy of Morxemplum) =-
 
-epilepsyWarning.png -- add some epilepsy warning message to make more accurate/elegant, and warning sign replaced to...shocked bowser...? maybe not
+`epilepsyWarning.png` -- add some epilepsy warning message to make more accurate/elegant, and warning sign replaced to...shocked bowser...? maybe not
 
-titleBar.png -- is now added w/ // (depressed Marchionne (belongs to CorpseSyndrome | Team ARI) + creating some LeaF's MARENOL design * hexagon logical) * now minimalist design //
+`titleBar.png` -- is now added w/ // (depressed Marchionne (belongs to CorpseSyndrome | Team ARI) + creating some LeaF's MARENOL design * hexagon logical) * now minimalist design //
 
-bottomBar.png, creditsBar1.png, creditsBar2.png, creditsBar2b.png, and creditsBar2c.png -- is now transperent to 50%
+`bottomBar.png`, `creditsBar1.png`, `creditsBar2.png`, `creditsBar2b.png`, and `creditsBar2c.png` -- is now transperent to 50%
 
-creditsBar2d.png -- set transperent to 50% too, removed game & discord donation message, now adding resource pack & inspiration infomation
+`creditsBar2d.png` -- set transperent to 50% too, removed game & discord donation message, now adding resource pack & inspiration infomation
 
 -font assets-
 
 OH v19.2, v2 RC1, v2 release build 06.16.2020 users >>>
-imagine.ttf -- imagine font replaced into Morxemplum's Open Square font...nothing special.
+`imagine.ttf` -- imagine font replaced into Morxemplum's Open Square font...nothing special.
 
 OH v2.0 release build 06.29.2020 (non-steam release), v2.x.x+ steam release/compiled new version of OH users >>>
-forcedsquare.ttf & OpenSquare-Bold.ttf -- FORCED SQUARE & Open Square Bold replaced into
+`forcedsquare.ttf` & `OpenSquare-Bold.ttf` -- FORCED SQUARE & Open Square Bold replaced into
 Nintendo's/aruanticus' MARIO Font v3.2 Solid font (like ***accurate/legit*** Super Mario logo's new era) - includes katana and etc...
 
 oh and this font IS my favorite and i like this font but eh...
 
 "i like nintendo, i like mario, mario is a great community..." -Puz, 2019
 
-OpenSquare-Regular.ttf -- Open Square Regular replaced into PopHappinessStd-EB font (belongs to Fontworks Inc.),
+`OpenSquare-Regular.ttf` -- Open Square Regular replaced into PopHappinessStd-EB font (belongs to Fontworks Inc.),
 btw - also...this font had no katana glyph in it (same as delfino font from
 super mario sunshine & galaxy ui font) because attempting to import .otf file from glyphr studio with
 katana glyph...IT TOOK TOO LONG TO LOAD and MY BROWSER PAGE SUDDENLY DIDN'T RESPONDING for me ;_; (rip katana glyph)
@@ -67,21 +69,25 @@ about my <Mario font on Open Hexagon 2.x.x+ steam release> - .otf to .ttf conver
 
 -utils-
 
-getChance(), getDelayWalls(), getDelaySides(), getDelayAngle(), getDelayWallAndSides() and etc. belongs to Kodhiper
-getRebootPatternSide(), getRebootPatternHalfSide(), getPolygonExcept(), and getSpeedDelay() belongs to The Sun XIX
-customizePatternThickness(), customizePatternDelay() and other baba's functions belongs to babadrake
+`getChance()`, `getDelayWalls()`, `getDelaySides()`, `getDelayAngle()`, `getDelayWallAndSides()` and etc. belongs to Kodhiper
+
+`getRebootPatternSide()`, `getRebootPatternHalfSide()`, `getPolygonExcept()`, and `getSpeedDelay()` belongs to The Sun XIX
+
+`customizePatternThickness()`, `customizePatternDelay()` and other baba's functions belongs to babadrake
+
 and other bunch of main/inspiration/modification utility suggestions by me (March31onne) 
 
 -commons-
 
-rWallExFlip(), cBarrageNGap(), cBarrageNBlock() taken from Kodhiper's Inflorescence OH pack, credit to him...
+`rWallExFlip()`, `cBarrageNGap()`, `cBarrageNBlock()` taken from Kodhiper's Inflorescence OH pack, credit to him...
 
 -patterns-
 
-pMarch31osTrapAround() - belongs to Exschwaison, now accurate design (belongs to Terry)
-pMarch31osAccurateBat() - belongs to Hexadorsip, now accurate design (belongs to Terry, too)
+`pMarch31osTrapAround()` - belongs to Exschwaison, now accurate design (belongs to Terry)
 
-pMarc31osTunnel() - this pattern was too hard to code the customized tunnel pattern, such as double tunnel, even back and forth tunnel.
+`pMarch31osAccurateBat()` - belongs to Hexadorsip, now accurate design (belongs to Terry, too)
+
+`pMarc31osTunnel()` - this pattern was too hard to code the customized tunnel pattern, such as double tunnel, even back and forth tunnel.
 
 as i say...
 my patterns in order >>>
@@ -89,27 +95,37 @@ random barrage non-repeats, random barrage non-distance, full whirlwind, full wh
 
 other patterns credits in order >>>
 customized vorta barrage (as known as vortex & barrel inspired from OH steam release's Inflorescence pack) belongs to Kodhiper
+
 wall displacer pattern belongs to AlphaPromethium
+
 double-holed barrage variants, one-hole to two-holed barrage, jumble, odd & even alternating barrage, alternating half & trap barrage, random spiral, alternating barrage & random barrage & jumble tunnel, growing barrage, and diamond belongs to babadrake
+
 spray barrage belongs to syyrion
+
 random walls, snake barrage, & middle cut spiral as known as novel patterns and pattern maker/constructor belongs inspired from OH steam release's Inflorescence pack belongs to kodhiper
+
 abstract barrage inspired from OH v1.92's takarazed, cubic, & zicronium pack and xer barrage inspired from OH v1.92's takarazed pack belongs to KawaiiKayden/KenseMartinez
+
 side tunnel/barrage spiral tunnel belongs to Quoz/RNBW
+
 trap barrage tunnel belongs to trollbreeder
+
 trap around/*accurate* wrap around belongs to Exschwaison, (accurate design belongs to Terry)
-wall extra filler spiral, *accurate* bat, left-right spiral tunnel short belongs to Hexadorsip, (bat accurate design belongs to Terry)
+
+wall extra filler spiral, *accurate* bat, left-right spiral tunnel short belongs to Hexadorsip, (accurate bat design belongs to Terry)
+
 double barrage spiral across & back and forth tunnel (as known as double tunnel) type variants belongs to ~ VioletDraggy ~ / Spyro
 
 # replacing assets
 
-- dump the assets from <<.../[ assets ]/-graphics-/>> & <<.../[ assets ]/-sounds-/>> of inner .zip file to <<.../Open Hexagon/Assets/>>,
+- dump the assets from `.../[ assets ]/-graphics-/` & `.../[ assets ]/-sounds-/` of inner .zip file to `.../Open Hexagon/Assets/`,
   of course you can unzip it on your folder directory, for example: adding your folder, etc.
   and don't forget to add bottomBar.png -- click on bottom bar folder which resolution is fit, select version what do you want
-- for bonus assets: it is possible to replacing the font from <<.../[ assets ]/-fonts-/>>
+- for bonus assets: it is possible to replacing the font from `.../[ assets ]/-fonts-/`
 
 "If you mean the font 'forced square' or 'open square' instead, open the game's folder,
 (Located in your steam folder, at steamapps/common/Open Hexagon)
-head into assets, then do whatever with forcedsquare.ttf or even OpenSquare-Bold.ttf and OpenSquare-Regular.ttf"
+head into assets, then do whatever with `forcedsquare.ttf` or even `OpenSquare-Bold.ttf` and `OpenSquare-Regular.ttf`"
 
 "or if you don't feel like going exploring with windows explorer, open steam,
 right click 'open hexagon' in your library, click properties, click local files,
@@ -117,23 +133,24 @@ click browse local files to get to the game's folder"
 
 -Trollbreeder, 2020
 
-"just rename for forcedsquare.ttf or even OpenSquare-Bold.ttf and OpenSquare-Regular.ttf to [current_font_name]_o.ttf
-then copypaste the current ones from <<.../[ assets ]/-graphics-/>> into assets and
-rename it to forcedsquare.ttf or even OpenSquare-Bold.ttf and OpenSquare-Regular.ttf"
+"just rename for `forcedsquare.ttf` or even `OpenSquare-Bold.ttf` and `OpenSquare-Regular.ttf` to `[current_font_name]_o.ttf`
+then copypaste the current ones from `.../[ assets ]/-graphics-/` into assets and
+rename it to `forcedsquare.ttf` or even `OpenSquare-Bold.ttf` and `OpenSquare-Regular.ttf`"
 
 -Trollbreeder, 2021-01-16
 
 # adding lua scripts
 
 for OH v1.92 & v2 non steam release users >>>
-- add these script on <<.../[ scripts ]/marchionne's base scripts/Scripts/>> directory to <<.../Open Hexagon/Packs/[pack_name]/Scripts/>>
+- add these script on `.../[ scripts ]/marchionne's base scripts/Scripts/` directory to `.../Open Hexagon/Packs/[pack_name]/Scripts/`
 
 for OH v2.0.4+ steam release/compiled latest version of OH users >>>
-- add these dependency script on <<.../[ scripts ]/>> directory on 'marchionne's base scripts' folder to <<.../Open Hexagon/Packs/>>,
-  and don't forget to make sure your pack has a dependency in it (with good JSON syntax), see example: <<.../Open Hexagon/Packs/cube/pack.json>>,
-  if you don't have any directories or the pack you saw the dependencies can't be found, you can see the github's Open Hexagon page, see example: <<.../_RELEASE/Packs/cube/pack.json>> -- for OH steam/compiled game users
+- add these dependency script on `.../[ scripts ]/` directory on 'marchionne's base scripts' folder to `.../Open Hexagon/Packs/`,
+  and don't forget to make sure your pack has a dependency in it (with good JSON syntax), see example: `.../Open Hexagon/Packs/cube/pack.json`,
+  if you don't have any directories or the pack you saw the dependencies can't be found, you can see the github's Open Hexagon page, see example: `.../_RELEASE/Packs/cube/pack.json` -- for OH steam/compiled game users
 
 current version: v2.0.0 (stable)
 
 S E L A M A T   M E N C O B A .
+
 E N J O Y Y Y Y . . .
