@@ -30,7 +30,7 @@ on open hexagon. so let's talk about the assets first.
 
 `bottomBar.png`, `creditsBar1.png`, `creditsBar2.png`, `creditsBar2b.png`, and `creditsBar2c.png` -- is now transperent to 50%
 
-`creditsBar2d.png` -- set transperent to 50% too, removed game & discord donation message, now adding resource pack & inspiration infomation
+`creditsBar2d.png` -- set transperent to 50% too, removed game & discord donation message, now adding resource pack & inspiration information
 
 **-font assets-**
 
