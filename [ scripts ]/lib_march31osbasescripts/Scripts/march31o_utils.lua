@@ -17,6 +17,7 @@ local u_rndReal = u_rndReal or math.random
 local e_waitS = e_waitS or e_eventWaitS
 local e_waitUntilS = e_waitUntilS or e_eventWaitUntilS
 local a_playSound = a_playSound or u_playSound
+local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or messageImportantAdd
 
 --[[
     var: number THICKNESS
