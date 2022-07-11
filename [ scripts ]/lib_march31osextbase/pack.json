@@ -1,0 +1,22 @@
+{
+    "disambiguator": "library_march31osextbase",
+    "name": "march31os_ext_base",
+    "author": "march31onne",
+    "version": 1,
+    "priority": -103,
+    "dependencies":
+    [
+        {
+            "disambiguator": "ohvrvanilla",
+            "name": "base",
+            "author": "vittorio romeo",
+            "min_version": 1
+        },
+        {
+            "disambiguator": "lib_march31osbasescripts",
+            "name": "march31os_scr_base",
+            "author": "march31onne",
+            "min_version": 1
+        }
+    ]
+}
