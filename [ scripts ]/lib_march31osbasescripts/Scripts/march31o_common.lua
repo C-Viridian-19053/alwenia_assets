@@ -65,8 +65,8 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant
     void cWallTkns(_side, _thick_mult_step, _thick_mult_step_limit, _extra, _step_dir, _thick_mult, _thickness, ...)
     void cWallGrow(_side, _extend, _thickness, ...)
     void cWallGrowEx(_side, _extend, _extra, _thickness, ...)
-    void cWallMirror(_side, _offset, _thickness, ...)
-    void cWallMirrorEx(_side, _offset, _extra, _thickness, ...)
+    void cWallMirror(_side, _mirror_step, _thickness, ...)
+    void cWallMirrorEx(_side, _mirror_step, _extra, _thickness, ...)
 
     void cWallDraw(_side, _wallMin, _wallMax, _thickness, ...)
 
@@ -372,13 +372,13 @@ function cWallGrowEx(_side, _extend, _extra, _thickness, ...)
 end
 
 -- cWallMirror: spawns a mirror wall with specified mirror offsets.
-function cWallMirror(_side, _offset, _thickness, ...)
-    for spacingWalls = 0, _offset - 1, 1 do cWall(_side + math.floor(spacingWalls * (getProtocolSides() / _offset)), _thickness, ...); end
+function cWallMirror(_side, _mirror_step, _thickness, ...)
+    for spacingWalls = 0, _mirror_step - 1, 1 do cWall(_side + math.floor(spacingWalls * (getProtocolSides() / _mirror_step)), _thickness, ...); end
 end
 
 -- cWallMirrorEx: spawns a mirror wall with specified mirror offsets with _extra walls attached to it.
-function cWallMirrorEx(_side, _offset, _extra, _thickness, ...)
-    for spacingWalls = 0, _offset - 1, 1 do cWallEx(_side + math.floor(spacingWalls * (getProtocolSides() / _offset)), _extra, _thickness, ...); end
+function cWallMirrorEx(_side, _mirror_step, _extra, _thickness, ...)
+    for spacingWalls = 0, _mirror_step - 1, 1 do cWallEx(_side + math.floor(spacingWalls * (getProtocolSides() / _mirror_step)), _extra, _thickness, ...); end
 end
 
 -- cWallDraw: spawns a wall, but you can draw everything
