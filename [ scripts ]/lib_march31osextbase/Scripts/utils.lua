@@ -124,15 +124,30 @@ function rotate2DPointAroundOrigin(R, x, y)
 end
 
 -- Sets hue to a specific value by setting its min an max to the same value
-function forceSetHue(h)
-    s_setHueMin(h)
-    s_setHueMax(h)
+function forceSetHue(hMin, hMax)
+    s_setHueMin(hMin)
+    s_setHueMax(hMax or hMin)
 end
 
 -- Sets pulse to a specific value by setting its min an max to the same value
-function forceSetPulse(p)
-    s_setPulseMin(p)
-    s_setPulseMax(p)
+function forceSetPulse(pMin, pMax)
+    s_setPulseMin(pMin)
+    s_setPulseMax(pMax or pMin)
+end
+
+function forceSetPulseDiff(p, d)
+    if d >= 0 then
+        s_setPulseMin(p)
+        s_setPulseMax(p + d)
+    else
+        s_setPulseMin(p + d)
+        s_setPulseMax(p)
+    end
+end
+
+function forceSet3DPulse(value)
+    s_set3dPulseMin(value)
+    s_set3dPulseMax(value)
 end
 
 -- Square wave function with period 1 and amplitude 1 at value <x> with duty cycle <d>
@@ -271,7 +286,7 @@ function clearAll()
 	u_clearWalls()
 end
 
-function l_setLevelValues(mStyle, mSpeedMult, mRotSpeed, mDelayMult, mSides, mPulseMin, mPulseMax, mPulseSpeed, mPulseSpeedR, mPulseDelayMax, mBeatPulseMax, mBeatPulseDelayMax, mRadiusMin, isSwapEnabled, isRndSideChanges, isDarkenUnevenBackgroundChunk)
+function l_setLevelValues(mStyle, mSpeedMult, mRotSpeed, mDelayMult, mSides, mPulseMin, mPulseMax, mPulseSpeed, mPulseSpeedR, mPulseDelayMax, mBeatPulseMax, mBeatPulseDelayMax, mRadiusMin, isSwapEnabled, isRndSideChanges, isDarkenUnevenBackgroundChunk, mSpawnDistancek)
 	if (mSpeedMult ~= nil) then l_setSpeedMult(mSpeedMult) end
 	if (mRotSpeed ~= nil) then l_setRotationSpeed(mRotSpeed) end
 	if (mDelayMult ~= nil) then l_setDelayMult(mDelayMult) end
@@ -288,6 +303,7 @@ function l_setLevelValues(mStyle, mSpeedMult, mRotSpeed, mDelayMult, mSides, mPu
 	if (isSwapEnabled ~= nil) then l_setSwapEnabled(isSwapEnabled) end
 	if (isRndSideChanges ~= nil) then l_enableRndSideChanges(isRndSideChanges) end
 	if (isDarkenUnevenBackgroundChunk ~= nil) then l_setDarkenUnevenBackgroundChunk(isDarkenUnevenBackgroundChunk) end
+	l_setWallSpawnDistance(mSpawnDistance or 1600)
 end
 
 --SHOUTOUTS TO SYYRION
