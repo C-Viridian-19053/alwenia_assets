@@ -303,3 +303,14 @@ function l_changeLevel(mLevelPath, mStyleID, mBacksoundName, mTimeSegment, bRese
 	u_clearWalls(); t_clear();
 	onInit(); onLoad();
 end
+
+function whyCantIJustGoToTheMenu()
+	a_setMusic("emptyness")
+	e_kill() -- that sucks
+end
+
+function whyCanIPlayerFailsThisChallenge(_msg, _is_err)
+	if getBooleanNumber(_is_err) and (l_getOfficial()) then error(_msg)
+	else                                                    e_messageAddImportant(_msg, 99999) e_kill() -- that sucks
+	end
+end
