@@ -495,7 +495,7 @@ function l_getTargetLevelTimeDuration(_min_timer, _max_timer, _is_sync_to_dm, _t
 end
 
 --timelines
-function t_applyPatDel(_wait_amount) t_wait(mWaitAmount) end
+function t_applyPatDel(_wait_amount) t_wait(_wait_amount) end
 
 --events
 function e_waitSecDM(_duration) e_waitS(_duration * (u_getDifficultyMult() ^ -0.12)); end
