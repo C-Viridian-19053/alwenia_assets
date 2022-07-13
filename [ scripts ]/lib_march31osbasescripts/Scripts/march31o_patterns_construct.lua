@@ -1,9 +1,8 @@
 --need utils & commons, to avoid stack overflow
---[[ NOTICE: if 'table.unpack' was currently unavailable from lua 5.1 (such as LuaJIT), make sure you've to change the lua version to 5.1 on 'march31o_utils.lua'
+--[[ NOTICE: if 'table.unpack' was currently unavailable from lua 5.1, make sure you've to change the lua version to 5.1 on 'march31o_utils.lua'
 in order to add 'table.unpack' lua function shortcut, if 'table.unpack' has already, change the lua version to 5.3 or higher ]]
 
 --2.x.x+ & 1.92 conv functs
-local t_wait = t_wait or wait
 local u_getSpeedMultDM = u_getSpeedMultDM or getSpeedMult
 local u_rndInt = u_rndInt or math.random
 
@@ -76,8 +75,8 @@ function p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _loopDir
             _side = _side + _loopDir * _step
             _args[1] = _side
             --apply delay
-            if _usingPerfectThickness then t_wait(_delay)
-            else t_wait(_delayAmount)
+            if _usingPerfectThickness then t_applyPatDel(_delay)
+            else t_applyPatDel(_delayAmount)
             end
         end
         _loopDir = -_loopDir
@@ -88,8 +87,8 @@ function p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _loopDir
 
     p_patternEffectEnd();
     -- end delay (optional arg, default false)
-    t_wait(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(_endAdditionalDelay or 0);
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
 
 function p_constructRepeat(_side, _func, _args, _freq, _delayAmount, _isRebootingSide, _endAdditionalDelay, _addMult, _isTight, _skipEndDelay)
@@ -123,11 +122,11 @@ function p_constructRepeat(_side, _func, _args, _freq, _delayAmount, _isRebootin
         --call
         _func(table.unpack(_args))
         --delay
-        t_wait(_delayAmount * _curDelaySpeed)
+        t_applyPatDel(_delayAmount * _curDelaySpeed)
     end
 
     p_patternEffectEnd();
     -- end delay (optional arg, default false)
-    t_wait(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(_endAdditionalDelay or 0);
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
