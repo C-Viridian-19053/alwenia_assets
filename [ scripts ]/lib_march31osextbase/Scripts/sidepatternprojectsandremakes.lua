@@ -5,7 +5,6 @@ So I made my own of 2 cage paterns (Include Trap Arond & Accurate Bat pattern) w
 -- Mario
 
 --2.x.x+ & 1.92 conv functs
-local t_wait = t_wait or wait
 local u_getSpeedMultDM = u_getSpeedMultDM or getSpeedMult
 local u_rndInt = u_rndInt or math.random
 
@@ -58,18 +57,18 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
         _thickCount = _thickCount or 2
         _sub_neighbors = _sub_neighbors or 0
         if _mode == 1 then
-            _wallGrowPart(_sub_side + (_sub_isOppositeSideAlt % 2 == 1 and _sub_isOddAlt + math.floor(getProtocolSides() / 2) or 0),
-                (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and (_sub_isOppositeSideAlt % 2 == 1 and _sub_isOddAlt - 1 or _sub_isOddAlt) or 0) % 2,
-                math.floor(getProtocolSides() / 4) - _sub_neighbors, --getProtocolSides() >= 10 and math.floor(getProtocolSides() / 4) - _sub_neighbors or 1, -- target
+            _wallGrowPart(_sub_side + ((getPolySides(2, "floor") * (_sub_isOppositeSideAlt % 2))),
+                (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and _sub_isOddAlt or 0) % 2,
+                getPolySides(4, "floor") - _sub_neighbors, --getProtocolSides() >= 10 and math.floor(getProtocolSides() / 4) - _sub_neighbors or 1, -- target
             customizePatternThickness(_thickCount * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
         else
             if getProtocolSides() % 2 == 1 then
-                _wallGrowPart(_sub_side + (_sub_isOppositeSideAlt % 2 == 1 and _sub_isOddAlt + math.floor(getProtocolSides() / 2) or 0),
-                    (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and (_sub_isOppositeSideAlt % 2 == 1 and _sub_isOddAlt - 1 or _sub_isOddAlt) or 0) % 2, math.ceil(getProtocolSides() / 2) - (2 + _sub_neighbors),
+                _wallGrowPart(_sub_side + ((getPolySides(2, "floor") * (_sub_isOppositeSideAlt % 2))),
+                    (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and _sub_isOddAlt or 0) % 2, getPolySides(2, "ceil") - (2 + _sub_neighbors),
                 customizePatternThickness(_thickCount * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
             else
-                _barrageNPart(_sub_side + (_sub_isOppositeSideAlt % 2 == 0 and _sub_isOddAlt + math.floor(getProtocolSides() / 2) or 0),
-                    (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and (_sub_isOppositeSideAlt % 2 == 1 and _sub_isOddAlt - 1 or _sub_isOddAlt) or 0) % 2, _sub_neighbors,
+                _barrageNPart(_sub_side + ((getPolySides(2, "floor") * ((_sub_isOppositeSideAlt + 1) % 2))),
+                    (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and _sub_isOddAlt or 0) % 2, _sub_neighbors,
                 customizePatternThickness(_thickCount * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
             end
         end
@@ -82,30 +81,30 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
         if (_isInverted) then
             if _modeDesignAlt == 1 or _modeDesignAlt == 3 then
                 if getProtocolSides() > 5 then _halfLegAndHeadPart(_side, _isOddAlt, _isOppositeSideAlt, _neighbors, 1, _modeDesignAlt == 3 and 4 + (_designDelCountAdd * 2) or 2.5 + (_designDelCountAdd * 0.5)) end
-                t_wait(customizePatternDelay((1 + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay((1 + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
             end
             _halfLegAndHeadPart(_side, _isOddAlt, _isOppositeSideAlt, _neighbors, 0, 2)
             if _modeDesignAlt == 2 then
                 if getProtocolSides() > 5 then _halfLegAndHeadPart(_side, _isOddAlt, _isOppositeSideAlt, _neighbors, 1, 3 + _designDelCountAdd) end
-                t_wait(customizePatternDelay((1 + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay((1 + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
             end
         else
             if _modeDesignAlt == 2 or _modeDesignAlt == 3 then
                 if getProtocolSides() > 5 then _halfLegAndHeadPart(_side, _isOddAlt, _isOppositeSideAlt, _neighbors, 1, _modeDesignAlt == 3 and 4 + (_designDelCountAdd * 2) or 2.5 + (_designDelCountAdd * 0.5)) end
-                t_wait(customizePatternDelay((1 + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay((1 + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
             end
             _halfLegAndHeadPart(_side, _isOddAlt, _isOppositeSideAlt, _neighbors, 0, 2)
             if _modeDesignAlt == 1 then
                 if getProtocolSides() > 5 then _halfLegAndHeadPart(_side, _isOddAlt, _isOppositeSideAlt, _neighbors, 1, 3 + _designDelCountAdd) end
-                t_wait(customizePatternDelay((1 + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay((1 + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
             end
         end
         if getProtocolSides() > 3 and _largeThickCount > 0 then
-            _wallPart(_side + (_isOppositeSideAlt % 2 == 1 and _isOddAlt + math.floor(getProtocolSides() / 2) or 0),
-                (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and (_isOppositeSideAlt % 2 == 1 and _isOddAlt - 1 or _isOddAlt) or 0) % 2,
+            _wallPart(_side + ((getPolySides(2, "floor") * (_isOppositeSideAlt % 2))),
+                (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and _isOddAlt or 0) % 2,
             customizePatternThickness(_largeThickCount * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
         end
-        t_wait(customizePatternDelay((_delEndCount + _designDelCountAdd) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+        t_applyPatDel(customizePatternDelay((_delEndCount + _designDelCountAdd) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
     end
     local _deskPart = function(_side, _isOddAlt, _isOppositeSideAlt, _modeDesignSubCycleAlt, _neighbors, _thickCount, _delEndCount, _designDelCountAdd, _isInverted)
         _thickCount = _thickCount or 5;
@@ -114,64 +113,64 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
         _designDelCountAdd = _designDelCountAdd or 0;
         if (_isInverted) then
             if _modeDesignSubCycleAlt == 1 then
-                --t_wait(customizePatternDelay((1 + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+                --t_applyPatDel(customizePatternDelay((1 + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
                 if getProtocolSides() > 5 then
-                    _wallPart(_side + (_isOppositeSideAlt % 2 == 0 and _isOddAlt + math.floor(getProtocolSides() / 2) or 0),
-                        (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and (_isOppositeSideAlt % 2 == 0 and _isOddAlt - 1 or _isOddAlt) or 0) % 2,
+                    _wallPart(_side + (_isOppositeSideAlt % 2 == 0 and getPolySides(2, "floor") or 0),
+                        ((_isOddAlt + 1) % 2) * (getProtocolSides() % 2),
                     customizePatternThickness((_thickCount + _designDelCountAdd) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()))
                 end
-                t_wait(customizePatternDelay((1 + closeValue(_thickCount - 4, 0, 999) + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay((1 + closeValue(_thickCount - 4, 0, 999) + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
             elseif _modeDesignSubCycleAlt == 2 then
-                --t_wait(customizePatternDelay((1 + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+                --t_applyPatDel(customizePatternDelay((1 + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
                 if getProtocolSides() > 5 then
-                    _wallPart(_side + (_isOppositeSideAlt % 2 == 0 and _isOddAlt + math.floor(getProtocolSides() / 2) or 0),
-                        (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and (_isOppositeSideAlt % 2 == 0 and _isOddAlt - 1 or _isOddAlt) or 0) % 2,
+                    _wallPart(_side + (_isOppositeSideAlt % 2 == 0 and getPolySides(2, "floor") or 0),
+                        ((_isOddAlt + 1) % 2) * (getProtocolSides() % 2),
                     customizePatternThickness((_thickCount + _designDelCountAdd - 1.5) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()))
                 end
-                t_wait(customizePatternDelay((1 + closeValue(_thickCount - 4, 0, 999) + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay((1 + closeValue(_thickCount - 4, 0, 999) + (_designDelCountAdd * 0.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
             end
             if getProtocolSides() > 5 then
-                _wallGrowPart(_side + (_isOppositeSideAlt % 2 == 0 and _isOddAlt + math.floor(getProtocolSides() / 2) or 0),
-                    (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and (_isOppositeSideAlt % 2 == 0 and _isOddAlt - 1 or _isOddAlt) or 0) % 2,
-                    math.floor(getProtocolSides() / 4) - _neighbors,
+                _wallGrowPart(_side + (_isOppositeSideAlt % 2 == 0 and getPolySides(2, "floor") or 0),
+                    ((_isOddAlt + 1) % 2) * (getProtocolSides() % 2),
+                    getPolySides(4, "floor") - _neighbors,
                 customizePatternThickness(2 * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()))
             else
-                _wallPart(_side + (_isOppositeSideAlt % 2 == 0 and _isOddAlt + math.floor(getProtocolSides() / 2) or 0),
-                    (getProtocolSides() % 2 == 1 and (_isOppositeSideAlt % 2 == 0 and _isOddAlt - 1 or _isOddAlt) or 0) % 2,
+                _wallPart(_side + (_isOppositeSideAlt % 2 == 0 and getPolySides(2, "floor") or 0),
+                    (getProtocolSides() % 2 == 1 and _isOddAlt or 0) % 2,
                 customizePatternThickness(2 * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()))
             end
-            t_wait(customizePatternDelay((_delEndCount + _designDelCountAdd) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay((_delEndCount + _designDelCountAdd) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
         else
             if _modeDesignSubCycleAlt == 1 then
                 if getProtocolSides() > 5 then
-                    _wallPart(_side + (_isOppositeSideAlt % 2 == 0 and _isOddAlt + math.floor(getProtocolSides() / 2) or 0),
-                        (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and (_isOppositeSideAlt % 2 == 0 and _isOddAlt - 1 or _isOddAlt) or 0) % 2,
+                    _wallPart(_side + (_isOppositeSideAlt % 2 == 0 and getPolySides(2, "floor") or 0),
+                        ((_isOddAlt + 1) % 2) * (getProtocolSides() % 2),
                     customizePatternThickness((_thickCount + (_designDelCountAdd * 1.5)) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()))
                 end
-                t_wait(customizePatternDelay((1 + _designDelCountAdd) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay((1 + _designDelCountAdd) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
             end
             if _modeDesignSubCycleAlt == 2 then
-                t_wait(customizePatternDelay(1 * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay(1 * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
             end
             if getProtocolSides() > 5 then
-                _wallGrowPart(_side + (_isOppositeSideAlt % 2 == 0 and _isOddAlt + math.floor(getProtocolSides() / 2) or 0),
-                    (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and (_isOppositeSideAlt % 2 == 0 and _isOddAlt - 1 or _isOddAlt) or 0) % 2,
-                    math.floor(getProtocolSides() / 4) - _neighbors,
+                _wallGrowPart(_side + (_isOppositeSideAlt % 2 == 0 and getPolySides(2, "floor") or 0),
+                    ((_isOddAlt + 1) % 2) * (getProtocolSides() % 2),
+                    getPolySides(4, "floor") - _neighbors,
                 customizePatternThickness(2 * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()))
             else
-                _wallPart(_side + (_isOppositeSideAlt % 2 == 0 and _isOddAlt + math.floor(getProtocolSides() / 2) or 0),
-                    (getProtocolSides() % 2 == 1 and (_isOppositeSideAlt % 2 == 0 and _isOddAlt - 1 or _isOddAlt) or 0) % 2,
+                _wallPart(_side + (_isOppositeSideAlt % 2 == 0 and getPolySides(2, "floor") or 0),
+                    ((_isOddAlt + 1) % 2) * (getProtocolSides() % 2),
                 customizePatternThickness(2 * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()))
             end
             if _modeDesignSubCycleAlt < 2 then
-                t_wait(customizePatternDelay((_delEndCount + _designDelCountAdd) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay((_delEndCount + _designDelCountAdd) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
             elseif _modeDesignSubCycleAlt == 2 then
                 if getProtocolSides() > 5 then
-                    _wallPart(_side + (_isOppositeSideAlt % 2 == 0 and _isOddAlt + math.floor(getProtocolSides() / 2) or 0),
-                        (getProtocolSides() % 2 == 1 and getProtocolSides() > 5 and (_isOppositeSideAlt % 2 == 0 and _isOddAlt - 1 or _isOddAlt) or 0) % 2,
+                    _wallPart(_side + (_isOppositeSideAlt % 2 == 0 and getPolySides(2, "floor") or 0),
+                        ((_isOddAlt + 1) % 2) * (getProtocolSides() % 2),
                     customizePatternThickness((_thickCount + _designDelCountAdd - 0.5) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()))
                 end
-                t_wait(customizePatternDelay((_delEndCount + _designDelCountAdd) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay((_delEndCount + _designDelCountAdd) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
             end
         end
     end
@@ -204,14 +203,14 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
         if (getBooleanNumber(_hasContainedEnd)) then
             -- set c barrage neighbors after pattern spawned
             _barrageNPart(_curSide + ((_oddValueFix % 2) * getHalfSides()), _oddValueFix % 2, _neighContainedStart, customizePatternThickness((1 + _designDelAddThick) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-            t_wait(customizePatternDelay((4 + _designDelAddThick) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay((4 + _designDelAddThick) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
         end
         if getProtocolSides() >= 8 then
             if _freq == 0 and _freqInv > 0 then
                 for aInv = 0, _freqInv do
                     local delGapFix = (aInv > 0 and aInv < _freqInv - 1 and 0) or 1
                     local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignCycle > 0 and _freq > 0 and 1 + _designDelAddCycle or 0)
-                    _bodyPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2,
+                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2,
                          aInv == 0 and _modeDesignEnd   or aInv == _freqInv and _modeDesignStart   or _modeDesignCycle,
                         (aInv == 0 and _neighDesignEnd  or aInv == _freqInv and _neighDesignStart  or _neighDesignCycle) + ((aInv > 0 and aInv < _freqInv) and 1 or 0),
                         (aInv < _freqInv - 1 and thickwall + (aInv == _freqInv - 2 and 1 or 0) or 0), (aInv == _freqInv and getBooleanNumber(_hasContainedEnd) and 0 or 5) + delGapFix,
@@ -223,10 +222,10 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
                     for aMain = 0, _freq do
                         p_patternEffectCycle();
                         local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignDesk > 0 and 1.5 + _designDelAddDesk or 0) + (_modeDesignCycle > 0 and aMain > 0 and 1 + _designDelAddCycle or 0)
-                        _bodyPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignEnd or _modeDesignCycle, aMain == 0 and _neighDesignEnd or _neighDesignCycle, thickwall,                 5,                                    _designDelAddEnd,  false) --end
-                        _deskPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                   _neighDesignDesk,                                    aMain == _freq and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk, false) --desk
+                        _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignEnd or _modeDesignCycle, aMain == 0 and _neighDesignEnd or _neighDesignCycle, thickwall,             5 - (_modeDesignDesk > 0 and 1 or 0), _designDelAddEnd,  true) --end
+                        _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                   _neighDesignDesk,                                    aMain == 0 and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk, true) --desk
                     end
-                    _bodyPart(_curSide, _checkOddInt, _checkOddInt, _modeDesignStart, _neighDesignStart, aInv == _freqInv and getBooleanNumber(_hasContainedEnd) and 0 or 5, _designDelAddStart, true) --start
+                    _bodyPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, _modeDesignStart, _neighDesignStart, 0, 5, _designDelAddStart, true) --start
                 end
             end
         else
@@ -234,28 +233,28 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
                 for aMain = 0, _freq do
                     p_patternEffectCycle();
                     local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignDesk > 0 and 1.5 + _designDelAddDesk or 0) + (_modeDesignCycle > 0 and aMain > 0 and 1 + _designDelAddCycle or 0)
-                    _bodyPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignEnd or _modeDesignCycle, aMain == 0 and _neighDesignEnd or _neighDesignCycle, thickwall,                 5,                                    _designDelAddEnd,  false) --end
-                    _deskPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                   _neighDesignDesk,                                    aMain == _freq and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk, false) --desk
+                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignEnd or _modeDesignCycle, aMain == 0 and _neighDesignEnd or _neighDesignCycle, thickwall,             5 - (_modeDesignDesk > 0 and 1 or 0), _designDelAddEnd,  true) --end
+                    _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                   _neighDesignDesk,                                    aMain == 0 and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk, true) --desk
                 end
-                _bodyPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, _modeDesignStart, _neighDesignStart, aInv == _freqInv and getBooleanNumber(_hasContainedStart) and 0 or 5, _designDelAddStart, true) --start
+                _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignStart, _neighDesignStart, 0, 5, _designDelAddStart, true) --start
             end
         end
         if (getBooleanNumber(_hasContainedStart)) then
-            t_wait(customizePatternDelay(1 * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
-            _barrageNPart(_curSide + ((_oddValueFix % 2) * getHalfSides()), _oddValueFix % 2, _neighContainedEnd, customizePatternThickness((1 + _designDelAddThick) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(1 * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
+            _barrageNPart(_curSide + ((_checkOddInt % 2) * getHalfSides()), _checkOddInt % 2, _neighContainedEnd, customizePatternThickness((1 + _designDelAddThick) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
         end
     else
         if (getBooleanNumber(_hasContainedStart)) then
             -- set c barrage neighbors after pattern spawned
             _barrageNPart(_curSide + ((_oddValueFix % 2) * getHalfSides()), _oddValueFix % 2, _neighContainedStart, customizePatternThickness((1 + _designDelAddThick) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-            t_wait(customizePatternDelay((4 + _designDelAddThick) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay((4 + _designDelAddThick) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
         end
         if getProtocolSides() >= 8 then
             if _freq == 0 and _freqInv > 0 then
                 for aInv = 0, _freqInv do
                     local delGapFix = (aInv > 0 and aInv < _freqInv - 1 and 0) or 1
                     local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignCycle > 0 and _freq > 0 and 1 + _designDelAddCycle or 0)
-                    _bodyPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2,
+                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2,
                          aInv == 0 and _modeDesignStart   or aInv == _freqInv and _modeDesignEnd   or _modeDesignCycle,
                         (aInv == 0 and _neighDesignStart  or aInv == _freqInv and _neighDesignEnd  or _neighDesignCycle) + ((aInv > 0 and aInv < _freqInv) and 1 or 0),
                         (aInv < _freqInv - 1 and thickwall + (aInv == _freqInv - 2 and 1 or 0) or 0), (aInv == _freqInv and getBooleanNumber(_hasContainedEnd) and 0 or 5) + delGapFix,
@@ -267,10 +266,10 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
                     for aMain = 0, _freq do
                         p_patternEffectCycle();
                         local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignDesk > 0 and 1.5 + _designDelAddDesk or 0) + (_modeDesignCycle > 0 and aMain > 0 and 1 + _designDelAddCycle or 0)
-                        _bodyPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignStart or _modeDesignCycle, aMain == 0 and _neighDesignStart or _neighDesignCycle, thickwall,                 5,                                    _designDelAddStart, false) --start
-                        _deskPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                     _neighDesignDesk,                                      aMain == _freq and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk,  false) --desk
+                        _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignStart or _modeDesignCycle, aMain == 0 and _neighDesignStart or _neighDesignCycle, thickwall,                 5,                                    _designDelAddStart, false) --start
+                        _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                     _neighDesignDesk,                                      aMain == _freq and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk,  false) --desk
                     end
-                    _bodyPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, _modeDesignEnd, _neighDesignEnd, 0, aInv == _freqInv and getBooleanNumber(_hasContainedEnd) and 0 or 5, _designDelAddEnd, false) --end
+                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignEnd, _neighDesignEnd, 0, aInv == _freqInv and getBooleanNumber(_hasContainedEnd) and 0 or 5, _designDelAddEnd, false) --end
                 end
             end
         else
@@ -278,14 +277,14 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
                 for aMain = 0, _freq do
                     p_patternEffectCycle();
                     local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignDesk > 0 and 1.5 + _designDelAddDesk or 0) + (_modeDesignCycle > 0 and aMain > 0 and 1 + _designDelAddCycle or 0)
-                    _bodyPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignStart or _modeDesignCycle, aMain == 0 and _neighDesignStart or _neighDesignCycle, thickwall,                 5,                                    _designDelAddStart, false) --start
-                    _deskPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                     _neighDesignDesk,                                      aMain == _freq and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk,  false) --desk
+                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignStart or _modeDesignCycle, aMain == 0 and _neighDesignStart or _neighDesignCycle, thickwall,                 5,                                    _designDelAddStart, false) --start
+                    _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                     _neighDesignDesk,                                      aMain == _freq and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk,  false) --desk
                 end
-                _bodyPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, _modeDesignEnd, _neighDesignEnd, 0, aInv == _freqInv and getBooleanNumber(_hasContainedEnd) and 0 or 5, _designDelAddEnd, false) --end
+                _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignEnd, _neighDesignEnd, 0, aInv == _freqInv and getBooleanNumber(_hasContainedEnd) and 0 or 5, _designDelAddEnd, false) --end
             end
         end
         if (getBooleanNumber(_hasContainedEnd)) then
-            t_wait(customizePatternDelay((1 + _designDelAddThick) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay((1 + _designDelAddThick) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
             _barrageNPart(_curSide + ((_oddValueFix % 2) * getHalfSides()), _oddValueFix % 2, _neighContainedEnd, customizePatternThickness((1 + _designDelAddThick) * _currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
         end
     end
@@ -293,8 +292,8 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
     p_patternEffectEnd()
 
     -- end delay (optional arg, default false)
-    t_wait(_endAdditionalDelay or 0)
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getPerfectDelay(THICKNESS) * 11) else t_wait(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(_endAdditionalDelay or 0)
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 11) else t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
 
 function pLuigisAccurateBatNew(_side, _hasContainedStart, _hasContainedEnd, _neighContainedStart, _neighContainedEnd, _design, _isOdd, _isInverted, _delMult, _scale, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual, _isTight, _skipEndDelay)
@@ -339,20 +338,20 @@ function pLuigisAccurateBatNew(_side, _hasContainedStart, _hasContainedEnd, _nei
         if (_hasContainedEnd) then
             -- set c barrage neighbors
             _barrageNPart(_curSide + math.floor(getProtocolSides() / 2) + 1, (_checkOddInt + 1) % 2, _neighContainedStart, customizePatternThickness(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-            t_wait(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
         end
         if getProtocolSides() <= 3 then -- if sides less than equal 3 section...
             _wallPart(_curSide + ((_checkOddInt + 1) % 2), (_checkOddInt + 1) % 2, customizePatternThickness(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-            t_wait(customizePatternDelay(4 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(4 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
             _wallPart(_curSide, _checkOddInt % 2, customizePatternThickness(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
         elseif getProtocolSides() > 3 and getProtocolSides() <= 5 then -- if sides greater than 3 and less than equal 5 section...
             cWall(_curSide + math.floor(getProtocolSides() / 2) - ((_checkOddInt + 1) % 2), customizePatternThickness(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
             cWall(_curSide + math.ceil(getProtocolSides() / 2) + (((_checkOddInt + 1) % 2)) + (_checkOddInt % 2), customizePatternThickness(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-            t_wait(customizePatternDelay(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
             _wallPart(_curSide + math.ceil(getProtocolSides() / 2) - ((_checkOddInt + 1) % 2), (_checkOddInt + 1) % 2, customizePatternThickness(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-            t_wait(customizePatternDelay(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
             _wallGrowPart(_curSide, _checkOddInt % 2, 0, customizePatternThickness(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-            t_wait(customizePatternDelay(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
             _wallGrowPart(_curSide, _checkOddInt % 2, 1, customizePatternThickness(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
         elseif getProtocolSides() > 5 then -- elseif sides greater than 5 section...
             if _design == 1 then --alright, if _design is equal 1 section...
@@ -360,32 +359,32 @@ function pLuigisAccurateBatNew(_side, _hasContainedStart, _hasContainedEnd, _nei
                     local _addSide = math.floor(getProtocolSides() / 2) - 2;
                     cWall(_curSide + math.floor(getProtocolSides() / 2) + (1 + amount001) + (getProtocolSides() % 2), customizePatternThickness(6 + (_addSide * 3) - (amount001 * 3) * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
                     cWall(_curSide + math.floor(getProtocolSides() / 2) - (1 + amount001) + (_checkOddInt % 2), customizePatternThickness(6 + (_addSide * 3) - (amount001 * 3) * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-                    t_wait(customizePatternDelay(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+                    t_applyPatDel(customizePatternDelay(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
                     if amount001 == 0 then cWallEx(_curSide + math.floor(getProtocolSides() / 2) + (_checkOddInt % 2), (getProtocolSides() % 2 == 1 and _checkOddInt % 2 == 0) and 1 or 0, customizePatternThickness(7 + (_addSide * 2.5) * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool())); end
                 end
                 _barrageNPart(_curSide + (_checkOddInt % 2), _checkOddInt % 2, 0, customizePatternThickness(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-                t_wait(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
                 for amount001 = 0, math.floor(getProtocolSides() / 2) - 2, 1 do
                     _wallGrowPart(_curSide, _checkOddInt % 2, amount001, customizePatternThickness(3.5 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-                    t_wait(customizePatternDelay(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+                    t_applyPatDel(customizePatternDelay(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
                 end
                 _wallGrowPart(_curSide, _checkOddInt % 2, math.floor(getProtocolSides() / 2) - 1, customizePatternThickness(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
             else
                 for largeWallsOffset002 = 0, math.floor(getProtocolSides() / 10), 1 do cWall(_curSide + largeWallsOffset002 + math.floor(getProtocolSides() / 2) + (getProtocolSides() % 2) + 1, customizePatternThickness(7 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool())); end
                 for largeWallsOffset002 = 0, math.floor(getProtocolSides() / 10), 1 do cWall(_curSide - largeWallsOffset002 + math.floor(getProtocolSides() / 2) - 1 + (_checkOddInt % 2), customizePatternThickness(7 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool())); end
-                t_wait(customizePatternDelay(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
                 _barrageNPart(_curSide + (_checkOddInt % 2), _checkOddInt % 2, 0, customizePatternThickness(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
                 cWallEx(_curSide + math.floor(getProtocolSides() / 2) + _checkOddInt, _checkOddInt % 2 == 0 and getProtocolSides() % 2 or 0, customizePatternThickness(8 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
-                t_wait(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
                 _wallPart(_curSide, _checkOddInt % 2, customizePatternThickness(6.5 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-                t_wait(customizePatternDelay(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
                 _wallGrowPart(_curSide, _checkOddInt % 2, math.floor(getProtocolSides() / 2) - 2 - math.floor(getProtocolSides() / 10), customizePatternThickness(3.5 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-                t_wait(customizePatternDelay(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
                 _wallGrowPart(_curSide, _checkOddInt % 2, math.floor(getProtocolSides() / 2) - 1, customizePatternThickness(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
             end
         end
         if (_hasContainedStart) then
-            t_wait(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
             -- set c barrage neighbors after pattern spawned
             _barrageNPart(_curSide + (_checkOddInt % 2), _checkOddInt % 2, _neighContainedStart, customizePatternThickness(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
         end
@@ -393,48 +392,48 @@ function pLuigisAccurateBatNew(_side, _hasContainedStart, _hasContainedEnd, _nei
         if (_hasContainedStart) then
             -- set c barrage neighbors
             _barrageNPart(_curSide + (_checkOddInt % 2), _checkOddInt % 2, _neighContainedStart, customizePatternThickness(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-            t_wait(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
         end
         if getProtocolSides() <= 3 then -- if sides less than equal 3 section...
             _wallPart(_curSide, _checkOddInt % 2, customizePatternThickness(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-            t_wait(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
             _wallPart(_curSide + ((_checkOddInt + 1) % 2), (_checkOddInt + 1) % 2, customizePatternThickness(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
         elseif getProtocolSides() > 3 and getProtocolSides() <= 5 then -- if sides greater than 3 and less than equal 5 section...
             _wallGrowPart(_curSide, _checkOddInt % 2, 1, customizePatternThickness(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
             _wallGrowPart(_curSide, _checkOddInt % 2, 0, customizePatternThickness(4 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-            t_wait(customizePatternDelay(5 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(5 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
             cWallEx(_curSide + math.floor(getProtocolSides() / 2) + (_checkOddInt % 2), _checkOddInt % 2 == 0 and getProtocolSides() % 2 or 0, customizePatternThickness(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-            t_wait(customizePatternDelay(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
             cWall(_curSide + math.floor(getProtocolSides() / 2) - ((_checkOddInt + 1) % 2), customizePatternThickness(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
             cWall(_curSide + math.ceil(getProtocolSides() / 2) + (((_checkOddInt + 1) % 2)) + (_checkOddInt % 2), customizePatternThickness(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
         elseif getProtocolSides() > 5 then -- elseif sides greater than 5 section...
             if _design == 1 then --alright, if _design is equal 1 section...
                 _wallGrowPart(_curSide, _checkOddInt % 2, math.floor(getProtocolSides() / 2) - 1, customizePatternThickness(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
                 for amount001 = 0, math.floor(getProtocolSides() / 2) - 2, 1 do _wallGrowPart(_curSide, _checkOddInt % 2, math.floor(getProtocolSides() / 2) - (amount001 + 2), customizePatternThickness((4 + (amount001 * 3)) * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool())); end
-                t_wait(customizePatternDelay((math.floor(getProtocolSides() / 2) + 2) * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay((math.floor(getProtocolSides() / 2) + 2) * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
                 cWallEx(_curSide + math.floor(getProtocolSides() / 2) + (_checkOddInt % 2), _checkOddInt % 2 == 0 and getProtocolSides() % 2 or 0, customizePatternThickness((math.floor(getProtocolSides() / 2) + math.floor(getProtocolSides() / 2) + 1 + math.floor(getProtocolSides() / 10) + math.floor(getProtocolSides() / 4)) * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-                t_wait(customizePatternDelay(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
                 for amount002 = 0, math.floor(getProtocolSides() / 2) - 3, 1 do
                     cWall(_curSide + math.floor(getProtocolSides() / 2) + (getProtocolSides() % 2) + 1 + amount002, customizePatternThickness((math.floor(getProtocolSides() / 2) + (math.floor(getProtocolSides() / 2) + 1) + (math.floor(getProtocolSides() / 2) - 3) - (amount002 * 3)) * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
                     cWall(_curSide + math.floor(getProtocolSides() / 2) - ((_checkOddInt + 1) % 2) - amount002, customizePatternThickness((math.floor(getProtocolSides() / 2) + (math.floor(getProtocolSides() / 2) + 1) + (math.floor(getProtocolSides() / 2) - 3) - (amount002 * 3)) * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-                    if amount002 < math.floor(getProtocolSides() / 2) - 3 then t_wait(customizePatternDelay(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool())); end
+                    if amount002 < math.floor(getProtocolSides() / 2) - 3 then t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool())); end
                 end
             else -- elseif _design is equal 0 section...
                 _wallGrowPart(_curSide, _checkOddInt % 2, math.floor(getProtocolSides() / 2) - 1, customizePatternThickness(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
                 _wallGrowPart(_curSide, _checkOddInt % 2, math.floor(getProtocolSides() / 2) - 2 - math.floor(getProtocolSides() / 10), customizePatternThickness(4 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
                 _wallPart(_curSide, _checkOddInt % 2, customizePatternThickness(7 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-                t_wait(customizePatternDelay(5 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay(5 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
                 cWallEx(_curSide + math.floor(getProtocolSides() / 2) + _checkOddInt, _checkOddInt % 2 == 0 and getProtocolSides() % 2 or 0, customizePatternThickness(7 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _delMult * _scale, p_getDelayPatternBool()));
-                t_wait(customizePatternDelay(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+                t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
                 for largeWallsOffset002 = 0, math.floor(getProtocolSides() / 10), 1 do cWall(_curSide + largeWallsOffset002 + math.floor(getProtocolSides() / 2) + (getProtocolSides() % 2) + 1, customizePatternThickness(7 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool())); end
                 for largeWallsOffset002 = 0, math.floor(getProtocolSides() / 10), 1 do cWall(_curSide - largeWallsOffset002 + math.floor(getProtocolSides() / 2) - 1 + (_checkOddInt % 2), customizePatternThickness(7 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool())); end
             end
-            t_wait(customizePatternDelay(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
             _barrageNPart(_curSide + (_checkOddInt % 2), _checkOddInt % 2, 0, customizePatternThickness(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-            t_wait(customizePatternDelay(4 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(4 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
         end
         if (_hasContainedEnd) then
-            t_wait(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
             -- set c barrage neighbors after pattern spawned
             _barrageNPart(_curSide + math.floor(getProtocolSides() / 2) + 1, (_checkOddInt + 1) % 2, _neighContainedStart, customizePatternThickness(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
         end
@@ -443,6 +442,6 @@ function pLuigisAccurateBatNew(_side, _hasContainedStart, _hasContainedEnd, _nei
     p_patternEffectEnd();
 
     -- end delay (optional arg, default false)
-    t_wait(_endAdditionalDelay or 0)
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getPerfectDelay(THICKNESS) * 11) else t_wait(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(_endAdditionalDelay or 0)
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 11) else t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
