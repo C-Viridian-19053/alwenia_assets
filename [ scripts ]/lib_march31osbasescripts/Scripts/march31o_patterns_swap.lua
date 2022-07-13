@@ -1,7 +1,6 @@
 --need utils & commons, to avoid stack overflow
 
 --2.x.x+ & 1.92 conv functs
-local t_wait = t_wait or wait
 local u_getSpeedMultDM = u_getSpeedMultDM or getSpeedMult
 local u_rndInt = u_rndInt or math.random
 local u_rndIntUpper = u_rndIntUpper or math.random
@@ -46,8 +45,8 @@ function fMarch31osSwapBarrage(_side, _corridorThickNonSpd, _corridorThickSpd, _
     cSwapBarrage(_curSide, _delMult * _curDelaySpeed * _scale, p_getDelayPatternBool(), p_getTunnelPatternCorridorThickness() * _scale);
 
     p_patternEffectEnd();
-    t_wait(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getPerfectDelay(THICKNESS) * 11) else t_wait(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(_endAdditionalDelay or 0);
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 11) else t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
 
 function fMarch31osSwapCorridor(_side, _corridorThickNonSpd, _corridorThickSpd, _iter, _delMult, _scale, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual, _isTight, _skipEndDelay)
@@ -76,8 +75,8 @@ function fMarch31osSwapCorridor(_side, _corridorThickNonSpd, _corridorThickSpd, 
     end
 
     p_patternEffectEnd();
-    t_wait(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getPerfectDelay(THICKNESS) * 11) else t_wait(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(_endAdditionalDelay or 0);
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 11) else t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
 
 --[ Swap corridors ]--
@@ -100,7 +99,7 @@ function fMarch31osChance(_side, _corridorThickNonSpd, _corridorThickSpd, _delMu
     local _corridorBlockDir = _blockDir;
 
     rWall(_curSide, customizePatternThickness(16 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()) + ((p_getTunnelPatternCorridorThickness() / 2) * _scale));
-    t_wait(customizePatternDelay(16 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+    t_applyPatDel(customizePatternDelay(16 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
     if _corridorBlockDir > 0 then
         for i = 0, getHalfSides(), 1 do cWall(_curSide + i, p_getTunnelPatternCorridorThickness() * _scale); end
     else
@@ -108,8 +107,8 @@ function fMarch31osChance(_side, _corridorThickNonSpd, _corridorThickSpd, _delMu
     end
 
     p_patternEffectEnd();
-    t_wait(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getPerfectDelay(THICKNESS) * 11) else t_wait(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(_endAdditionalDelay or 0);
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 11) else t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
 
 function fMarch31osBarrageNoDelay(_side, _corridorThickNonSpd, _corridorThickSpd, _iter, _delMult, _scale, _loopDir, _isRandDir, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual, _isTight, _skipEndDelay)
@@ -145,13 +144,13 @@ function fMarch31osBarrageNoDelay(_side, _corridorThickNonSpd, _corridorThickSpd
             if (_isRandDir) then _curSide = _curSide + getRandomDir() + math.floor(getProtocolSides() / 2);
             else _curSide = _curSide + _corridorLoopDir + math.floor(getProtocolSides() / 2);
             end
-            t_wait(customizePatternDelay(8 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(8 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
         end
     end
 
     p_patternEffectEnd();
-    t_wait(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(_endAdditionalDelay or 0);
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
 
 function fMarch31osFlip(_side, _thickness, _scale, _loopDir, _endAdditionalDelay, _skipEndDelay)
@@ -177,12 +176,12 @@ function fMarch31osFlip(_side, _thickness, _scale, _loopDir, _endAdditionalDelay
         elseif (getProtocolSides() % 2) == 1 and a > 0 and (_loopDir > 0) then cWall(_curSide - a, (_thickness or THICKNESS) * _scale);
         elseif (getProtocolSides() % 2) == 1 and a < math.floor(getProtocolSides() / 2) and (_loopDir <= 0) then cWall(_curSide - a - 1, (_thickness or THICKNESS) * _scale);
         end
-        if a < math.floor(getProtocolSides() / 2) then t_wait(getPerfectDelay((_thickness or THICKNESS) * _scale)) end
+        if a < math.floor(getProtocolSides() / 2) then t_applyPatDel(getPerfectDelay((_thickness or THICKNESS) * _scale)) end
     end
 
     p_patternEffectEnd();
-    t_wait(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getPerfectDelay(THICKNESS) * 11) else t_wait(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(_endAdditionalDelay or 0);
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 11) else t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
 
 --[ Swap spirals ]--
@@ -219,11 +218,11 @@ function fMarch31osMirrorWhirlwind(_side, _thickness, _iter, _extra, _pos_spacin
         if a == _iter and getBooleanNumber(_isCleanEnd) then currentTimesOfThickAmountForGreaterThanSquare = (_curSpiralThick + 1); end
         rWallEx(_curSide + _spiralPosistionOffset, _extra, customizePatternThickness(currentTimesOfThickAmountForGreaterThanSquare * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
         _spiralPosistionOffset = _spiralPosistionOffset + (_loopDir * _pos_spacing);
-        t_wait(customizePatternDelay(_curSpiralThick * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+        t_applyPatDel(customizePatternDelay(_curSpiralThick * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
     end
     rWallEx(_curSide + _spiralPosistionOffset, _extra, customizePatternThickness(2 * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
     if getBooleanNumber(_isCleanEnd) then rWallEx(_curSide + _spiralPosistionOffset - (_loopDir * _pos_spacing), _extra, customizePatternThickness(2 * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool())); end
-    t_wait(customizePatternDelay(_curSpiralThick * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+    t_applyPatDel(customizePatternDelay(_curSpiralThick * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
 
     if _blockDir > 0 then
         for i = 0, getHalfSides(), 1 do cWall(_curSide + _spiralPosistionOffset + i, -p_getTunnelPatternCorridorThickness() * _scale); end
@@ -232,8 +231,8 @@ function fMarch31osMirrorWhirlwind(_side, _thickness, _iter, _extra, _pos_spacin
     end
 
     p_patternEffectEnd();
-    t_wait(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(_endAdditionalDelay or 0);
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
 
 --[ Swap tunnels ]--
@@ -269,12 +268,12 @@ function fMarch31osSwapTunnelCorridor(_side, _corridorThickNonSpd, _corridorThic
         else
             for i = getHalfSides(), getProtocolSides(), 1 do cWall(_curSide + i, p_getTunnelPatternCorridorThickness() * _scale); end
         end
-        t_wait(customizePatternDelay(8 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+        t_applyPatDel(customizePatternDelay(8 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
     end
 
     p_patternEffectEnd();
-    t_wait(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(_endAdditionalDelay or 0);
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
 
 -- baba's inspired patterns
@@ -337,10 +336,10 @@ function fMarch31osBackAndForthTunnel(_side, _corridorThickNonSpd, _corridorThic
 
         _tunnelLoopDirGearTeeth = _tunnelLoopDirGearTeeth * -1
         if (_isBeforeGearTeethBegin) and _amountOfBeforeGearTeethBegin == 0 and _gearTeethSizeMult == 0 then _amountOfBeforeGearTeethBegin = _amountOfBeforeGearTeethBegin + 1; _gearTeethSizeMult = _oldGearTeethSizeMult; end
-        t_wait(customizePatternDelay(3 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+        t_applyPatDel(customizePatternDelay(3 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
     end
     if (getBooleanNumber(_isLargeWallOnce)) then rWall(_curSide, customizePatternThickness(3 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()) + ((p_getTunnelPatternCorridorThickness() / 2) * _scale)); end
-    t_wait(customizePatternDelay(3 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+    t_applyPatDel(customizePatternDelay(3 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
 
     if _blockDir > 0 then
         for i = 0, getHalfSides(), 1 do cWall(_curSide + i, p_getTunnelPatternCorridorThickness() * _scale); end
@@ -349,6 +348,6 @@ function fMarch31osBackAndForthTunnel(_side, _corridorThickNonSpd, _corridorThic
     end
 
     p_patternEffectEnd();
-    t_wait(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getPerfectDelay(THICKNESS) * 11) else t_wait(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(_endAdditionalDelay or 0);
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 11) else t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
