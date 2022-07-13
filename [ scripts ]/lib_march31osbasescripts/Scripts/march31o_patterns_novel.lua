@@ -1,7 +1,6 @@
 --need utils & commons, to avoid stack overflow
 
 --2.x.x+ & 1.92 conv functs
-local t_wait = t_wait or wait
 local u_getSpeedMultDM = u_getSpeedMultDM or getSpeedMult
 local u_rndInt = u_rndInt or math.random
 local u_rndIntUpper = u_rndIntUpper or math.random
@@ -44,14 +43,14 @@ function pMarch31osRandomWalls(_side, _thickness, _iter, _mirrorOffset, _extra, 
 
         cWallMirrorEx(_curSide, _mirrorOffset, _extra, p_getTunnelPatternCorridorThickness() * _scale);
 
-        t_wait(customizePatternDelay(2 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()))
+        t_applyPatDel(customizePatternDelay(2 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()))
         _curSide = _curSide + u_rndInt(0, _maxstep) * getRandomDir()
     end
 
     p_patternEffectEnd();
-    t_wait(_endAdditionalDelay or 0)
+    t_applyPatDel(_endAdditionalDelay or 0)
     -- end delay (optional arg, default false)
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getDelaySides(getProtocolSides() / 2)) end
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getDelaySides(getProtocolSides() / 2)) end
 end
 
 function pMarch31osSnakeBarrage(_side, _thickness, _iter, _extra, _mirrorOffset, _isContained, _maxDist, _delMult, _thickMult, _scale, _isRebootingSide, _endAdditionalDelay, _addMult, _skipEndDelay)
@@ -80,7 +79,7 @@ function pMarch31osSnakeBarrage(_side, _thickness, _iter, _extra, _mirrorOffset,
     _isContained = getBooleanNumber(_isContained);
     if _isContained then
         cWallMirrorEx(_side, _mirrorOffset, _maxDist + _extra, (_thickness or THICKNESS) * _scale);
-        t_wait(getDelayWalls(2) * _curDelaySpeed * _delMult * _scale);
+        t_applyPatDel(getDelayWalls(2) * _curDelaySpeed * _delMult * _scale);
     end
 
     _maxDist = math.abs(_maxDist)
@@ -92,19 +91,19 @@ function pMarch31osSnakeBarrage(_side, _thickness, _iter, _extra, _mirrorOffset,
         p_patternEffectCycle();
 
         cWallMirrorEx(_side, _mirrorOffset, _extra, (_thickness or THICKNESS) * _thickMult * _scale);
-        t_wait(getDelayWalls(1) * _curDelaySpeed * _delMult * _scale);
+        t_applyPatDel(getDelayWalls(1) * _curDelaySpeed * _delMult * _scale);
         _side = _side + u_rndInt(0, 1) * getRandomDir();
         _side = closeValue(_side, _sideLimits[1], _sideLimits[2])
     end
 
     if _isContained then
-        t_wait(getDelayWalls(1) * _curDelaySpeed * _delMult * _scale);
+        t_applyPatDel(getDelayWalls(1) * _curDelaySpeed * _delMult * _scale);
         cWallMirrorEx(_sideLimits[1], _mirrorOffset, _maxDist + _extra, (_thickness or THICKNESS) * _scale);
     end
 
     p_patternEffectEnd();
-    t_wait(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getDelaySides(getProtocolSides() / 2 + 1)) end
+    t_applyPatDel(_endAdditionalDelay or 0);
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getDelaySides(getProtocolSides() / 2 + 1)) end
 end
 
 function pMarch31osMidCutSpiral(_side, _iter, _step, _extra, _mirrorOffset, _totalThicknessMult, _delMult, _scale, _isRebootingSide, _endAdditionalDelay, _addMult, _skipEndDelay)
@@ -138,9 +137,9 @@ function pMarch31osMidCutSpiral(_side, _iter, _step, _extra, _mirrorOffset, _tot
 
     local _constructMidCutSpiPart = function(_side, _mirrorOffset, _extra)
         cWallMirrorEx(_side, _mirrorOffset, _extra)
-        t_wait(getDelayWalls(2) * _curDelaySpeed * _delMult * _scale)
+        t_applyPatDel(getDelayWalls(2) * _curDelaySpeed * _delMult * _scale)
         cWallMirrorEx(_side, _mirrorOffset, _extra)
-        t_wait(getDelayWalls(1) * _curDelaySpeed * _delMult * _scale)
+        t_applyPatDel(getDelayWalls(1) * _curDelaySpeed * _delMult * _scale)
     end
 
     -- new thickness
@@ -158,7 +157,7 @@ function pMarch31osMidCutSpiral(_side, _iter, _step, _extra, _mirrorOffset, _tot
     THICKNESS = oldThickness
 
     p_patternEffectEnd();
-    t_wait(_endAdditionalDelay or 0);
+    t_applyPatDel(_endAdditionalDelay or 0);
     -- end delay (optional arg, default false)
-    if not getBooleanNumber(_skipEndDelay) then t_wait(getDelaySides(getProtocolSides() / 2 + 1)) end
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getDelaySides(getProtocolSides() / 2 + 1)) end
 end
