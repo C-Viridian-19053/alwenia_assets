@@ -209,7 +209,7 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
             if _freq == 0 and _freqInv > 0 then
                 for aInv = 0, _freqInv do
                     local delGapFix = (aInv > 0 and aInv < _freqInv - 1 and 0) or 1
-                    local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignCycle > 0 and _freq > 0 and 1 + _designDelAddCycle or 0)
+                    local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignCycle > 0 and _freq > 0 and 1 + _designDelAddCycle or 0) + _designDelAddEnd
                     _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2,
                          aInv == 0 and _modeDesignEnd   or aInv == _freqInv and _modeDesignStart   or _modeDesignCycle,
                         (aInv == 0 and _neighDesignEnd  or aInv == _freqInv and _neighDesignStart  or _neighDesignCycle) + ((aInv > 0 and aInv < _freqInv) and 1 or 0),
@@ -221,7 +221,7 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
                 for aInv = 0, _freqInv do
                     for aMain = 0, _freq do
                         p_patternEffectCycle();
-                        local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignDesk > 0 and 1.5 + _designDelAddDesk or 0) + (_modeDesignCycle > 0 and aMain > 0 and 1 + _designDelAddCycle or 0)
+                        local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignDesk > 0 and 1.5 + _designDelAddDesk or 0) + (_modeDesignCycle > 0 and aMain > 0 and 1 + _designDelAddCycle or 0) + _designDelAddEnd
                         _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignEnd or _modeDesignCycle, aMain == 0 and _neighDesignEnd or _neighDesignCycle, thickwall,             5 - (_modeDesignDesk > 0 and 1 or 0), _designDelAddEnd,  true) --end
                         _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                   _neighDesignDesk,                                    aMain == 0 and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk, true) --desk
                     end
@@ -232,7 +232,7 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
             for aInv = 0, _freqInv do
                 for aMain = 0, _freq do
                     p_patternEffectCycle();
-                    local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignDesk > 0 and 1.5 + _designDelAddDesk or 0) + (_modeDesignCycle > 0 and aMain > 0 and 1 + _designDelAddCycle or 0)
+                    local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignDesk > 0 and 1.5 + _designDelAddDesk or 0) + (_modeDesignCycle > 0 and aMain > 0 and 1 + _designDelAddCycle or 0) + _designDelAddEnd
                     _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignEnd or _modeDesignCycle, aMain == 0 and _neighDesignEnd or _neighDesignCycle, thickwall,             5 - (_modeDesignDesk > 0 and 1 or 0), _designDelAddEnd,  true) --end
                     _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                   _neighDesignDesk,                                    aMain == 0 and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk, true) --desk
                 end
@@ -253,7 +253,7 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
             if _freq == 0 and _freqInv > 0 then
                 for aInv = 0, _freqInv do
                     local delGapFix = (aInv > 0 and aInv < _freqInv - 1 and 0) or 1
-                    local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignCycle > 0 and _freq > 0 and 1 + _designDelAddCycle or 0)
+                    local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignCycle > 0 and _freq > 0 and 1 + _designDelAddCycle or 0) + _designDelAddEnd
                     _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2,
                          aInv == 0 and _modeDesignStart   or aInv == _freqInv and _modeDesignEnd   or _modeDesignCycle,
                         (aInv == 0 and _neighDesignStart  or aInv == _freqInv and _neighDesignEnd  or _neighDesignCycle) + ((aInv > 0 and aInv < _freqInv) and 1 or 0),
@@ -265,7 +265,7 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
                 for aInv = 0, _freqInv do
                     for aMain = 0, _freq do
                         p_patternEffectCycle();
-                        local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignDesk > 0 and 1.5 + _designDelAddDesk or 0) + (_modeDesignCycle > 0 and aMain > 0 and 1 + _designDelAddCycle or 0)
+                        local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignDesk > 0 and 1.5 + _designDelAddDesk or 0) + (_modeDesignCycle > 0 and aMain > 0 and 1 + _designDelAddCycle or 0) + _designDelAddEnd
                         _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignStart or _modeDesignCycle, aMain == 0 and _neighDesignStart or _neighDesignCycle, thickwall,                 5,                                    _designDelAddStart, false) --start
                         _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                     _neighDesignDesk,                                      aMain == _freq and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk,  false) --desk
                     end
@@ -276,7 +276,7 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
             for aInv = 0, _freqInv do
                 for aMain = 0, _freq do
                     p_patternEffectCycle();
-                    local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignDesk > 0 and 1.5 + _designDelAddDesk or 0) + (_modeDesignCycle > 0 and aMain > 0 and 1 + _designDelAddCycle or 0)
+                    local thickwall = 11 + (_modeDesignStart > 0 and aMain == 0 and 1 + _designDelAddStart or 0) + (_modeDesignDesk > 0 and 1.5 + _designDelAddDesk or 0) + (_modeDesignCycle > 0 and aMain > 0 and 1 + _designDelAddCycle or 0) + _designDelAddEnd
                     _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignStart or _modeDesignCycle, aMain == 0 and _neighDesignStart or _neighDesignCycle, thickwall,                 5,                                    _designDelAddStart, false) --start
                     _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                     _neighDesignDesk,                                      aMain == _freq and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk,  false) --desk
                 end
