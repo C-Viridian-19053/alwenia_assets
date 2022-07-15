@@ -8,8 +8,8 @@ local u_rndIntUpper = u_rndIntUpper or math.random
 --[[
     void pMarch31osAlternatingBarrageTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter, _designType, _largeWalls, _isLargeWallOnce, _delMult, _scale, _loopDir, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual, _isTight, _skipEndDelay)
     void pMarch31osAlternatingBarrageTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter) --, 2, 1, false, 1, 1, u_rndInt(0, 1), false, 0, 1, 1, 2, false, false
-    void pMarch31osRandomBarrageTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter, _designType, _largeWalls, _delMult, _scale, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual, _isTight, _skipEndDelay)
-    void pMarch31osRandomBarrageTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter) --, 2, 1, 1, 1, false, 0, 1, 1, 2, false, false
+    void pMarch31osRandomBarrageTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter, _designType, _largeWalls, _delMult, _delMult, _scale, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual, _isTight, _skipEndDelay)
+    void pMarch31osRandomBarrageTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter) --, 2, 1, true, 1, 1, false, 0, 1, 1, 2, false, false
     void pMarch31osRandomBarrageNdistanceTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter, _designType, _largeWalls, _isLargeWallOnce, _delMult, _scale, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual, _isTight, _skipEndDelay)
     void pMarch31osRandomBarrageNdistanceTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter) --, 2, 1, false, 1, 1, false, 0, 1, 1, 2, false, false
     void pMarch31osJumbleTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter, _designType, _largeWalls, _isLargeWallOnce, _chance, _delMult, _scale, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual, _isTight, _skipEndDelay)
@@ -135,8 +135,8 @@ function pMarch31osAlternatingBarrageTunnel(_side, _corridorThickNonSpd, _corrid
 end
 pMarch31osAlternatingTunnel = pMarch31osAlternatingBarrageTunnel
 
-function pMarch31osRandomBarrageTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter, _designType, _largeWalls, _delMult, _scale, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual, _isTight, _skipEndDelay)
-    _iter = anythingButNil(_iter, u_rndInt(2, 5)); _designType = anythingButNil(_designType, 2); _largeWalls = anythingButNil(_largeWalls, 1); _delMult = anythingButNil(_delMult, 1); _scale = anythingButNil(_scale, 1);
+function pMarch31osRandomBarrageTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter, _designType, _largeWalls, _isRepeat, _delMult, _scale, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual, _isTight, _skipEndDelay)
+    _iter = anythingButNil(_iter, u_rndInt(2, 5)); _designType = anythingButNil(_designType, 2); _largeWalls = anythingButNil(_largeWalls, 1); _isRepeat = anythingButNil(_isRepeat, 1); _delMult = anythingButNil(_delMult, 1); _scale = anythingButNil(_scale, 1);
     _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
@@ -153,6 +153,7 @@ function pMarch31osRandomBarrageTunnel(_side, _corridorThickNonSpd, _corridorThi
     local _tunnelOldOffset = 0;
     local _tunnelOffset = 0;
     local _tunnelDistanceDelay = 0;
+	
 
     for a = 0, _iter, 1 do
         p_patternEffectCycle();
@@ -165,6 +166,11 @@ function pMarch31osRandomBarrageTunnel(_side, _corridorThickNonSpd, _corridorThi
             for i = 1, getBarrageSide(), 1 do cWall(i + _curSide + _tunnelOffset + _largeWalls, p_getTunnelPatternCorridorThickness() * _scale); end
         end
         _tunnelOldOffset = _tunnelOffset; _tunnelOffset = u_rndInt(0, getProtocolSides() - (_largeWalls + 1));
+        if (not _isRepeat) then
+             repeat _tunnelOffset = u_rndInt(0, getProtocolSides() - (_largeWalls + 1));
+             until _tunnelOffset ~= _tunnelOldOffset
+        else _tunnelOffset = u_rndInt(0, getProtocolSides() - (_largeWalls + 1));
+        end
         _tunnelDistanceDelay = _tunnelOldOffset - _tunnelOffset;
 
         if _tunnelDistanceDelay < 0 then _tunnelDistanceDelay = _tunnelDistanceDelay * -1; end
