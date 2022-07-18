@@ -430,10 +430,10 @@ function pLuigisAccurateBatNew(_side, _hasContainedStart, _hasContainedEnd, _nei
             end
             t_applyPatDel(customizePatternDelay(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
             _barrageNPart(_curSide + (_checkOddInt % 2), _checkOddInt % 2, 0, customizePatternThickness(3 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
-            t_applyPatDel(customizePatternDelay(4 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(((getProtocolSides() / 2) + 3) * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
         end
         if (_hasContainedEnd) then
-            t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(((getProtocolSides() / 2) + 3) * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
             -- set c barrage neighbors after pattern spawned
             _barrageNPart(_curSide + math.floor(getProtocolSides() / 2) + 1, (_checkOddInt + 1) % 2, _neighContainedStart, customizePatternThickness(1 * currentSizeOverride * p_getDelayPatternThickMultOfNoSpdMultMode() * _scale, p_getDelayPatternBool()));
         end
