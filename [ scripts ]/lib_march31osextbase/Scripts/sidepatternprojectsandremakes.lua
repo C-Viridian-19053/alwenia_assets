@@ -269,7 +269,7 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
                         _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignStart or _modeDesignCycle, aMain == 0 and _neighDesignStart or _neighDesignCycle, thickwall,                 5,                                    _designDelAddStart, false) --start
                         _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                     _neighDesignDesk,                                      aMain == _freq and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk,  false) --desk
                     end
-                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignEnd, _neighDesignEnd, 0, aInv == _freqInv and getBooleanNumber(_hasContainedEnd) and 0 or 5, _designDelAddEnd, false) --end
+                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignEnd, _neighDesignEnd, 0, 5, _designDelAddEnd, false) --end
                 end
             end
         else
@@ -280,7 +280,7 @@ function pMariosTrapAroundNew(_side, _freq, _freqInv, _hasContainedStart, _hasCo
                     _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignStart or _modeDesignCycle, aMain == 0 and _neighDesignStart or _neighDesignCycle, thickwall,                 5,                                    _designDelAddStart, false) --start
                     _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignDesk,                                     _neighDesignDesk,                                      aMain == _freq and 5 or 4, 5 + (_modeDesignDesk > 0 and 1 or 0), _designDelAddDesk,  false) --desk
                 end
-                _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignEnd, _neighDesignEnd, 0, aInv == _freqInv and getBooleanNumber(_hasContainedEnd) and 0 or 5, _designDelAddEnd, false) --end
+                _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignEnd, _neighDesignEnd, 0, 5, _designDelAddEnd, false) --end
             end
         end
         if (getBooleanNumber(_hasContainedEnd)) then
