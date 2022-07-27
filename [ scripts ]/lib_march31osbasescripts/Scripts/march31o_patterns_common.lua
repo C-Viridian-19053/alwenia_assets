@@ -646,6 +646,7 @@ function pMarch31osTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter,
 
     _gearTeethInc = anythingButNil(_gearTeethInc, p_getTunnelPatternCorridorThickness() * (6 / getProtocolSides()));
 
+    --_isSpiral = getBooleanNumber(_isSpiral); if (_isSpiral) then _sidedir0gap = 1; _sidedir1gap = _sidedir0gap; _sidedir0offset = 0; _sidedir1offset = _sidedir0offset; end
     local _curTunnelDel = getBooleanNumber(_isDistanceTight) and (closeValue(getProtocolSides(), 3, 9) / (_largeWalls * 0.4 + 0.175) + ((p_getTunnelPatternCorridorThickness() / 2) * (_largeWalls / (getProtocolSides() - 2)) / customizePatternThickness(9, true))) or 9;
     _isBeforeGearTeethBegin = getBooleanNumber(_isBeforeGearTeethBegin); if (_isBeforeGearTeethBegin) then _timesOfBeforeGearTeethBegin = 1; end
     _isAfterGearTeethEnd = getBooleanNumber(_isAfterGearTeethEnd); if (_isAfterGearTeethEnd) then _timesOfAfterGearTeethEnd = 1; end
@@ -706,7 +707,7 @@ function pMarch31osTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter,
         end
 
         if _dirType == 1 then _tunnelSpiralExpected = true;
-            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd - 1 then _curSide = _curSide - ((_largeWalls + 1) + (_curTunnelCorridorDirGap - 1) + _curTunnelCorridorDirOffset) * _curTunnelCorridorDir; --if a == _iter + _timesOfBeforeGearTeethBegin - 1 then _curSide = _curSide - (_curTunnelCorridorDirGap - 1) + _curTunnelCorridorDirOffset * _curTunnelCorridorDir; _curTunnelSpiralCorridorDir = _curTunnelSpiralCorridorDir * -1; end
+            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd - 1 then _curSide = _curSide - ((_largeWalls + 1) + (_curTunnelCorridorDirGap - 1) + _curTunnelCorridorDirOffset) * _curTunnelCorridorDir;
             else _tunnelLoopDir = _tunnelLoopDir * -1 + (_largeWalls + 1);
             end
         elseif _dirType == 2 then if u_rndInt(0, 100) > 50 then _tunnelLoopDir = _tunnelLoopDir * -1 + (_largeWalls + 1); end
@@ -722,10 +723,10 @@ function pMarch31osTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter,
 
         if (_isBeforeGearTeethBegin) and _amountOfBeforeGearTeethBegin == 0 and _gearTeethSizeMult == 0 then _amountOfBeforeGearTeethBegin = _amountOfBeforeGearTeethBegin + 1; _gearTeethSizeMult = _oldGearTeethSizeMult; end
 
-        t_applyPatDel(customizePatternDelay(_curTunnelDel * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool()));
+        if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then t_applyPatDel(customizePatternDelay(_curTunnelDel * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult * _scale, p_getDelayPatternBool())); end
     end
 
     p_patternEffectEnd();
     t_applyPatDel(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
+    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 11) else t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
