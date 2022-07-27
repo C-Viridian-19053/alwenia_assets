@@ -100,6 +100,7 @@ function spawnPattern(mNumbSpawn)
         mNumbSpawn = 5
     end
 
+    -- for OH v2 or lower, use 'math.random' instead of 'u_rndInt', otherwise doesn't work
         if mNumbSpawn == 0 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 6), false, 0, 0, 2, false, 1, 1, getRandomDir(), true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult)
     elseif mNumbSpawn == 1 then pMarch31osWhirlwind(_side, u_rndInt(3, 6), 0, math.floor(getProtocolSides() / 3), 1, false, 1, 1, getRandomDir(), 0, 0, false, true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult)
     elseif mNumbSpawn == 2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 3), 1, 1, 1, getRandomDir(), true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult)
