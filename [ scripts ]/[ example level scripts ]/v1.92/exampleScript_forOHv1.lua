@@ -43,12 +43,12 @@ function spawnPattern(mNumbSpawn)
         mNumbSpawn = 5
     end
 
-        if mNumbSpawn == 0 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 6), false, 0, 0, 2, false, 1, 1, getRandomDir(), true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult)
-    elseif mNumbSpawn == 1 then pMarch31osWhirlwind(_side, u_rndInt(3, 6), 0, math.floor(getProtocolSides() / 3), 1, false, 1, 1, getRandomDir(), 0, 0, false, true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult)
-    elseif mNumbSpawn == 2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 3), 1, 1, 1, getRandomDir(), true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult)
-    elseif mNumbSpawn == 3 then pMarch31osBarrageReversals(_side, march31oPat_thickness, 1, false, 1, 1, u_rndInt(0, 1), true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult)
-    elseif mNumbSpawn == 4 then pMarch31osTunnel(_side, march31oPat_thickness * 1.75, nil, u_rndInt(1, 3), 2, 0, 2, true, false, 0, 0, 1, 1, false, 0, 2, false, 1, nil, 0, nil, 1, 1, u_rndInt(0, 1), true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult)
-    elseif mNumbSpawn == 5 then pMarch31osWhirlwind(_side, getProtocolSides() * u_rndInt(1, 2), 0, 1, 1, false, 1, 1, getRandomDir(), 0, 0, false, true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult);
+        if mNumbSpawn == 0 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, math.random(3, 6), false, 0, 0, 2, false, 1, 1, getRandomDir(), true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult)
+    elseif mNumbSpawn == 1 then pMarch31osWhirlwind(_side, math.random(3, 6), 0, math.floor(getProtocolSides() / 3), 1, false, 1, 1, getRandomDir(), 0, 0, false, true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult)
+    elseif mNumbSpawn == 2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, math.random(0, 3), 1, 1, 1, getRandomDir(), true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult)
+    elseif mNumbSpawn == 3 then pMarch31osBarrageReversals(_side, march31oPat_thickness, 1, false, 1, 1, math.random(0, 1), true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult)
+    elseif mNumbSpawn == 4 then pMarch31osTunnel(_side, march31oPat_thickness * 1.75, nil, math.random(1, 3), 2, 0, 2, true, false, 0, 0, 1, 1, false, 0, 2, false, 1, nil, 0, nil, 1, 1, math.random(0, 1), true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult)
+    elseif mNumbSpawn == 5 then pMarch31osWhirlwind(_side, getProtocolSides() * math.random(1, 2), 0, 1, 1, false, 1, 1, getRandomDir(), 0, 0, false, true, march31oPatDel_AdditionalDelay, march31oPatDel_AddMult);
     end
 
     -- debug, remove if you don't want to use this
