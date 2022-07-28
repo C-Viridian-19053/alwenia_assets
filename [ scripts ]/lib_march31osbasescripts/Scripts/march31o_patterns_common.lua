@@ -646,7 +646,7 @@ function pMarch31osTunnel(_side, _corridorThickNonSpd, _corridorThickSpd, _iter,
 
     _gearTeethInc = anythingButNil(_gearTeethInc, p_getTunnelPatternCorridorThickness() * (6 / getProtocolSides()));
 
-    local _curTunnelDel = getBooleanNumber(_isDistanceTight) and (closeValue(getProtocolSides(), 3, 9) / (_largeWalls * 0.4 + 0.175) + ((p_getTunnelPatternCorridorThickness() / 2) * (_largeWalls / (getProtocolSides() - 2)) / customizePatternThickness(getProtocolSides(), 3, 9), false))) or 9;
+    local _curTunnelDel = getBooleanNumber(_isDistanceTight) and (closeValue(getProtocolSides(), 3, 9) / (_largeWalls * 0.4 + 0.175) + ((p_getTunnelPatternCorridorThickness() / 2) * (_largeWalls / (getProtocolSides() - 2)) / customizePatternThickness(closeValue(getProtocolSides(), 3, 9), false))) or 9;
     _isBeforeGearTeethBegin = getBooleanNumber(_isBeforeGearTeethBegin); if (_isBeforeGearTeethBegin) then _timesOfBeforeGearTeethBegin = 1; end
     _isAfterGearTeethEnd = getBooleanNumber(_isAfterGearTeethEnd); if (_isAfterGearTeethEnd) then _timesOfAfterGearTeethEnd = 1; end
     _isRepeatCorridorDelaySpd = getBooleanNumber(_isRepeatCorridorDelaySpd);
