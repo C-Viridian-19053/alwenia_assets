@@ -22,14 +22,14 @@ local u_rndInt = u_rndInt or math.random
     void spMarch31osFullWhirlwindPrototype(_side, _loopDir, _isRebootingSide)
     void spMarch31osFullWhirlwindPrototype(_side) --, getRandomDir(), false
 
-    void spMarch31osTunnel(_side, _thickness, _iter, _designType, _dirType, _distance, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _sidedir0gap, _sidedir1gap, _sidedir0offset, _sidedir1offset, _beatDistance, _loopDir, _isRebootingSide)
-    void spMarch31osTunnel(_side, _thickness, _iter) --, 2, 0, u_rndInt(2, getProtocolSides() - 1), 0, (to be indexed if is nil), 1, 1, false, false, false, 1 1, nil, 0, nil, 1, u_rndInt(0, 1), false
-    void spMarch31osBackAndForthTunnelAxis(_side, _corridorThick, _iter, _free, _designType, _modeDesign, _modeDesign1_offset, _modeDesign1_adjust, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _beatDistance, _loopDir, _isRebootingSide)
-    void spMarch31osBackAndForthTunnelAxis(_side, _corridorThick, _iter) --, 0, 2, 0, 0, 0, 0, (to be indexed if is nil), 1, 1, false, false, false, 1, 1, u_rndInt(0, 1), false
-    void spMarch31osBackAndForthTunnelAxisInterpolated(_side, _corridorThick, _iter, _free, _designType, _modeDesign, _modeDesign1_offset, _modeDesign1_adjust, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _beatDistance, _loopDir, _isRebootingSide)
-    void spMarch31osBackAndForthTunnelAxisInterpolated(_side, _corridorThick, _iter) --, 0, 2, 0, 0, 0, 0, (to be indexed if is nil), 1, 1, false, false, false, 1, 1, u_rndInt(0, 1), false
-    void spMarch31osBackAndForthTunnelCentral(_side, _corridorThick, _iter, _free, _designType, _modeDesign, _modeDesign1_offset, _modeDesign1_adjust, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _beatDistance, _loopDir, _isRebootingSide)
-    void spMarch31osBackAndForthTunnelCentral(_side, _corridorThick, _iter) --, 0, 2, 0, 0, 0, 0, (to be indexed if is nil), 1, 1, false, false, false, 1, 1, u_rndInt(0, 1), false
+    void spMarch31osTunnel(_side, _thickness, _iter, _designType, _dirType, _largeWalls, _isLargeWallOnce, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _sidedir0gap, _sidedir1gap, _sidedir0offset, _sidedir1offset, _beatDistance, _loopDir, _isRebootingSide)
+    void spMarch31osTunnel(_side, _thickness, _iter) --, 2, 0, u_rndInt(1, getProtocolSides() - 2), false, 0, (to be indexed if is nil), 1, 1, false, false, false, 1 1, nil, 0, nil, 1, u_rndInt(0, 1), false
+    void spMarch31osBackAndForthTunnelAxis(_side, _corridorThick, _iter, _free, _designType, _modeDesign, _modeDesign1_offset, _modeDesign1_adjust, _isLargeWallOnce, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _beatDistance, _loopDir, _isRebootingSide)
+    void spMarch31osBackAndForthTunnelAxis(_side, _corridorThick, _iter) --, 0, 2, 0, 0, 0, false, 0, (to be indexed if is nil), 1, 1, false, false, false, 1, 1, u_rndInt(0, 1), false
+    void spMarch31osBackAndForthTunnelAxisInterpolated(_side, _corridorThick, _iter, _free, _designType, _modeDesign, _modeDesign1_offset, _modeDesign1_adjust, _isLargeWallOnce, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _beatDistance, _loopDir, _isRebootingSide)
+    void spMarch31osBackAndForthTunnelAxisInterpolated(_side, _corridorThick, _iter) --, 0, 2, 0, 0, 0, false, 0, (to be indexed if is nil), 1, 1, false, false, false, 1, 1, u_rndInt(0, 1), false
+    void spMarch31osBackAndForthTunnelCentral(_side, _corridorThick, _iter, _free, _designType, _modeDesign, _modeDesign1_offset, _modeDesign1_adjust, _isLargeWallOnce, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _beatDistance, _loopDir, _isRebootingSide)
+    void spMarch31osBackAndForthTunnelCentral(_side, _corridorThick, _iter) --, 0, 2, 0, 0, 0, false, 0, (to be indexed if is nil), 1, 1, false, false, false, 1, 1, u_rndInt(0, 1), false
 
     void spMarch31osTrapAround(_side, _iter, _hasContainedStart, _hasContainedEnd, _neighContainedStart, _neighContainedEnd, _modeDesignStart, _modeDesignCycle, _modeDesignEnd, _designDelayAdd, _wallLength, _isRebootingSide)
     void spMarch31osTrapAround(_side, _iter) --, 1, nil, 0, nil, 1, 1, 0, 0, 1, false
@@ -46,15 +46,17 @@ local _constructDesignCWallExPart = function(_side, _designType, _extra, _thickn
     end
 end
 
-local _constructBAFTunnelLargeWallPart = function(_side, _freqAmount, _largeWallThick, _corridorThick, _isLargeWallThickSpdMode, _designType)
-    for i = 0, math.floor(getProtocolSides() / 3) - 1, 1 do cWall(_side + (i * 3), customizeTempoPatternThickness(_largeWallThick, _isLargeWallThickSpdMode) + ((_corridorThick / 2))); end
+local _constructBAFTunnelLargeWallPart = function(_side, _freqAmount, _freqCount, _largeWallBeatThick, _isLargeWallOnce, _corridorThick, _designType, _repeatCorridorDelay)
+    _hasRepeatState = _hasRepeatState and 1 or 0
+    _freqAmount = (type(_freqAmount) == "number" and _freqAmount >= 1 and (_isLargeWallOnce)) and _freqAmount or 1
+    for i = 0, math.floor(getProtocolSides() / 3) - 1, 1 do cWall(_side + (i * 3), customizeTempoPatternThickness(_largeWallBeatThick) - (customizePatternThickness(_repeatCorridorDelay, false) * _freqAmount * _hasRepeatState) + (_corridorThick / 2)); end
     if (getProtocolSides() % 3 > 0) then
         if (_designType <= 1) then
-            for i = 0, 1, 1 do cWall(_side - (i * (getProtocolSides() % 3)), customizeTempoPatternThickness(_largeWallThick, _isLargeWallThickSpdMode) + ((_corridorThick / 2))); end
-            if (_designType == 0 and getProtocolSides() % 3 == 2) and _freqAmount == 0 then cWall(_side - 1, _corridorThick); end
+            for i = 0, 1, 1 do cWall(_side - (i * (getProtocolSides() % 3)), customizeTempoPatternThickness(_largeWallBeatThick) - (customizePatternThickness(_repeatCorridorDelay, false) * _freqAmount * _hasRepeatState) + (_corridorThick / 2)); end
+            if (_designType == 0 and getProtocolSides() % 3 == 2) and _freqCount == 0 then cWall(_side - 1, _corridorThick); end
             if (_designType == 1 and getProtocolSides() % 3 == 2) then cWall(_side - 1, _corridorThick); end
         else
-            for i = 0, getProtocolSides() % 3, 1 do cWall(_side - i, customizeTempoPatternThickness(_largeWallThick, _isLargeWallThickSpdMode) + ((_corridorThick / 2))); end
+            for i = 0, getProtocolSides() % 3, 1 do cWall(_side - i, customizeTempoPatternThickness(_largeWallBeatThick) - (customizePatternThickness(_repeatCorridorDelay, false) * _freqAmount * _hasRepeatState) + (_corridorThick / 2)); end
         end
     end
 end
@@ -532,9 +534,9 @@ end
 --[ Tunnels ]--
 
 --here's a tunnel what forces you to circle around a very thick wall...but you can personalize everything
-function spMarch31osTunnel(_side, _thickness, _iter, _designType, _dirType, _distance, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _sidedir0gap, _sidedir1gap, _sidedir0offset, _sidedir1offset, _beatDistance, _loopDir, _isRebootingSide)
+function spMarch31osTunnel(_side, _thickness, _iter, _designType, _dirType, _largeWalls, _isDistanceTight, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _sidedir0gap, _sidedir1gap, _sidedir0offset, _sidedir1offset, _beatDistance, _loopDir, _isRebootingSide)
     _iter = anythingButNil(_iter, u_rndInt(1, 3)); _designType = anythingButNil(_designType, 2); _beatDistance = anythingButNil(_beatDistance, 1); _repeatDelayMult = anythingButNil(_repeatDelayMult, 1);
-    _distance = anythingButNil(_distance, u_rndInt(2, getProtocolSides() - 1)); _gearTeethSizeMult = anythingButNil(_gearTeethSizeMult, 0); _isBeforeGearTeethBegin = anythingButNil(_isBeforeGearTeethBegin, 0); _isAfterGearTeethEnd = anythingButNil(_isAfterGearTeethEnd, 0);
+    _largeWalls = anythingButNil(_largeWalls, u_rndInt(2, getProtocolSides() - 1)); _gearTeethSizeMult = anythingButNil(_gearTeethSizeMult, 0); _isBeforeGearTeethBegin = anythingButNil(_isBeforeGearTeethBegin, 0); _isAfterGearTeethEnd = anythingButNil(_isAfterGearTeethEnd, 0);
     _sidedir0gap = anythingButNil(_sidedir0gap, 1); _sidedir1gap = anythingButNil(_sidedir1gap, _sidedir0gap); _sidedir0offset = anythingButNil(_sidedir0offset, 0); _sidedir1offset = anythingButNil(_sidedir1offset, _sidedir0offset);
     if not _gearTeethStepDel or _gearTeethStepDel < 1 then _gearTeethStepDel = 1; end
     if not _gearTeethStepLimit or _gearTeethStepLimit < 1 then _gearTeethStepLimit = 1; end
@@ -557,8 +559,8 @@ function spMarch31osTunnel(_side, _thickness, _iter, _designType, _dirType, _dis
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
     if _curSide == TARGET_PATTERN_SIDE and getBooleanNumber(_isRebootingSide) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
     TARGET_PATTERN_SIDE = getBooleanNumber(_isRebootingSide) and _curSide or -256;
-    local _tunnelLoopDir = math.floor(_loopDir) * _distance;
-    local _amountOfDesignType0, _tunnelSpiralExpected = 1, false;
+    local _tunnelLoopDir = math.floor(_loopDir) * (_largeWalls + 1);
+    local _amountOfDesignType0, _tunnelSpiralExpected, _largeWallOnceExpected = 1, _dirType == 1, (getBooleanNumber(_isLargeWallOnce)) and (_dirType == 0 or _dirType == 2);
     local _hasRepeatState = (getBooleanNumber(_hasRepeat) and 1) or 0;
 
     _gearTeethInc = anythingButNil(_gearTeethInc, p_getTunnelPatternCorridorThickness() * (6 / getProtocolSides()));
@@ -567,10 +569,16 @@ function spMarch31osTunnel(_side, _thickness, _iter, _designType, _dirType, _dis
     _isAfterGearTeethEnd = getBooleanNumber(_isAfterGearTeethEnd); if (_isAfterGearTeethEnd) then _timesOfAfterGearTeethEnd = 1; end
     _isRepeatCorridorDelaySpd = getBooleanNumber(_isRepeatCorridorDelaySpd);
 
+    --for larger wall once 
+    if (_largeWallOnceExpected) then
+        _constructDesignCWallExPart(_curSide + 1, _designType, _largeWalls - 1,
+        customizeTempoPatternThickness((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2));
+    end
+
     for a = 0, _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd, 1 do
         p_patternEffectCycle();
 
-        if _designType == 0 and (a > 0 and a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) and (not _tunnelSpiralExpected) then _amountOfDesignType0 = _distance - 1;
+        if _designType == 0 and (a > 0 and a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) and (not _tunnelSpiralExpected) then _amountOfDesignType0 = _largeWalls;
         else _amountOfDesignType0 = 1;
         end
 
@@ -582,14 +590,14 @@ function spMarch31osTunnel(_side, _thickness, _iter, _designType, _dirType, _dis
         end
 
         for repeatAmount = 0, _hasRepeatState, 1 do
-            if repeatAmount < _hasRepeatState then _constructDesignCWallExPart(_curSide + 1, _designType, _distance - 2, customizePatternThickness(_repeatDelayMult, false) + ((p_getTunnelPatternCorridorThickness() / 2))); end
+            if repeatAmount < _hasRepeatState then _constructDesignCWallExPart(_curSide + 1, _designType, _largeWalls - 1, customizePatternThickness(_repeatDelayMult, false) + ((p_getTunnelPatternCorridorThickness() / 2))); end
 
             _gearTeethBarrageAmount = 1; _gearTeethBarrageStep = 0; _gearTeethBarrageInc = 0;
 
             for corridorGap = _curTunnelCorridorDirGap, getBarrageSide(_curTunnelCorridorDirOffset + _amountOfDesignType0), 1 do
                 if _gearTeethSizeMult > 0 then
                     cWall((corridorGap * _curTunnelCorridorDir) + _curSide + _tunnelLoopDir + (_curTunnelCorridorDirOffset * _curTunnelCorridorDir), (p_getTunnelPatternCorridorThickness() + _gearTeethBarrageInc) * _gearTeethSizeMult)
-                    if corridorGap < getBarrageSide(_curTunnelCorridorDirOffset + _gearTeethStepLimit) - (_distance - 1) then _gearTeethBarrageStep = _gearTeethBarrageStep + 1;
+                    if corridorGap < getBarrageSide(_curTunnelCorridorDirOffset + _gearTeethStepLimit) - _largeWalls then _gearTeethBarrageStep = _gearTeethBarrageStep + 1;
                         if _gearTeethBarrageStep >= _gearTeethStepDel then _gearTeethBarrageStep = 0; _gearTeethBarrageInc = (_gearTeethBarrageAmount * _gearTeethInc); _gearTeethBarrageAmount = _gearTeethBarrageAmount + 1; end
                     end
                 else cWall((corridorGap * _curTunnelCorridorDir) + _curSide + _tunnelLoopDir + (_curTunnelCorridorDirOffset * _curTunnelCorridorDir), p_getTunnelPatternCorridorThickness() * _saveOldGearTeethSizeMult)
@@ -610,24 +618,23 @@ function spMarch31osTunnel(_side, _thickness, _iter, _designType, _dirType, _dis
             if repeatAmount < _hasRepeatState then t_applyPatDel(customizePatternDelay(_repeatDelayMult, false)); end
         end
 
-        if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then
-            --for i = 1, _distance - 1, 1 do cWall(_curSide + i, customizeTempoPatternThickness(_curTunnelDel * _wallLength * _curDelaySpeed) + ((p_getTunnelPatternCorridorThickness() / 2))); end
-            _constructDesignCWallExPart(_curSide + 1, _designType, _distance - 2, customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + ((p_getTunnelPatternCorridorThickness() / 2)));
+        if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd and (not _largeWallOnceExpected) then
+            _constructDesignCWallExPart(_curSide + 1, _designType, _largeWalls - 1, customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + ((p_getTunnelPatternCorridorThickness() / 2)));
         end
 
         if _dirType == 1 then _tunnelSpiralExpected = true;
-            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd - 1 then _curSide = _curSide - (_distance + (_curTunnelCorridorDirGap - 1) + _curTunnelCorridorDirOffset) * _curTunnelCorridorDir; --if a == _iter + _timesOfBeforeGearTeethBegin - 1 then _curSide = _curSide - (_curTunnelCorridorDirGap - 1) + _curTunnelCorridorDirOffset * _curTunnelCorridorDir; _curTunnelSpiralCorridorDir = _curTunnelSpiralCorridorDir * -1; end
-            else _tunnelLoopDir = _tunnelLoopDir * -1 + _distance;
+            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd - 1 then _curSide = _curSide - ((_largeWalls + 1) + (_curTunnelCorridorDirGap - 1) + _curTunnelCorridorDirOffset) * _curTunnelCorridorDir; --if a == _iter + _timesOfBeforeGearTeethBegin - 1 then _curSide = _curSide - (_curTunnelCorridorDirGap - 1) + _curTunnelCorridorDirOffset * _curTunnelCorridorDir; _curTunnelSpiralCorridorDir = _curTunnelSpiralCorridorDir * -1; end
+            else _tunnelLoopDir = _tunnelLoopDir * -1 + (_largeWalls + 1);
             end
-        elseif _dirType == 2 then if u_rndInt(0, 100) > 50 then _tunnelLoopDir = _tunnelLoopDir * -1 + _distance; end
+        elseif _dirType == 2 then if u_rndInt(0, 100) > 50 then _tunnelLoopDir = _tunnelLoopDir * -1 + (_largeWalls + 1); end
         elseif _dirType == 3 then
             if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd - 1 then
-                if u_rndInt(0, 100) > 50 then _tunnelSpiralExpected = true; _curSide = _curSide - (_distance + (_curTunnelCorridorDirGap - 1) + _curTunnelCorridorDirOffset) * _curTunnelCorridorDir; _oldCurSide = _curSide if a == _iter + _timesOfBeforeGearTeethBegin - 1 then _curSide = _curSide - (_curTunnelCorridorDirGap - 1) + _curTunnelCorridorDirOffset * _curTunnelCorridorDir; _curTunnelSpiralCorridorDir = _curTunnelSpiralCorridorDir * -1; end
-                else _tunnelSpiralExpected = false; _tunnelLoopDir = _tunnelLoopDir * -1 + _distance;
+                if u_rndInt(0, 100) > 50 then _tunnelSpiralExpected = true; _curSide = _curSide - ((_largeWalls + 1) + (_curTunnelCorridorDirGap - 1) + _curTunnelCorridorDirOffset) * _curTunnelCorridorDir; _oldCurSide = _curSide if a == _iter + _timesOfBeforeGearTeethBegin - 1 then _curSide = _curSide - (_curTunnelCorridorDirGap - 1) + _curTunnelCorridorDirOffset * _curTunnelCorridorDir; _curTunnelSpiralCorridorDir = _curTunnelSpiralCorridorDir * -1; end
+                else _tunnelSpiralExpected = false; _tunnelLoopDir = _tunnelLoopDir * -1 + (_largeWalls + 1);
                 end
-            else _tunnelLoopDir = _tunnelLoopDir * -1 + _distance;
+            else _tunnelLoopDir = _tunnelLoopDir * -1 + (_largeWalls + 1);
             end
-        else _tunnelLoopDir = _tunnelLoopDir * -1 + _distance;
+        else _tunnelLoopDir = _tunnelLoopDir * -1 + (_largeWalls + 1);
         end
 
         if (_isBeforeGearTeethBegin) and _amountOfBeforeGearTeethBegin == 0 and _gearTeethSizeMult == 0 then _amountOfBeforeGearTeethBegin = _amountOfBeforeGearTeethBegin + 1; _gearTeethSizeMult = _oldGearTeethSizeMult; end
@@ -639,7 +646,7 @@ function spMarch31osTunnel(_side, _thickness, _iter, _designType, _dirType, _dis
 end
 
 -- back and forth (double tunnel) patterns
-function spMarch31osBackAndForthTunnelAxis(_side, _corridorThick, _iter, _free, _designType, _modeDesign, _modeDesign1_offset, _modeDesign1_adjust, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _beatDistance, _loopDir, _isRebootingSide)
+function spMarch31osBackAndForthTunnelAxis(_side, _corridorThick, _iter, _free, _designType, _modeDesign, _modeDesign1_offset, _modeDesign1_adjust, _isLargeWallOnce, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _beatDistance, _loopDir, _isRebootingSide)
     _iter = anythingButNil(_iter, u_rndInt(4, 6)); _designType = anythingButNil(_designType, 2); _beatDistance = anythingButNil(_beatDistance, 1); _repeatDelayMult = anythingButNil(_repeatDelayMult, 1);
     _free = anythingButNil(_free, 0); _modeDesign = anythingButNil(_modeDesign, 0); _modeDesign1_offset = anythingButNil(_modeDesign1_offset, 0); _modeDesign1_adjust = anythingButNil(_modeDesign1_adjust, 0);
     if not _loopDir or _loopDir > 1 or _loopDir < 0 then _loopDir = u_rndInt(0, 1); end
@@ -695,6 +702,11 @@ function spMarch31osBackAndForthTunnelAxis(_side, _corridorThick, _iter, _free, 
         if (_isAfterGearTeethEnd) and a >= _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd and _gearTeethSizeMult > 0 then _gearTeethSizeMult = 0; end
 
         if _modeDesign == 1 then
+            if (getBooleanNumber(_isLargeWallOnce) and a == 0) then
+                _constructDesignCWallExPart(_curSide, _designType, _modeDesign1_offset, customizePatternThickness(4.5 * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd)) + customizePatternThickness(_repeatCorridorDelay * (_repeatCorridorAmount + (_repeatCorridorAmount * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd))) * _sizeMult, _isRepeatCorridorDelaySpd) + (p_getTunnelPatternCorridorThickness() / 2));
+                _constructDesignCWallExPart(_curSide + 3 + _modeDesign1_offset + _modeDesign1_adjust, _designType, getProtocolSides() - 3 - _modeDesign1_adjust - (3 + _modeDesign1_offset + _modeDesign1_adjust), customizePatternThickness(4.5 * _iter) + customizePatternThickness(_repeatCorridorDelay * (_repeatCorridorAmount + (_repeatCorridorAmount * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd))) * _sizeMult, _isRepeatCorridorDelaySpd) + (p_getTunnelPatternCorridorThickness() / 2));
+            end
+
             for repeatAmount = 0, _hasRepeatState, 1 do
                 if repeatAmount < _hasRepeatState then
                     _constructDesignCWallExPart(_curSide, _designType, _modeDesign1_offset, customizePatternThickness(_repeatDelayMult, false) + ((p_getTunnelPatternCorridorThickness() / 2)));
@@ -719,6 +731,10 @@ function spMarch31osBackAndForthTunnelAxis(_side, _corridorThick, _iter, _free, 
             else _constructBAFTunnelAxisCorridorPart()
             end
         elseif _modeDesign == 2 then
+            if (getBooleanNumber(_isLargeWallOnce) and a == 0) then
+                _constructBAFTunnelLargeWallPart(_curSide, _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd, a, 0.5 * _beatDistance, true, p_getTunnelPatternCorridorThickness(), _designType, _repeatDelayMult);
+            end
+
             for repeatAmount = 0, _hasRepeatState, 1 do
                 if repeatAmount < _hasRepeatState then _constructBAFTunnelLargeWallPart(_curSide, _repeatCorridorDelay, p_getTunnelPatternCorridorThickness(), _isRepeatCorridorDelaySpd, _designType); end
                 for i = 0, math.floor((getProtocolSides() / 6) - 0.5), 1 do cWall(_curSide + (i * 6) + ((a + _tunnelLoopDir) % 2) + 1, p_getTunnelPatternCorridorThickness()); end
@@ -730,12 +746,22 @@ function spMarch31osBackAndForthTunnelAxis(_side, _corridorThick, _iter, _free, 
                 if repeatAmount < _hasRepeatState then t_applyPatDel(customizePatternDelay(_repeatDelayMult, false)); end
             end
 
-            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then _constructBAFTunnelLargeWallPart(_curSide, a, 4.5 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult, p_getTunnelPatternCorridorThickness(), p_getDelayPatternBool(), _designType);
+            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then
+                if (not getBooleanNumber(_isLargeWallOnce)) then
+                    _constructBAFTunnelLargeWallPart(_curSide, _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd, a, 0.5, true, p_getTunnelPatternCorridorThickness(), _designType, _repeatDelayMult);
+                end
             else
                 for i = 0, math.floor(getProtocolSides() / 3) - 1, 1 do cWall(_curSide + (i * 3), p_getTunnelPatternCorridorThickness()); end
                 for i = 0, getProtocolSides() % 3, 1 do cWall(_curSide - i, p_getTunnelPatternCorridorThickness()); end
             end
         elseif _modeDesign == 3 then
+            if (getBooleanNumber(_isLargeWallOnce) and a == 0) then
+                for i = 0, 1, 1 do cWall(_curSide + (i * (closeValue(getProtocolSides() % 3, 0, 1) + 3)), customizeTempoPatternThickness((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5 * _beatDistance) + (customizePatternThickness(_repeatDelayMult, false) * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+                if getProtocolSides() >= 9 then
+                    for i = 0, math.floor(getProtocolSides() / 3) - 3, 1 do cWall(_curSide + (i * 3) + (closeValue(getProtocolSides() % 3, 0, 1) + closeValue((getProtocolSides() % 3) - 1, 0, 1) + 6), customizeTempoPatternThickness((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5 * _beatDistance) + (customizePatternThickness(_repeatDelayMult, false) * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+                end
+            end
+
             for repeatAmount = 0, _hasRepeatState, 1 do
                 if repeatAmount < _hasRepeatState then
                     for i = 0, 1, 1 do cWall(_curSide + (i * (closeValue(getProtocolSides() % 3, 0, 1) + 3)), customizePatternThickness(_repeatDelayMult, false) + ((p_getTunnelPatternCorridorThickness() / 2))); end
@@ -753,9 +779,11 @@ function spMarch31osBackAndForthTunnelAxis(_side, _corridorThick, _iter, _free, 
             end
 
             if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then
-                for i = 0, 1, 1 do cWall(_curSide + (i * (closeValue(getProtocolSides() % 3, 0, 1) + 3)), customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
-                if getProtocolSides() >= 9 then
-                    for i = 0, math.floor(getProtocolSides() / 3) - 3, 1 do cWall(_curSide + (i * 3) + (closeValue(getProtocolSides() % 3, 0, 1) + closeValue((getProtocolSides() % 3) - 1, 0, 1) + 6), customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+                if (not getBooleanNumber(_isLargeWallOnce)) then 
+                    for i = 0, 1, 1 do cWall(_curSide + (i * (closeValue(getProtocolSides() % 3, 0, 1) + 3)), customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+                    if getProtocolSides() >= 9 then
+                        for i = 0, math.floor(getProtocolSides() / 3) - 3, 1 do cWall(_curSide + (i * 3) + (closeValue(getProtocolSides() % 3, 0, 1) + closeValue((getProtocolSides() % 3) - 1, 0, 1) + 6), customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+                    end
                 end
             else
                 for i = 0, 1, 1 do cWall(_curSide + (i * (closeValue(getProtocolSides() % 3, 0, 1) + 3)), p_getTunnelPatternCorridorThickness()); end
@@ -764,8 +792,9 @@ function spMarch31osBackAndForthTunnelAxis(_side, _corridorThick, _iter, _free, 
                 end
             end
         else
+            if (getBooleanNumber(_isLargeWallOnce) and a == 0) then rWall(_curSide, customizeTempoPatternThickness((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
             for repeatAmount = 0, _hasRepeatState, 1 do
-                if repeatAmount < _hasRepeatState then rWall(_curSide, customizePatternThickness(_repeatDelayMult, false) + ((p_getTunnelPatternCorridorThickness() / 2))); end
+                if repeatAmount < _hasRepeatState not getBooleanNumber(_isLargeWallOnce) then rWall(_curSide, customizePatternThickness(_repeatDelayMult, false) + ((p_getTunnelPatternCorridorThickness() / 2))); end
                 if _gearTeethSizeMult > 0 then
                     cWallTkns(_curSide + (((a + _tunnelLoopDir) % 2) * (2 + _free)), _gearTeethStepDel, _gearTeethStepLimit, math.ceil(getProtocolSides() / 2) - (_free + 2), _tunnelLoopDirGearTeeth, _gearTeethInc * _gearTeethSizeMult, p_getTunnelPatternCorridorThickness() * _gearTeethSizeMult)
                     cWallTkns(_curSide - (((a + _tunnelLoopDir) % 2) * (2 + _free)) + getHalfSides() + (2 + _free), _gearTeethStepDel, _gearTeethStepLimit, math.ceil(getProtocolSides() / 2) - (2 + (getProtocolSides() % 2)) - _free, -_tunnelLoopDirGearTeeth, _gearTeethInc * _gearTeethSizeMult, p_getTunnelPatternCorridorThickness() * _gearTeethSizeMult)
@@ -773,7 +802,7 @@ function spMarch31osBackAndForthTunnelAxis(_side, _corridorThick, _iter, _free, 
                 end
                 if repeatAmount < _hasRepeatState then t_applyPatDel(customizePatternDelay(_repeatDelayMult, false)); end
             end
-            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then rWall(_curSide, customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd not getBooleanNumber(_isLargeWallOnce) then rWall(_curSide, customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
         end
 
         _tunnelLoopDirGearTeeth = _tunnelLoopDirGearTeeth * -1
@@ -784,7 +813,7 @@ function spMarch31osBackAndForthTunnelAxis(_side, _corridorThick, _iter, _free, 
     p_patternEffectEnd();
 end
 
-function spMarch31osBackAndForthTunnelAxisInterpolated(_side, _corridorThick, _iter, _free, _designType, _modeDesign, _modeDesign1_offset, _modeDesign1_adjust, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _beatDistance, _loopDir, _isRebootingSide)
+function spMarch31osBackAndForthTunnelAxisInterpolated(_side, _corridorThick, _iter, _free, _designType, _modeDesign, _modeDesign1_offset, _modeDesign1_adjust, _isLargeWallOnce, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _beatDistance, _loopDir, _isRebootingSide)
     _iter = anythingButNil(_iter, u_rndInt(4, 6)); _designType = anythingButNil(_designType, 2); _beatDistance = anythingButNil(_beatDistance, 1); _repeatDelayMult = anythingButNil(_repeatDelayMult, 1);
     _free = anythingButNil(_free, 0); _modeDesign = anythingButNil(_modeDesign, 0); _modeDesign1_offset = anythingButNil(_modeDesign1_offset, 0); _modeDesign1_adjust = anythingButNil(_modeDesign1_adjust, 0);
     if not _loopDir or _loopDir > 1 or _loopDir < 0 then _loopDir = u_rndInt(0, 1); end
@@ -842,6 +871,12 @@ function spMarch31osBackAndForthTunnelAxisInterpolated(_side, _corridorThick, _i
         if (_isAfterGearTeethEnd) and a >= _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd and _gearTeethSizeMult > 0 then _gearTeethSizeMult = 0; end
 
         if _modeDesign == 1 then
+            if (getBooleanNumber(_isLargeWallOnce)) then
+                if a == 0 then _constructBAFTunnelAxisInterpolatedLargeWallDirPart(((_tunnelLoopDir) % 2), _designType, customizeTempoPatternThickness(0.5 * _beatDistance * (math.floor((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5) * 2)) - (customizePatternThickness(_repeatDelayMult, false) * (math.floor((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5) * 2) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2));
+                elseif a == 1 then _constructBAFTunnelAxisInterpolatedLargeWallDirPart(((_tunnelLoopDir + 1) % 2), _designType, customizeTempoPatternThickness(0.5 * _beatDistance * (math.floor((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5 - 0.5) * 2)) - (customizePatternThickness(_repeatDelayMult, false) * (math.floor((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5 - 0.5) * 2) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2));
+                end
+            end
+
             for repeatAmount = 0, _repeatCorridorAmount, 1 do
                 if repeatAmount < _repeatCorridorAmount then
                     if a < (math.floor((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5) * 2) + 1 then _constructBAFTunnelAxisInterpolatedLargeWallDirPart((_tunnelLoopDir % 2), _designType, customizePatternThickness(_repeatDelayMult, false) + ((p_getTunnelPatternCorridorThickness() / 2) * _scale)); end
@@ -865,13 +900,18 @@ function spMarch31osBackAndForthTunnelAxisInterpolated(_side, _corridorThick, _i
                 if repeatAmount < _repeatCorridorAmount then t_applyPatDel(customizePatternDelay(customizePatternDelay(_repeatDelayMult, false))); end
             end
 
-            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then
+            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd and (not getBooleanNumber(_isLargeWallOnce)) then
                 if a < (math.floor((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5) * 2) then _constructBAFTunnelAxisInterpolatedLargeWallDirPart(((_tunnelLoopDir) % 2), _designType, customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
                 if a > 0 and a < getValOfOddOrEven(_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd, 1) then _constructBAFTunnelAxisInterpolatedLargeWallDirPart(((_tunnelLoopDir + 1) % 2), _designType, customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
             end
         else
+            if (getBooleanNumber(_isLargeWallOnce)) then
+                if a == 0 then cWall(_curSide + (((_tunnelLoopDir) % 2) * getHalfSides()), customizeTempoPatternThickness(0.5 * _beatDistance * (math.floor((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5) * 2)) - (customizePatternThickness(_repeatDelayMult, false) * (math.floor((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5) * 2) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2));
+                elseif a == 1 then cWall(_curSide + (((_tunnelLoopDir + 1) % 2) * getHalfSides()), customizeTempoPatternThickness(0.5 * _beatDistance * (math.floor((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5 - 0.5) * 2)) - (customizePatternThickness(_repeatDelayMult, false) * (math.floor((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5 - 0.5) * 2) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2));
+                end
+            end
             for repeatAmount = 0, _repeatCorridorAmount, 1 do
-                if repeatAmount < _repeatCorridorAmount then
+                if repeatAmount < _repeatCorridorAmount and (not getBooleanNumber(_isLargeWallOnce)) then
                     if a < (math.floor((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5) * 2) + 1 + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then cWall(_curSide + (((_tunnelLoopDir) % 2) * getHalfSides()), customizePatternThickness(_repeatDelayMult, false) + ((p_getTunnelPatternCorridorThickness() / 2) * _scale)); end
                     if a > 0 and a < getValOfOddOrEven(_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd, 1) + 1 + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then cWall(_curSide + (((_tunnelLoopDir + 1) % 2) * getHalfSides()), customizePatternThickness(_repeatDelayMult, false) + ((p_getTunnelPatternCorridorThickness() / 2) * _scale)); end
                 end
@@ -882,8 +922,10 @@ function spMarch31osBackAndForthTunnelAxisInterpolated(_side, _corridorThick, _i
                 end
                 if repeatAmount < _repeatCorridorAmount then t_applyPatDel(customizePatternDelay(_repeatCorridorDelay * _scale, _isRepeatCorridorDelaySpd)); end
             end
-            if a < (math.floor((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5) * 2) then cWall(_curSide + (((_tunnelLoopDir) % 2) * getHalfSides()), customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
-            if a > 0 and a < getValOfOddOrEven(_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd, 1) then cWall(_curSide + (((_tunnelLoopDir + 1) % 2) * getHalfSides()), customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+            if (not getBooleanNumber(_isLargeWallOnce)) then
+                if a < (math.floor((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5) * 2) then cWall(_curSide + (((_tunnelLoopDir) % 2) * getHalfSides()), customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+                if a > 0 and a < getValOfOddOrEven(_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd, 1) then cWall(_curSide + (((_tunnelLoopDir + 1) % 2) * getHalfSides()), customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+            end
         end
 
         _tunnelLoopDirGearTeeth = _tunnelLoopDirGearTeeth * -1
@@ -896,7 +938,7 @@ function spMarch31osBackAndForthTunnelAxisInterpolated(_side, _corridorThick, _i
     if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
 
-function spMarch31osBackAndForthTunnelCentral(_side, _corridorThick, _iter, _free, _designType, _modeDesign, _modeDesign1_offset, _modeDesign1_adjust, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _beatDistance, _loopDir, _isRebootingSide)
+function spMarch31osBackAndForthTunnelCentral(_side, _corridorThick, _iter, _free, _designType, _modeDesign, _modeDesign1_offset, _modeDesign1_adjust, _isLargeWallOnce, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _beatDistance, _loopDir, _isRebootingSide)
     _iter = anythingButNil(_iter, u_rndInt(4, 6)); _designType = anythingButNil(_designType, 2); _beatDistance = anythingButNil(_beatDistance, 1); _repeatDelayMult = anythingButNil(_repeatDelayMult, 1);
     _free = anythingButNil(_free, 0); _modeDesign = anythingButNil(_modeDesign, 0); _modeDesign1_offset = anythingButNil(_modeDesign1_offset, 0); _modeDesign1_adjust = anythingButNil(_modeDesign1_adjust, 0);
     if not _loopDir or _loopDir > 1 or _loopDir < 0 then _loopDir = u_rndInt(0, 1); end
@@ -951,6 +993,11 @@ function spMarch31osBackAndForthTunnelCentral(_side, _corridorThick, _iter, _fre
         if (_isAfterGearTeethEnd) and a >= _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd and _gearTeethSizeMult > 0 then _gearTeethSizeMult = 0; end
 
         if _modeDesign == 1 then
+            if (getBooleanNumber(_isLargeWallOnce) and a == 0) then
+                _constructDesignCWallExPart(_curSide, _designType, _modeDesign1_offset, customizePatternThickness(4.5 * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd)) + customizePatternThickness(_repeatCorridorDelay * (_repeatCorridorAmount + (_repeatCorridorAmount * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd))) * _sizeMult, _isRepeatCorridorDelaySpd) + (p_getTunnelPatternCorridorThickness() / 2));
+                _constructDesignCWallExPart(_curSide + 3 + _modeDesign1_offset + _modeDesign1_adjust, _designType, getProtocolSides() - 3 - _modeDesign1_adjust - (3 + _modeDesign1_offset + _modeDesign1_adjust), customizePatternThickness(4.5 * _iter) + customizePatternThickness(_repeatCorridorDelay * (_repeatCorridorAmount + (_repeatCorridorAmount * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd))) * _sizeMult, _isRepeatCorridorDelaySpd) + (p_getTunnelPatternCorridorThickness() / 2));
+            end
+
             for repeatAmount = 0, _hasRepeatState, 1 do
                 if repeatAmount < _hasRepeatState then
                     _constructDesignCWallExPart(_curSide, _designType, _modeDesign1_offset, customizePatternThickness(_repeatDelayMult, false) + ((p_getTunnelPatternCorridorThickness() / 2)));
@@ -970,23 +1017,39 @@ function spMarch31osBackAndForthTunnelCentral(_side, _corridorThick, _iter, _fre
 
             if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then
                 if (_designType == 0 and a == 0) or (_designType == 1 and a >= 0) then _constructBAFTunnelCentralCorridorPart() end
-                _constructDesignCWallExPart(_curSide, _designType, _modeDesign1_offset, customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2));
-                _constructDesignCWallExPart(_curSide + 3 + _modeDesign1_offset + _modeDesign1_adjust, _designType, getProtocolSides() - 3 - _modeDesign1_adjust - (3 + _modeDesign1_offset + _modeDesign1_adjust), customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2));
+                if (not getBooleanNumber(_isLargeWallOnce)) then
+                    _constructDesignCWallExPart(_curSide, _designType, _modeDesign1_offset, customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2));
+                    _constructDesignCWallExPart(_curSide + 3 + _modeDesign1_offset + _modeDesign1_adjust, _designType, getProtocolSides() - 3 - _modeDesign1_adjust - (3 + _modeDesign1_offset + _modeDesign1_adjust), customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2));
+                end
             else _constructBAFTunnelCentralCorridorPart()
             end
         elseif _modeDesign == 2 then
+            if (getBooleanNumber(_isLargeWallOnce) and a == 0) then
+                _constructBAFTunnelLargeWallPart(_curSide, _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd, a, 0.5 * _beatDistance, true, p_getTunnelPatternCorridorThickness(), _designType, _repeatDelayMult);
+            end
+
             for repeatAmount = 0, _hasRepeatState, 1 do
-                if repeatAmount < _hasRepeatState then _constructBAFTunnelLargeWallPart(_curSide, a, _repeatCorridorDelay, p_getTunnelPatternCorridorThickness(), _isRepeatCorridorDelaySpd, _designType); end
+                if repeatAmount < _hasRepeatState then _constructBAFTunnelLargeWallPart(_curSide, _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd, a, 0.5 * _beatDistance, true, p_getTunnelPatternCorridorThickness(), _designType, _repeatDelayMult); end
                 for i = 0, math.floor(getProtocolSides() / 3) - 1, 1 do cWall(_curSide + (i * 3) + ((a + _tunnelLoopDir) % 2) + 1, p_getTunnelPatternCorridorThickness()); end
                 if repeatAmount < _hasRepeatState then t_applyPatDel(customizePatternDelay(_repeatDelayMult, false)); end
             end
 
-            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then _constructBAFTunnelLargeWallPart(_curSide, a, 4.5 * p_getDelayPatternThickMultOfNoSpdMultMode() * _curDelaySpeed * _delMult, p_getTunnelPatternCorridorThickness(), p_getDelayPatternBool(), _designType);
+            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then
+                if (not getBooleanNumber(_isLargeWallOnce)) then
+                    _constructBAFTunnelLargeWallPart(_curSide, _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd, a, 0.5, true, p_getTunnelPatternCorridorThickness(), _designType, _repeatDelayMult);
+                end
             else
                 for i = 0, math.floor(getProtocolSides() / 3) - 1, 1 do cWall(_curSide + (i * 3), p_getTunnelPatternCorridorThickness()); end
                 for i = 0, getProtocolSides() % 3, 1 do cWall(_curSide - i, p_getTunnelPatternCorridorThickness()); end
             end
         elseif _modeDesign == 3 then
+            if (getBooleanNumber(_isLargeWallOnce) and a == 0) then
+                for i = 0, 1, 1 do cWall(_curSide + (i * (closeValue(getProtocolSides() % 3, 0, 1) + 3)), customizeTempoPatternThickness((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5 * _beatDistance) + (customizePatternThickness(_repeatDelayMult, false) * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+                if getProtocolSides() >= 9 then
+                    for i = 0, math.floor(getProtocolSides() / 3) - 3, 1 do cWall(_curSide + (i * 3) + (closeValue(getProtocolSides() % 3, 0, 1) + closeValue((getProtocolSides() % 3) - 1, 0, 1) + 6), customizeTempoPatternThickness((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5 * _beatDistance) + (customizePatternThickness(_repeatDelayMult, false) * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+                end
+            end
+
             for repeatAmount = 0, _hasRepeatState, 1 do
                 if repeatAmount < _hasRepeatState then
                     for i = 0, 1, 1 do cWall(_curSide + (i * (closeValue(getProtocolSides() % 3, 0, 1) + 3)), customizePatternThickness(_repeatDelayMult, false) + ((p_getTunnelPatternCorridorThickness() / 2))); end
@@ -1000,9 +1063,11 @@ function spMarch31osBackAndForthTunnelCentral(_side, _corridorThick, _iter, _fre
             end
 
             if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then
+                if (not getBooleanNumber(_isLargeWallOnce)) then 
                 for i = 0, 1, 1 do cWall(_curSide + (i * (closeValue(getProtocolSides() % 3, 0, 1) + 3)), customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
-                if getProtocolSides() >= 9 then
-                    for i = 0, math.floor(getProtocolSides() / 3) - 3, 1 do cWall(_curSide + (i * 3) + (closeValue(getProtocolSides() % 3, 0, 1) + closeValue((getProtocolSides() % 3) - 1, 0, 1) + 6), customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+                    if getProtocolSides() >= 9 then
+                        for i = 0, math.floor(getProtocolSides() / 3) - 3, 1 do cWall(_curSide + (i * 3) + (closeValue(getProtocolSides() % 3, 0, 1) + closeValue((getProtocolSides() % 3) - 1, 0, 1) + 6), customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+                    end
                 end
             else
                 for i = 0, 1, 1 do cWall(_curSide + (i * (closeValue(getProtocolSides() % 3, 0, 1) + 3)), p_getTunnelPatternCorridorThickness()); end
@@ -1011,8 +1076,9 @@ function spMarch31osBackAndForthTunnelCentral(_side, _corridorThick, _iter, _fre
                 end
             end
         else
+            if (getBooleanNumber(_isLargeWallOnce) and a == 0) then rWall(_curSide, customizeTempoPatternThickness((_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * 0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
             for repeatAmount = 0, _hasRepeatState, 1 do
-                if repeatAmount < _hasRepeatState then rWall(_curSide, customizePatternThickness(_repeatDelayMult, false) + ((p_getTunnelPatternCorridorThickness() / 2))); end
+                if repeatAmount < _repeatCorridorAmount and not getBooleanNumber(_isLargeWallOnce) then rWall(_curSide, customizePatternThickness(_repeatDelayMult, false) + ((p_getTunnelPatternCorridorThickness() / 2))); end
                 if _gearTeethSizeMult > 0 then
                     cWallTkns(_curSide + (((a + _tunnelLoopDir) % 2) * (2 + _free)), _gearTeethStepDel, _gearTeethStepLimit, math.ceil(getProtocolSides() / 2) - (_free + 2), _tunnelLoopDirGearTeeth, _gearTeethInc * _gearTeethSizeMult, p_getTunnelPatternCorridorThickness() * _gearTeethSizeMult)
                     cWallTkns(_curSide + (((a + _tunnelLoopDir) % 2) * (2 + _free)) + getHalfSides(), _gearTeethStepDel, _gearTeethStepLimit, math.ceil(getProtocolSides() / 2) - (2 + (getProtocolSides() % 2)) - _free, _tunnelLoopDirGearTeeth, _gearTeethInc * _gearTeethSizeMult, p_getTunnelPatternCorridorThickness() * _gearTeethSizeMult)
@@ -1020,7 +1086,7 @@ function spMarch31osBackAndForthTunnelCentral(_side, _corridorThick, _iter, _fre
                 end
                 if repeatAmount < _hasRepeatState then t_applyPatDel(customizePatternDelay(_repeatDelayMult, false)); end
             end
-            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd then rWall(_curSide, customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
+            if a < _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd and not getBooleanNumber(_isLargeWallOnce) then rWall(_curSide, customizeTempoPatternThickness(0.5 * _beatDistance) - (customizePatternThickness(_repeatDelayMult, false) * _hasRepeatState) + (p_getTunnelPatternCorridorThickness() / 2)); end
         end
 
         _tunnelLoopDirGearTeeth = _tunnelLoopDirGearTeeth * -1
