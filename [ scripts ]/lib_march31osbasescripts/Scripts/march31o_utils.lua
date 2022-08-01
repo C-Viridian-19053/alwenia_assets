@@ -58,19 +58,19 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
     number table math_sum(_table_of_numbers)
 
     var: bool pstr_currentResultBool
-    var: number pstr_currentThickMult_noSpdMultMode
-    var: number pstr_currentCorridorThickness
+    var: number pstr_currentDelayMultOfSpeedLessThan
+    var: number pstr_currentThickness
 
     bool p_getDelayPatternBool()
-    number p_getDelayPatternThickMultOfNoSpdMultMode()
-    number p_getTunnelPatternCorridorThickness()
+    number p_getDelayPatternOfSpeedLessThan()
+    number p_getPatternThickness()
 
     void p_setDelayPatternBool(_bool)
-    void p_setDelayPatternThickMultOfNoSpdMultMode(_thickMult_amount)
-    void p_setTunnelPatternCorridorThickness(_corridorThick)
+    void p_setDelayPatternOfSpeedLessThan(_thickMult_amount)
+    void p_setPatternThickness(_corridorThick)
 
     void p_resetPatternDelaySettings()
-    void p_adjustPatternDelaySettings(_spdMultDMIsGreaterThanEqual, _thickMult_noSpdMultMode, _corridorThickness_spdMultMode, _corridorThickness_noSpdMultMode)
+    void p_adjustPatternDelaySettings(_spdMultDMIsGreaterThanEqual, _delMultOfSpeedLessThan, _corridorThickOfSpdGreaterThanEqual, _corridorThickOfSpdLessThan)
 
     void p_setOverrideShape(_sideType, _emulatedSides)
 
@@ -359,8 +359,8 @@ function errF(_level, _label, _message, ...)
 end
 
 -- formatted warning messages (made by me)
-function warnF(_label, _message, ...)
-    e_messageAddImportant(("-= WARNING RAISED (%s) // CHECK CONSOLE =-"):format(_label), 999)
+function warnF(_is_msg, _label, _message, ...)
+    if (_is_msg) then e_messageAddImportant(("-= WARNING RAISED (%s) // CHECK CONSOLE =-"):format(_label), 999) end
     print(('[%sWarning] '):format(_label) .. _message:format(...))
 end
 
@@ -420,7 +420,7 @@ function verifyValueType(_input, _type)
 end
 
 function anythingButNil(_input, _input_to_avoid)
-    if (_input_to_avoid == nil) then errF("AvoidNilInput", "DO NOT INSERT nil OR SKIP IN THIS ARGUMENT #2", 2) end
+    if (_input_to_avoid == nil) then errF("AvoidNilInput", "DO NOT INPUT <nil> IN THIS ARGUMENT #2", 2) end
     if (_input == nil) then return _input_to_avoid or 0; end
     return _input
 end
@@ -445,24 +445,24 @@ end
 
 --pattern settings
 local pstr_currentResultBool = false;
-local pstr_currentThickMult_noSpdMultMode = 0;
-local pstr_currentCorridorThickness = THICKNESS;
+local pstr_currentDelayMultOfSpeedLessThan = 0;
+local pstr_currentThickness = THICKNESS;
 
 function p_getDelayPatternBool() return pstr_currentResultBool; end
-function p_getDelayPatternThickMultOfNoSpdMultMode() return pstr_currentThickMult_noSpdMultMode; end
-function p_getTunnelPatternCorridorThickness() return pstr_currentCorridorThickness; end
+function p_getDelayPatternOfSpeedLessThan() return pstr_currentDelayMultOfSpeedLessThan; end
+function p_getPatternThickness() return pstr_currentThickness; end
 
 function p_setDelayPatternBool(_bool) pstr_currentResultBool = getBooleanNumber(_bool); end
-function p_setDelayPatternThickMultOfNoSpdMultMode(_thickMult_amount) pstr_currentThickMult_noSpdMultMode = _thickMult_amount; end
-function p_setTunnelPatternCorridorThickness(_corridorThick) pstr_currentCorridorThickness = _corridorThick; end
+function p_setDelayPatternOfSpeedLessThan(_thickMult_amount) pstr_currentDelayMultOfSpeedLessThan = _thickMult_amount; end
+function p_setPatternThickness(_corridorThick) pstr_currentThickness = _corridorThick; end
 
 function p_resetPatternDelaySettings()
-    pstr_currentResultBool = false; pstr_currentThickMult_noSpdMultMode = 0; pstr_currentCorridorThickness = THICKNESS;
+    pstr_currentResultBool = false; pstr_currentDelayMultOfSpeedLessThan = 0; pstr_currentThickness = THICKNESS;
 end
 
-function p_adjustPatternDelaySettings(_spdMultDMIsGreaterThanEqual, _thickMult_noSpdMultMode, _corridorThickness_noSpdMultMode, _corridorThickness_spdMultMode)
-    if u_getSpeedMultDM() < _spdMultDMIsGreaterThanEqual then pstr_currentThickMult_noSpdMultMode = _thickMult_noSpdMultMode; pstr_currentResultBool = false; pstr_currentCorridorThickness = _corridorThickness_noSpdMultMode or THICKNESS;
-    elseif u_getSpeedMultDM() >= _spdMultDMIsGreaterThanEqual then pstr_currentThickMult_noSpdMultMode = 1; pstr_currentResultBool = true; pstr_currentCorridorThickness = _corridorThickness_spdMultMode or _corridorThickness_noSpdMultMode;
+function p_adjustPatternDelaySettings(_spdMultDMIsGreaterThanEqual, _delMultOfSpeedLessThan, _corridorThickOfSpdLessThan, _corridorThickOfSpdGreaterThanEqual)
+    if u_getSpeedMultDM() < _spdMultDMIsGreaterThanEqual then pstr_currentDelayMultOfSpeedLessThan = _delMultOfSpeedLessThan; pstr_currentResultBool = false; pstr_currentThickness = _corridorThickOfSpdLessThan or THICKNESS;
+    elseif u_getSpeedMultDM() >= _spdMultDMIsGreaterThanEqual then pstr_currentDelayMultOfSpeedLessThan = 1; pstr_currentResultBool = true; pstr_currentThickness = _corridorThickOfSpdGreaterThanEqual or _corridorThickOfSpdLessThan;
     end
 end
 
@@ -789,7 +789,7 @@ function l_setSyncedPulse(mFrameTime, _tempo_input, _is_advanced_tempo, _effect_
     if (type(_lvl_pul_max) == "number") then l_setPulseMax(_lvl_pul_max) end
     if type(_lvl_pul_spd) ~= "number" then errF(2, "SyncPulse", "argument #8 is not a number. why did you input a non-number value?") end
     if type(_lvl_pul_spd_r) ~= "number" then errF(2, "SyncPulse", "argument #9 is literally not a number. why did you input a non-number value?") end
-    if type(_lvl_pul_dir) ~= "number" then warnF("SyncPulse", "inserting a non-number value in this argument #10 doesn't work // make sure you've to insert a number value in this pulse direction") end
+    if type(_lvl_pul_dir) ~= "number" then errF(2, "SyncPulse", "argument #10 is LITERALLY LITERALLY not a number. why did you input a non-number value?") end
 
     if ((_timer_input * marchiocommon_DMvalue) > marchiocommon_currentSyncedPulseTimer) then
         marchiocommon_currentSyncedPulseTimer = (marchiocommon_currentSyncedPulseTimer + marchiocommon_tempoState);
@@ -842,7 +842,7 @@ function l_setSyncedPulseInstant(mFrameTime, _tempo_input, _is_advanced_tempo, _
     local marchiocommon_DMvalue = (getBooleanNumber(_is_sync_to_dm) == true and u_getDifficultyMult() ^ 0.12) or 1;
     local marchiocommon_tempoState = (getBooleanNumber(_is_advanced_tempo) == true and convertBPMtoSeconds(_tempo_input)) or _tempo_input
 
-    if type(_lvl_pul_dir) ~= "number" then warnF("SyncPulse", "inserting a non-number value in this argument #9 doesn't work // make sure you've to insert a number value in this pulse direction") end
+    if type(_lvl_pul_dir) ~= "number" then errF(2, "SyncPulse", "argument #9 is LITERALLY LITERALLY not a number. why did you input a non-number value?") end
 
     if (type(_lvl_pul_min) == "number") then l_setPulseMin(_lvl_pul_min) end
     if (type(_lvl_pul_max) == "number") then l_setPulseMax(_lvl_pul_max) end
@@ -897,7 +897,7 @@ function l_setSyncedPulseV1Compatibility(mFrameTime, _tempo_input, _is_advanced_
     if (type(_lvl_pul_max) == "number") then setLevelValueFloat("pulse_max", _lvl_pul_max) end
     if type(_lvl_pul_spd) ~= "number" then errF(2, "SyncPulse", "argument #8 is not a number. why did you input a non-number value?") end
     if type(_lvl_pul_spd_r) ~= "number" then errF(2, "SyncPulse", "argument #9 is literally not a number. why did you input a non-number value?") end
-    if type(_lvl_pul_dir) ~= "number" then warnF("SyncPulse", "inserting a non-number value in this argument #10 doesn't work // make sure you've to insert a number value in this pulse direction") end
+    if type(_lvl_pul_dir) ~= "number" then errF(2, "SyncPulse", "argument #10 is LITERALLY LITERALLY not a number. why did you input a non-number value?") end
 
     if ((_timer_input * marchiocommon_DMvalue) > marchiocommon_currentSyncedPulseTimer) then
         marchiocommon_currentSyncedPulseTimer = (marchiocommon_currentSyncedPulseTimer + marchiocommon_tempoState);
@@ -1210,7 +1210,7 @@ function l_setSyncedAdvancedPulse(mFrameTime, _game_ver, _tempo_input, _is_advan
 
     if type(_lvl_pul_spd) ~= "number" then errF(2, "SyncPulse", "argument #8 is not a number. why did you input a non-number value?") end
     if type(_lvl_pul_spd_r) ~= "number" then errF(2, "SyncPulse", "argument #9 is literally not a number. why did you input a non-number value?") end
-    if type(_lvl_pul_dir) ~= "number" then warnF("SyncPulse", "inserting a non-number value in this argument #10 doesn't work // make sure you've to insert a number value in this pulse direction") end
+    if type(_lvl_pul_dir) ~= "number" then errF(2, "SyncPulse", "argument #10 is LITERALLY LITERALLY not a number. why did you input a non-number value?") end
 
     if ((_timer_input * marchiocommon_DMvalue) > marchiocommon_currentSyncedAdvPulseTimer) then
         marchiocommon_boolAdvPulseActiveHeld = true;
