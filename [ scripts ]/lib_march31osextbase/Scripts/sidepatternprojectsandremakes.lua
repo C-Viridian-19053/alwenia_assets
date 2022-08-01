@@ -1,4 +1,4 @@
---[[ Alright then, Marchionne made-a this pattern from march31o_patterns_cage.lua script, but it's garbage when I
+--[[ Okie-dokie, Marchionne made-a this pattern from march31o_patterns_cage.lua script, but it's garbage when I
 tried-a to testing a {Trap/Accurate Wrap} Around-a pattern, Luigi said.
 
 So I made my own of 2 cage paterns (Include Trap Arond & Accurate Bat pattern) with our brothers. ]]
