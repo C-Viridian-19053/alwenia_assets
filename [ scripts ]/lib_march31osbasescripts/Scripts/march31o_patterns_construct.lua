@@ -1,23 +1,39 @@
---need utils & commons, to avoid stack overflow
 --[[ NOTICE: if 'table.unpack' was currently unavailable from lua 5.1, make sure you've to change the lua version to 5.1 on 'march31o_utils.lua'
 in order to add 'table.unpack' lua function shortcut, if 'table.unpack' has already, change the lua version to 5.3 or higher ]]
 
---2.x.x+ & 1.92 conv functs
-local u_getSpeedMultDM = u_getSpeedMultDM or getSpeedMult
-local u_rndInt = u_rndInt or math.random
-
 --[[
-    void p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _loopDir, _delayAmount, _isRebootingSide, _endAdditionalDelay, _addMult, _isTight, _skipEndDelay, _perfectThicknessMult)
-    void p_constructSpiral(_side, _func, _args, _freq) --, 0, 1, getRandomDir(), 1, false, 0, 1, true, false, nil
-    void p_constructRepeat(_side, _func, _args, _freq, _delayAmount, _isRebootingSide, _endAdditionalDelay, _addMult, _isTight, _skipEndDelay)
-    void p_constructRepeat(_side, _func, _args, _freq) --, 1, false, 0, 1, false, false
+    void p_constructPatternizer(_side, _array, _sizeMult, _isSpdMode)
+    void p_constructPatternizer(_side, _array) --, 1, true
+    void p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _loopDir, _delayAmount, _delaySides, _delayWalls, _skipEndDelay, _perfectThicknessMult, _isRebootingSide, _endAdditionalDelay, _addMult)
+    void p_constructSpiral(_side, _func, _args, _freq) --, 0, 1, getRandomDir(), 1, false, 1, false, nil, false, 0, 1
+    void p_constructRepeat(_side, _func, _args, _freq, _delayAmount, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult)
+    void p_constructRepeat(_side, _func, _args, _freq) --, 1, false, false, 0, 1
 ]]
 
---[ Pattern constructors (Inspired from Kodipher's Inflorescence pack) ]--
+--[ Pattern constructors ]--
 
-function p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _loopDir, _delayAmount, _delaySides, _delayWalls, _isRebootingSide, _endAdditionalDelay, _addMult, _skipEndDelay, _perfectThicknessMult)
+-- p_constructPatternizer: constructs patternizer with array
+function p_constructPatternizer(_side, _array, _sizeMult, _isSpdMode)
+    _side = _side or getRandomSide();
+    _sizeMult = _sizeMult or 1;
+    _isSpdMode = _isSpdMode or true;
+    local eArray = cycleSide(getProtocolSides(), _side)
+    local j = math.floor((#_array) / getProtocolSides())
+
+    for i = 1, j, 1 do
+        for k = 1, getProtocolSides(), 1 do
+            if _array[(i - 1) * getProtocolSides() + k] == 1 then
+                cWall(eArray[k], customizePatternThickness(2 * _sizeMult, _isSpdMode))
+            end
+        end
+        t_applyPatDel(customizePatternDelay(1.8 * _sizeMult, _isSpdMode))
+    end
+end
+
+-- Inspired from Kodipher's Inflorescence pack
+function p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _loopDir, _delayAmount, _delaySides, _delayWalls, _skipEndDelay, _perfectThicknessMult, _isRebootingSide, _endAdditionalDelay, _addMult)
     _side = anythingButNil(_side, u_rndInt(0, getProtocolSides() - 1)); _freq = anythingButNil(_freq, 5);
-    _isTight = anythingButNil(_isTight, 1); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     --reboot side posistion
     _isRebootingSide = anythingButNil(_isRebootingSide, 1);
@@ -91,9 +107,9 @@ function p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _loopDir
     if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
 end
 
-function p_constructRepeat(_side, _func, _args, _freq, _delayAmount, _isRebootingSide, _endAdditionalDelay, _addMult, _isTight, _skipEndDelay)
+function p_constructRepeat(_side, _func, _args, _freq, _delayAmount, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult)
     _side = anythingButNil(_side, u_rndInt(0, getProtocolSides() - 1)); _freq = anythingButNil(_freq, 5);
-    _isTight = anythingButNil(_isTight, 1); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     --reboot side posistion
     _isRebootingSide = anythingButNil(_isRebootingSide, 1);
@@ -108,9 +124,6 @@ function p_constructRepeat(_side, _func, _args, _freq, _delayAmount, _isRebootin
 
     --get delay speed
     local _curDelaySpeed = (_addMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
-
-    --get number into bool
-    _isTight = getBooleanNumber(_isTight); if _isTight then p_setDelayPatternBool(false); end
 
     p_resetPatternDelaySettings();
     p_patternEffectStart();
