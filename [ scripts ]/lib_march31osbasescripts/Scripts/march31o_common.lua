@@ -82,7 +82,6 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant
 
     int randomArray(_number, _lower, _upper)
     int cycleSide(_sides, _sidePosInput)
-    void p_constructPatternizer(_side, _array, _scale, _isSpdMode)
 
     int getPerfectAccelDM()
     local var: number wallAccelType
@@ -178,7 +177,7 @@ function cWallBasePrimary(_side, _thickness, ...)
     end
 end
 
--- [LOCAL FUNCTION] cWallBaseSecondary: a secondary base wall, which one is side was imitated into circle
+-- [LOCAL FUNCTION] cWallBaseSecondary: a secondary base wall, which one is side was imitated into circle or not
 local function cWallBaseSecondary(_side, _thickness, ...)
     if (SHAPE_TYPE == 2) then
         local _sideLength = getFakeSideLength(EMULATED_SIDES_AMOUNT);
@@ -433,7 +432,7 @@ end
 
 -- cBarrageExHoles: spawns a holed barrage wall with extra holes attached to it.
 function cBarrageExHoles(_side, _extra_holes, _thickness, ...)
-    if _extra_holes == nil or _extra_holes < 0 or _extra_holes > math.floor(getProtocolSides() / 2) then _extra_holes = 0; end
+    _extra_holes = closeValue((_extra_holes or 0), 0, math.floor(getProtocolSides() / 2))
     for barrageWalls = _extra_holes * 2, getProtocolSides() - 2, 1 do cWall(_side + barrageWalls, _thickness, ...); end
     for shiftWalls = 0, math.floor(getProtocolSides() / 2) - 1, 1 do cWall(_side + (shiftWalls * 2), _thickness, ...); end
 end
@@ -493,24 +492,6 @@ function cycleSide(_sides, _sidePosInput)
     return eArray
 end
 
--- p_constructPatternizer: constructs patternizer with array
-function p_constructPatternizer(_side, _array, _scale, _isSpdMode)
-    _side = _side or getRandomSide();
-    _scale = _scale or 1;
-    _isSpdMode = _isSpdMode or false;
-    local eArray = cycleSide(getProtocolSides(), _side)
-    local j = math.floor((#_array) / getProtocolSides())
-
-    for i = 1, j, 1 do
-        for k = 1, getProtocolSides(), 1 do
-            if _array[(i - 1) * getProtocolSides() + k] == 1 then
-                cWall(eArray[k], customizePatternThickness(2 * _scale, _isSpdMode))
-            end
-        end
-        t_wait(customizePatternDelay(1.8 * _scale, _isSpdMode))
-    end
-end
-
 ---------------------------------------------------------------------------------------- END OF ALTERNATIVE UTILS
 
 -- getPerfectAccelDM: returns a constant that is used to perfectly adjust wallAcc acceleration to speed and difficulty multiplier
@@ -524,7 +505,7 @@ function getPerfectAccelDM()
             diffAdjust = 1 - (-2 * u_getDifficultyMult() + 2) ^ 2 / 2.7;
         end
     end
-    return diffAdjust * requiredDecel
+    return diffAdjust * requiredDecel * ((1600 / (l_getWallSpawnDistance() or 1600)) ^ 1.225)
 end
 
 local wallAccelType = 0
@@ -581,9 +562,13 @@ local spdSyncRndMax = 0 -- maximum random displacement from the synced speed
 local normalCurveMult = 1
 local syncedCurveMult = 1
 
+local function wallSpawnDistanceFix()
+	return (1600 / (l_getWallSpawnDistance() or 1600))
+end
+
 -- syncCurveToSideDistance: Returns an appropriate constant that, if applied to a curving wall travelling at constant speed, will cause it go one full side.
 function syncCurveToSideDistance()
-    return (0.2 * u_getSpeedMultDM() + 0.005) * (6 / getProtocolSides()) * (u_getDifficultyMult() ^ -0.25); 
+    return (0.2 * u_getSpeedMultDM() + 0.005) * (6 / getProtocolSides()) * wallSpawnDistanceFix() * (u_getDifficultyMult() ^ -0.25); 
 end
 
 -- getPerfectCurveDecel: Returns a constant that, if applied to a curving wall, will make the wall stop accelerating on a side panel.
@@ -591,7 +576,7 @@ function getPerfectCurveDecel()
     -- Coordinates tested: (0, 0), (1, .134), (1.5, .295), (2, .52), (2.5, .81), (3, 1.162), (3.5, 1.579), (4, 2.06)
     -- Cubic Formula (full accuracy): 0.000233918 x^3 + 0.125985 x^2 + 0.00730493 x + 0.0000701754
     -- Current formula has ~100% accuracy
-    return (0.127378 * u_getSpeedMultDM() ^ 2 + 0.00526331 * u_getSpeedMultDM() + 0.000431373) * (6 / getProtocolSides());
+    return (0.127378 * u_getSpeedMultDM() ^ 2 + 0.00526331 * u_getSpeedMultDM() + 0.000431373) * (6 / getProtocolSides()) * wallSpawnDistanceFix();
 end
 
 -- syncCurveWithRotationSpeed: the function to call when wanting to sync curving walls with the rotation speed
@@ -659,7 +644,7 @@ end
 -- _thickness (OPTIONAL): the thickness of the curving wall
 function wallHMStop(_side, _offset, _thickness, ...)
     _thickness = _thickness or THICKNESS
-    local curveAcc = getPerfectCurveDecel();
+    local curveAcc = getPerfectCurveDecel() * wallSpawnDistanceFix();
     if (getNeg(_offset) < 0) then
         wallHMCurveAcc(_side + _offset, 2 * -_offset, curveAcc * _offset / 100, 0, 2 * -_offset, false, _thickness, ...);
     else
@@ -723,7 +708,7 @@ end
 -- hmcBarrageStop: a barrage that comes to a full stop, similiar to how wallHMStop works
 function hmcBarrageStop(_side, _offset, _neighbors, _thickness, ...)
     _neighbors = _neighbors or 0
-    local curveAcc = getPerfectCurveDecel();
+    local curveAcc = getPerfectCurveDecel() * wallSpawnDistanceFix();
     if (getNeg(_offset) < 0) then
         hmcBarrageN(_side + _offset, _neighbors, 2 * -_offset, curveAcc * _offset / 100, 0, 2 * -_offset, false, _thickness, ...); 
     else
