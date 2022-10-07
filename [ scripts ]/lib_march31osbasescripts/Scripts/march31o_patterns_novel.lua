@@ -1,5 +1,3 @@
---need utils & commons, to avoid stack overflow
-
 --2.x.x+ & 1.92 conv functs
 local u_getSpeedMultDM = u_getSpeedMultDM or getSpeedMult
 local u_rndInt = u_rndInt or math.random
@@ -43,7 +41,7 @@ function pMarch31osRandomWalls(_side, _thickness, _iter, _mirrorOffset, _extra, 
 
         cWallMirrorEx(_curSide, _mirrorOffset, _extra, p_getPatternThickness() * _sizeMult);
 
-        t_applyPatDel(customizePatternDelay(2 * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()))
+        t_applyPatDel(customizePatternDelay(2 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()))
         _curSide = _curSide + u_rndInt(0, _maxstep) * getRandomDir()
     end
 
