@@ -1,5 +1,5 @@
 local lua_version = 5.1
-local game_version = 2.14
+local game_version = 2.15
 
 --2.x.x+ & 1.92 conv functs
 local t_wait = t_wait or wait
@@ -21,6 +21,7 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
 
 --[[
     var: number THICKNESS
+    var: number DELAY_CONSTANT
     var: number PLAYER_SPEED
     var: number THICKNESS_PERFECT_ADD_ENDED
     var: number EMULATED_SIDES_AMOUNT
@@ -138,6 +139,13 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
 
     number getAccurateThickness()
     number getThicknessOfDelay(_thickness_amount)
+
+
+    int getQDelayAndSides(_del_mult)
+    int getPulseContribution(_game_ver)
+    int getThickPulse(_game_ver)
+    void l_setZoom(_factor, _base1, _base2, _base3, _base4, _game_ver)
+    int winding(_min_val, _max_val)
 
 
     int getRebootPatternSide()
@@ -331,6 +339,7 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
 
 -- common variables
 THICKNESS = 40.0;
+DELAY_CONSTANT = 800 / 21
 PLAYER_SPEED = 9.449999809265137; --deg/frame
 THICKNESS_PERFECT_ADD_ENDED = 4.0;
 EMULATED_SIDES_AMOUNT = 6;
@@ -354,12 +363,12 @@ if lua_version < 5.3 then
 end
 
 -- formatted error messages """for globals""" (taken from utis.lua from lib_extbase by Syyrion)
-function errF(_level, _label, _message, ...)
+function errorf(_level, _label, _message, ...)
     error(('[%sError] '):format(_label) .. _message:format(...), _level + 1)
 end
 
 -- formatted warning messages (made by me)
-function warnF(_is_msg, _label, _message, ...)
+function warnf(_is_msg, _label, _message, ...)
     if (_is_msg) then e_messageAddImportant(("-= WARNING RAISED (%s) // CHECK CONSOLE =-"):format(_label), 999) end
     print(('[%sWarning] '):format(_label) .. _message:format(...))
 end
@@ -408,19 +417,19 @@ function getBooleanNumber(_numb_val)
 end
 
 function isValueType(_input, _type, _is_opposite, _val1_result, _val2_result)
-    if type(_type) ~= "string" then errF(2, "Input", "argument #2 is not a string.") end
+    if type(_type) ~= "string" then errorf(2, "Input", "argument #2 is not a string.") end
     if getBooleanNumber(_is_opposite) then return (type(_input) ~= _type and _val1_result) or _val2_result;
     else return (type(_input) == _type and _val1_result) or _val2_result;
     end
 end
 
 function verifyValueType(_input, _type)
-    if type(_type) ~= "string" then errF(2, "Verification", "argument #2 is not a string.") end
+    if type(_type) ~= "string" then errorf(2, "Verification", "argument #2 is not a string.") end
     return type(_input) == _type
 end
 
 function anythingButNil(_input, _input_to_avoid)
-    if (_input_to_avoid == nil) then errF("AvoidNilInput", "DO NOT INPUT <nil> IN THIS ARGUMENT #2", 2) end
+    if (_input_to_avoid == nil) then errorf(2, "AvoidNilInput", "DO NOT INPUT <nil> IN THIS ARGUMENT #2") end
     if (_input == nil) then return _input_to_avoid or 0; end
     return _input
 end
@@ -435,7 +444,7 @@ function math_sum(_table_of_numbers)
     local _curSum = 0;
     if #_table_of_numbers > 0 then
         for a = 1, #_table_of_numbers, 1 do
-            if type(_table_of_numbers[a]) ~= "number" then errF(2, "Sum", "table #%d is not a number. why did you input a non-number value?", a) end
+            if type(_table_of_numbers[a]) ~= "number" then errorf(2, "Sum", "table #%d is not a number. why did you input a non-number value?", a) end
             _curSum = _curSum + _table_of_numbers[a]
         end
         return _curSum;
@@ -467,8 +476,8 @@ function p_adjustPatternDelaySettings(_spdMultDMIsGreaterThanEqual, _delMultOfSp
 end
 
 function p_setOverrideShape(_sideType, _emulatedSides)
-    if type(_sideType) ~= "number" then errF(2, "SideType", "argument #1 is not a number. why did you input a non-number value?") end
-    if type(_emulatedSides) ~= "number" then errF(2, "EmluateSide", "argument #2 is not a number. why did you input a non-number value?") end
+    if type(_sideType) ~= "number" then errorf(2, "SideType", "argument #1 is not a number. why did you input a non-number value?") end
+    if type(_emulatedSides) ~= "number" then errorf(2, "EmluateSide", "argument #2 is not a number. why did you input a non-number value?") end
     SHAPE_TYPE = math.floor(_sideType) or 0; EMULATED_SIDES_AMOUNT = math.floor(_emulatedSides) or 6;
 end
 
@@ -627,6 +636,51 @@ function getDelayWallAndSides(_delay_amount) return getDelayWalls(1) + getDelayS
 function getAccurateThickness() return ((360 / getProtocolSides()) / PLAYER_SPEED) / u_getDelayMultDM() * (5.02 * u_getSpeedMultDM()) + THICKNESS_PERFECT_ADD_ENDED; end
 function getThicknessOfDelay(_delay_amount) return _delay_amount * 5.02 * u_getSpeedMultDM() * u_getDelayMultDM() + THICKNESS_PERFECT_ADD_ENDED; end
 
+--[ Begin Quantum's common ]--
+
+--utils
+function getQDelayAndSides(_del_mult)
+    return DELAY_CONSTANT / getProtocolSides() * (_del_mult or 1), getProtocolSides()
+end
+
+-- for ease of use
+-- thickPulse = THICKNESS + l_getBeatPulseMax() + l_getRadiusMin() * (l_getPulseMax() / l_getPulseMin() - 1)
+-- pulseContrib = l_getBeatPulseMax() + l_getRadiusMin() * (l_getPulseMax() / l_getPulseMin() - 1)
+function getPulseContribution(_game_ver)
+    _game_ver = _game_ver and game_version
+    if _game_ver >= 2 then return l_getBeatPulseMax() + l_getRadiusMin() * (l_getPulseMax() / l_getPulseMin() - 1)
+    else                   return getLevelValueFloat("beatpulse_max") + getLevelValueFloat("radius_min") * (getLevelValueFloat("pulse_max") / getLevelValueFloat("pulse_min") - 1)
+    end
+end
+
+function getThickPulse(_game_ver)
+    return THICKNESS + getPulseContribution(_game_ver)
+end
+
+--this function allows you to set a winding amount rather than number of walls for spiral.
+function winding(_min_val, _max_val)
+    if _max_val == nil then _max_val = _min_val end
+    if _min_val < 1 + (1/getProtocolSides()) then _min_val = 1 + (1/getProtocolSides()) end
+
+    return u_rndInt(math.floor(_min_val * getProtocolSides()), math.floor(_max_val * getProtocolSides()))
+end
+
+--takes the base value and zooms out by factor.
+function l_setZoom(_factor, _base1, _base2, _base3, _base4, _game_ver)
+    _game_ver = _game_ver and game_version
+    if _game_ver >= 2 then
+        l_setRadiusMin(   (_base1 or l_getRadiusMin())    / _factor)
+        l_setPulseMax(    (_base2 or l_getPulseMax())     / _factor)
+        l_setPulseMin(    (_base3 or l_getPulseMin())     / _factor)
+        l_setBeatPulseMax((_base4 or l_getBeatPulseMax()) / _factor)
+    else
+        setLevelValueFloat("radius_min",    (_base1 or getLevelValueFloat("radius_min"))    / _factor)
+        setLevelValueFloat("pulse_max",     (_base2 or getLevelValueFloat("pulse_max"))     / _factor)
+        setLevelValueFloat("pulse_min",     (_base3 or getLevelValueFloat("pulse_min"))     / _factor)
+        setLevelValueFloat("beatpulse_max", (_base4 or getLevelValueFloat("beatpulse_max")) / _factor)
+    end
+end
+
 --[ Begin The Sun XIX's common ]--
 
 --sides
@@ -657,10 +711,10 @@ end
 function convValue(mFrameTime, _value, _valueTo, _strength) return _value - (0.1 * _strength * (_value - _valueTo)) * mFrameTime end
 function closeValue(_input, _min_val, _max_val, _lim_type)
     if not _lim_type then _lim_type = "all"; end
-    if _lim_type == "min" then return (_input < _min_val and _min_val) or _input;
+        if _lim_type == "min" then return (_input < _min_val and _min_val) or _input;
     elseif _lim_type == "max" then return (_input > _max_val and _max_val) or _input;
     elseif _lim_type == "all" then return (_input < _min_val and _min_val) or (_input > _max_val and _max_val) or _input;
-    else errF(2, "Clamp", "just type to nil or 'all' w/ string value on closeValue funct located on <_lim_type>.")
+    else errorf(2, "Clamp", "just type to nil or 'all' w/ string value on closeValue funct located on <_lim_type>.")
     end
 end
 
@@ -787,9 +841,9 @@ function l_setSyncedPulse(mFrameTime, _tempo_input, _is_advanced_tempo, _effect_
 
     if (type(_lvl_pul_min) == "number") then l_setPulseMin(_lvl_pul_min) end
     if (type(_lvl_pul_max) == "number") then l_setPulseMax(_lvl_pul_max) end
-    if type(_lvl_pul_spd) ~= "number" then errF(2, "SyncPulse", "argument #8 is not a number. why did you input a non-number value?") end
-    if type(_lvl_pul_spd_r) ~= "number" then errF(2, "SyncPulse", "argument #9 is literally not a number. why did you input a non-number value?") end
-    if type(_lvl_pul_dir) ~= "number" then errF(2, "SyncPulse", "argument #10 is LITERALLY LITERALLY not a number. why did you input a non-number value?") end
+    if type(_lvl_pul_spd) ~= "number" then errorf(2, "SyncPulse", "argument #8 is not a number. why did you input a non-number value?") end
+    if type(_lvl_pul_spd_r) ~= "number" then errorf(2, "SyncPulse", "argument #9 is literally not a number. why did you input a non-number value?") end
+    if type(_lvl_pul_dir) ~= "number" then errorf(2, "SyncPulse", "argument #10 is LITERALLY LITERALLY not a number. why did you input a non-number value?") end
 
     if ((_timer_input * marchiocommon_DMvalue) > marchiocommon_currentSyncedPulseTimer) then
         marchiocommon_currentSyncedPulseTimer = (marchiocommon_currentSyncedPulseTimer + marchiocommon_tempoState);
@@ -842,7 +896,7 @@ function l_setSyncedPulseInstant(mFrameTime, _tempo_input, _is_advanced_tempo, _
     local marchiocommon_DMvalue = (getBooleanNumber(_is_sync_to_dm) == true and u_getDifficultyMult() ^ 0.12) or 1;
     local marchiocommon_tempoState = (getBooleanNumber(_is_advanced_tempo) == true and convertBPMtoSeconds(_tempo_input)) or _tempo_input
 
-    if type(_lvl_pul_dir) ~= "number" then errF(2, "SyncPulse", "argument #9 is LITERALLY LITERALLY not a number. why did you input a non-number value?") end
+    if type(_lvl_pul_dir) ~= "number" then errorf(2, "SyncPulse", "argument #9 is LITERALLY LITERALLY not a number. why did you input a non-number value?") end
 
     if (type(_lvl_pul_min) == "number") then l_setPulseMin(_lvl_pul_min) end
     if (type(_lvl_pul_max) == "number") then l_setPulseMax(_lvl_pul_max) end
@@ -895,9 +949,9 @@ function l_setSyncedPulseV1Compatibility(mFrameTime, _tempo_input, _is_advanced_
 
     if (type(_lvl_pul_min) == "number") then setLevelValueFloat("pulse_min", _lvl_pul_min) end
     if (type(_lvl_pul_max) == "number") then setLevelValueFloat("pulse_max", _lvl_pul_max) end
-    if type(_lvl_pul_spd) ~= "number" then errF(2, "SyncPulse", "argument #8 is not a number. why did you input a non-number value?") end
-    if type(_lvl_pul_spd_r) ~= "number" then errF(2, "SyncPulse", "argument #9 is literally not a number. why did you input a non-number value?") end
-    if type(_lvl_pul_dir) ~= "number" then errF(2, "SyncPulse", "argument #10 is LITERALLY LITERALLY not a number. why did you input a non-number value?") end
+    if type(_lvl_pul_spd) ~= "number" then errorf(2, "SyncPulse", "argument #8 is not a number. why did you input a non-number value?") end
+    if type(_lvl_pul_spd_r) ~= "number" then errorf(2, "SyncPulse", "argument #9 is literally not a number. why did you input a non-number value?") end
+    if type(_lvl_pul_dir) ~= "number" then errorf(2, "SyncPulse", "argument #10 is LITERALLY LITERALLY not a number. why did you input a non-number value?") end
 
     if ((_timer_input * marchiocommon_DMvalue) > marchiocommon_currentSyncedPulseTimer) then
         marchiocommon_currentSyncedPulseTimer = (marchiocommon_currentSyncedPulseTimer + marchiocommon_tempoState);
@@ -1039,12 +1093,12 @@ overrideDelay = p_setOverridePatternDelay;
 --delays & thickness
 function customizePatternDelay(_delay_amount, _is_spd_mult)
     if _is_spd_mult == nil then _is_spd_mult = true; end
-    return (getPerfectDelay(THICKNESS) * (_delay_amount * marchiocommon_currentOverridePatternDelay) * (getBooleanNumber(_is_spd_mult) and (u_getSpeedMultDM()) / 2 or 1));
+    return (getPerfectDelay(THICKNESS) * (_delay_amount * marchiocommon_currentOverridePatternDelay * pstr_currentDelayMultOfSpeedLessThan) * (getBooleanNumber(_is_spd_mult) and (u_getSpeedMultDM()) / 2 or 1));
 end
 
 function customizePatternThickness(_thickness_amount, _is_spd_mult)
     if _is_spd_mult == nil then _is_spd_mult = true; end
-    return ((THICKNESS * u_getDelayMultDM()) * (_thickness_amount * marchiocommon_currentOverridePatternDelay) * (getBooleanNumber(_is_spd_mult) and (u_getSpeedMultDM()) / 2 or 1));
+    return ((THICKNESS * u_getDelayMultDM()) * (_thickness_amount * marchiocommon_currentOverridePatternDelay * pstr_currentDelayMultOfSpeedLessThan) * (getBooleanNumber(_is_spd_mult) and (u_getSpeedMultDM()) / 2 or 1));
 end
 
 -- my implementation of implemented custWait & custThickness on babadrake's common
@@ -1117,7 +1171,7 @@ function p_setSyncedPatternRepairUpdaterTimerOffset(_offset_amount) marchiocommo
 
 -- common's <<getRandomNeg + value input>> function method
 function getRandomNegVal(_input)
-    if type(_input) ~= "number" then errF(2, "Input", "argument #1 is not a number. why did you input a non-number value?") end
+    if type(_input) ~= "number" then errorf(2, "Input", "argument #1 is not a number. why did you input a non-number value?") end
     return u_rndInt(0, 100) > 50 and _input or -_input
 end
 getRandomDirVal = getRandomNegVal;
@@ -1208,9 +1262,9 @@ function l_setSyncedAdvancedPulse(mFrameTime, _game_ver, _tempo_input, _is_advan
     local marchiocommon_DMvalue = (getBooleanNumber(_is_sync_to_dm) == true and u_getDifficultyMult() ^ 0.12) or 1;
     local marchiocommon_tempoState = (getBooleanNumber(_is_advanced_tempo) == true and convertBPMtoSeconds(_tempo_input)) or _tempo_input;
 
-    if type(_lvl_pul_spd) ~= "number" then errF(2, "SyncPulse", "argument #8 is not a number. why did you input a non-number value?") end
-    if type(_lvl_pul_spd_r) ~= "number" then errF(2, "SyncPulse", "argument #9 is literally not a number. why did you input a non-number value?") end
-    if type(_lvl_pul_dir) ~= "number" then errF(2, "SyncPulse", "argument #10 is LITERALLY LITERALLY not a number. why did you input a non-number value?") end
+    if type(_lvl_pul_spd) ~= "number" then errorf(2, "SyncPulse", "argument #8 is not a number. why did you input a non-number value?") end
+    if type(_lvl_pul_spd_r) ~= "number" then errorf(2, "SyncPulse", "argument #9 is literally not a number. why did you input a non-number value?") end
+    if type(_lvl_pul_dir) ~= "number" then errorf(2, "SyncPulse", "argument #10 is LITERALLY LITERALLY not a number. why did you input a non-number value?") end
 
     if ((_timer_input * marchiocommon_DMvalue) > marchiocommon_currentSyncedAdvPulseTimer) then
         marchiocommon_boolAdvPulseActiveHeld = true;
