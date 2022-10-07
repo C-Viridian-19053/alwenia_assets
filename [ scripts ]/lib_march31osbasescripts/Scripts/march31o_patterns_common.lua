@@ -555,7 +555,6 @@ function pMarch31osExWhirlwind(_side, _iter, _timesBeforeChangeDir, _revFreq, _e
 
     local currentTimesOfDelayAmountForTriangle, currentTimesOfThickAmountForTriangle = 4, 4;
     local currentTimesOfDelayAmountForSquare, currentTimesOfThickAmountForSquare, currentTimesOfThickAmountBeforeDirChangeForSquare, currentThickOffsetAmountBeforeDirChangeForSquare_001, currentThickOffsetAmountBeforeDirChangeForSquare_002 = 2, 4, 6, 0, 0;
-    local currentTimesOfThickAmountForGreaterThanSquare = 2;
     local currentSizeOverride, currentDelayOverride = 1, 0.9;
 
     if getProtocolSides() == 3 and ((_slopeAmountStart > 0 and _slopeAmountCycle > 0 and _slopeAmountEnd > 0) and getBooleanNumber(_is_full)) then
@@ -610,7 +609,7 @@ function pMarch31osExWhirlwind(_side, _iter, _timesBeforeChangeDir, _revFreq, _e
             cWall(_curSide + _spiralPosistionOffset, customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool())); _spiralPosistionOffset = _spiralPosistionOffset + _direction;
             for i = 0, 1, 1 do cWall(_curSide + _spiralPosistionOffset + i * _direction, customizePatternThickness(5 * currentSizeOverride * _sizeMult, p_getDelayPatternBool())); end _spiralPosistionOffset = _spiralPosistionOffset + _direction * 2;
             t_applyPatDel(customizePatternDelay(4 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
-            for a = 0, _iter + 1, 1 do --1, _iter + 2
+            for a = 0, _iter + 1, 1 do
                 p_patternEffectCycle();
                 if a == _iter + 1 then currentTimesOfThickAmountForSquare = 6; end
                 cWall(_curSide + _spiralPosistionOffset, customizePatternThickness((a == _iter + 1 and 7 or 9) * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
