@@ -1,5 +1,9 @@
---[[ NOTICE: if 'table.unpack' was currently unavailable from lua 5.1, make sure you've to change the lua version to 5.1 on 'march31o_utils.lua'
-in order to add 'table.unpack' lua function shortcut, if 'table.unpack' has already, change the lua version to 5.3 or higher ]]
+--2.x.x+ & 1.92 conv functs
+local u_getSpeedMultDM = u_getSpeedMultDM or getSpeedMult
+local u_rndInt = u_rndInt or math.random
+
+--Lua 5.3+ & 5.1 conv functs
+local table.unpack = table.unpack or unpack
 
 --[[
     void p_constructPatternizer(_side, _array, _sizeMult, _isSpdMode)
@@ -26,7 +30,7 @@ function p_constructPatternizer(_side, _array, _sizeMult, _isSpdMode)
                 cWall(eArray[k], customizePatternThickness(2 * _sizeMult, _isSpdMode))
             end
         end
-        t_applyPatDel(customizePatternDelay(1.8 * _sizeMult, _isSpdMode))
+        t_wait(customizePatternDelay(1.8 * _sizeMult, _isSpdMode))
     end
 end
 
