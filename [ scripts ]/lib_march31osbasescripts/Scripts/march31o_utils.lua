@@ -1,4 +1,3 @@
-local lua_version = 5.1
 local game_version = 2.15
 
 --2.x.x+ & 1.92 conv functs
@@ -351,16 +350,6 @@ GLOBAL_TEMPO_DM_STATE = 1;
 GLOBAL_SPAWN_DISTANCE_MULT = 1;
 GLOBAL_SPAWN_DISTANCE_ADD = 0;
 GLOBAL_TIME_SIGNATURE = 4 / 4;
-
-if lua_version < 5.3 then
-    -- did realize not doing this gave call a nil value error on lua v5.1
-    function table.unpack (t, i)
-        i = i or 1
-        if t[i] ~= nil then
-            return t[i], table.unpack(t, i + 1)
-        end
-    end
-end
 
 -- formatted error messages """for globals""" (taken from utis.lua from lib_extbase by Syyrion)
 function errorf(_level, _label, _message, ...)
