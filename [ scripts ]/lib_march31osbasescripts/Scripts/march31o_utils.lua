@@ -1,3 +1,4 @@
+local lua_version = 5.1
 local game_version = 2.15
 
 --2.x.x+ & 1.92 conv functs
@@ -351,6 +352,16 @@ GLOBAL_SPAWN_DISTANCE_MULT = 1;
 GLOBAL_SPAWN_DISTANCE_ADD = 0;
 GLOBAL_TIME_SIGNATURE = 4 / 4;
 
+if lua_version < 5.3 then
+    -- did realize not doing this gave call a nil value error on lua v5.1
+    function table.unpack (t, i)
+        i = i or 1
+        if t[i] ~= nil then
+            return t[i], table.unpack(t, i + 1)
+        end
+    end
+end
+
 -- formatted error messages """for globals""" (taken from utis.lua from lib_extbase by Syyrion)
 function errorf(_level, _label, _message, ...)
     error(('[%sError] '):format(_label) .. _message:format(...), _level + 1)
@@ -464,10 +475,10 @@ function p_adjustPatternDelaySettings(_spdMultDMIsGreaterThanEqual, _delMultOfSp
     end
 end
 
-function p_setOverrideShape(_sideType, _emulatedSides)
-    if type(_sideType) ~= "number" then errorf(2, "SideType", "argument #1 is not a number. why did you input a non-number value?") end
-    if type(_emulatedSides) ~= "number" then errorf(2, "EmluateSide", "argument #2 is not a number. why did you input a non-number value?") end
-    SHAPE_TYPE = math.floor(_sideType) or 0; EMULATED_SIDES_AMOUNT = math.floor(_emulatedSides) or 6;
+function p_setOverrideShape(_sideType, _emulatedSide)
+    if type(_emulatedSide) ~= "number" then errorf(2, "EmluateSide", "argument #2 is not a number. why did you input a non-number value?") end
+    SHAPE_TYPE = (type(_sideType) == "string" and (_sideType == "fakeside" and 1 or _sideType == "circle" and 2)) or (type(_sideType) == "number" and math.floor(_sideType)) or 0;
+    EMULATED_SIDES_AMOUNT = math.floor(_emulatedSides) or 6;
 end
 
 --timers
