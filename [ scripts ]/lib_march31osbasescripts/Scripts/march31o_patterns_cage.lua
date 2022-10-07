@@ -7,10 +7,10 @@
     void pMarch31osAccurateBat(_side) --, "all", false, false, 1, 1, { false, false }, { 0, 0 }, false, false, false, 0, 1, 1, 2
     void pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _hasContainedTable, _neighContainedTable, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
     void pMarch31osDiamond(_side, _iter) --, 0, 0, 1, { false, false }, { 0, 0 }, false, false, false, 0, 1, 1, 2
-    void pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual, _skipEndDelay)
-    void pMarch31osInterpretInversions(_side, _iter) --, 1, 1, false, false, 0, 1, 1, 2
-    void pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual, _skipEndDelay)
-    void pMarch31osDivergencedGauntlets(_side, _iter) --, 1, 1, false, false, 0, 1, 1, 2
+    void pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
+    void pMarch31osInterpretInversions(_side, _iter) --, 1, 1, false, false, false, 0, 1, 1, 2
+    void pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
+    void pMarch31osDivergencedGauntlets(_side, _iter) --, 1, 1, false, false, false, 0, 1, 1, 2
 ]]
 
 --[[
@@ -61,7 +61,7 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
     elseif u_getSpeedMultDM lower than _spdIs_greaterThanEqual that won't calculated with speed difficulty multiplier,
     but you can now change the '_thickMult_nonSpd' value ]]
     p_adjustPatternDelaySettings(_spdIs_greaterThanEqual or 2, _thickMult_nonSpd or 1, nil, nil);
-    _delMult = _delMult * (getBooleanNumber(isTight) and 0.75 or 1);
+    _delMult = _delMult * (getBooleanNumber(_isTight) and 0.75 or 1);
 
     p_patternEffectStart()
 
@@ -381,7 +381,7 @@ function pMarch31osTrapPatternizer(_side, _iter, _delMult, _sizeMult, _hasContai
 
     -- Prepare the value data.
     local _largeWallThickStat, _designMiddleThickStat, _designMiddleDelayStat = 11, 10, 4;
-    local currentSizeOverride = 1;
+    local currentSizeOverride = 1.25;
 
     p_resetPatternDelaySettings();
     --[[ if u_getSpeedMultDM greater than equal _spdIsGreaterThanEqual that will calculated with speed difficulty multiplier,
@@ -482,7 +482,7 @@ function pMarch31osAccurateBat(_side, _design, _isOdd, _isInverted, _delMult, _s
     elseif u_getSpeedMultDM lower than _spdIs_greaterThanEqual that won't calculated with speed difficulty multiplier,
     but you can now change the '_thickMult_nonSpd' value ]]
     p_adjustPatternDelaySettings(_spdIs_greaterThanEqual or 2, _thickMult_nonSpd or 1, nil, nil);
-    _delMult = closeValue(_delMult * (getBooleanNumber(isTight) and 0.75 or 1), 0, 1.5);
+    _delMult = closeValue(_delMult * (getBooleanNumber(_isTight) and 0.75 or 1), 0, 1.5);
 
     p_patternEffectStart();
 
@@ -622,12 +622,12 @@ pMarch31osBat = pMarch31osAccurateBat;
 --            _exDelBit: amount extra delay bit.
 --   _hasContainedTable: boolean of containter, only works on table contains booleans
 -- _neighContainedTable: amount of free-neighbor containter, only works on table contains integers
-function pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _hasContainedTable, _neighContainedTable, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
+function pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _hasContainedTable, _neighContainedTable, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
     -- When the value is nil, the values will automatically indexed itself!
     _iter = anythingButNil(_iter, 0); _exDelBit = anythingButNil(_exDelBit, 0); _sizeMult = anythingButNil(_sizeMult, 1);
     _endHeadFree = anythingButNil(_endHeadFree, 1);
     if _endHeadFree > math.floor(getProtocolSides() / 2) - 2 then _endHeadFree = 0; end
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     -- Prepare the value data.
     local currentSizeOverride = 1;
@@ -637,6 +637,7 @@ function pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _ha
     elseif u_getSpeedMultDM lower than _spdIsGreaterThanEqual that won't calculated with speed difficulty multiplier,
     but you can now change the '_delayMultSpdLessThan' value ]]
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultSpdLessThan or 1, nil, nil);
+    _delMult = _delMult * (getBooleanNumber(_isTight) and 0.75 or 1);
 
     p_patternEffectStart();
 
@@ -698,7 +699,7 @@ function pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _ha
 end
 
 -- pMarch31osInterpretInversions(): a pattern from Super Circles' Super Hexagon clone of circle version where you have to turn left-left or right-right or elsewhat. (3-spin)
-function pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
+function pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
     -- When the value is nil, the values will automatically indexed itself!
     _iter = anythingButNil(_iter, u_rndInt(0, 3)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
     _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
@@ -712,6 +713,7 @@ function pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _skipE
     elseif u_getSpeedMultDM lower than _spdIsGreaterThanEqual that won't calculated with speed difficulty multiplier,
     but you can now change the '_delayMultSpdLessThan' value ]]
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultSpdLessThan or 1, nil, nil);
+    _delMult = _delMult * (getBooleanNumber(_isTight) and 0.75 or 1);
 
     p_patternEffectStart();
 
@@ -755,10 +757,11 @@ end
 pMarch31osHexazazInversions = pMarch31osInterpretInversions;
 
 -- pMarch31osDivergencedGauntlets(): a pattern from Serponge's Super Hexagon clone (Ultra Hexagon) from Geometry Dash where you have to turn left-right or right-left. (2-spin)
-function pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
+function pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
     -- When the value is nil, the values will automatically indexed itself!
     _iter = anythingButNil(_iter, 1); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
     _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _delMult = _delMult * (getBooleanNumber(_isTight) and 0.75 or 1);
 
     -- Prepare the value data.
     local currentSizeOverride = 1.25;
