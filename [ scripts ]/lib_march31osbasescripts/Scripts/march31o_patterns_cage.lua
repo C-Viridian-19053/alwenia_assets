@@ -5,7 +5,7 @@
     void pMarch31osTrapPatternizer(_side, _iter) --, 1, 1, { false, false }, { 0, 0 }, false, false, false, 0, 1, 1, 2
     void pMarch31osAccurateBat(_side, _design, _isOdd, _isInverted, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual)
     void pMarch31osAccurateBat(_side) --, "all", false, false, 1, 1, { false, false }, { 0, 0 }, false, false, false, 0, 1, 1, 2
-    void pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _hasContainedTable, _neighContainedTable, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
+    void pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _hasContainedTable, _neighContainedTable, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
     void pMarch31osDiamond(_side, _iter) --, 0, 0, 1, { false, false }, { 0, 0 }, false, false, false, 0, 1, 1, 2
     void pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
     void pMarch31osInterpretInversions(_side, _iter) --, 1, 1, false, false, false, 0, 1, 1, 2
