@@ -1,5 +1,3 @@
---need utils & commons, to avoid stack overflow
-
 --2.x.x+ & 1.92 conv functs
 local u_getSpeedMultDM = u_getSpeedMultDM or getSpeedMult
 local u_rndInt = u_rndInt or math.random
@@ -93,8 +91,8 @@ function fMarch31osChance(_side, _corridorThickNonSpd, _corridorThickSpd, _delMu
     TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
     local _corridorBlockDir = _blockDir;
 
-    rWall(_curSide, customizePatternThickness(16 * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult));
-    t_applyPatDel(customizePatternDelay(16 * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
+    rWall(_curSide, customizePatternThickness(16 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult));
+    t_applyPatDel(customizePatternDelay(16 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
     if _corridorBlockDir > 0 then
         for i = 0, getHalfSides(), 1 do cWall(_curSide + i, p_getPatternThickness() * _sizeMult); end
     else
@@ -130,14 +128,14 @@ function fMarch31osBarrageNoDelay(_side, _corridorThickNonSpd, _corridorThickSpd
             p_patternEffectCycle();
 
             if a < _iter then
-                cWall(_curSide + 1, customizePatternThickness(8 * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult));
-                cWall(_curSide - 1, customizePatternThickness(8 * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult));
+                cWall(_curSide + 1, customizePatternThickness(8 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult));
+                cWall(_curSide - 1, customizePatternThickness(8 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult));
             end
             cBarrage(_curSide, p_getPatternThickness() * _sizeMult);
             if (_isRandDir) then _curSide = _curSide + getRandomDir() + math.floor(getProtocolSides() / 2);
             else _curSide = _curSide + _corridorLoopDir + math.floor(getProtocolSides() / 2);
             end
-            t_applyPatDel(customizePatternDelay(8 * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay(8 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
         end
     end
 
@@ -201,17 +199,17 @@ function fMarch31osMirrorWhirlwind(_side, _thickness, _iter, _extra, _pos_spacin
     TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
     local _spiralPosistionOffset = 0;
 
-    if getBooleanNumber(_isCleanStart) then rWallEx(_curSide + _spiralPosistionOffset + (_loopDir * _pos_spacing), _extra, customizePatternThickness(3 * p_setDelayPatternOfSpeedLessThan() * _delMult * _sizeMult, p_getDelayPatternBool())); end
+    if getBooleanNumber(_isCleanStart) then rWallEx(_curSide + _spiralPosistionOffset + (_loopDir * _pos_spacing), _extra, customizePatternThickness(3 * _delMult * _sizeMult, p_getDelayPatternBool())); end
     for a = 0, _iter, 1 do
         p_patternEffectCycle();
         if a == _iter and getBooleanNumber(_isCleanEnd) then currentTimesOfThickAmountForGreaterThanSquare = (_curSpiralThick + 1); end
-        rWallEx(_curSide + _spiralPosistionOffset, _extra, customizePatternThickness(currentTimesOfThickAmountForGreaterThanSquare * p_setDelayPatternOfSpeedLessThan() * _sizeMult, p_getDelayPatternBool()));
+        rWallEx(_curSide + _spiralPosistionOffset, _extra, customizePatternThickness(currentTimesOfThickAmountForGreaterThanSquare * _sizeMult, p_getDelayPatternBool()));
         _spiralPosistionOffset = _spiralPosistionOffset + (_loopDir * _pos_spacing);
-        t_applyPatDel(customizePatternDelay(_curSpiralThick * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
+        t_applyPatDel(customizePatternDelay(_curSpiralThick * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
     end
-    rWallEx(_curSide + _spiralPosistionOffset, _extra, customizePatternThickness(2 * p_setDelayPatternOfSpeedLessThan() * _sizeMult, p_getDelayPatternBool()));
-    if getBooleanNumber(_isCleanEnd) then rWallEx(_curSide + _spiralPosistionOffset - (_loopDir * _pos_spacing), _extra, customizePatternThickness(2 * p_setDelayPatternOfSpeedLessThan() * _sizeMult, p_getDelayPatternBool())); end
-    t_applyPatDel(customizePatternDelay(_curSpiralThick * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
+    rWallEx(_curSide + _spiralPosistionOffset, _extra, customizePatternThickness(2 * _sizeMult, p_getDelayPatternBool()));
+    if getBooleanNumber(_isCleanEnd) then rWallEx(_curSide + _spiralPosistionOffset - (_loopDir * _pos_spacing), _extra, customizePatternThickness(2 * _sizeMult, p_getDelayPatternBool())); end
+    t_applyPatDel(customizePatternDelay(_curSpiralThick * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
 
     if _blockDir > 0 then
         for i = 0, getHalfSides(), 1 do cWall(_curSide + _spiralPosistionOffset + i, -p_getPatternThickness() * _sizeMult); end
@@ -243,19 +241,19 @@ function fMarch31osSwapTunnelCorridor(_side, _corridorThickNonSpd, _corridorThic
     local _tunnelBlockDir = math.floor(_loopDir);
 
     if (getBooleanNumber(_isLargeWallOnce)) then
-        rWall(_curSide, customizePatternThickness(8 * _iter * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult));
+        rWall(_curSide, customizePatternThickness(8 * _iter * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult));
     end
 
     for a = 0, _iter, 1 do
         p_patternEffectCycle();
 
-        if a < _iter and (not getBooleanNumber(_isLargeWallOnce)) then rWall(_curSide, customizePatternThickness(8 * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult)); end
+        if a < _iter and (not getBooleanNumber(_isLargeWallOnce)) then rWall(_curSide, customizePatternThickness(8 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult)); end
         if (_tunnelBlockDir + a) % 2 == 0 then
             for i = 0, getHalfSides(), 1 do cWall(_curSide + i, p_getPatternThickness() * _sizeMult); end
         else
             for i = getHalfSides(), getProtocolSides(), 1 do cWall(_curSide + i, p_getPatternThickness() * _sizeMult); end
         end
-        t_applyPatDel(customizePatternDelay(8 * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
+        t_applyPatDel(customizePatternDelay(8 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
     end
 
     p_patternEffectEnd();
@@ -295,7 +293,7 @@ function fMarch31osBackAndForthTunnel(_side, _corridorThickNonSpd, _corridorThic
     _isAfterGearTeethEnd = getBooleanNumber(_isAfterGearTeethEnd); if (_isAfterGearTeethEnd) then _timesOfAfterGearTeethEnd = 1; end
 
     if (getBooleanNumber(_isLargeWallOnce)) then
-        rWall(_curSide, customizePatternThickness(((3 * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd)) + 3) * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult));
+        rWall(_curSide, customizePatternThickness(((3 * (_iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd)) + 3) * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult));
     end
 
     for a = 0, _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd, 1 do
@@ -304,7 +302,7 @@ function fMarch31osBackAndForthTunnel(_side, _corridorThickNonSpd, _corridorThic
         if (_isBeforeGearTeethBegin) and _amountOfBeforeGearTeethBegin == 0 and _gearTeethSizeMult > 0 then _oldGearTeethSizeMult = _gearTeethSizeMult; _gearTeethSizeMult = 0; _saveOldGearTeethSizeMult = _oldGearTeethSizeMult; end
         if (_isAfterGearTeethEnd) and a >= _iter + _timesOfBeforeGearTeethBegin + _timesOfAfterGearTeethEnd and _gearTeethSizeMult > 0 then _gearTeethSizeMult = 0; end
 
-        if (getBooleanNumber(_isLargeWallOnce)) then rWall(_curSide, customizePatternThickness(3 * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult)); end
+        if (getBooleanNumber(_isLargeWallOnce)) then rWall(_curSide, customizePatternThickness(3 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult)); end
         if _variantDesign == 1 then
             if _gearTeethSizeMult > 0 then
                 cWallTkns(_curSide + (((a + _tunnelLoopDir) % 2) * (2 + _free)), _gearTeethStepDel, _gearTeethStepLimit, math.ceil(getProtocolSides() / 2) - (_free + 2), _tunnelLoopDirGearTeeth, THICKNESS * (6 / getProtocolSides()) * _gearTeethSizeMult, p_getPatternThickness() * _gearTeethSizeMult * _sizeMult)
@@ -321,10 +319,10 @@ function fMarch31osBackAndForthTunnel(_side, _corridorThickNonSpd, _corridorThic
 
         _tunnelLoopDirGearTeeth = _tunnelLoopDirGearTeeth * -1
         if (_isBeforeGearTeethBegin) and _amountOfBeforeGearTeethBegin == 0 and _gearTeethSizeMult == 0 then _amountOfBeforeGearTeethBegin = _amountOfBeforeGearTeethBegin + 1; _gearTeethSizeMult = _oldGearTeethSizeMult; end
-        t_applyPatDel(customizePatternDelay(3 * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
+        t_applyPatDel(customizePatternDelay(3 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
     end
-    if (getBooleanNumber(_isLargeWallOnce)) then rWall(_curSide, customizePatternThickness(3 * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult)); end
-    t_applyPatDel(customizePatternDelay(3 * p_setDelayPatternOfSpeedLessThan() * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
+    if (getBooleanNumber(_isLargeWallOnce)) then rWall(_curSide, customizePatternThickness(3 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult)); end
+    t_applyPatDel(customizePatternDelay(3 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
 
     if _blockDir > 0 then
         for i = 0, getHalfSides(), 1 do cWall(_curSide + i, p_getPatternThickness() * _sizeMult); end
