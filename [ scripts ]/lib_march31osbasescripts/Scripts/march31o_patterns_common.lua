@@ -625,9 +625,9 @@ function pMarch31osExWhirlwind(_side, _iter, _timesBeforeChangeDir, _revFreq, _e
         if (_slopeAmountStart > 0) then
             for fa = 0, _slopeAmountStart, 1 do
                 for ia = 0, _slopeAmountStart - fa, 1 do
-                    if ia > 0 then cWallMirrorEx(_curSide - (_direction * _posSpacing * (ia - 1)), _mirrorStep, _extraWidth, customizePatternThickness((_curSpiralThick + 1) * _delMult * _sizeMult, p_getDelayPatternBool())); end
+                    if ia > 0 then cWallMirrorEx(_curSide - (_direction * _posSpacing * (ia - 1)), _mirrorStep, _extraWidth, customizePatternThickness((_curSpiralThick + 1) * _sizeMult, p_getDelayPatternBool())); end
                 end
-                cWallMirrorEx(_curSide + (_direction * _posSpacing * fa) - (_slopeAmountStart * _direction * _posSpacing), _mirrorStep, _extraWidth, customizePatternThickness(_curSpiralThick * _delMult * _sizeMult, p_getDelayPatternBool()));
+                cWallMirrorEx(_curSide + (_direction * _posSpacing * fa) - (_slopeAmountStart * _direction * _posSpacing), _mirrorStep, _extraWidth, customizePatternThickness(_curSpiralThick * _sizeMult, p_getDelayPatternBool()));
                 t_applyPatDel(customizePatternDelay(2 * currentDelayOverride * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
                 if fa == _slopeAmountStart then _spiralPosistionOffset = _spiralPosistionOffset + (_direction * _posSpacing); end
             end
