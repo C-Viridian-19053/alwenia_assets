@@ -562,7 +562,6 @@ function pMarch31osRandomWhirlwind(_side, _iter, _extra, _mirror_step, _pos_spac
     if not _slopeAmountEnd or _slopeAmountEnd < 0 then _slopeAmountEnd = _slopeAmountStart; end
     _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
-    local currentTimesOfDelayAmountForTriangle = 4;
     local currentTimesOfThickStartAmountForSquare, currentTimesEndOfThickAmountForSquare, currentTimesOfThickAmountForGreaterThanSquare = 6, 8.25, 2;
     local currentSizeOverride, currentDelayOverride = 1.25, 0.9;
     local currentTimesOfThickAmount = 2;
@@ -597,10 +596,9 @@ function pMarch31osRandomWhirlwind(_side, _iter, _extra, _mirror_step, _pos_spac
             t_applyPatDel(customizePatternDelay(4 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
         end
         for i = 0, 2, 1 do
-            if i == 2 then currentTimesOfDelayAmountForTriangle = 3; end
             cWall(_curSide + _spiralPosistionOffset, customizePatternThickness(4 * _sizeMult, p_getDelayPatternBool()));
             _spiralPosistionOffset = _spiralPosistionOffset + _spiralRngLoopDir;
-            t_applyPatDel(customizePatternDelay(currentTimesOfDelayAmountForTriangle * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay((i == 2 and 3 or 4) * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
         end
         cBarrage(_curSide + _spiralPosistionOffset + _spiralRngLoopDir, customizePatternThickness(1 * _sizeMult, p_getDelayPatternBool()));
     elseif getProtocolSides() == 4 and ((_slopeAmountStart > 0 and _slopeAmountEnd > 0) and _is_full) then
