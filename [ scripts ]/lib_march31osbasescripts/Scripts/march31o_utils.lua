@@ -1179,7 +1179,7 @@ getRandomDirVal = getRandomNegVal;
 -- babadrake's <<closeValue * -1>> function method
 function loopValue(_input, _min_val, _max_val) -- thanks Lanterns
     local _modRem = _max_val - _min_val
-    return (_input % _modRem) + _min_val
+    return (_input % (_modRem + 1)) + _min_val
 end
 
 --syncs
