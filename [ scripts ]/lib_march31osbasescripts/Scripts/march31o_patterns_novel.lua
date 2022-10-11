@@ -39,7 +39,7 @@ function pMarch31osRandomWalls(_side, _thickness, _iter, _mirrorOffset, _extra, 
     for a = 0, _iter, 1 do
         p_patternEffectCycle();
 
-        cWallMirrorEx(_curSide, _mirrorOffset, _extra, p_getPatternThickness() * _sizeMult);
+        cMirrorWallEx(_curSide, _mirrorOffset, _extra, p_getPatternThickness() * _sizeMult);
 
         t_applyPatDel(customizePatternDelay(2 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()))
         _curSide = _curSide + u_rndInt(0, _maxstep) * getRandomDir()
@@ -74,7 +74,7 @@ function pMarch31osSnakeBarrage(_side, _thickness, _iter, _extra, _mirrorOffset,
 
     _isContained = getBooleanNumber(_isContained);
     if _isContained then
-        cWallMirrorEx(_side, _mirrorOffset, _maxDist + _extra, (_thickness or THICKNESS) * _sizeMult);
+        cMirrorWallEx(_side, _mirrorOffset, _maxDist + _extra, (_thickness or THICKNESS) * _sizeMult);
         t_applyPatDel(getDelayWalls(2) * _curDelaySpeed * _delMult * _sizeMult);
     end
 
@@ -86,7 +86,7 @@ function pMarch31osSnakeBarrage(_side, _thickness, _iter, _extra, _mirrorOffset,
     for a = 0, _iter, 1 do
         p_patternEffectCycle();
 
-        cWallMirrorEx(_side, _mirrorOffset, _extra, (_thickness or THICKNESS) * _thickMult * _sizeMult);
+        cMirrorWallEx(_side, _mirrorOffset, _extra, (_thickness or THICKNESS) * _thickMult * _sizeMult);
         t_applyPatDel(getDelayWalls(1) * _curDelaySpeed * _delMult * _sizeMult);
         _side = _side + u_rndInt(0, 1) * getRandomDir();
         _side = closeValue(_side, _sideLimits[1], _sideLimits[2])
@@ -94,7 +94,7 @@ function pMarch31osSnakeBarrage(_side, _thickness, _iter, _extra, _mirrorOffset,
 
     if _isContained then
         t_applyPatDel(getDelayWalls(1) * _curDelaySpeed * _delMult * _sizeMult);
-        cWallMirrorEx(_sideLimits[1], _mirrorOffset, _maxDist + _extra, (_thickness or THICKNESS) * _sizeMult);
+        cMirrorWallEx(_sideLimits[1], _mirrorOffset, _maxDist + _extra, (_thickness or THICKNESS) * _sizeMult);
     end
 
     p_patternEffectEnd();
@@ -130,9 +130,9 @@ function pMarch31osMidCutSpiral(_side, _iter, _step, _extra, _mirrorOffset, _tot
     end
 
     local _constructMidCutSpiPart = function(_side, _mirrorOffset, _extra)
-        cWallMirrorEx(_side, _mirrorOffset, _extra)
+        cMirrorWallEx(_side, _mirrorOffset, _extra)
         t_applyPatDel(getDelayWalls(2) * _curDelaySpeed * _delMult * _sizeMult)
-        cWallMirrorEx(_side, _mirrorOffset, _extra)
+        cMirrorWallEx(_side, _mirrorOffset, _extra)
         t_applyPatDel(getDelayWalls(1) * _curDelaySpeed * _delMult * _sizeMult)
     end
 
