@@ -305,15 +305,15 @@ function fMarch31osBackAndForthTunnel(_side, _corridorThickNonSpd, _corridorThic
         if (getBooleanNumber(_isLargeWallOnce)) then rWall(_curSide, customizePatternThickness(3 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult)); end
         if _variantDesign == 1 then
             if _gearTeethSizeMult > 0 then
-                cWallTkns(_curSide + (((a + _tunnelLoopDir) % 2) * (2 + _free)), _gearTeethStepDel, _gearTeethStepLimit, math.ceil(getProtocolSides() / 2) - (_free + 2), _tunnelLoopDirGearTeeth, THICKNESS * (6 / getProtocolSides()) * _gearTeethSizeMult, p_getPatternThickness() * _gearTeethSizeMult * _sizeMult)
-                cWallTkns(_curSide - (((a + _tunnelLoopDir) % 2) * (2 + _free)) + getHalfSides() + (2 + _free), _gearTeethStepDel, _gearTeethStepLimit, math.ceil(getProtocolSides() / 2) - (2 + (getProtocolSides() % 2)) - _free, -_tunnelLoopDirGearTeeth, THICKNESS * (6 / getProtocolSides()) * _gearTeethSizeMult, p_getPatternThickness() * _gearTeethSizeMult * _sizeMult)
-            else cBarrageDoubleHoled(_curSide + (((a + _tunnelLoopDir + 1) % 2) * getHalfSides()), 0, _free, p_getPatternThickness() * _saveOldGearTeethSizeMult * _sizeMult);
+                cTknsWall(_curSide + (((a + _tunnelLoopDir) % 2) * (2 + _free)), _gearTeethStepDel, _gearTeethStepLimit, math.ceil(getProtocolSides() / 2) - (_free + 2), _tunnelLoopDirGearTeeth, THICKNESS * (6 / getProtocolSides()) * _gearTeethSizeMult, p_getPatternThickness() * _gearTeethSizeMult * _sizeMult)
+                cTknsWall(_curSide - (((a + _tunnelLoopDir) % 2) * (2 + _free)) + getHalfSides() + (2 + _free), _gearTeethStepDel, _gearTeethStepLimit, math.ceil(getProtocolSides() / 2) - (2 + (getProtocolSides() % 2)) - _free, -_tunnelLoopDirGearTeeth, THICKNESS * (6 / getProtocolSides()) * _gearTeethSizeMult, p_getPatternThickness() * _gearTeethSizeMult * _sizeMult)
+            else cDoubleHoledBarrage(_curSide + (((a + _tunnelLoopDir + 1) % 2) * getHalfSides()), 0, _free, p_getPatternThickness() * _saveOldGearTeethSizeMult * _sizeMult);
             end
         else
             if _gearTeethSizeMult > 0 then
-                cWallTkns(_curSide + (((a + _tunnelLoopDir) % 2) * (2 + _free)), _gearTeethStepDel, _gearTeethStepLimit, math.ceil(getProtocolSides() / 2) - (_free + 2), _tunnelLoopDirGearTeeth, THICKNESS * (6 / getProtocolSides()) * _gearTeethSizeMult, p_getPatternThickness() * _gearTeethSizeMult * _sizeMult)
-                cWallTkns(_curSide + (((a + _tunnelLoopDir) % 2) * (2 + _free)) + getHalfSides(), _gearTeethStepDel, _gearTeethStepLimit, math.ceil(getProtocolSides() / 2) - (2 + (getProtocolSides() % 2)) - _free, _tunnelLoopDirGearTeeth, THICKNESS * (6 / getProtocolSides()) * _gearTeethSizeMult, p_getPatternThickness() * _gearTeethSizeMult * _sizeMult)
-            else cBarrageVorta(_curSide + (((a + _tunnelLoopDir) % 2) * (2 + _free)), _free, p_getPatternThickness() * _saveOldGearTeethSizeMult * _sizeMult);
+                cTknsWall(_curSide + (((a + _tunnelLoopDir) % 2) * (2 + _free)), _gearTeethStepDel, _gearTeethStepLimit, math.ceil(getProtocolSides() / 2) - (_free + 2), _tunnelLoopDirGearTeeth, THICKNESS * (6 / getProtocolSides()) * _gearTeethSizeMult, p_getPatternThickness() * _gearTeethSizeMult * _sizeMult)
+                cTknsWall(_curSide + (((a + _tunnelLoopDir) % 2) * (2 + _free)) + getHalfSides(), _gearTeethStepDel, _gearTeethStepLimit, math.ceil(getProtocolSides() / 2) - (2 + (getProtocolSides() % 2)) - _free, _tunnelLoopDirGearTeeth, THICKNESS * (6 / getProtocolSides()) * _gearTeethSizeMult, p_getPatternThickness() * _gearTeethSizeMult * _sizeMult)
+            else cVortaBarrage(_curSide + (((a + _tunnelLoopDir) % 2) * (2 + _free)), _free, p_getPatternThickness() * _saveOldGearTeethSizeMult * _sizeMult);
             end
         end
 
