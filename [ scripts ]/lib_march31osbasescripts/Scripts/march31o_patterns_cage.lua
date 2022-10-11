@@ -786,7 +786,7 @@ function pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult, _isTi
     t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
     for a = 0, _iter, 1 do
         p_patternEffectCycle();
-        for d = 0, 1 do
+        for d = 0, 1, 1 do
             for i = 1 - d, math.floor(getProtocolSides() / 2) + (((a + 1) % 2) * (getProtocolSides() % 2)) + (d - 1), 1 do cWall(_curSide + i + (((a + 1) % 2) * math.floor(getProtocolSides() / 2)), customizePatternThickness((3 - d) * currentSizeOverride * _sizeMult, p_getDelayPatternBool())); end
             t_applyPatDel(customizePatternDelay(((d + 1) * 2) * currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
         end
