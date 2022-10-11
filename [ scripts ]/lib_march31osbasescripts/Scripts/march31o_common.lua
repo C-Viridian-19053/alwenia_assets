@@ -1,5 +1,3 @@
---need utils, to avoid stack overflow
-
 --2.x.x+ & 1.92 conv functs
 local w_wall = w_wall or wall
 local w_wallAdj = w_wallAdj or wallAdj
@@ -59,21 +57,21 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant
     void cBarrage(_side, _thickness, ...)
     void cBarrageGap(_side, _gap, _thickness, ...)
 
-    void cBarrageAlt(_side, _step, _thickness, ...)
-    void cBarrageAltEx(_side, _step, _extra, _thickness, ...)
+    void cAltBarrage(_side, _step, _thickness, ...)
+    void cAltBarrageEx(_side, _step, _extra, _thickness, ...)
 
-    void cWallTkns(_side, _thick_mult_step, _thick_mult_step_limit, _extra, _step_dir, _thick_mult, _thickness, ...)
-    void cWallGrow(_side, _extend, _thickness, ...)
-    void cWallGrowEx(_side, _extend, _extra, _thickness, ...)
-    void cWallMirror(_side, _mirror_step, _thickness, ...)
-    void cWallMirrorEx(_side, _mirror_step, _extra, _thickness, ...)
+    void cTknsWall(_side, _thick_mult_step, _thick_mult_step_limit, _extra, _step_dir, _thick_mult, _thickness, ...)
+    void cGrowWall(_side, _extend, _thickness, ...)
+    void cGrowWallEx(_side, _extend, _extra, _thickness, ...)
+    void cMirrorWall(_side, _mirror_step, _thickness, ...)
+    void cMirrorWallEx(_side, _mirror_step, _extra, _thickness, ...)
 
-    void cWallDraw(_side, _wallMin, _wallMax, _thickness, ...)
+    void cDrawWall(_side, _wallMin, _wallMax, _thickness, ...)
 
-    void cBarrageTkns(_side, _thick_mult_step, _thick_mult_step_limit, _gap, _step_dir, _thick_mult, _thickness, ...)
-    void cBarrageVorta(_side, _free, _thickness, ...)
-    void cBarrageHalf(_side, _thickness, ...)
-    void cBarrageDoubleHoled(_side, _extra_large_walls, _free, _thickness, ...)
+    void cTknsBarrage(_side, _thick_mult_step, _thick_mult_step_limit, _gap, _step_dir, _thick_mult, _thickness, ...)
+    void cVortaBarrage(_side, _free, _thickness, ...)
+    void cHalfBarrage(_side, _thickness, ...)
+    void cDoubleHoledBarrage(_side, _extra_large_walls, _free, _thickness, ...)
     void cBarrageExHoles(_side, _extra_holes, _thickness, ...)
 
     void cSwapBarrageN(_side, _neighbors, _delMult, _isSpdMode, _thickness, ...)
@@ -324,16 +322,16 @@ function cAltBarrage(_side, _step, _thickness, ...)
     end
 end
 
--- cBarrageAltEx: spawns a alternate wall with _extra walls attached to it.
-function cBarrageAltEx(_side, _step, _extra, _thickness, ...)
+-- cAltBarrageEx: spawns a alternate wall with _extra walls attached to it.
+function cAltBarrageEx(_side, _step, _extra, _thickness, ...)
     _step = _step or 2;
     for spacingWalls = 0, getProtocolSides(), _step do
         cWallEx(_side + spacingWalls, _extra, _thickness, ...);
     end
 end
 
--- cWallTkns: spawns a several thickness wall attached to it.
-function cWallTkns(_side, _thick_mult_step, _thick_mult_step_limit, _extra, _step_dir, _thick_mult, _thickness, ...)
+-- cTknsWall: spawns a several thickness wall attached to it.
+function cTknsWall(_side, _thick_mult_step, _thick_mult_step_limit, _extra, _step_dir, _thick_mult, _thickness, ...)
     _thick_mult = _thick_mult or THICKNESS * (6 / getProtocolSides());
     _thick_mult_step = _thick_mult_step or 1; _step_dir = _step_dir or 1;
     if _extra == nil or _extra < 0 then _extra = 0; end
@@ -358,35 +356,35 @@ function cWallTkns(_side, _thick_mult_step, _thick_mult_step_limit, _extra, _ste
     end
 end
 
--- cWallGrow: spawns a growing wall including _extend walls attached to it, plus the large walls growing at each direction.
-function cWallGrow(_side, _extend, _thickness, ...)
+-- cGrowWall: spawns a growing wall including _extend walls attached to it, plus the large walls growing at each direction.
+function cGrowWall(_side, _extend, _thickness, ...)
     _extend = _extend or 0;
     for largeWallsWidth = -_extend, _extend, 1 do cWall(_side + largeWallsWidth, _thickness, ...); end
 end
 
--- cWallGrowEx: spawns a growing wall with _extra walls attached to it.
-function cWallGrowEx(_side, _extend, _extra, _thickness, ...)
+-- cGrowWallEx: spawns a growing wall with _extra walls attached to it.
+function cGrowWallEx(_side, _extend, _extra, _thickness, ...)
     _extend = _extend or 0;
     for largeWallsWidth = -_extend, _extend, 1 do cWallEx(_side + largeWallsWidth, _extra, _thickness, ...); end
 end
 
--- cWallMirror: spawns a mirror wall with specified mirror offsets.
-function cWallMirror(_side, _mirror_step, _thickness, ...)
+-- cMirrorWall: spawns a mirror wall with specified mirror offsets.
+function cMirrorWall(_side, _mirror_step, _thickness, ...)
     for spacingWalls = 0, _mirror_step - 1, 1 do cWall(_side + math.floor(spacingWalls * (getProtocolSides() / _mirror_step)), _thickness, ...); end
 end
 
--- cWallMirrorEx: spawns a mirror wall with specified mirror offsets with _extra walls attached to it.
-function cWallMirrorEx(_side, _mirror_step, _extra, _thickness, ...)
+-- cMirrorWallEx: spawns a mirror wall with specified mirror offsets with _extra walls attached to it.
+function cMirrorWallEx(_side, _mirror_step, _extra, _thickness, ...)
     for spacingWalls = 0, _mirror_step - 1, 1 do cWallEx(_side + math.floor(spacingWalls * (getProtocolSides() / _mirror_step)), _extra, _thickness, ...); end
 end
 
--- cWallDraw: spawns a wall, but you can draw everything
-function cWallDraw(_side, _wallMin, _wallMax, _thickness, ...)
+-- cDrawWall: spawns a wall, but you can draw everything
+function cDrawWall(_side, _wallMin, _wallMax, _thickness, ...)
     for i = _wallMin, _wallMax, 1 do cWall(_side + i, _thickness, ...) end
 end
 
--- cBarrageTkns: same as 'cWallTkns' function + barrage logic
-function cBarrageTkns(_side, _thick_mult_step, _thick_mult_step_limit, _gap, _step_dir, _thick_mult, _thickness, ...)
+-- cTknsBarrage: same as 'cTknsWall' function + barrage logic
+function cTknsBarrage(_side, _thick_mult_step, _thick_mult_step_limit, _gap, _step_dir, _thick_mult, _thickness, ...)
     _thick_mult = _thick_mult or THICKNESS * (6 / getProtocolSides());
     _thick_mult_step = _thick_mult_step or 1; _step_dir = _step_dir or 1;
     if _gap == nil or _gap < 1 then _gap = 1; end
@@ -411,20 +409,20 @@ function cBarrageTkns(_side, _thick_mult_step, _thick_mult_step_limit, _gap, _st
     end
 end
 
--- cBarrageVorta: spawns a vorta/vortex wall that every sides will work properly.
-function cBarrageVorta(_side, _free, _thickness, ...)
+-- cVortaBarrage: spawns a vorta/vortex wall that every sides will work properly.
+function cVortaBarrage(_side, _free, _thickness, ...)
     _free = _free or 0;
     for largeWallsWidth_001 = 0, math.ceil(getProtocolSides() * 0.5 - 2) - _free, 1 do cWall(_side + largeWallsWidth_001, _thickness, ...); end
     for largeWallsWidth_002 = 0, math.floor(getProtocolSides() * 0.5 - 2) - _free, 1 do cWall(_side + getPolySides(2) + largeWallsWidth_002, _thickness, ...); end
 end
 
--- cBarrageHalf: spawns a half-barrage wall.
-function cBarrageHalf(_side, _thickness, ...)
+-- cHalfBarrage: spawns a half-barrage wall.
+function cHalfBarrage(_side, _thickness, ...)
     for largeWallsWidth = 0, getPolySides(2) - 1, 1 do cWall(_side + largeWallsWidth, _thickness, ...); end
 end
 
--- cBarrageDoubleHoled: spawns a double-holed barrage wall that every sides will work properly.
-function cBarrageDoubleHoled(_side, _2nd_hole_offset, _hole_free, _thickness, ...)
+-- cDoubleHoledBarrage: spawns a double-holed barrage wall that every sides will work properly.
+function cDoubleHoledBarrage(_side, _2nd_hole_offset, _hole_free, _thickness, ...)
     _2nd_hole_offset = _2nd_hole_offset or 0; _hole_free = _hole_free or 0;
     for largeWallsWidth_001 = _2nd_hole_offset + 2 + _hole_free, getProtocolSides() - 2 - _hole_free, 1 do cWall(_side + largeWallsWidth_001, _thickness, ...); end
     for largeWallsWidth_002 = 0, _2nd_hole_offset, 1 do cWall(_side + largeWallsWidth_002, _thickness, ...); end
@@ -563,7 +561,7 @@ local normalCurveMult = 1
 local syncedCurveMult = 1
 
 local function wallSpawnDistanceFix()
-	return (1600 / (l_getWallSpawnDistance() or 1600))
+    return (1600 / (l_getWallSpawnDistance() or 1600))
 end
 
 -- syncCurveToSideDistance: Returns an appropriate constant that, if applied to a curving wall travelling at constant speed, will cause it go one full side.
