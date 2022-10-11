@@ -411,12 +411,12 @@ function pMarch31osTrapPatternizer(_side, _iter, _delMult, _sizeMult, _hasContai
     end
     if getProtocolSides() >= 6 then
         local modeDesignStartType001_sideOffset = (getProtocolSides() >= 10 and math.floor(getProtocolSides() / 4)) or 1;
-        cWallGrow(_curSide, modeDesignStartType001_sideOffset, customizePatternThickness(3 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()))
+        cGrowWall(_curSide, modeDesignStartType001_sideOffset, customizePatternThickness(3 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()))
         t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
-        if getProtocolSides() % 2 == 1 then cWallGrow(_curSide, math.ceil(getProtocolSides() / 2) - 2, customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+        if getProtocolSides() % 2 == 1 then cGrowWall(_curSide, math.ceil(getProtocolSides() / 2) - 2, customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
         else cBarrage(_curSide + math.floor(getProtocolSides() / 2), customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
         end
-    else cWallGrow(_curSide, math.floor(getProtocolSides() / 4), customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+    else cGrowWall(_curSide, math.floor(getProtocolSides() / 4), customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
     end
     for a = 0, _iter do
         if getProtocolSides() >= 6 and getProtocolSides() < 8 then _largeWallThickStat = (a == _iter and 11) or 13;
@@ -438,16 +438,16 @@ function pMarch31osTrapPatternizer(_side, _iter, _delMult, _sizeMult, _hasContai
         for largeWallsOffset001 = 0, getProtocolSides() % 2, 1 do cWall(_curSide + largeWallsOffset001 + math.floor(getProtocolSides() / 2), customizePatternThickness(_designMiddleThickStat * currentSizeOverride * _sizeMult, p_getDelayPatternBool())); end
         if getProtocolSides() >= 6 then
             t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
-            for largeWallsOffset002 = -1, (getProtocolSides() % 2) + 1, 1 do cWallGrow(_curSide + largeWallsOffset002 + math.floor(getProtocolSides() / 2), math.floor(getProtocolSides() / 4) - 1, customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool())); end
+            for largeWallsOffset002 = -1, (getProtocolSides() % 2) + 1, 1 do cGrowWall(_curSide + largeWallsOffset002 + math.floor(getProtocolSides() / 2), math.floor(getProtocolSides() / 4) - 1, customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool())); end
         end
         t_applyPatDel(customizePatternDelay(_designMiddleDelayStat * currentSizeOverride * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
         if a < _iter then
-            if getProtocolSides() % 2 == 1 then cWallGrow(_curSide, math.ceil(getProtocolSides() / 2) - 2, customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+            if getProtocolSides() % 2 == 1 then cGrowWall(_curSide, math.ceil(getProtocolSides() / 2) - 2, customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             else cBarrage(_curSide + math.floor(getProtocolSides() / 2), customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             end
         end
     end
-    cWallGrow(_curSide, math.floor(getProtocolSides() / 4), customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()))
+    cGrowWall(_curSide, math.floor(getProtocolSides() / 4), customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()))
     if getBooleanNumber(_hasContainedTable[2]) then
         t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
         -- Set the "C" barrage with neighbors after pattern spawned.
@@ -662,7 +662,7 @@ function pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _ha
     local _currentReduceThickAmountStat = (getProtocolSides() >= 6 and 0.25) or -0.1
     if getProtocolSides() > 3 then cWall(_curSide, customizePatternThickness((((getProtocolSides() - (getProtocolSides() % 2)) + (_exDelBit * 2) - _currentReduceThickAmountStat) * 2) * currentSizeOverride * _curDelaySpeed * _sizeMult, p_getDelayPatternBool())); end
     for adj = 0, math.floor(getProtocolSides() / 2) - 2, 1 do
-        cWallGrow(_curSide, adj + 1, customizePatternThickness(((math.floor(getProtocolSides() / 2) - (1 + adj)) * 2) * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+        cGrowWall(_curSide, adj + 1, customizePatternThickness(((math.floor(getProtocolSides() / 2) - (1 + adj)) * 2) * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
     end
     t_applyPatDel(customizePatternDelay(((_exDelBit + 2) * 2) * currentSizeOverride * _curDelaySpeed * _sizeMult, p_getDelayPatternBool()));
     for a = 0, _iter, 1 do
@@ -675,14 +675,14 @@ function pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _ha
         if a < _iter then
             if getProtocolSides() > 3 then cWall(_curSide, customizePatternThickness(((((getProtocolSides() - (getProtocolSides() % 2)) + (_exDelBit * 2) - _currentReduceThickAmountStat) * 2) + 1.5) * currentSizeOverride * _curDelaySpeed * _sizeMult, p_getDelayPatternBool())); end
             for adj = 0, math.floor(getProtocolSides() / 2) - 2, 1 do
-                cWallGrow(_curSide, adj + 1, customizePatternThickness((((getProtocolSides() - (getProtocolSides() % 2)) - (adj * 2 + 3)) * 2) * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+                cGrowWall(_curSide, adj + 1, customizePatternThickness((((getProtocolSides() - (getProtocolSides() % 2)) - (adj * 2 + 3)) * 2) * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
                 t_applyPatDel(customizePatternDelay(((1 + math.floor((adj + 1) / (math.floor(getProtocolSides() / 2) - 1)) + (_exDelBit * math.floor((adj + 1) / (math.floor(getProtocolSides() / 2) - 1)))) * 2) * currentSizeOverride * _curDelaySpeed * _sizeMult, p_getDelayPatternBool()));
             end
         end
     end
     for adj = 0, math.floor(getProtocolSides() / 2) - (_endHeadFree + 2), 1 do
         local _currentEndHeadThickAmountStat = adj >= math.floor(getProtocolSides() / 2) - (_endHeadFree + 2) and 2 or 3;
-        cWallGrow(_curSide, adj + 1, customizePatternThickness(_currentEndHeadThickAmountStat * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+        cGrowWall(_curSide, adj + 1, customizePatternThickness(_currentEndHeadThickAmountStat * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
         t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * _curDelaySpeed * _sizeMult, p_getDelayPatternBool()));
     end
     if getBooleanNumber(_hasContainedTable[2]) then
@@ -728,7 +728,7 @@ function pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _isTig
     --[ -= Starting of pattern code =- ]--
     if getProtocolSides() >= 6 then
         for sideOffset001 = 0, getProtocolSides() % 2, 1 do
-            cWallGrow(_curSide - (getProtocolSides() % 2) + sideOffset001, math.floor(getProtocolSides() / 4), customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+            cGrowWall(_curSide - (getProtocolSides() % 2) + sideOffset001, math.floor(getProtocolSides() / 4), customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
         end
     elseif getProtocolSides() < 6 then
         for sideOffset001a = 0, getProtocolSides() % 2, 1 do
@@ -741,7 +741,7 @@ function pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _isTig
             local _thickSideAmountStat = (sideAmount == math.floor(getProtocolSides() / 2) - 1 and 2) or 3;
             t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
             for sideOffset = 0, ((a % 2) * (getProtocolSides() % 2)), 1 do
-                cWallGrow(_curSide + sideOffset + (((a + 1) % 2) * math.floor(getProtocolSides() / 2)) - ((a % 2) * (getProtocolSides() % 2)), sideAmount, customizePatternThickness(_thickSideAmountStat * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+                cGrowWall(_curSide + sideOffset + (((a + 1) % 2) * math.floor(getProtocolSides() / 2)) - ((a % 2) * (getProtocolSides() % 2)), sideAmount, customizePatternThickness(_thickSideAmountStat * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
                 cWall(_curSide + sideOffset + (((a + 1) % 2) * math.floor(getProtocolSides() / 2)) - ((a % 2) * (getProtocolSides() % 2)), customizePatternThickness((sideAmount * 2) * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             end
         end
