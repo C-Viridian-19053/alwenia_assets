@@ -705,8 +705,7 @@ function pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _isTig
     _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     -- Prepare the value data.
-    local currentTimesOfThickAmount_001 = 3;
-    local currentSizeOverride = 1.25;
+    local currentSizeOverride = 1;
 
     p_resetPatternDelaySettings();
     --[[ if u_getSpeedMultDM greater than equal _spdIsGreaterThanEqual that will calculated with speed difficulty multiplier,
@@ -764,7 +763,7 @@ function pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult, _isTi
     _delMult = _delMult * (getBooleanNumber(_isTight) and 0.75 or 1);
 
     -- Prepare the value data.
-    local currentSizeOverride = 1.25;
+    local currentSizeOverride = 1;
 
     p_resetPatternDelaySettings();
     --[[ if u_getSpeedMultDM greater than equal _spdIsGreaterThanEqual that will calculated with speed difficulty multiplier,
