@@ -561,7 +561,7 @@ local normalCurveMult = 1
 local syncedCurveMult = 1
 
 local function wallSpawnDistanceFix()
-    return (1600 / (l_getWallSpawnDistance() or 1600))
+	return (1600 / (l_getWallSpawnDistance() or 1600))
 end
 
 -- syncCurveToSideDistance: Returns an appropriate constant that, if applied to a curving wall travelling at constant speed, will cause it go one full side.
