@@ -1,6 +1,6 @@
 u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
-u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "march31o_utils.lua")
-u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "march31o_utility_classes.lua")
+u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_utils.lua")
+u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_utility_classes.lua")
 
 function mch_wallSwap()
 	a_playPackSound("warning.ogg")
@@ -320,8 +320,9 @@ function l_changeLevel(mLevelPath, mStyleID, mBacksoundName, mTimeSegment, bRese
 	onInit(); onLoad();
 end
 
-function whyCantIJustGoToTheMenu()
-	a_setMusic("emptyness")
+function whyCantIJustGoToTheMenu(mMusicID)
+	a_setMusicPitch(0)
+	a_setMusic(mMusicID)
 	e_kill() -- that sucks
 end
 
