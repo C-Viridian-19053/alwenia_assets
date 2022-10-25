@@ -3,7 +3,8 @@ specific pattern sets are listed in below, patterns fully modfiied by me (Marchi
 ]]
 
 -- include
-u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_utils.lua")
+u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_utils.lua")
+u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_common.lua")
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_common.lua")
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_additional.lua")
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_additional_tunnel.lua")
