@@ -1,4 +1,4 @@
-u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "march31o_common.lua")
+u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_common.lua")
 
 SPINNINGCONSTANT = 0.9450024
 --this constant roughly determines how fast the world must spin to be as fast as the triangular cursor (note: could use improving)
@@ -38,13 +38,14 @@ function barrageFiller(mThickness, mNumbType)
 	elseif mNumbType == 4 then for a = 0, 1 do cAltBarrage(side, 2, mThickness) t_wait(customizeTempoPatternDelay(a == 0 and 0.25 or 0)) end
 	elseif mNumbType == 5 then rWall(side, customizeTempoPatternThickness(0.25) + mThickness)
 	elseif mNumbType == 6 then cAltBarrage(side, 2, customizeTempoPatternThickness(0.25) + mThickness)
-	elseif mNumbType == 7 then cBarrageHalf(side, mThickness)
-	elseif mNumbType == 8 then cBarrageVorta(side, 0, mThickness)
+	elseif mNumbType == 7 then cHalfBarrage(side, mThickness)
+	elseif mNumbType == 8 then cVortaBarrage(side, 0, mThickness)
 	elseif mNumbType == 9 then cBarrageExHoles(side, 2, mThickness)
 	elseif mNumbType == 10 then cBarrage(side, mThickness)
 	end
 end
 
+--deprecated
 function filler(mThickness, bIsRepeat, bIsThick)
 	local side = getRandomSide()
 	bIsRepeat = getBooleanNumber(bIsRepeat) and 1 or 0
@@ -69,10 +70,10 @@ function filler(mThickness, bIsRepeat, bIsThick)
 	elseif randomNumber == 3 then
 		if (not bIsThick) then
 			for a = 0, bIsRepeat do
-				cBarrageHalf(side, mThickness)
+				cHalfBarrage(side, mThickness)
 				t_wait(customizeTempoPatternDelay(0.25))
 			end
-		else cBarrageHalf(side, customizeTempoPatternThickness(0.25 * bIsRepeat) + mThickness)
+		else cHalfBarrage(side, customizeTempoPatternThickness(0.25 * bIsRepeat) + mThickness)
 		end
 	end
 end
