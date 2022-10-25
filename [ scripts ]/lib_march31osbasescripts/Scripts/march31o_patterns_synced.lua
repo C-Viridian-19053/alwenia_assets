@@ -13,7 +13,7 @@ local u_rndInt = u_rndInt or math.random
 
     void spMarch31osWhirlwind(_side, _iter, _extra, _mirrorStep, _posSpacing, _wallLength, _direction, _cleanAmountStart, _cleanAmountEnd, _is_full, _isRebootingSide)
     void spMarch31osWhirlwind(_side, _iter) --, 0, math.floor(getProtocolSides() / 3), 1, 1, getRandomDir(), 0, 0, false, false
-    void spMarch31osWhirlwindRev(_side, _iter, _times_beforeChangeDir, _extra, _mirrorStep, _posSpacing, _wallLength, _direction, _cleanAmountStart, _cleanAmountCycle, _cleanAmountEnd, _is_full, _isRebootingSide)
+    void spMarch31osWhirlwindRev(_side, _iter, _timesBeforeChangeDir, _extra, _mirrorStep, _posSpacing, _wallLength, _direction, _cleanAmountStart, _cleanAmountCycle, _cleanAmountEnd, _is_full, _isRebootingSide)
     void spMarch31osWhirlwindRev(_side, _iter) --, 1, 0, math.floor(getProtocolSides() / 3), 1, 1, getRandomDir(), 0, 0, 0, false, false
     void spMarch31osFullWhirlwind(_side, _iter, _direction, _isRebootingSide)
     void spMarch31osFullWhirlwind(_side, _iter) --, getRandomDir(), false
@@ -339,10 +339,10 @@ function spMarch31osWhirlwind(_side, _iter, _extra, _mirrorStep, _posSpacing, _w
     p_patternEffectEnd();
 end
 
-function spMarch31osWhirlwindRev(_side, _iter, _times_beforeChangeDir, _extra, _mirrorStep, _posSpacing, _wallLength, _direction, _cleanAmountStart, _cleanAmountCycle, _cleanAmountEnd, _is_full, _isRebootingSide)
+function spMarch31osWhirlwindRev(_side, _iter, _timesBeforeChangeDir, _extra, _mirrorStep, _posSpacing, _wallLength, _direction, _cleanAmountStart, _cleanAmountCycle, _cleanAmountEnd, _is_full, _isRebootingSide)
     _iter = anythingButNil(_iter, u_rndInt(4, 7)); _wallLength = anythingButNil(_wallLength, 1);
     _extra = anythingButNil(_extra, 0); _mirrorStep = anythingButNil(_mirrorStep, math.floor(getProtocolSides() / 3)); _posSpacing = anythingButNil(_posSpacing, 1); _is_full = anythingButNil(_is_full, 0);
-    if _times_beforeChangeDir == nil or _times_beforeChangeDir < 0 then _times_beforeChangeDir = 1; end
+    if _timesBeforeChangeDir == nil or _timesBeforeChangeDir < 0 then _timesBeforeChangeDir = 1; end
     _direction = (type(_direction) == "number" and getNeg(_direction)) or (_direction == 0 and getRandomDir()) or getRandomDir();
     if not _cleanAmountStart or _cleanAmountStart < 0 then _cleanAmountStart = 0; end
     if not _cleanAmountCycle or _cleanAmountCycle < 0 then _cleanAmountCycle = _cleanAmountStart; end
@@ -421,10 +421,10 @@ function spMarch31osWhirlwindRev(_side, _iter, _times_beforeChangeDir, _extra, _
                 for ib = 0, fb, 1 do cMirrorWallEx(_curSide + (_spiralPosistionOffset - (_direction * _posSpacing)) + (_direction * _posSpacing * ib), _mirrorStep, _extra, customizeTempoPatternThickness(0.3 * _wallLength)); end
                 t_applyPatDel(customizeTempoPatternDelay(0.25 * _wallLength));
             end
-            for hb = 0, _times_beforeChangeDir, 1 do
-                if hb < _times_beforeChangeDir then
+            for hb = 0, _timesBeforeChangeDir, 1 do
+                if hb < _timesBeforeChangeDir then
                     for ib = 0, _cleanAmountCycle, 1 do cMirrorWallEx(_curSide + (_spiralPosistionOffset - (_direction * _posSpacing)) + (_direction * _posSpacing * ib), _mirrorStep, _extra, customizeTempoPatternThickness(0.3 * _wallLength)); end
-                elseif hb == _times_beforeChangeDir then
+                elseif hb == _timesBeforeChangeDir then
                     for ib = 0, _cleanAmountCycle - 1, 1 do cMirrorWallEx(_curSide + (_spiralPosistionOffset - (_direction * _posSpacing)) + (_direction * _posSpacing * ib), _mirrorStep, _extra, customizeTempoPatternThickness(0.3 * _wallLength)); end
                     cMirrorWallEx(_curSide + (_spiralPosistionOffset - (_direction * _posSpacing)) + (_direction * _posSpacing * _cleanAmountCycle), _mirrorStep, _extra, customizeTempoPatternThickness(0.25 * _wallLength));
                 end
@@ -440,7 +440,7 @@ function spMarch31osWhirlwindRev(_side, _iter, _times_beforeChangeDir, _extra, _
                 t_applyPatDel(customizeTempoPatternDelay(0.25 * _wallLength));
             end
         else
-            for hb = 0, _times_beforeChangeDir, 1 do
+            for hb = 0, _timesBeforeChangeDir, 1 do
                 cMirrorWallEx(_curSide + (_spiralPosistionOffset - (_direction * _posSpacing)) + (_direction * _posSpacing * _cleanAmountCycle), _mirrorStep, _extra, customizeTempoPatternThickness((hb == _cleanAmountCycle and 0.25 or 0.3) * _wallLength));
                 t_applyPatDel(customizeTempoPatternDelay(0.25 * _wallLength));
             end
