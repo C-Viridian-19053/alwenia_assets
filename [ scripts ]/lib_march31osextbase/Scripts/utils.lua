@@ -1,6 +1,6 @@
 u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
-u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_utils.lua")
-u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_utility_classes.lua")
+u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "march31o_utils.lua")
+u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "march31o_utility_classes.lua")
 
 -- omegasphere mechanics
 function mch_wallSwap()
@@ -122,9 +122,9 @@ end
 
 -- these 2 are from Ved's lua script by Dav999
 -- probably, i certainly use it maybe.
-local function round(num, idp)
-  local mult = 10^(idp or 0)
-  return math.floor(num * mult + 0.5) / mult
+function round(num, idp)
+	local mult = 10^(idp or 0)
+	return math.floor(num * mult + 0.5) / mult
 end
 
 local sincet = 0
