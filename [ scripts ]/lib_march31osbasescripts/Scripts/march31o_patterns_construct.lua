@@ -8,7 +8,7 @@ local unpack = unpack or table.unpack
 --[[
     void p_constructPatternizer(_side, _array, _sizeMult, _isSpdMode)
     void p_constructPatternizer(_side, _array) --, 1, true
-    void p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _loopDir, _delayAmount, _delaySides, _delayWalls, _skipEndDelay, _perfectThicknessMult, _isRebootingSide, _endAdditionalDelay, _addMult)
+    void p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _direction, _delayAmount, _delaySides, _delayWalls, _skipEndDelay, _perfectThicknessMult, _isRebootingSide, _endAdditionalDelay, _addMult)
     void p_constructSpiral(_side, _func, _args, _freq) --, 0, 1, getRandomDir(), 1, false, 1, false, nil, false, 0, 1
     void p_constructRepeat(_side, _func, _args, _freq, _delayAmount, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult)
     void p_constructRepeat(_side, _func, _args, _freq) --, 1, false, false, 0, 1
@@ -35,7 +35,7 @@ function p_constructPatternizer(_side, _array, _sizeMult, _isSpdMode)
 end
 
 -- Inspired from Kodipher's Inflorescence pack
-function p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _loopDir, _delayAmount, _delaySides, _delayWalls, _skipEndDelay, _perfectThicknessMult, _isRebootingSide, _endAdditionalDelay, _addMult)
+function p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _direction, _delayAmount, _delaySides, _delayWalls, _skipEndDelay, _perfectThicknessMult, _isRebootingSide, _endAdditionalDelay, _addMult)
     _side = anythingButNil(_side, u_rndInt(0, getProtocolSides() - 1)); _freq = anythingButNil(_freq, 5);
     _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
@@ -58,11 +58,11 @@ function p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _loopDir
     _delayAmount = anythingButNil(_delayAmount, customizePatternDelay(1));
     _delayWalls = anythingButNil(_delayWalls, 1);
     _step = anythingButNil(_step, 1);
-    if _loopDir == nil or _loopDir == 0 then _loopDir = getRandomDir(); end
-    if _loopDir < -1 then _loopDir = -1 elseif _loopDir > 1 then _loopDir = 1; end
+    if _direction == nil or _direction == 0 then _direction = getRandomDir(); end
+    if _direction < -1 then _direction = -1 elseif _direction > 1 then _direction = 1; end
 
     -- negative shift to flip dir
-    if (_step < 0) then _step = -_step; _loopDir  = -_loopDir; end
+    if (_step < 0) then _step = -_step; _direction  = -_direction; end
 
     -- optional args: based on other
     if not _delaySides then _delaySides = _step end
@@ -92,14 +92,14 @@ function p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _loopDir
             --call functions
             _func(unpack(_args))
             --shift posistions
-            _side = _side + _loopDir * _step
+            _side = _side + _direction * _step
             _args[1] = _side
             --apply delay
             if _usingPerfectThickness then t_applyPatDel(_delay)
             else t_applyPatDel(_delayAmount)
             end
         end
-        _loopDir = -_loopDir
+        _direction = -_direction
     end
 
     --reset thickness
