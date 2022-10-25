@@ -16,7 +16,7 @@ function spawnMainPattern(mNumbSpawn)
     local _side = getRandomSide();
 
         if mNumbSpawn ==  0 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), false, false, 1, 0, 1, false, 1, 1, getRandomDir())
-    elseif mNumbSpawn ==  1 then pMarch31osExWhirlwind(_side, u_rndInt(7, 11), 1, 0, 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 1, 1, 1, true)
+    elseif mNumbSpawn ==  1 then pMarch31osExWhirlwind(_side, u_rndInt(3, 6), 1, 0, 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 1, 1, 1, true)
     elseif mNumbSpawn ==  2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 3), 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  3 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 2), 1, 2, false, 1.2, 1, getRandomDir())
     elseif mNumbSpawn ==  4 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, 2, 1, 1, false, 0.7, 1, getRandomDir())
