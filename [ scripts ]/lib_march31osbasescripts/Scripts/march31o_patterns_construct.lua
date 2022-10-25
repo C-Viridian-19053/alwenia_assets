@@ -3,7 +3,7 @@ local u_getSpeedMultDM = u_getSpeedMultDM or getSpeedMult
 local u_rndInt = u_rndInt or math.random
 
 --Lua 5.3+ & 5.1 conv functs
-local table.unpack = table.unpack or unpack
+local unpack = unpack or table.unpack
 
 --[[
     void p_constructPatternizer(_side, _array, _sizeMult, _isSpdMode)
@@ -90,7 +90,7 @@ function p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _loopDir
             p_patternEffectCycle();
 
             --call functions
-            _func(table.unpack(_args))
+            _func(unpack(_args))
             --shift posistions
             _side = _side + _loopDir * _step
             _args[1] = _side
@@ -137,7 +137,7 @@ function p_constructRepeat(_side, _func, _args, _freq, _delayAmount, _skipEndDel
         p_patternEffectCycle();
 
         --call
-        _func(table.unpack(_args))
+        _func(unpack(_args))
         --delay
         t_applyPatDel(_delayAmount * _curDelaySpeed)
     end
