@@ -4,6 +4,7 @@ u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "ma
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_cage.lua")
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_construct.lua")
 
+-- pattern sets are contained here:
 function spawnMainPattern(mNumbSpawn)
     local _side = getRandomSide();
 
