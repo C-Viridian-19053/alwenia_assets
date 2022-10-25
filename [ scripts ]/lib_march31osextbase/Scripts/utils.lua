@@ -1,6 +1,6 @@
 u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
-u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "march31o_utils.lua")
-u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "march31o_utility_classes.lua")
+u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_utils.lua")
+u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_utility_classes.lua")
 
 -- omegasphere mechanics
 function mch_wallSwap()
