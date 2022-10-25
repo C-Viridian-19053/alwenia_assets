@@ -151,12 +151,12 @@ function pMarch31osMidCutSpiral(_side, _iter, _step, _extra, _mirrorStep, _total
     TARGET_PATTERN_SIDE = getBooleanNumber(_isRebootingSideStat) and _side or -256;
 
     --locals
-    local _loopDir = getRandomDir()
+    local _direction = getRandomDir()
 
     -- negative shift to flip dir
     if (_step < 0) then
         _step = -_step
-        _loopDir  = -_loopDir
+        _direction  = -_direction
     end
 
     local _constructMidCutSpiPart = function(_side, _mirrorStep, _extra)
@@ -174,7 +174,7 @@ function pMarch31osMidCutSpiral(_side, _iter, _step, _extra, _mirrorStep, _total
         p_patternEffectCycle();
 
         _constructMidCutSpiPart(_side, _mirrorStep, _extra)
-        _side = _side + _step * _loopDir
+        _side = _side + _step * _direction
     end
 
     --restore thickness
