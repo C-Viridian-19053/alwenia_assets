@@ -1,7 +1,8 @@
 u_execDependencyScript("ohvrvanilla", "base", "vittorio romeo", "utils.lua")
-u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_utils.lua")
-u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_utility_classes.lua")
+u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "march31o_utils.lua")
+u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "march31o_utility_classes.lua")
 
+-- omegasphere mechanics
 function mch_wallSwap()
 	a_playPackSound("warning.ogg")
 	u_setPlayerAngle(u_getPlayerAngle() + math.pi)
@@ -99,6 +100,46 @@ function mch_getDeathTriggerOnceOfDommyStopper()
 	return false;
 end
 
+-- these 2 are from lua-users.org by Luc Bloom
+-- math.sign: returns the sign of the number
+function math.sign(v)
+    return (v > 0 and 1) or (v == 0 and 0) or -1
+end
+
+-- math.round: rounds up fractional v to the nearest bracket
+function math.round(v, bracket)
+	bracket = bracket or 1
+	return math.floor(v/bracket + math.sign(v) * 0.5) * bracket
+end
+
+-- table.lookForOne: Looks for atleast one of something in a table. T = table, R = what you're looking for
+function table.lookForOne(t, r)
+	for _,v in pairs(t) do
+		if v == r then return true end
+	end
+	return false
+end
+
+-- these 2 are from Ved's lua script by Dav999
+-- probably, i certainly use it maybe.
+local function round(num, idp)
+  local mult = 10^(idp or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
+local sincet = 0
+
+function cons(text)
+	if text == nil then
+		text = "nil"
+	elseif type(text) == "boolean" then
+		text = (text and "TRUE" or "FALSE")
+	end
+	print("[" .. round(l_getLevelTime(), 2) .. "\\" .. round(l_getLevelTime()-sincet, 2) .. "] " .. text)
+	sincet = round(l_getLevelTime(), 2)
+end
+
+---- taken from syyrion
 -- Constants
 THICKNESS = 40			-- Wall thickness. Sometimes more convenient to define in utils
 FOCUS_RATIO = 0.625		-- The percentage by which the player shrinks when focused
@@ -133,21 +174,6 @@ end
 function forceSetPulse(pMin, pMax)
     s_setPulseMin(pMin)
     s_setPulseMax(pMax or pMin)
-end
-
-function forceSetPulseDiff(p, d)
-    if d >= 0 then
-        s_setPulseMin(p)
-        s_setPulseMax(p + d)
-    else
-        s_setPulseMin(p + d)
-        s_setPulseMax(p)
-    end
-end
-
-function forceSet3DPulse(value)
-    s_set3dPulseMin(value)
-    s_set3dPulseMax(value)
 end
 
 -- Square wave function with period 1 and amplitude 1 at value <x> with duty cycle <d>
@@ -188,25 +214,7 @@ function fromHSV(h, s, v)
 	return __fromHSV(type(h) == 'number' and h or 0, type(s) == 'number' and clamp(s, 0, 1) or 1, type(v) == 'number' and clamp(v, 0, 1) or 1)
 end
 
--- these 2 are from lua-users.org by Luc Bloom
--- math.sign: returns the sign of the number
-function math.sign(v)
-    return (v > 0 and 1) or (v == 0 and 0) or -1
-end
-
--- math.round: rounds up fractional v to the nearest bracket
-function math.round(v, bracket)
-	bracket = bracket or 1
-	return math.floor(v/bracket + math.sign(v) * 0.5) * bracket
-end
-
--- table.lookForOne: Looks for atleast one of something in a table. T = table, R = what you're looking for
-function table.lookForOne(t, r)
-	for _,v in pairs(t) do
-		if v == r then return true end
-	end
-	return false
-end
+-- polygons --
 
 -- Distance from the center to the player position
 function getDistanceBetweenCenterAndPlayer()
@@ -253,11 +261,6 @@ function getWallSpeedInUnitsPerFrame()
     return u_getSpeedMultDM() * 5
 end
 
-function l_setAllPulseSpeed(mValue)
-	l_setPulseSpeed(mValue);
-	l_setPulseSpeedR(mValue);
-end
-
 -- Max size of polygon, delay between pulses
 function configBeatPulse(max, del)
 	l_setBeatPulseMax(max)
@@ -279,6 +282,27 @@ function stopWallPulse(freezeAt)
 	l_setPulseSpeed(0)
 	l_setPulseSpeedR(0)
 	l_setPulseDelayMax(0)
+end
+----
+
+function forceSetPulseDiff(p, d)
+    if d >= 0 then
+        s_setPulseMin(p)
+        s_setPulseMax(p + d)
+    else
+        s_setPulseMin(p + d)
+        s_setPulseMax(p)
+    end
+end
+
+function forceSetPulse3D(value)
+    s_set3dPulseMin(value)
+    s_set3dPulseMax(value)
+end
+
+function l_setAllPulseSpeed(mValue)
+	l_setPulseSpeed(mValue);
+	l_setPulseSpeedR(mValue);
 end
 
 function clearAll()
