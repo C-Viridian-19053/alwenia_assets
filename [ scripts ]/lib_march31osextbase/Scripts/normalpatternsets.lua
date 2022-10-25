@@ -1,3 +1,9 @@
+--[[
+specific pattern sets are listed in below, patterns fully modfiied by me (Marchionne)
+]]
+
+-- include
+u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_utils.lua")
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_common.lua")
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_additional.lua")
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_additional_tunnel.lua")
@@ -148,7 +154,7 @@ function spawnExschPattern(mNumbSpawn)
     elseif mNumbSpawn == 10                            then pMarch31osRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), nil, nil, true, true, 1, 1)
     elseif mNumbSpawn == 11                            then pMarch31osBackAndForthTunnelCentral(_side, march31oPat_thickness * 2, nil, u_rndIntUpper(2) * 2, 0, 0, 0, 0, 1, 1, u_rndInt(0, 1), 0, true)
     elseif mNumbSpawn == 12                            then pMarch31osTrapAround(_side, 0, 0, "wrap", false, false, 1, 1)
-    elseif mNumbSpawn == 13                            then
+    elseif mNumbSpawn == 13 then
         local _gapOffset = u_rndInt(1, getProtocolSides() - 2);
         pMarch31osTunnel(_side, march31oPat_thickness, nil, u_rndInt(2, 4) * 2 - 1, 1, 0.5, 1, u_rndInt(0, 1), 0, 0, false, true, _gapOffset, getProtocolSides() - (_gapOffset + 1), 0, 0)
     end
