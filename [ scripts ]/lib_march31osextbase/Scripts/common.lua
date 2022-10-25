@@ -44,36 +44,3 @@ function barrageFiller(mThickness, mNumbType)
 	elseif mNumbType == 10 then cBarrage(side, mThickness)
 	end
 end
-
---deprecated
-function filler(mThickness, bIsRepeat, bIsThick)
-	local side = getRandomSide()
-	bIsRepeat = getBooleanNumber(bIsRepeat) and 1 or 0
-	bIsThick = getBooleanNumber(bIsThick)
-	local randomNumber = u_rndIntUpper(3)
-	if randomNumber == 1 then
-		if (not bIsThick) then
-			for a = 0, bIsRepeat do
-				cAltBarrage(side, 2, mThickness)
-				t_wait(customizeTempoPatternDelay(0.25))
-			end
-		else cAltBarrage(side, 2, customizeTempoPatternThickness(0.25 * bIsRepeat) + mThickness)
-		end
-	elseif randomNumber == 2 then
-		if (not bIsThick) then
-			for a = 0, bIsRepeat do
-				rWall(side, mThickness)
-				t_wait(customizeTempoPatternDelay(0.25))
-			end
-		else rWall(side, customizeTempoPatternThickness(0.25 * bIsRepeat) + mThickness)
-		end
-	elseif randomNumber == 3 then
-		if (not bIsThick) then
-			for a = 0, bIsRepeat do
-				cHalfBarrage(side, mThickness)
-				t_wait(customizeTempoPatternDelay(0.25))
-			end
-		else cHalfBarrage(side, customizeTempoPatternThickness(0.25 * bIsRepeat) + mThickness)
-		end
-	end
-end
