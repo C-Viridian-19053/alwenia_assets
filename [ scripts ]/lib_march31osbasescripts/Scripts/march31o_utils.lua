@@ -454,7 +454,7 @@ end
 
 --pattern settings
 local pstr_currentResultBool = false;
-local pstr_currentDelayMultOfSpeedLessThan = 0;
+local pstr_currentDelayMultOfSpeedLessThan = 1;
 local pstr_currentThickness = THICKNESS;
 
 function p_getDelayPatternBool() return pstr_currentResultBool; end
@@ -466,7 +466,7 @@ function p_setDelayPatternOfSpeedLessThan(_thickMult_amount) pstr_currentDelayMu
 function p_setPatternThickness(_corridorThick) pstr_currentThickness = _corridorThick; end
 
 function p_resetPatternDelaySettings()
-    pstr_currentResultBool = false; pstr_currentDelayMultOfSpeedLessThan = 0; pstr_currentThickness = THICKNESS;
+    pstr_currentResultBool = false; pstr_currentDelayMultOfSpeedLessThan = 1; pstr_currentThickness = THICKNESS;
 end
 
 function p_adjustPatternDelaySettings(_spdMultDMIsGreaterThanEqual, _delMultOfSpeedLessThan, _corridorThickOfSpdLessThan, _corridorThickOfSpdGreaterThanEqual)
@@ -478,7 +478,7 @@ end
 function p_setOverrideShape(_sideType, _emulatedSide)
     if type(_emulatedSide) ~= "number" then errorf(2, "EmluateSide", "argument #2 is not a number. why did you input a non-number value?") end
     SHAPE_TYPE = (type(_sideType) == "string" and (_sideType == "fakeside" and 1 or _sideType == "circle" and 2)) or (type(_sideType) == "number" and math.floor(_sideType)) or 0;
-    EMULATED_SIDES_AMOUNT = math.floor(_emulatedSides) or 6;
+    EMULATED_SIDES_AMOUNT = math.floor(_emulatedSide) or 6;
 end
 
 --timers
@@ -1177,9 +1177,16 @@ end
 getRandomDirVal = getRandomNegVal;
 
 -- babadrake's <<closeValue * -1>> function method
-function loopValue(_input, _min_val, _max_val) -- thanks Lanterns
-    local _modRem = _max_val - _min_val
-    return (_input % (_modRem + 1)) + _min_val
+function loopValue(_input, _min_val, _max_val)
+    local _remaining = 0
+    if _input < _min_val then
+        _remaining = _min_val - _input - 1
+        return _max_val - _remaining;
+    elseif _input > _max_val then
+        _remaining = _input - _max_val - 1
+        return _min_val + _remaining;
+    end
+    return _input;
 end
 
 --syncs
