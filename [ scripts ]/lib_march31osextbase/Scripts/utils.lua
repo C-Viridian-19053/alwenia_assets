@@ -65,7 +65,7 @@ function mch_doDommyStopper(mFrameTime, mSwap, mDeathFunct, bAddWarnMsg)
 	if os_deathTriggered == false then
 		if (mSwap) then
 			if (not os_dommyIsDown) then
-				if os_doomytimer > 0 then
+				if math.floor(os_doomytimer) > 0 then
 					os_doomytimer = -256 --disable doom
 					a_playPackSound("flashrefill.ogg")
 					os_dommyIsDown = true
@@ -78,15 +78,15 @@ function mch_doDommyStopper(mFrameTime, mSwap, mDeathFunct, bAddWarnMsg)
 		else os_dommyIsDown = false
 		end
 
-		if os_doomytimer == 0 then
+		if math.floor(os_doomytimer) == 0 then
 			os_deathTriggeredHeld = true
 			os_deathTriggeredOnce = true
 			os_doomytimer = -256
 			mDeathFunct()
-		elseif os_doomytimer > 0 then
-			os_doomytimer = os_doomytimer - 1
+		elseif math.floor(os_doomytimer) > 0 then
+			os_doomytimer = os_doomytimer - mFrameTime
 			e_messageAddImportant("quick, press space!", mFrameTime)
-		elseif os_doomytimer == -256 and u_rndInt(1, 1500) == 83 then
+		elseif math.floor(os_doomytimer) == -256 and u_rndInt(1, 1500) == 83 then
 			os_doomytimer = 120
 		end
 	end
@@ -138,6 +138,17 @@ function cons(text)
 	print("[" .. round(l_getLevelTime(), 2) .. "\\" .. round(l_getLevelTime()-sincet, 2) .. "] " .. text)
 	sincet = round(l_getLevelTime(), 2)
 end
+
+---- taken from The Sun XIX
+function shuffle2D(x)
+	for k = 1, #x do
+		for i = #x[k], 2, -1 do
+			local j = u_rndIntUpper(i)
+			x[k][i], x[k][j] = x[k][j], x[k][i]
+		end
+	end
+end
+----
 
 ---- taken from syyrion
 -- Constants
@@ -344,14 +355,17 @@ function l_changeLevel(mLevelPath, mStyleID, mBacksoundName, mTimeSegment, bRese
 	onInit(); onLoad();
 end
 
-function whyCantIJustGoToTheMenu(mMusicID)
-	a_setMusicPitch(0)
-	a_setMusic(mMusicID)
-	e_kill() -- that sucks
+function whyCantIJustGoToTheMenu()
+	e_kill() -- that sucks less
 end
 
-function whyCanIPlayerFailsThisChallenge(_msg, _is_err)
-	if getBooleanNumber(_is_err) and (l_getOfficial()) then error(_msg)
-	else                                                    e_messageAddImportant(_msg, 99999) e_kill() -- that sucks
+function whyCanIForceFailChallenge(_msg, _is_err)
+	if getBooleanNumber(_is_err) and (l_getOfficial()) then
+		error(_msg)
+	else
+		e_messageAddImportant(_msg, 99999)
+		l_setRotationSpeed(math.huge)
+		l_setPulseMin(math.huge)
+		e_kill()
 	end
 end
