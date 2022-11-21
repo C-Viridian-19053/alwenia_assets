@@ -16,7 +16,7 @@ function spawnMainPattern(mNumbSpawn)
     local _side = getRandomSide();
 
         if mNumbSpawn ==  0 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), false, false, 1, 0, 1, false, 1, 1, getRandomDir())
-    elseif mNumbSpawn ==  1 then pMarch31osExWhirlwind(_side, u_rndInt(3, 6), 1, 0, 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 1, 1, 1, true)
+    elseif mNumbSpawn ==  1 then pMarch31osExWhirlwind(_side, u_rndInt(7, 11), 1, 0, 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 1, 1, 1, true)
     elseif mNumbSpawn ==  2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 3), 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  3 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 2), 1, 2, false, 1.2, 1, getRandomDir())
     elseif mNumbSpawn ==  4 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, 2, 1, 1, false, 0.7, 1, getRandomDir())
@@ -108,8 +108,8 @@ function spawnSHPattern(mNumbSpawn, mSpawnType, bIsHyper, bIsFinalEngage)
         elseif mNumbSpawn == 12                    then pMarch31osTrapAround(_side, 0, 0, "trap", false, false, 1, 1);
         elseif mNumbSpawn == 13                    then pMarch31osBackAndForthTunnelCentral(_side, march31oPat_thickness * 2, nil, 4, 0, 0, 0, 0, 1, 1, u_rndInt(0, 1), 0, true);
         elseif mNumbSpawn == 14 and (not bIsHyper) then pMarch31osTunnel(_side, march31oPat_thickness, nil, 2, 1, 1, 1, 0, 0, 0, true, true)
-        elseif mNumbSpawn == 15 and (bIsHyper)     then pMarch31osTunnel(_side, march31oPat_thickness, nil, 3, 2, 1, 1, 1, 0, 0, true, true, 1, 1, 0, 0, 1, nil)
-        elseif mNumbSpawn == 16 and (not bIsHyper) then pMarch31osTunnel(_side, march31oPat_thickness, nil, 5, 1, 1, 1, 0, 0, 0, true, true, 2, 2)
+        elseif mNumbSpawn == 15 and (bIsHyper)     then pMarch31osTunnel(_side, march31oPat_thickness, nil, 3, 2, 1, 1, 1, 0, 0, true, true, 1, 1, 0, 0, 1, nil, 1, 1, true)
+        elseif mNumbSpawn == 16 and (not bIsHyper) then pMarch31osTunnel(_side, march31oPat_thickness, nil, 5, 1, 0.5, 1, 1, 0, 0, true, true, 2, 2)
         elseif mNumbSpawn == 17                    then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, 4, false, false, 0, 0, 2, false, 1, 1, getRandomDir());
         end
     elseif mSpawnType == 2 then
@@ -121,7 +121,7 @@ function spawnSHPattern(mNumbSpawn, mSpawnType, bIsHyper, bIsFinalEngage)
         elseif mNumbSpawn == 13                      then pMarch31osTrapAround(_side, 0, 0, "trap", false, false, 1, 1);
         elseif mNumbSpawn == 14 and (bIsFinalEngage) then pMarch31osBackAndForthTunnelCentral(_side, march31oPat_thickness * 2, nil, 4, 0, 0, 0, 0, 1, 1, u_rndInt(0, 1), 0, true);
         elseif mNumbSpawn == 15 and (bIsFinalEngage) then pMarch31osTunnel(_side, march31oPat_thickness, nil, 2, 1, 1, 1, 0, 0, 0, true, true);
-        elseif mNumbSpawn == 16                      then pMarch31osTunnel(_side, march31oPat_thickness, nil, 3, 2, 1, 1, 1, 0, 0, true, true, 1, 1, 0, 0, 1, nil);
+        elseif mNumbSpawn == 16                      then pMarch31osTunnel(_side, march31oPat_thickness, nil, 3, 2, 1, 1, 1, 0, 0, true, true, 1, 1, 0, 0, 1, nil, 1, 1, true);
         elseif mNumbSpawn == 17                      then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, 4, false, false, 0, 0, 2, false, 1, 1, getRandomDir());
         end
     end
@@ -292,7 +292,7 @@ function spawnBabaV1Pattern(mNumbSpawn)
 end
 
 function getKeyBabaV1()
-    getKeys = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 7, 8, 9, 10, 10, 10, 11, 12, 13, 13, 14, 15, 15, 16, 16, 16, 16, 17, 18, 19, 20, 20, 21, 22, 22, 23 }
+    getKeys = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 7, 8, 9, 10, 10, 10, 11, 12, 14, 15, 15, 16, 16, 16, 16, 17, 18, 19, 20, 20, 21, 22, 22, 23 }
     shuffle(getKeys)
     pat_index = 0
 end
