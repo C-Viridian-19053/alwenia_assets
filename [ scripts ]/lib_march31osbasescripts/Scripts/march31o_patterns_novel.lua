@@ -141,12 +141,12 @@ function pMarch31osMidCutSpiral(_side, _iter, _step, _extra, _mirrorStep, _total
     _mirrorStep = anythingButNil(_mirrorStep, 1);
     _totalThicknessMult = anythingButNil(_totalThicknessMult, 2);
 
-    p_resetPatternDelaySettings();_addMult or march31oPatDel_AddMult or 1
+    p_resetPatternDelaySettings();
 
     p_patternEffectStart();
 
     local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
-    local _curDelaySpeed = (_addMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     if _side == TARGET_PATTERN_SIDE and getBooleanNumber(_isRebootingSideStat) then _side = _side + getRandomNegVal(getRebootPatternSide()) end
     TARGET_PATTERN_SIDE = getBooleanNumber(_isRebootingSideStat) and _side or -256;
 
