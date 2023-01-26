@@ -1,5 +1,6 @@
-local lua_version = 5.1
-local game_version = 2.15
+--note: if you wondering if you use the current version of OH and Lua, use it and change this ver
+lua_version = 5.1
+game_version = 2.15
 
 --2.x.x+ & 1.92 conv functs
 local t_wait = t_wait or wait
@@ -13,6 +14,9 @@ local u_getDifficultyMult = u_getDifficultyMult or getDifficultyMult
 local u_rndInt = u_rndInt or math.random
 local u_rndIntUpper = u_rndIntUpper or math.random
 local u_rndReal = u_rndReal or math.random
+local u_execScript = u_execScript or execScript
+--lua compatibilities
+local load = load or loadstring
 --deprecated functs
 local e_waitS = e_waitS or e_eventWaitS
 local e_waitUntilS = e_waitUntilS or e_eventWaitUntilS
@@ -58,10 +62,6 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
     table u_rndTablePick(_table_of_tables)
     number table math_sum(_table_of_numbers)
 
-    var: bool pstr_currentResultBool
-    var: number pstr_currentDelayMultOfSpeedLessThan
-    var: number pstr_currentThickness
-
     bool p_getDelayPatternBool()
     number p_getDelayPatternOfSpeedLessThan()
     number p_getPatternThickness()
@@ -75,24 +75,22 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
 
     void p_setOverrideShape(_sideType, _emulatedSides)
 
-    var: number marchiocommon_currentTimerAmount
-
     void l_updateLevelFrameTime(mFrameTime, _fps)
     number l_getLevelFrameTime()
 
     void l_getSyncLevelTimeToMusicDM(_timer_input)
     void l_getTargetLevelTimeDuration(_min_timer, _max_timer, _is_sync_to_dm, _timer_input)
 
+    void te_wait(_wait_amount)
+    void te_waitS(_duration_amount)
+    void te_waitUntilS(_time_amount)
+    void te_eval(_code)
+    void te_runTimelineEventCore(_frameTime)
+
     void t_applyPatDel(_wait_amount)
 
     void e_waitSecDM(_duration)
     void e_waitUntilSecDM(_duration)
-
-    var: number marchiocommon_currentEventTime
-    var: number marchiocommon_currentEventSection
-    var: bool marchiocommon_isDebounceInAdvanceEventHalter
-    var: bool marchiocommon_isDebounce
-    var: bool marchiocommon_isAdvanceHalted
 
     void e_updateEventSection(_is_sync_to_dm, _dur_offset, _timer_input, _launch_time)
     int bool e_detectEventSection(_duration_target, _section_target, _is_halt_advance)
@@ -102,6 +100,12 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
     number e_getEventTimeDuration()
     number e_getEventSection()
     void e_setEventSection(_amount)
+
+    void ee_wait(_wait_amount)
+    void ee_waitS(_duration_amount)
+    void ee_waitUntilS(_time_amount)
+    void ee_eval(_code)
+    void ee_runTimelineEventCore()
 
     number getPatternDelayMult(_delay_amount)
     number getSpeedWallThickness(_thickness_amount, _division, _is_delay_mult)
@@ -176,13 +180,10 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
     number math_pow(_val, _amount)
     number math_root(_val, _amount)
 
-    var: number marchiocommon_isManualIncrementing
-    var: number marchiocommon_currentManualIncrementTimer
-    var: number marchiocommon_currentManualIncrementTimes
-
     void u_forceManualIncrement(_rot_inc, _spd_inc, del_inc)
     void u_forceManualIncrementV1Compatibility(_rot_inc, _spd_inc, del_inc)
     void u_doManualIncrements(_inc_duration, _rot_inc, _spd_inc, del_inc, _game_ver, _is_sync_to_dm, _timer_input)
+    void u_setManualIncrementLimit(_rot_min, _rot_max, _spd_min, _spd_max, _del_min, _del_max)
     bool u_hasIncrementedManually()
     impl: bool u_hasManualIncremented = u_hasIncrementedManually
 
@@ -192,19 +193,11 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
     number u_getManualIncrementDurationOffset()
     void u_setManualIncrementDurationOffset(_offset_amount)
 
-    var: number marchiocommon_isIncrementing
     bool u_hasIncremented()
 
     int convertBPMtoSeconds(_tempo, _division, _multiply)
     impl: int getBPM = convertBPMtoSeconds
     impl: int getSync = convertBPMtoSeconds
-
-    var: number marchiocommon_currentSyncedPulseTimer
-    var: number marchiocommon_currentSyncedPulseTimerOffsetFix
-    var: number marchiocommon_currentSyncedPulseTimes
-    var: number marchiocommon_currentBeatPulse
-    var: bool marchiocommon_boolPulseActiveHeld
-    var: bool marchiocommon_boolPulseActiveOnce
 
     void l_setSyncedPulse(mFrameTime, _tempo_input, _is_advanced_tempo, _effect_type, _is_instant_pul_spd, _lvl_pul_min, _lvl_pul_max, _lvl_pul_spd, _lvl_pul_spd_r, _lvl_pul_dir, _lvl_beat_pul_max, _lvl_beat_pul_spd, _lvl_rot_spd, _lvl_rot_spd_mult, _lvl_rot_spd_dir, _rev_del, _is_sync_to_dm, _timer_input)
     void l_setSyncedPulseInstant(mFrameTime, _tempo_input, _is_advanced_tempo, _effect_type, _lvl_pul_min, _lvl_pul_max, _lvl_pul_spd, _lvl_pul_spd_r, _lvl_pul_dir, _lvl_beat_pul_max, _lvl_beat_pul_spd, _lvl_rot_spd, _lvl_rot_spd_mult, _lvl_rot_spd_dir, _rev_del, _is_sync_to_dm, _timer_input)
@@ -218,11 +211,6 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
     number l_getSyncedPulseTimerOffset()
     void l_setSyncedPulseTimerOffset(_offset_amount)
 
-    var: number marchiocommon_currentPulseDetectorTimer
-    var: number marchiocommon_currentPulseDetectorTimes
-    var: bool marchiocommon_boolPulseDetectedHeld
-    var: bool marchiocommon_boolPulseDetectedOnce
-
     void l_setPulseDetector(_dur_input, _is_using_bpm, _rev_del, _is_sync_to_dm, _timer_input)
     bool l_isPulseDetectedHeld()
     bool l_isPulseDetectedOnce()
@@ -233,10 +221,6 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
     number l_getPulseDetectorTimerOffset()
     void l_setPulseDetectorTimerOffset(_offset_amount)
 
-    var: number marchiocommon_currentInvincibilityTimer
-    var: number marchiocommon_currentInvincibilityDuration
-    var: bool marchiocommon_boolIsInvincibilityDeployed
-
     void mch_getEmergencyInvinciblity(_wait_amount, _duration_amount, _timer_input)
     void mch_doEmergencyInvinciblityReset(_timer_input)
 
@@ -244,8 +228,6 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
 
     number mch_getEmergencyInvincibilityTimerOffset()
     void mch_setEmergencyInvincibilityTimerOffset(_offset_amount)
-
-    var: number marchiocommon_currentOverridePatternDelay
 
     number p_getOverridePatternDelay()
     void p_setOverridePatternDelay(_override_amount)
@@ -260,12 +242,7 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
 
     void p_updateGlobalSyncedPatterns()
 
-    var: number marchiocommon_oldSyncedPatternRepairSeconds
-
     void p_setGlobalSyncedPatternSettings(_tempo, _spawn_dist_mult, _spawn_dist_add, _1st_time_signature, _2nd_time_signature, _is_sync_to_dm)
-
-    var: number marchiocommon_currentSyncedPatternRepairDuration
-    var: number marchiocommon_currentSyncedPatternRepairTimes
 
     void p_updateSyncedPatternRepair(_beat_duration_amount, _beat_delay_amount, _is_spd_inc_fix, _func_primary, _func_secondary, _timer_input)
 
@@ -282,18 +259,11 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
 
     int convertSecondsToBPM(_input)
     impl: int revertBPM = convertSecondsToBPM
-    impl: int revertSync = convertSecondsToBPM
-
-    var: number marchiocommon_currentRotSpdMultOfFastSpin
+    impl: int revertSync = convertSecondsToBPMn
 
     void  u_updateRotSpdOfFastSpinning(mFrameTime, _conv_mult)
     number  u_getRotSpdOfFastSpinning()
     void  u_setRotSpdOfFastSpinning(_amount)
-
-    var: number marchiocommon_currentSyncedBeatPulseTimer
-    var: number marchiocommon_currentSyncedBeatPulseTimes
-    var: number marchiocommon_currentSyncedBeatPulseAmount
-    var: bool marchiocommon_boolBeatPulseActive
 
     void l_setSyncedBeatPulse(mFrameTime, _game_ver, _tempo_input, _is_advanced_tempo, _lvl_beat_pul_max, _lvl_beat_pul_spd, _is_sync_to_dm, _timer_input)
     bool l_isBeatPulseActive()
@@ -304,14 +274,6 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
     number l_getSyncedBeatPulseTimerOffset()
     void l_setSyncedBeatPulseTimerOffset(_offset_amount)
 
-    var: number marchiocommon_currentInvincibilityTimer
-    var: number marchiocommon_currentInvincibilityTimes
-    var: number marchiocommon_currentAdvPulse
-    var: number marchiocommon_currentAdvPulseSpd
-    var: number marchiocommon_currentAdvBeatPulse
-    var: bool marchiocommon_boolPulseActiveHeld
-    var: bool marchiocommon_boolPulseActiveOnce
-
     void l_setSyncedAdvancedPulse(_frameTime, _game_ver, _tempo_input, _is_advanced_tempo, _pul_override_amount, _lvl_pul_min, _lvl_pul_max, _lvl_pul_spd, _lvl_pul_spd_r, _lvl_pul_dir, _pul_rev_del, _lvl_beat_pul_max, _lvl_beat_pul_spd, _lvl_rad_min, _is_sync_to_dm, _timer_input)
     bool l_isAdvancedPulseActiveHeld()
     bool l_isAdvancedPulseActiveOnce()
@@ -321,10 +283,6 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
 
     number l_getSyncedAdvancedPulseTimerOffset()
     void l_setSyncedAdvancedPulseTimerOffset(_offset_amount)
-
-    var: number marchiocommon_currentWallRemovalTimer
-    var: number marchiocommon_currentWallRemovalDuration
-    var: bool marchiocommon_boolIsWallRemovalDeployed
 
     void mch_getEmergencyWallRemoval(_wait_amount, _timer_input)
     void mch_doEmergencyWallRemovalReset(_timer_input)
@@ -362,6 +320,45 @@ if lua_version < 5.3 then
     end
 end
 
+if game_version >= 2.02 then
+    os = {}
+
+    function os.clock()
+        return l_getLevelTime()
+    end
+
+    os.exit = e_kill  -- levels that close the game in 1.92 should kill the player
+
+    -- spoof date
+    function os.date(format_string)
+        if format_string == nil then
+            format_string = "%m/%d/%Y %H:%M:%S"
+        end
+        local function ensure_length(string, len)
+            while #string < len do
+                string = "0" .. string
+            end
+            return string
+        end
+        local time = l_getLevelTime() + 100000
+        local string = format_string
+                :gsub("%%y", "23")
+                :gsub("%%Y", "2023")
+                :gsub("%%m", "01")
+                :gsub("%%I", ensure_length(tostring(math.floor(time / 86400) % 7 + 1), 2))
+                :gsub("%%d", ensure_length(tostring(math.floor(time / 86400) % 30 + 1), 2))
+                :gsub("%%H", ensure_length(tostring(math.floor(time / 3600) % 24), 2))
+                :gsub("%%M", ensure_length(tostring(math.floor(time / 60) % 60), 2))
+                :gsub("%%S", ensure_length(tostring(math.floor(time) % 60), 2))
+        return string
+    end
+
+    function os.execute(_cmd)
+        print("[me::Utils::MaliciousCommandExecution] This level attempted to execute a potentially malicious command:\n", _cmd)
+        return 1
+    end
+end
+
 -- formatted error messages """for globals""" (taken from utis.lua from lib_extbase by Syyrion)
 function errorf(_level, _label, _message, ...)
     error(('[%sError] '):format(_label) .. _message:format(...), _level + 1)
@@ -372,6 +369,8 @@ function warnf(_is_msg, _label, _message, ...)
     if (_is_msg) then e_messageAddImportant(("-= WARNING RAISED (%s) // CHECK CONSOLE =-"):format(_label), 999) end
     print(('[%sWarning] '):format(_label) .. _message:format(...))
 end
+
+u_execScript("baum192_timeline.lua")
 
 --[ Begin Marchionne's commons ]--
 
@@ -434,6 +433,22 @@ function anythingButNil(_input, _input_to_avoid)
     return _input
 end
 
+function evaluateCode(functCode)
+    local func, err = load([[return function() ]] .. functCode .. [[ end]])
+    if func then
+        local ran, runCode = pcall(func)
+        if ran then
+            runCode()
+        else
+            print("INTERFERENCE DETECTED-\nEXECUTION FAILURE\n" .. runCode)
+            return
+        end
+    else
+        print(functCode .. "\nINTERFERENCE DETECTED-\nCOMPILATION FAILURE\n" .. err)
+        return
+    end
+end
+
 --maths
 --i found a randomPick & tSum from L3010's utils, from L3010's pack.
 function u_rndTablePick(_table_of_tables)
@@ -488,14 +503,14 @@ function l_updateLevelFrameTime(mFrameTime, _fps) marchiocommon_currentTimerAmou
 function l_getLevelFrameTime() return marchiocommon_currentTimerAmount; end
 
 function l_getSyncLevelTimeToMusicDM(_timer_input)
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
     return _timer_input * (u_getDifficultyMult() ^ 0.12);
 end
 l_getLevelTimeDM = l_getSyncLevelTimeToMusicDM;
 
 function l_getTargetLevelTimeDuration(_min_timer, _max_timer, _is_sync_to_dm, _timer_input)
     if _is_sync_to_dm == nil then _is_sync_to_dm = false; end
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
 
     local marchiocommon_DMvalue = (getBooleanNumber(_is_sync_to_dm) == true and u_getDifficultyMult() ^ 0.12) or 1;
 
@@ -504,6 +519,45 @@ function l_getTargetLevelTimeDuration(_min_timer, _max_timer, _is_sync_to_dm, _t
 end
 
 --timelines
+local baum192common_timeline, baum192common_wait, baum192common_waitS, baum192common_waitUntilS, baum192common_append = __192common_get_timeline_module()
+local marchiocommon_main_timeline = baum192common_timeline:new()
+local marchiocommon_timeline_frametime = 0
+local marchiocommon_timeline_frametime_taken = 0
+
+function te_wait(_wait_amount)
+    marchiocommon_main_timeline:append(baum192common_wait:new(marchiocommon_main_timeline, _wait_amount))
+    t_wait(_wait_amount)
+end
+
+function te_waitS(_duration_amount)
+    marchiocommon_main_timeline:append(baum192common_waitS:new(marchiocommon_main_timeline, _duration_amount))
+    t_wait(_duration_amount * 60)
+end
+
+function te_waitUntilS(_time_amount)
+    marchiocommon_main_timeline:append(baum192common_append:new(marchiocommon_main_timeline, function()
+        marchiocommon_timeline_frametime_taken = marchiocommon_timeline_frametime
+        if marchiocommon_timeline_frametime_taken < 0 then marchiocommon_timeline_frametime_taken = 0 end
+    end))
+    marchiocommon_main_timeline:append(baum192common_waitUntilS:new(marchiocommon_main_timeline, _time_amount - marchiocommon_timeline_frametime_taken))
+    t_waitUntilS(_time_amount)
+end
+
+function te_eval(_code)
+    marchiocommon_main_timeline:append(baum192common_append:new(marchiocommon_main_timeline, function()
+        evaluateCode(_code)
+    end))
+end
+
+function te_runTimelineEventCore(_frameTime)
+    marchiocommon_timeline_frametime = marchiocommon_timeline_frametime + (_frameTime / 60)
+    marchiocommon_main_timeline:update(_frameTime)
+    if marchiocommon_main_timeline.finished then
+        marchiocommon_main_timeline:clear()
+        marchiocommon_main_timeline:reset()
+    end
+end
+
 function t_applyPatDel(_wait_amount) t_wait(_wait_amount) end
 
 --events
@@ -517,7 +571,7 @@ local marchiocommon_isDebounce = false;
 local marchiocommon_isAdvanceHalted = false;
 
 function e_updateEventSection(_is_sync_to_dm, _dur_offset, _timer_input, _launch_time)
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
     local marchiocommon_DMvalue = (getBooleanNumber(_is_sync_to_dm) == true and u_getDifficultyMult() ^ 0.12) or 1;
     marchiocommon_currentEventTime = (_timer_input - (_launch_time or 0) + (_dur_offset or 0)) * marchiocommon_DMvalue;
 end
@@ -555,6 +609,43 @@ function e_getEventTimeDuration() return marchiocommon_currentEventTime; end
 
 function e_getEventSection() return marchiocommon_currentEventSection; end
 function e_setEventSection(_amount) marchiocommon_currentEventSection = _amount; end
+
+local baum2common_eventtimeline, baum2common_eventwait, baum2common_eventwaitS, baum2common_eventwaitUntilS, baum2common_eventappend = __2common_get_event_timeline_module()
+local marchiocommon_event_timeline = baum2common_eventtimeline:new()
+local marchiocommon_event_timeline_time = 0
+local marchiocommon_event_timeline_time_taken = 0
+
+function ee_wait(_wait_amount)
+    marchiocommon_event_timeline:append(baum2common_eventwait:new(marchiocommon_event_timeline, _wait_amount))
+end
+
+function ee_waitS(_duration_amount)
+    marchiocommon_event_timeline:append(baum2common_eventwaitS:new(marchiocommon_event_timeline, _duration_amount))
+end
+
+function ee_waitUntilS(_time_amount)
+    marchiocommon_event_timeline:append(baum2common_eventappend:new(marchiocommon_event_timeline, function()
+        marchiocommon_event_timeline_time_taken = marchiocommon_event_timeline_time
+        if marchiocommon_event_timeline_time_taken < 0 then marchiocommon_event_timeline_time_taken = 0 end
+    end))
+
+    marchiocommon_event_timeline:append(baum2common_eventwaitUntilS:new(marchiocommon_event_timeline, _time_amount - marchiocommon_event_timeline_time_taken))
+end
+
+function ee_eval(_code)
+    marchiocommon_event_timeline:append(baum2common_eventappend:new(marchiocommon_event_timeline, function()
+        evaluateCode(_code)
+    end))
+end
+
+function ee_runTimelineEventCore()
+    marchiocommon_event_timeline_time = os.clock()
+    marchiocommon_event_timeline:update()
+    if marchiocommon_event_timeline.finished then
+        marchiocommon_event_timeline:clear()
+        marchiocommon_event_timeline:reset()
+    end
+end
 
 --delay & thickness
 function getPatternDelayMult(_delay_amount) return (_delay_amount * u_getDelayMultDM()); end
@@ -719,7 +810,7 @@ function closeValue(_input, _min_val, _max_val, _lim_type)
 end
 
 function getLevelTimeSine(_spd, _del, _timer_input)
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
     return math.sin(_timer_input * _spd - _del);
 end
 
@@ -751,14 +842,28 @@ local marchiocommon_isManualIncrementing = 0;
 local marchiocommon_currentManualIncrementTimer = 0;
 local marchiocommon_currentManualIncrementTimes = 0;
 
+local marchiocommon_miRotOnce = false;
+local marchiocommon_miRotSpd = 0;
+local marchiocommon_miRotDir = 1;
+
+local marchiocommon_miRotMin, marchiocommon_miRotMax = -math.huge, math.huge;
+local marchiocommon_miSpdMin, marchiocommon_miSpdMax = -math.huge, math.huge;
+local marchiocommon_miDelMin, marchiocommon_miDelMax = -math.huge, math.huge;
+
 function u_forceManualIncrement(_rot_inc, _spd_inc, _del_inc)
     _rot_inc = type(_rot_inc) == "number" and _rot_inc or 0;
     _spd_inc = type(_spd_inc) == "number" and _spd_inc or 0;
     _del_inc = type(_del_inc) == "number" and _del_inc or 0;
-    l_setRotationSpeed(math_add(l_getRotationSpeed(), _rot_inc * getDir(l_getRotationSpeed())) * -1);
-    l_setSpeedMult(math_add(l_getSpeedMult(), _spd_inc));
-    l_setDelayMult(math_add(l_getDelayMult(), _del_inc));
+
+    marchiocommon_miRotSpd = closeValue(math_add(marchiocommon_miRotSpd, _rot_inc), marchiocommon_miRotMin, marchiocommon_miRotMax)
+    --marchiocommon_miRotDir = -marchiocommon_miRotDir;
+
+    l_setRotationSpeed(marchiocommon_miRotSpd * marchiocommon_miRotDir);
+    l_setSpeedMult(closeValue(math_add(l_getSpeedMult(), _spd_inc), marchiocommon_miSpdMin, marchiocommon_miSpdMax));
+    l_setDelayMult(closeValue(math_add(l_getDelayMult(), _del_inc), marchiocommon_miDelMin, marchiocommon_miDelMax));
+
     a_playSound("levelUp.ogg");
+
     marchiocommon_isManualIncrementing = 1;
     marchiocommon_currentManualIncrementTimes = marchiocommon_currentManualIncrementTimes + 1;
 end
@@ -767,10 +872,16 @@ function u_forceManualIncrementV1Compatibility(_rot_inc, _spd_inc, _del_inc)
     _rot_inc = type(_rot_inc) == "number" and _rot_inc or 0;
     _spd_inc = type(_spd_inc) == "number" and _spd_inc or 0;
     _del_inc = type(_del_inc) == "number" and _del_inc or 0;
-    setLevelValueFloat("rotation_speed", math_add(getLevelValueFloat("rotation_speed"), _rot_inc * getDir(getLevelValueFloat("rotation_speed"))) * -1);
-    setLevelValueFloat("speed_multiplier", math_add(getLevelValueFloat("speed_multiplier"), _spd_inc));
-    setLevelValueFloat("delay_multiplier", math_add(getLevelValueFloat("delay_multiplier"), _del_inc));
+
+    marchiocommon_miRotSpd = closeValue(math_add(marchiocommon_miRotSpd, _rot_inc), marchiocommon_miRotMin, marchiocommon_miRotMax)
+    marchiocommon_miRotDir = -marchiocommon_miRotDir;
+
+    setLevelValueFloat("rotation_speed",   marchiocommon_miRotSpd * marchiocommon_miRotDir);
+    setLevelValueFloat("speed_multiplier", closeValue(math_add(getLevelValueFloat("speed_multiplier"), _spd_inc), marchiocommon_miSpdMin, marchiocommon_miSpdMax));
+    setLevelValueFloat("delay_multiplier", closeValue(math_add(getLevelValueFloat("delay_multiplier"), _del_inc), marchiocommon_miDelMin, marchiocommon_miDelMax));
+
     playSound("levelUp.ogg");
+
     marchiocommon_isManualIncrementing = 1;
     marchiocommon_currentManualIncrementTimes = marchiocommon_currentManualIncrementTimes + 1;
 end
@@ -779,16 +890,31 @@ function u_doManualIncrements(_inc_duration, _rot_inc, _spd_inc, _del_inc, _game
     _inc_duration = _inc_duration or 15
     _game_ver = _game_ver or game_version
     if _is_sync_to_dm == nil then _is_sync_to_dm = false; end
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
 
     local marchiocommon_DMvalue = (getBooleanNumber(_is_sync_to_dm) == true and u_getDifficultyMult() ^ 0.12) or 1;
 
     if ((_timer_input * marchiocommon_DMvalue) > marchiocommon_currentManualIncrementTimer + _inc_duration) then
         marchiocommon_currentManualIncrementTimer = marchiocommon_currentManualIncrementTimer + _inc_duration;
+        marchiocommon_miRotSpd = forceAbsValue(l_getRotationSpeed() or getLevelValueInt("rotation_speed") or 0);
+
         if _game_ver >= 2 then u_forceManualIncrement(_rot_inc, _spd_inc, _del_inc);
-        else u_forceManualIncrementV1Compatibility(_rot_inc, _spd_inc, marchiocommon_currentDelMultInc);
+        else u_forceManualIncrementV1Compatibility(_rot_inc, _spd_inc, _del_inc);
         end
     end
+end
+
+function u_setManualIncrementLimit(_rot_min, _rot_max, _spd_min, _spd_max, _del_min, _del_max)
+    marchiocommon_miRotMin, marchiocommon_miSpdMin, marchiocommon_miDelMin = closeValue(_rot_min or 0,         0, math.huge), closeValue(_spd_min or 0,         0, math.huge), closeValue(_del_min or 0,         0, math.huge)
+    marchiocommon_miRotMax, marchiocommon_miSpdMax, marchiocommon_miDelMax = closeValue(_rot_max or math.huge, 0, math.huge), closeValue(_rot_max or math.huge, 0, math.huge), closeValue(_rot_max or math.huge, 0, math.huge)
+
+    if marchiocommon_miRotMin > marchiocommon_miRotMax then marchiocommon_miRotMin = marchiocommon_miRotMax end
+    if marchiocommon_miSpdMin > marchiocommon_miSpdMax then marchiocommon_miSpdMin = marchiocommon_miSpdMax end
+    if marchiocommon_miDelMin > marchiocommon_miDelMax then marchiocommon_miDelMin = marchiocommon_miDelMax end
+
+    if marchiocommon_miRotMax < marchiocommon_miRotMin then marchiocommon_miRotMax = marchiocommon_miRotMin end
+    if marchiocommon_miSpdMax < marchiocommon_miSpdMin then marchiocommon_miSpdMax = marchiocommon_miSpdMin end
+    if marchiocommon_miDelMax < marchiocommon_miDelMin then marchiocommon_miDelMax = marchiocommon_miDelMin end
 end
 
 function u_hasIncrementedManually()
@@ -832,7 +958,7 @@ function l_setSyncedPulse(mFrameTime, _tempo_input, _is_advanced_tempo, _effect_
     if _lvl_beat_pul_spd == nil then _lvl_beat_pul_spd = 1; end
     if _lvl_rot_spd_dir == nil or _lvl_rot_spd_dir == 0 or _lvl_rot_spd_dir > 1 or _lvl_rot_spd_dir < -1 then _lvl_rot_spd_dir = 1; end
     if _is_sync_to_dm == nil then _is_sync_to_dm = false; end
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
 
     local marchiocommon_DMvalue = (getBooleanNumber(_is_sync_to_dm) == true and u_getDifficultyMult() ^ 0.12) or 1;
     local marchiocommon_tempoState = (getBooleanNumber(_is_advanced_tempo) == true and convertBPMtoSeconds(_tempo_input)) or _tempo_input;
@@ -891,7 +1017,7 @@ function l_setSyncedPulseInstant(mFrameTime, _tempo_input, _is_advanced_tempo, _
     if _lvl_beat_pul_spd == nil then _lvl_beat_pul_spd = 1; end
     if _lvl_rot_spd_dir == nil or _lvl_rot_spd_dir == 0 or _lvl_rot_spd_dir > 1 or _lvl_rot_spd_dir < -1 then _lvl_rot_spd_dir = 1; end
     if _is_sync_to_dm == nil then _is_sync_to_dm = false; end
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
 
     local marchiocommon_DMvalue = (getBooleanNumber(_is_sync_to_dm) == true and u_getDifficultyMult() ^ 0.12) or 1;
     local marchiocommon_tempoState = (getBooleanNumber(_is_advanced_tempo) == true and convertBPMtoSeconds(_tempo_input)) or _tempo_input
@@ -940,7 +1066,7 @@ function l_setSyncedPulseV1Compatibility(mFrameTime, _tempo_input, _is_advanced_
     if _lvl_beat_pul_spd == nil then _lvl_beat_pul_spd = 1; end
     if _lvl_rot_spd_dir == nil or _lvl_rot_spd_dir == 0 or _lvl_rot_spd_dir > 1 or _lvl_rot_spd_dir < -1 then _lvl_rot_spd_dir = 1; end
     if _is_sync_to_dm == nil then _is_sync_to_dm = false; end
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
 
     local marchiocommon_DMvalue = (getBooleanNumber(_is_sync_to_dm) == true and u_getDifficultyMult() ^ 0.12) or 1;
     local marchiocommon_tempoState = (getBooleanNumber(_is_advanced_tempo) == true and convertBPMtoSeconds(_tempo_input)) or _tempo_input;
@@ -1017,7 +1143,7 @@ local marchiocommon_boolPulseDetectedOnce = false;
 function l_setPulseDetector(_dur_input, _is_using_bpm, _rev_del, _is_sync_to_dm, _timer_input)
     if not _is_using_bpm then _is_using_bpm = false; end
     if not _is_sync_to_dm then _is_sync_to_dm = false; end
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
 
     local marchiocommon_DMvalue = (getBooleanNumber(_is_sync_to_dm) == true and u_getDifficultyMult() ^ 0.12) or 1;
     local marchiocommon_tempoState = (getBooleanNumber(_is_using_bpm) == true and convertBPMtoSeconds(_dur_input)) or _dur_input;
@@ -1053,7 +1179,7 @@ local marchiocommon_currentInvincibilityDuration = 0;
 local marchiocommon_boolIsInvincibilityDeployed = false;
 
 function mch_getEmergencyInvinciblity(_wait_amount, _duration_amount, _timer_input)
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
 
     if _wait_amount == nil then _wait_amount = 25; end
     if _duration_amount == nil then _duration_amount = 1; end
@@ -1066,7 +1192,7 @@ function mch_getEmergencyInvinciblity(_wait_amount, _duration_amount, _timer_inp
 end
 
 function mch_doEmergencyInvinciblityReset(_timer_input)
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
 
     if _timer_input > marchiocommon_currentInvincibilityDuration then marchiocommon_boolIsInvincibilityDeployed = false;
     else marchiocommon_boolIsInvincibilityDeployed = true;
@@ -1136,7 +1262,7 @@ local marchiocommon_currentSyncedPatternRepairTimes = 0;
  make sure you have to obtain p_setSyncedPatternRepairUpdaterTimerOffset(_offset_amount) on
  onInit/onLoad's hardcored function in order to make the walls hits into hexagon perfectly ]]
 function p_updateSyncedPatternRepair(_beat_duration_amount, _beat_delay_amount, _is_spd_inc_fix, _func_primary, _func_secondary, _timer_input)
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
     _func_primary = _func_primary or t_clear;
     local marchiocommon_currentSyncedPatternRepairSeconds = (70 + 1100 * u_getSpeedMultDM() * 1.075 * convertBPMtoSeconds(GLOBAL_TEMPO) * GLOBAL_TIME_SIGNATURE) / (70 + 1100);
     local _spd_inc_fix_state = marchiocommon_currentSyncedPatternRepairSeconds - marchiocommon_oldSyncedPatternRepairSeconds
@@ -1212,7 +1338,7 @@ function l_setSyncedBeatPulse(mFrameTime, _game_ver, _tempo_input, _is_advanced_
     _game_ver = _game_ver or game_version
     if not _is_using_bpm then _is_using_bpm = false; end
     if not _is_sync_to_dm then _is_sync_to_dm = false; end
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
 
     local marchiocommon_DMvalue = (getBooleanNumber(_is_sync_to_dm) == true and u_getDifficultyMult() ^ 0.12) or 1;
     local marchiocommon_tempoState = (getBooleanNumber(_is_advanced_tempo) == true and convertBPMtoSeconds(_tempo_input)) or _tempo_input;
@@ -1257,7 +1383,7 @@ function l_setSyncedAdvancedPulse(mFrameTime, _game_ver, _tempo_input, _is_advan
     _game_ver = _game_ver or game_version
     if _is_advanced_tempo == nil then _is_advanced_tempo = false; end
     if _is_sync_to_dm == nil then _is_sync_to_dm = false; end
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
 
     local marchiocommon_DMvalue = (getBooleanNumber(_is_sync_to_dm) == true and u_getDifficultyMult() ^ 0.12) or 1;
     local marchiocommon_tempoState = (getBooleanNumber(_is_advanced_tempo) == true and convertBPMtoSeconds(_tempo_input)) or _tempo_input;
@@ -1317,7 +1443,7 @@ local marchiocommon_currentWallRemovalDuration = 0;
 local marchiocommon_boolIsWallRemovalDeployed = false;
 
 function mch_getEmergencyWallRemoval(_wait_amount, _duration_amount, _timer_input)
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
 
     if _wait_amount == nil then _wait_amount = 25; end
     if _duration_amount == nil then _duration_amount = 1; end
@@ -1333,7 +1459,7 @@ function mch_getEmergencyWallRemoval(_wait_amount, _duration_amount, _timer_inpu
 end
 
 function mch_doEmergencyWallRemovalReset(_timer_input)
-    _timer_input = _timer_input or l_getLevelTime();
+    _timer_input = _timer_input or os.clock();
 
     if _timer_input > marchiocommon_currentWallRemovalDuration then marchiocommon_boolIsWallRemovalDeployed = false;
     else marchiocommon_boolIsWallRemovalDeployed = true;
