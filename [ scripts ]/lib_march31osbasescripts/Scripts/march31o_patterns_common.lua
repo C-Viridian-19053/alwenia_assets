@@ -5,6 +5,8 @@
     void pMarch31osRandomBarrages(_side, _thickness, _iter) --, -getHalfSides("floor"), getHalfSides("floor"), true, true, 1, 1, false, false, 0, 1, 1, 2
     void pMarch31osAlternatingBarrage(_side, _thickness, _iter, _isSpiral, _hasContainedEnd, _gapLength, _repeatBarrageAmount, _repeatBarrageDelay, _isRepeatBarrageDelaySpd, _delMult, _sizeMult, _direction, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
     void pMarch31osAlternatingBarrage(_side, _thickness, _iter) --, false, false, 0, 0, 2, false, 1, 1, getRandomDir(), false, false, 0, 1, 1, 2
+    void pMarch31osVortexBarrageRev(_side, _thickness, _iter, _subIter, _vortaBarType, _free, _delMult, _sizeMult, _direction, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
+    void pMarch31osVortexBarrageRev(_side, _thickness, _iter) --, 0, 0, 0, 1, 1, getRandomDir(), 1, 1, false, false, 0, 1, 1, 2
     void pMarch31osVortaBarrage(_side, _thickness, _iter, _dirType, _revFreq, _dirPoints, _modeType, _free, _delMult, _sizeMult, _direction, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
     void pMarch31osVortaBarrage(_side, _thickness, _iter) --, 0, 1, {math.floor(_iter / 2)}, 0, 0, 1, 1, getRandomDir(), false, false, 0, 1, 1, 2
     void pMarch31osBarrageTypeBase(_side, _thickness, _iter, _gap, _holes, _offsetType, _offsetDistance, _mainLoopDir, _isInvertAccurate, _delMult, _sizeMult, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
@@ -58,7 +60,7 @@ end
 -- _neighbors: neighbors of the barrage
 function pMarch31osBarrage(_side, _thickness, _neighbors, _sizeMult, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
     _iter = anythingButNil(_iter, u_rndInt(3, 5)); _sizeMult = anythingButNil(_sizeMult, 1); _neighbors = anythingButNil(_neighbors, 0);
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
@@ -81,12 +83,12 @@ end
 --         _distMin: lower bound of randomization distance
 --         _distMax: upper bound of randomization distance
 --        _isRepeat: is random barrage pattern has repeat in it?
--- _isDelayDistance: is random barrage pattern has distance in it?
+-- _isDelayDistance: is random barrage pattern delay has distance in it?
 function pMarch31osRandomBarrage(_side, _thickness, _iter, _distMin, _distMax, _isRepeat, _isDelayDistance, _delMult, _sizeMult, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
     _iter = anythingButNil(_iter, u_rndInt(2, 5)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
     _distMin = anythingButNil(_distMin, -getHalfSides("floor")); _distMax = anythingButNil(_distMax, getHalfSides("floor"));
     _isRepeat = anythingButNil(_isRepeat, 1); _isDelayDistance = anythingButNil(_isDelayDistance, 1);
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
@@ -142,7 +144,7 @@ function pMarch31osAlternatingBarrage(_side, _thickness, _iter, _isSpiral, _hasC
     _isSpiral = getBooleanNumber(anythingButNil(_isSpiral, 0));
     _repeatBarrageDelay = anythingButNil(_repeatBarrageDelay, 2); _isRepeatBarrageDelaySpd = anythingButNil(_isRepeatBarrageDelaySpd, 0);
     _direction = (type(_direction) == "number" and getNeg(_direction)) or (_direction == 0 and getRandomDir()) or getRandomDir();
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
@@ -190,19 +192,75 @@ function pMarch31osAlternatingBarrage(_side, _thickness, _iter, _isSpiral, _hasC
     t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
 end
 
--- pMarch31osVortaBarrage(): spawns left-left right-right, etc. of vortrex patterns
+-- pMarch31osVortexBarrageRev(): spawns left-left right-right spiral patters
+--      _subIter: how many times the direction will halt, idk smth
+-- _vortaBarType: vortex barrage type
+--         _free: free amount of vortex barrage
+function pMarch31osVortexBarrageRev(_side, _thickness, _iter, _subIter, _vortaBarType, _free, _delMult, _sizeMult, _direction, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
+    _iter = anythingButNil(_iter, 1); _subIter = anythingButNil(_subIter, 0); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
+    _vortaBarType = anythingButNil(_vortaBarType, 0); _free = anythingButNil(_free, 0);
+    _direction = (type(_direction) == "number" and getNeg(_direction)) or (_direction == 0 and getRandomDir()) or getRandomDir();
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+
+    p_resetPatternDelaySettings();
+    p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
+
+    p_patternEffectStart();
+
+    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
+    local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
+    if _curSide == TARGET_PATTERN_SIDE and getBooleanNumber(_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternHalfSide()) end
+    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    local _revFreqAdd = 0;
+
+    local _vortaBarPart = function(_side, _free, _thickness, _vortaBarType)
+        --spawn piece; apply delay
+        if _vortaBarType == 1 then
+            cWallEx(_side, closeValue(getProtocolSides() % 3, 0, 1) + 1, _thickness);
+            cWallEx(_side + (closeValue(getProtocolSides() % 3, 0, 1) + 3), closeValue((getProtocolSides() % 3) - 1, 0, 1) + 1, _thickness);
+            if getProtocolSides() >= 9 then
+                for i = 0, math.floor(getProtocolSides() / 3) - 3, 1 do cWallEx(_side + (i * 3) + (closeValue(getProtocolSides() % 3, 0, 1) + closeValue((getProtocolSides() % 3) - 1, 0, 1) + 6), 1, _thickness); end
+            end
+        else cVortaBarrage(_side, _free, _thickness);
+        end
+        t_applyPatDel(customizePatternDelay(3.6 * _delMult * _sizeMult * _curDelaySpeed, p_getDelayPatternBool()));
+    end
+
+    for j = 0, _subIter, 1 do
+        for a = 0, _iter, 1 do
+            p_patternEffectCycle();
+            _vortaBarPart(_curSide, _free, p_getPatternThickness() * _sizeMult, _vortaBarType);
+            _curSide = _curSide + _direction
+        end
+
+        _direction = -_direction;
+
+        for a = 0, _iter + 1, 1 do
+            p_patternEffectCycle();
+            _vortaBarPart(_curSide, _free, p_getPatternThickness() * _sizeMult, _vortaBarType);
+            _curSide = _curSide + _direction
+        end
+    end
+
+    p_patternEffectEnd();
+    -- end delay (optional arg, default false)
+    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
+end
+
+-- pMarch31osExVortaBarrage(): spawns left-left right-right, etc. of vortrex patterns but you can personalize everything
 --                                 _dirType: direction type. 0 = L-L-R-R, 1 = which <_iter> amount will change direction, 2 = amount > iteration point => change direction
 -- [WORKS ONLY ON <_dirType> is 0] _revFreq: how many times the direction will change
 -- [WORKS ONLY ON TABLE NUMBERS] _dirPoints: iteration points before change direction
 --                            _vortaBarType: vortex barrage type
 --                                    _free: free amount of vortex barrage
-function pMarch31osVortaBarrage(_side, _thickness, _iter, _dirType, _revFreq, _dirPoints, _vortaBarType, _free, _delMult, _sizeMult, _direction, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
+function pMarch31osExVortaBarrage(_side, _thickness, _iter, _dirType, _revFreq, _dirPoints, _vortaBarType, _free, _delMult, _sizeMult, _direction, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
     -- optional args
     _iter = anythingButNil(_iter, 4); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
     _dirType = anythingButNil(_dirType, 0); _revFreq = anythingButNil(_revFreq, 1); _dirPoints = anythingButNil(_dirPoints, (_dirType == 2 and {u_rndInt(2, 5), u_rndInt(2, 5)} or {math.floor(_iter / 2)}));
     _vortaBarType = anythingButNil(_vortaBarType, 0); _free = anythingButNil(_free, 0);
     _direction = (type(_direction) == "number" and getNeg(_direction)) or (_direction == 0 and getRandomDir()) or getRandomDir();
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
@@ -288,7 +346,7 @@ function pMarch31osBarrageTypeBase(_side, _thickness, _iter, _gap, _holes, _offs
     if type(_offsetDistance) ~= "number" or _offsetDistance < 1 then _offsetDistance = 1; end
     if type(_offsetType) ~= "number" then _offsetType = 0; end
     if type(_mainLoopDir) == "number" and _mainLoopDir <= 0 then _mainLoopDir = -1; end
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
@@ -343,7 +401,7 @@ function pMarch31osBarrageSpiralRev(_side, _thickness, _iter, _revFreq, _gap, _h
     _revFreq = anythingButNil(_revFreq, u_rndInt(1, 2)); _distance = anythingButNil(_distance, 1);
     if type(_gap) ~= "number" or _gap < 1 then _gap = 1; end
     if type(_holes) ~= "number" or _holes < 1 then _holes = 1; end
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
@@ -391,13 +449,13 @@ end
 
 -- pMarch31osWallStrip(): spawns cMirrorWallExs close to one another on the same side
 -- _repetitions: same as <_iter> parameter, how many repeat in this wall
--- _mirrorStep: amount of mirror step
---       _extraWidth: amount of extras in this wall
+--  _mirrorStep: amount of mirror step
+--  _extraWidth: amount of extras in this wall
 -- _isThickness: boolean of thickness mode
 function pMarch31osWallStrip(_side, _thickness, _repetitions, _mirrorStep, _extraWidth, _delMult, _sizeMult, _isThickness, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
     _repetitions = anythingButNil(_repetitions, 1); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
     _mirrorStep = anythingButNil(_mirrorStep, u_rndInt(2, 3)); _extraWidth = anythingButNil(_extraWidth, 0);
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
@@ -443,7 +501,7 @@ function pMarch31osWhirlwind(_side, _iter, _extraWidth, _mirrorStep, _posSpacing
     _direction = (type(_direction) == "number" and getNeg(_direction)) or (_direction == 0 and getRandomDir()) or getRandomDir();
     if not _slopeAmountStart or _slopeAmountStart < 0 then _slopeAmountStart = 0; end
     if not _slopeAmountEnd or _slopeAmountEnd < 0 then _slopeAmountEnd = _slopeAmountStart; end
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     local currentTimesOfDelayAmountForTriangle, currentTimesOfThickAmountForSquare = 4, 8.25;
     local currentCleanTimesEndSectionOfThickAmountForGreaterThanSquare = 3 * (_seamless and 1.1 or 1) * ((_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0))) * _delMult; -- adding the 'timesBeforeChangeDir_thickAmountForGreaterThanSquare' value when loops until direction changes
@@ -538,7 +596,7 @@ function pMarch31osExWhirlwind(_side, _iter, _timesBeforeChangeDir, _revFreq, _e
     if not _slopeAmountStart or _slopeAmountStart < 0 then _slopeAmountStart = 0; end
     if not _slopeAmountCycle or _slopeAmountCycle < 0 then _slopeAmountCycle = _slopeAmountStart; end
     if not _slopeAmountEnd or _slopeAmountEnd < 0 then _slopeAmountEnd = _slopeAmountStart; end
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, nil, nil);
@@ -722,7 +780,7 @@ function pMarch31osTunnel(_side, _corridorThickOfSpeedLessThan, _corridorThickOf
     if not _sidedir0gap or _sidedir0gap < 1 then _sidedir0gap = 1; end
     if not _sidedir1gap or _sidedir1gap < 1 then _sidedir1gap = 1; end
     if not _direction or _direction > 1 or _direction < 0 then _direction = u_rndInt(0, 1); end
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
+    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     local _curTunnelCorridorDirGap, _curTunnelCorridorDirOffset = 0, 0; local _curTunnelCorridorDir, _curTunnelSpiralCorridorDir = 1, 1;
     local _amountOfBeforeGearTeethBegin, _timesOfBeforeGearTeethBegin, _timesOfAfterGearTeethEnd = 0, 0, 0;
