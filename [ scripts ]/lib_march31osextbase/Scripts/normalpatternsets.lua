@@ -10,28 +10,29 @@ u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "ma
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_additional_tunnel.lua")
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_cage.lua")
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_construct.lua")
+u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_personalize.lua")
 
 -- main patterns
 function spawnMainPattern(mNumbSpawn)
     local _side = getRandomSide();
 
-        if mNumbSpawn ==  0 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), false, false, 1, 0, 1, false, 1, 1, getRandomDir())
+        if mNumbSpawn ==  0 then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), false, false, 1, getRandomDir(), 0, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  1 then pMarch31osExWhirlwind(_side, u_rndInt(7, 11), 1, 0, 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 1, 1, 1, true)
     elseif mNumbSpawn ==  2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 3), 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  3 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 2), 1, 2, false, 1.2, 1, getRandomDir())
     elseif mNumbSpawn ==  4 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, 2, 1, 1, false, 0.7, 1, getRandomDir())
     elseif mNumbSpawn ==  5 then pMarch31osBarrageReversals(_side, march31oPat_thickness, 1, 1, true, 1, 1, u_rndInt(0, 1))
-    elseif mNumbSpawn ==  6 then pMarch31osTunnel(_side, march31oPat_thickness * 1.75, nil, u_rndIntUpper(3), u_rndInt(1, getProtocolSides() - 2), 1, 1, u_rndInt(0, 1), 0, 0, true)
+    elseif mNumbSpawn ==  6 then pMarch31osExTunnel(_side, march31oPat_thickness * 1.75, nil, u_rndIntUpper(3), u_rndInt(1, getProtocolSides() - 2), 1, 1, u_rndInt(0, 1), 0, 0, true)
     elseif mNumbSpawn ==  7 then pMarch31osWallStrip(_side, march31oPat_thickness, u_rndInt(0, 1), u_rndInt(0, 1) == 0 and getPolySides(2, "floor") or 2, 0, 1, 1, u_rndInt(0, 1))
     elseif mNumbSpawn ==  8 then pMarch31osVortaBarrage(_side, march31oPat_thickness, u_rndIntUpper(3), 0, 1, {}, 1, 0, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  9 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(4, 6), 1, 1, false, 0.5, 1, getRandomDir())
-    elseif mNumbSpawn == 10 then pMarch31osRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), nil, nil, true, true, 1, 1)
+    elseif mNumbSpawn == 10 then pMarch31osExRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), nil, nil, true, true, 1, 1)
     
     elseif mNumbSpawn == 11 then
         local _gapOffset = u_rndInt(1, getProtocolSides() - 2);
-        pMarch31osTunnel(_side, march31oPat_thickness, nil, u_rndInt(4, 6), 1, 0.5, 1, u_rndInt(0, 1), 0, 0, true, false, _gapOffset, getProtocolSides() - (_gapOffset + 1))
+        pMarch31osExTunnel(_side, march31oPat_thickness, nil, u_rndInt(4, 6), 1, 0.5, 1, u_rndInt(0, 1), 0, 0, true, false, _gapOffset, getProtocolSides() - (_gapOffset + 1))
     elseif mNumbSpawn == 12 then pMarch31osExWhirlwind(_side, u_rndInt(4, 7), 1, u_rndInt(0, 2), 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 1, 1, 1, true)
-    elseif mNumbSpawn == 13 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), true, true, 0, 1, 2, false, 1, 1, getRandomDir())
+    elseif mNumbSpawn == 13 then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), true, true, 0, getRandomDir(), 1, 2, false, 1, 1, getRandomDir())
     elseif mNumbSpawn == 14 then pMarch31osAlternatingTunnel(_side, march31oPat_thickness, nil, u_rndInt(3, 5), getProtocolSides() > 4 and getHalfSides("floor") or 1, 1, 1, getRandomDir(), 0, true)
     elseif mNumbSpawn == 15 then pMarch31osVortaBarrage(_side, march31oPat_thickness, u_rndInt(4, 6), 0, 0, {}, 1, 0, 1, 1, getRandomDir())
     elseif mNumbSpawn == 16 then pMarch31osGrowingBarrage(_side)
@@ -45,12 +46,12 @@ function spawnMainPattern(mNumbSpawn)
     elseif mNumbSpawn == 23 then pMarch31osAltHalfBarrage(_side, march31oPat_thickness, u_rndInt(4, 6), 0, 1, 1, getRandomDir())
     elseif mNumbSpawn == 24 then pMarch31osAltTrapBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), 1, 1, 1, -1, 0, 1, getRandomDir())
     
-    elseif mNumbSpawn == 25 then pMarch31osRandomBarrageTunnel(_side, march31oPat_thickness, nil, u_rndInt(2, 4), 1, true, true, 1, 1)
+    elseif mNumbSpawn == 25 then pMarch31osExRandomBarrageTunnel(_side, march31oPat_thickness, nil, u_rndInt(2, 4), 1, true, true, 1, 1)
     elseif mNumbSpawn == 26 then pMarch31osLRTunnelShortSpiral(_side, march31oPat_thickness, nil, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn == 27 then pMarch31osJumbleTunnel(_side, march31oPat_thickness, nil, u_rndInt(3, 4), 1, getProtocolSides() - 3, 1.4, 1)
     elseif mNumbSpawn == 28 then
         local _mode = u_rndInt(0, 1)
-        pMarch31osTunnel(_side, march31oPat_thickness, nil, u_rndIntUpper(4), _mode == 1 and math.floor(getProtocolSides() / 2) + 2 or getProtocolSides() - 1, 1, 1, u_rndInt(0, 1), 0, 1, true)
+        pMarch31osExTunnel(_side, march31oPat_thickness, nil, u_rndIntUpper(4), _mode == 1 and math.floor(getProtocolSides() / 2) + 2 or getProtocolSides() - 1, 1, 1, u_rndInt(0, 1), 0, 1, true)
     
     elseif mNumbSpawn == 29                            then pMarch31osBackAndForthTunnelAxisInterpolated(_side, march31oPat_thickness, nil, u_rndInt(4, 6), 0, 0, 0, 0, 1, 1, u_rndInt(0, 1), 0, true)
     elseif mNumbSpawn == 30                            then pMarch31osTrapAround(_side, u_rndInt(0, 2), 0, "trap", false, false, 1, 1)
@@ -107,10 +108,10 @@ function spawnSHPattern(mNumbSpawn, mSpawnType, bIsHyper, bIsFinalEngage)
         elseif mNumbSpawn == 11                    then pMarch31osAccurateBat(_side, "all", false, false, 1, 1);
         elseif mNumbSpawn == 12                    then pMarch31osTrapAround(_side, 0, 0, "trap", false, false, 1, 1);
         elseif mNumbSpawn == 13                    then pMarch31osBackAndForthTunnelCentral(_side, march31oPat_thickness * 2, nil, 4, 0, 0, 0, 0, 1, 1, u_rndInt(0, 1), 0, true);
-        elseif mNumbSpawn == 14 and (not bIsHyper) then pMarch31osTunnel(_side, march31oPat_thickness, nil, 2, 1, 1, 1, 0, 0, 0, true, true)
-        elseif mNumbSpawn == 15 and (bIsHyper)     then pMarch31osTunnel(_side, march31oPat_thickness, nil, 3, 2, 1, 1, 1, 0, 0, true, true, 1, 1, 0, 0, 1, nil, 1, 1, true)
-        elseif mNumbSpawn == 16 and (not bIsHyper) then pMarch31osTunnel(_side, march31oPat_thickness, nil, 5, 1, 0.5, 1, 1, 0, 0, true, true, 2, 2)
-        elseif mNumbSpawn == 17                    then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, 4, false, false, 0, 0, 2, false, 1, 1, getRandomDir());
+        elseif mNumbSpawn == 14 and (not bIsHyper) then pMarch31osExTunnel(_side, march31oPat_thickness, nil, 2, 1, 1, 1, 0, 0, 0, true, true)
+        elseif mNumbSpawn == 15 and (bIsHyper)     then pMarch31osExTunnel(_side, march31oPat_thickness, nil, 3, 2, 1, 1, 1, 0, 0, true, true, 1, 1, 0, 0, 1, nil, 1, 1, true)
+        elseif mNumbSpawn == 16 and (not bIsHyper) then pMarch31osExTunnel(_side, march31oPat_thickness, nil, 5, 1, 0.5, 1, 1, 0, 0, true, true, 2, 2)
+        elseif mNumbSpawn == 17                    then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, 4, false, false, 0, 0, 2, false, 1, 1, getRandomDir());
         end
     elseif mSpawnType == 2 then
             if mNumbSpawn ==  8                      then pMarch31osBarrageReversals(_side, march31oPat_thickness, 2, 1, false, 1, 1, u_rndInt(0, 1));
@@ -120,9 +121,9 @@ function spawnSHPattern(mNumbSpawn, mSpawnType, bIsHyper, bIsFinalEngage)
         elseif mNumbSpawn == 12                      then pMarch31osVortaBarrage(_side, march31oPat_thickness, 0, 2, 0, {1, 3}, 0, 0, 1, 1, 1);
         elseif mNumbSpawn == 13                      then pMarch31osTrapAround(_side, 0, 0, "trap", false, false, 1, 1);
         elseif mNumbSpawn == 14 and (bIsFinalEngage) then pMarch31osBackAndForthTunnelCentral(_side, march31oPat_thickness * 2, nil, 4, 0, 0, 0, 0, 1, 1, u_rndInt(0, 1), 0, true);
-        elseif mNumbSpawn == 15 and (bIsFinalEngage) then pMarch31osTunnel(_side, march31oPat_thickness, nil, 2, 1, 1, 1, 0, 0, 0, true, true);
-        elseif mNumbSpawn == 16                      then pMarch31osTunnel(_side, march31oPat_thickness, nil, 3, 2, 1, 1, 1, 0, 0, true, true, 1, 1, 0, 0, 1, nil, 1, 1, true);
-        elseif mNumbSpawn == 17                      then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, 4, false, false, 0, 0, 2, false, 1, 1, getRandomDir());
+        elseif mNumbSpawn == 15 and (bIsFinalEngage) then pMarch31osExTunnel(_side, march31oPat_thickness, nil, 2, 1, 1, 1, 0, 0, 0, true, true);
+        elseif mNumbSpawn == 16                      then pMarch31osExTunnel(_side, march31oPat_thickness, nil, 3, 2, 1, 1, 1, 0, 0, true, true, 1, 1, 0, 0, 1, nil, 1, 1, true);
+        elseif mNumbSpawn == 17                      then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, 4, false, false, 0, 0, 2, false, 1, 1, getRandomDir());
         end
     end
 end
@@ -142,22 +143,22 @@ end
 -- exschwaison patterns
 function spawnExschPattern(mNumbSpawn)
     local _side = getRandomSide();
-        if mNumbSpawn ==  0                            then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
+        if mNumbSpawn ==  0                            then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  1                            then pMarch31osExWhirlwind(_side, u_rndInt(3, 6), 1, 0, 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 0, 0, 0, false)
     elseif mNumbSpawn ==  2                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 3), 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  3                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 2), 1, 2, false, 1.2, 1, getRandomDir())
     elseif mNumbSpawn ==  4                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, 2, 1, 1, false, 0.7, 1, getRandomDir())
     elseif mNumbSpawn ==  5                            then pMarch31osBarrageReversals(_side, march31oPat_thickness, 1, 1, true, 1, 1, u_rndInt(0, 1))
-    elseif mNumbSpawn ==  6                            then pMarch31osTunnel(_side, march31oPat_thickness * 1.75, nil, u_rndIntUpper(3), u_rndInt(1, getProtocolSides() - 2), 1, 1, u_rndInt(0, 1), 0, 0, true)
+    elseif mNumbSpawn ==  6                            then pMarch31osExTunnel(_side, march31oPat_thickness * 1.75, nil, u_rndIntUpper(3), u_rndInt(1, getProtocolSides() - 2), 1, 1, u_rndInt(0, 1), 0, 0, true)
     elseif mNumbSpawn ==  7                            then pMarch31osWallStrip(_side, march31oPat_thickness, u_rndInt(0, 1), u_rndInt(0, 1) == 0 and getPolySides(2, "ceil") or 2, 0, 1, 1, u_rndInt(0, 1))
     elseif mNumbSpawn ==  8 and getProtocolSides() > 5 then pMarch31osVortaBarrage(_side, march31oPat_thickness, u_rndIntUpper(3), 0, 1, {}, 1, 0, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  9                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(4, 6), 1, 1, false, 0.5, 1, getRandomDir())
-    elseif mNumbSpawn == 10                            then pMarch31osRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), nil, nil, true, true, 1, 1)
+    elseif mNumbSpawn == 10                            then pMarch31osExRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), nil, nil, true, true, 1, 1)
     elseif mNumbSpawn == 11                            then pMarch31osBackAndForthTunnelCentral(_side, march31oPat_thickness * 2, nil, u_rndIntUpper(2) * 2, 0, 0, 0, 0, 1, 1, u_rndInt(0, 1), 0, true)
     elseif mNumbSpawn == 12                            then pMarch31osTrapAround(_side, 0, 0, "wrap", false, false, 1, 1)
     elseif mNumbSpawn == 13 then
         local _gapOffset = u_rndInt(1, getProtocolSides() - 2);
-        pMarch31osTunnel(_side, march31oPat_thickness, nil, u_rndInt(2, 4) * 2 - 1, 1, 0.5, 1, u_rndInt(0, 1), 0, 0, false, true, _gapOffset, getProtocolSides() - (_gapOffset + 1), 0, 0)
+        pMarch31osExTunnel(_side, march31oPat_thickness, nil, u_rndInt(2, 4) * 2 - 1, 1, 0.5, 1, u_rndInt(0, 1), 0, 0, false, true, _gapOffset, getProtocolSides() - (_gapOffset + 1), 0, 0)
     end
 end
 
@@ -170,7 +171,7 @@ end
 -- hexadorsip patterns
 function spawnHxdsHexV1Pattern(mNumbSpawn)
     local _side = getRandomSide();
-        if mNumbSpawn ==  0                            then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
+        if mNumbSpawn ==  0                            then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  1 and getProtocolSides() > 5 then pMarch31osWallStrip(_side, march31oPat_thickness, 1, getPolySides(2, "ceil"), 0, 1, 1, true)
     elseif mNumbSpawn ==  2                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(2, 3), 1, 1, false, 1, 1, -1)
     elseif mNumbSpawn ==  3 and getProtocolSides() > 5 then pMarch31osBackAndForthTunnelCentral(_side, march31oPat_thickness * 2, nil, u_rndInt(3, 4) * 2, 0, 0, 0, 0, 1, 1, u_rndInt(0, 1), 0, true)
@@ -178,9 +179,9 @@ function spawnHxdsHexV1Pattern(mNumbSpawn)
     elseif mNumbSpawn ==  5                            then pMarch31osBarrageReversals(_side, march31oPat_thickness, u_rndIntUpper(2) * 2 + 1, 1, true, 1, 1, u_rndInt(0, 1))
     elseif mNumbSpawn ==  6 and getProtocolSides() > 3 then pMarch31osWallStrip(_side, march31oPat_thickness, 1, 2, 0, 1, 1, false)
     elseif mNumbSpawn ==  7 and getProtocolSides() > 3 then pMarch31osWallStrip(_side, march31oPat_thickness, 1, 2, 0, 1, 1, true)
-    elseif mNumbSpawn ==  8 and getProtocolSides() > 4 then pMarch31osRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), nil, nil, true, true, 1, 1)
-    elseif mNumbSpawn ==  9                            then pMarch31osTunnel(_side, march31oPat_thickness * 2, nil, u_rndIntUpper(2), 1, 1, 1, u_rndInt(0, 1), 0, 0, true)
-    elseif mNumbSpawn == 10 and getProtocolSides() > 4 then pMarch31osTunnel(_side, march31oPat_thickness * 2, nil, u_rndInt(2, 3) * 2 - 1, getProtocolSides() - 2, 1, 1, u_rndInt(0, 1), 0, 0, true)
+    elseif mNumbSpawn ==  8 and getProtocolSides() > 4 then pMarch31osExRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), nil, nil, true, true, 1, 1)
+    elseif mNumbSpawn ==  9                            then pMarch31osExTunnel(_side, march31oPat_thickness * 2, nil, u_rndIntUpper(2), 1, 1, 1, u_rndInt(0, 1), 0, 0, true)
+    elseif mNumbSpawn == 10 and getProtocolSides() > 4 then pMarch31osExTunnel(_side, march31oPat_thickness * 2, nil, u_rndInt(2, 3) * 2 - 1, getProtocolSides() - 2, 1, 1, u_rndInt(0, 1), 0, 0, true)
     elseif mNumbSpawn == 11                            then pMarch31osVortaBarrage(_side, march31oPat_thickness, 3, 0, 0, {}, 1, 0, 1, 1, getRandomDir())
     elseif mNumbSpawn == 12                            then pMarch31osBarrageLeftRights(_side, march31oPat_thickness, u_rndInt(2, 3) * 2, 1, 1, true, 1, 1, getRandomDir())
     elseif mNumbSpawn == 13 and getProtocolSides() > 4 then pMarch31osWallStrip(_side, march31oPat_thickness, 1, getPolySides(2, "ceil"), 0, 1, 1, false)
@@ -195,23 +196,23 @@ end
 
 function spawnHxdsCrazyPentPattern(mNumbSpawn)
     local _side = getRandomSide();
-        if mNumbSpawn ==  0 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 4), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
+        if mNumbSpawn ==  0 then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 4), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  1 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(2, 4), 1, 1, false, 0.65, 1, -1)
     elseif mNumbSpawn ==  2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(2, 3), 1, 1, false, 0.55, 1, -1)
     elseif mNumbSpawn ==  3 then pMarch31osBarrageReversals(_side, march31oPat_thickness, 1, 1, false, 1.3, 1, u_rndInt(0, 1))
     elseif mNumbSpawn ==  4 then pMarch31osBarrageSpiralRev(_side, march31oPat_thickness, u_rndIntUpper(3), 1, 1, 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  5 then pMarch31osWallStrip(_side, march31oPat_thickness, 1, 2, 0, 1, 1, false)
     elseif mNumbSpawn ==  6 then pMarch31osBarrageReversals(_side, march31oPat_thickness, u_rndIntUpper(2) * 2 - 1, 1, false, 1.3, 1, u_rndInt(0, 1))
-    elseif mNumbSpawn ==  7 then pMarch31osTunnel(_side, march31oPat_thickness * 2, nil, u_rndInt(1, 2) * 2 - 1, 2, 1, 1, u_rndInt(0, 1), 0, 0, true)
-    elseif mNumbSpawn ==  8 then pMarch31osTunnel(_side, march31oPat_thickness * 2, nil, u_rndInt(3, 4), 1, 1, 1, u_rndInt(0, 1), 0, 0, true)
-    elseif mNumbSpawn ==  9 then pMarch31osRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 5), nil, nil, true, true, 1, 1)
+    elseif mNumbSpawn ==  7 then pMarch31osExTunnel(_side, march31oPat_thickness * 2, nil, u_rndInt(1, 2) * 2 - 1, 2, 1, 1, u_rndInt(0, 1), 0, 0, true)
+    elseif mNumbSpawn ==  8 then pMarch31osExTunnel(_side, march31oPat_thickness * 2, nil, u_rndInt(3, 4), 1, 1, 1, u_rndInt(0, 1), 0, 0, true)
+    elseif mNumbSpawn ==  9 then pMarch31osExRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 5), nil, nil, true, true, 1, 1)
     elseif mNumbSpawn == 10 then pMarch31osAccurateBat(_side, "all", false, false, 1, 1)
-    elseif mNumbSpawn == 11 then pMarch31osRandomBarrage(_side, march31oPat_thickness, u_rndInt(4, 7), nil, nil, true, true, 1, 1)
+    elseif mNumbSpawn == 11 then pMarch31osExRandomBarrage(_side, march31oPat_thickness, u_rndInt(4, 7), nil, nil, true, true, 1, 1)
     elseif mNumbSpawn == 12 then pMarch31osAltHalfBarrage(_side, march31oPat_thickness, u_rndIntUpper(2) * 2 - 1, 0, 1, 1, getRandomDir())
     elseif mNumbSpawn == 13 then pMarch31osVortaBarrage(_side, march31oPat_thickness, u_rndIntUpper(3), 0, 1, {}, 1, 0, 1, 1, getRandomDir())
     elseif mNumbSpawn == 14 then pMarch31osVortaBarrage(_side, march31oPat_thickness, 0, 2, 1, {2, 4, 1}, 1, 0, 1, 1, getRandomDir())
     elseif mNumbSpawn == 15 then pMarch31osBarrageLeftRights(_side, march31oPat_thickness, u_rndInt(2, 3) * 2, 1, 1, true, 1, 1, getRandomDir())
-    elseif mNumbSpawn == 16 then pMarch31osTunnel(_side, march31oPat_thickness * 2, nil, u_rndInt(6, 9) * 2 - 1, getProtocolSides() - 2, 1, 1, u_rndInt(0, 1), 0, 0, true)
+    elseif mNumbSpawn == 16 then pMarch31osExTunnel(_side, march31oPat_thickness * 2, nil, u_rndInt(6, 9) * 2 - 1, getProtocolSides() - 2, 1, 1, u_rndInt(0, 1), 0, 0, true)
     end
 end
 
@@ -225,18 +226,18 @@ function spawnHxdsV2Pattern(mNumbSpawn, bIsGearTeeth)
     local _side = getRandomSide();
     local _gearTeethMult = bIsGearTeeth and 1 or 0
 
-        if mNumbSpawn ==  0 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 4), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
-    elseif mNumbSpawn ==  1 then pMarch31osTunnel(_side, march31oPat_thickness * 1.75, nil, u_rndInt(2, 3) * 2 - 1, getProtocolSides() - 2, 1, 1, u_rndInt(0, 1), 0, 0, true)
+        if mNumbSpawn ==  0 then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 4), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
+    elseif mNumbSpawn ==  1 then pMarch31osExTunnel(_side, march31oPat_thickness * 1.75, nil, u_rndInt(2, 3) * 2 - 1, getProtocolSides() - 2, 1, 1, u_rndInt(0, 1), 0, 0, true)
     elseif mNumbSpawn ==  2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(2, 3), 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  3 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(2, 3), 1, 2, false, 1.2, 1, getRandomDir())
     elseif mNumbSpawn ==  4 then pMarch31osBarrageSpiralRev(_side, march31oPat_thickness, 4, 1, 1, 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  5 then pMarch31osWallStrip(_side, march31oPat_thickness, u_rndInt(0, 1), 2, 0, 1, 1, u_rndInt(0, 1)) t_applyPatDel(5)
-    elseif mNumbSpawn ==  6 then pMarch31osRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), nil, nil, true, true, 1, 1)
+    elseif mNumbSpawn ==  6 then pMarch31osExRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), nil, nil, true, true, 1, 1)
     elseif mNumbSpawn ==  7 then pMarch31osBarrageReversals(_side, march31oPat_thickness, 1, 1, true, 1, 1, u_rndInt(0, 1))
-    elseif mNumbSpawn ==  8 then pMarch31osTunnel(_side, march31oPat_thickness, nil, 3, u_rndInt(1, getProtocolSides() - 2), 1, 1, u_rndInt(0, 1), 0, 0, true, true, 1, 1, 0, 0, _gearTeethMult, nil)
+    elseif mNumbSpawn ==  8 then pMarch31osExTunnel(_side, march31oPat_thickness, nil, 3, u_rndInt(1, getProtocolSides() - 2), 1, 1, u_rndInt(0, 1), 0, 0, true, true, 1, 1, 0, 0, _gearTeethMult, nil)
     elseif mNumbSpawn ==  9 then
         local _gapOffset = u_rndInt(1, getProtocolSides() - 2);
-        pMarch31osTunnel(_side, march31oPat_thickness, nil, u_rndInt(4, 6), 1, 0.55, 1, u_rndInt(0, 1), 0, 0, true, true, _gapOffset, getProtocolSides() - (_gapOffset + 1), 0, 0, _gearTeethMult, nil)
+        pMarch31osExTunnel(_side, march31oPat_thickness, nil, u_rndInt(4, 6), 1, 0.55, 1, u_rndInt(0, 1), 0, 0, true, true, _gapOffset, getProtocolSides() - (_gapOffset + 1), 0, 0, _gearTeethMult, nil)
     elseif mNumbSpawn == 10 then pMarch31osVortaBarrage(_side, march31oPat_thickness, u_rndIntUpper(3), 0, 1, {}, 1, 0, 1, 1, getRandomDir())
     elseif mNumbSpawn == 11 then pMarch31osTrapAround(_side, 0, 0, "wrap", false, false, 1, 1)
     elseif mNumbSpawn == 12 then pMarch31osExWhirlwind(_side, u_rndInt(5, 8), 1, 0, 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 0, 0, 0, false)
@@ -257,20 +258,20 @@ end
 -- baba patterns
 function spawnBabaV1Pattern(mNumbSpawn)
     local _side = getRandomSide();
-        if mNumbSpawn ==  0                            then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
+        if mNumbSpawn ==  0                            then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  1                            then pMarch31osExWhirlwind(_side, u_rndInt(7, 11), 1, 0, 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 0, 0, 0, false)
     elseif mNumbSpawn ==  2                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 3), 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  3                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 2), 1, 2, false, 1.2, 1, getRandomDir())
     elseif mNumbSpawn ==  4                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, 2, 1, 1, false, 0.7, 1, getRandomDir())
     elseif mNumbSpawn ==  5                            then pMarch31osBarrageReversals(_side, march31oPat_thickness, 1, 1, true, 1, 1, u_rndInt(0, 1))
-    elseif mNumbSpawn ==  6                            then pMarch31osTunnel(_side, march31oPat_thickness * 1.75, nil, u_rndIntUpper(3), u_rndInt(1, getProtocolSides() - 2), 1, 1, u_rndInt(0, 1), 0, 0, true)
+    elseif mNumbSpawn ==  6                            then pMarch31osExTunnel(_side, march31oPat_thickness * 1.75, nil, u_rndIntUpper(3), u_rndInt(1, getProtocolSides() - 2), 1, 1, u_rndInt(0, 1), 0, 0, true)
     elseif mNumbSpawn ==  7                            then pMarch31osWallStrip(_side, march31oPat_thickness, u_rndInt(0, 1), u_rndInt(0, 1) == 0 and getPolySides(2, "ceil") or 2, 0, 1, 1, u_rndInt(0, 1))
     elseif mNumbSpawn ==  8 and getProtocolSides() > 5 then pMarch31osVortaBarrage(_side, march31oPat_thickness, u_rndIntUpper(3), 0, 1, {}, 1, 0, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  9                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(4, 6), 1, 1, false, 0.5, 1, getRandomDir())
-    elseif mNumbSpawn == 10                            then pMarch31osRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), nil, nil, true, true, 1, 1)
+    elseif mNumbSpawn == 10                            then pMarch31osExRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), nil, nil, true, true, 1, 1)
     elseif mNumbSpawn == 11 then
         local _gapOffset = u_rndInt(1, getProtocolSides() - 2);
-        pMarch31osTunnel(_side, march31oPat_thickness, nil, u_rndInt(4, 6), 1, 0.5, 1, u_rndInt(0, 1), 0, 0, false, true, _gapOffset, getProtocolSides() - (_gapOffset + 1), 0, 0)
+        pMarch31osExTunnel(_side, march31oPat_thickness, nil, u_rndInt(4, 6), 1, 0.5, 1, u_rndInt(0, 1), 0, 0, false, true, _gapOffset, getProtocolSides() - (_gapOffset + 1), 0, 0)
     elseif mNumbSpawn == 12                            then pMarch31osRandomWhirlwind(_side, u_rndInt(7, 11), 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 0, 0, 0, false)
     elseif mNumbSpawn == 13                            then 
         local _dir = getRandomDir();
@@ -287,7 +288,7 @@ function spawnBabaV1Pattern(mNumbSpawn)
     elseif mNumbSpawn == 22                            then pMarch31osCtoCIBarrage(_side, _thickness, u_rndInt(4, 8), 1, 1, getRandomDir())
     elseif mNumbSpawn == 23 then
         local _mode = u_rndInt(0, 1)
-        pMarch31osTunnel(_side, march31oPat_thickness, nil, u_rndIntUpper(4), _mode == 1 and math.floor(getProtocolSides() / 2) + 2 or getProtocolSides() - 1, 1, 1, u_rndInt(0, 1), 0, 1, true)
+        pMarch31osExTunnel(_side, march31oPat_thickness, nil, u_rndIntUpper(4), _mode == 1 and math.floor(getProtocolSides() / 2) + 2 or getProtocolSides() - 1, 1, 1, u_rndInt(0, 1), 0, 1, true)
     end
 end
 
@@ -299,21 +300,21 @@ end
 
 function spawnBabaV2Pattern(mNumbSpawn)
     local _side = getRandomSide();
-        if mNumbSpawn ==  0 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), false, false, 0, 0, 2, false, 1, 1, getRandomDir())
+        if mNumbSpawn ==  0 then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), false, false, 0, 0, 2, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  1 then pMarch31osExWhirlwind(_side, u_rndInt(4, 6), 0, 0, 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 0, 0, 0, false)
     elseif mNumbSpawn ==  2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(3, 6), 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  3 then pMarch31osBarrageLeftRights(_side, march31oPat_thickness, u_rndInt(4, 6), 1, u_rndIntUpper(2), true, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  4 then pMarch31osAlternatingTunnel(_side, march31oPat_thickness, nil, u_rndInt(3, 6), getProtocolSides() > 4 and getHalfSides("floor") or 1, 1, 1, getRandomDir(), 0, true)
     elseif mNumbSpawn ==  5 then pMarch31osJumbleBarrage(_side, march31oPat_thickness, u_rndInt(3, 4), getProtocolSides() - 2, 1.4, 1)
-    elseif mNumbSpawn ==  6 then pMarch31osTunnel(_side, march31oPat_thickness * 1.75, nil, u_rndIntUpper(3), u_rndInt(1, getProtocolSides() - 2), 1, 1, u_rndInt(0, 1), 0, 0, true)
+    elseif mNumbSpawn ==  6 then pMarch31osExTunnel(_side, march31oPat_thickness * 1.75, nil, u_rndIntUpper(3), u_rndInt(1, getProtocolSides() - 2), 1, 1, u_rndInt(0, 1), 0, 0, true)
     elseif mNumbSpawn ==  7 then pMarch31osOddAltBarrage(_side, march31oPat_thickness, u_rndInt(3, 4), 1, 1, getRandomDir())
     elseif mNumbSpawn ==  8 then pMarch31osDoubleHoledBarrageSpiral(_side, march31oPat_thickness, u_rndInt(4, 5), 0, 1, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  9 then pMarch31osDoubleHoledBarrageLeftRights(_side, march31oPat_thickness, u_rndInt(4, 5), 0, 1, 1, 1, getRandomDir())
     elseif mNumbSpawn == 10 then pMarch31osDoubleHoledBarrageInversions(_side, march31oPat_thickness, u_rndInt(4, 5), 0, true, 1, 1, getRandomDir())
-    elseif mNumbSpawn == 11 then pMarch31osRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), nil, nil, true, true, 1, 1)
+    elseif mNumbSpawn == 11 then pMarch31osExRandomBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), nil, nil, true, true, 1, 1)
     elseif mNumbSpawn == 12 then pMarch31osBackAndForthTunnelAxis(_side, march31oPat_thickness, nil, u_rndInt(4, 6), 0, 0, 0, 0, 1, 1, u_rndInt(0, 1), 0, true)
     elseif mNumbSpawn == 13 then pMarch31osAltHalfBarrage(_side, march31oPat_thickness, u_rndInt(4, 6), 0, 1, 1, getRandomDir())
-    elseif mNumbSpawn == 14 then pMarch31osRandomBarrageTunnel(_side, march31oPat_thickness, nil, u_rndInt(2, 4), 1, true, true, 1, 1)
+    elseif mNumbSpawn == 14 then pMarch31osExRandomBarrageTunnel(_side, march31oPat_thickness, nil, u_rndInt(2, 4), 1, true, true, 1, 1)
     elseif mNumbSpawn == 15 then pMarch31osJumbleTunnel(_side, march31oPat_thickness, nil, u_rndInt(3, 4), 1, getProtocolSides() - 3, 1.4, 1)
     elseif mNumbSpawn == 16 then pMarch31osAltTrapBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), 1, 1, 1, -1, 0, 1, getRandomDir())
     end
