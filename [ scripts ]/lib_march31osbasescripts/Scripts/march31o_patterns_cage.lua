@@ -1,34 +1,66 @@
 --[[
-    void pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInverted, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable, _designDelAddContainedTable, _modeDesignTable, _neighDesignTable, _designDelAddTable, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual, _isTight, _skipEndDelay)
-    void pMarch31osTrapAround(_side, _freq) --, 0, nil, false, false, 1, 1, { true, false }, { 0, 0 }, { 0, 0 }, { 2, 1, 0, 0 }, { 0, 0, 0, 1 }, { 0, 0, 0, 0 }, false, false, false, 0, 1, 1, 2
-    void pMarch31osTrapPatternizer(_side, _iter, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual)
-    void pMarch31osTrapPatternizer(_side, _iter) --, 1, 1, { false, false }, { 0, 0 }, false, false, false, 0, 1, 1, 2
-    void pMarch31osAccurateBat(_side, _design, _isOdd, _isInverted, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual)
-    void pMarch31osAccurateBat(_side) --, "all", false, false, 1, 1, { false, false }, { 0, 0 }, false, false, false, 0, 1, 1, 2
-    void pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _hasContainedTable, _neighContainedTable, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
-    void pMarch31osDiamond(_side, _iter) --, 0, 0, 1, { false, false }, { 0, 0 }, false, false, false, 0, 1, 1, 2
-    void pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
-    void pMarch31osInterpretInversions(_side, _iter) --, 1, 1, false, false, false, 0, 1, 1, 2
-    void pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
-    void pMarch31osDivergencedGauntlets(_side, _iter) --, 1, 1, false, false, false, 0, 1, 1, 2
+    void pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInverted, _delMult, _sizeMult)
+    void pMarch31osTrapAround(_side, _freq) --, 0, nil, false, false, 1, 1
+    void p_configTrapAroundDesign(_hasContainedTable, _neighContainedTable, _designDelAddContainedTable, _modeDesignTable, _neighDesignTable, _designDelAddTable)
+    void p_configTrapAroundDesign(
+                                <table contains boolean, 2 tables>,
+                                <table contains number, 2 tables>,
+                                <table contains number, but 0-1 are recommended in this delay design adder, 2 tables>,
+                                <table contains number, 4 tables>,
+                                <table contains number, 4 tables>,
+                                <table contains number, but 0-1 are recommended in this delay design adder, 4 tables>
+                                )
+    void pMarch31osTrapPatternizer(_side, _iter, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable)
+    void pMarch31osTrapPatternizer(_side, _iter) --, 1, 1, { false, false }, { 0, 0 }
+    void pMarch31osAccurateBat(_side, _design, _isOdd, _isInverted, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable)
+    void pMarch31osAccurateBat(_side) --, "all", false, false, 1, 1, { false, false }, { 0, 0 }
+    void pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _hasContainedTable, _neighContainedTable)
+    void pMarch31osDiamond(_side, _iter) --, 0, 0, 1, { false, false }, { 0, 0 }
+    void pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult)
+    void pMarch31osInterpretInversions(_side, _iter) --, 1, 1
+    void pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult)
+    void pMarch31osDivergencedGauntlets(_side, _iter) --, 1, 1
 ]]
 
 --[[
 [ NOTE FOR THE PARAMETERS ]
 
->>                                                    _side: which side the pattern spawns on
->>                                                    _iter: amount of times
->>                                                 _delMult: the delay pattern multiplier of the pattern
->>                                                _sizeMult: the size pattern multiplier of the pattern
->>                                               _direction: which direction
->> [KODIPHER's PARAMETER]                          _isTight: the boolean of tight delay of the pattern
->> [KODIPHER's PARAMETER]                     _skipEndDelay: skips delay after pattern spawned
->> [THE SUN XIX's PARAMETER]               _isRebootingSide: the boolean of rebooting side of the pattern
->> [THE SUN XIX's PARAMETER]            _endAdditionalDelay: amount of additional delay after pattern spawned, which 'march31oPatDel_AdditionalDelay' variable is
->> [THE SUN XIX's PARAMETER]                       _addMult: the alternative delay multiplier of the pattern, which 'march31oPatDel_AddMult' variable is
->>                                  _delayMultOfSpdLessThan: delay multiplier of speed less than...
->>                                   _spdIsGreaterThanEqual: speed is greater than equal
+>>      _side: which side the pattern spawns on
+>> _thickness: the thickness of the pattern
+>>      _iter: amount of times
+>>   _delMult: the delay pattern multiplier of the pattern
+>>  _sizeMult: the size pattern multiplier of the pattern
+>> _direction: which direction
 ]]
+
+--[[
+[ NOTE FOR THE OPTIONAL PARAMETERS ]
+
+// p_adjustPatternSettings(_isRebootingSide, _skipEndDelayBool, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
+
+>> [KODIPHER's PARAMETER]          _skipEndDelay: skips delay after pattern spawned
+>> [THE SUN XIX's PARAMETER]    _isRebootingSide: the boolean of rebooting side of the pattern
+>> [THE SUN XIX's PARAMETER] _endAdditionalDelay: amount of additional delay after pattern spawned, which 'march31oPatDel_AdditionalDelay' variable is
+>> [THE SUN XIX's PARAMETER]            _addMult: the alternative delay multiplier of the pattern, which 'march31oPatDel_AddMult' variable is
+>>                       _delayMultOfSpdLessThan: delay multiplier of speed less than...
+>>                        _spdIsGreaterThanEqual: speed is greater than equal
+]]
+
+-- [ Pattern utils ] --
+
+march31opatcommon_hasContainedTable = { false, false }
+march31opatcommon_neighContainedTable = { 0, 0 }
+march31opatcommon_designDelAddContainedTable = { 0, 0 }
+march31opatcommon_modeDesignTable = { 0, 0, 0, 0 }
+march31opatcommon_neighDesignTable = { 0, 0, 0, 0 }
+march31opatcommon_designDelAddTable = { 0, 0, 0, 0 }
+
+-- [ Pattern commons ] --
+
+function p_configContainedPattern(_hasContainedTable, _neighContainedTable)
+    march31opatcommon_hasContainedTable = type(_hasContainedTable) ~= "table" and _hasContainedTable or { false, false }
+    march31opatcommon_neighContainedTable = type(_neighContainedTable) ~= "table" and _neighContainedTable or { 0, 0 }
+end
 
 --[ Additional cages ]--
 
@@ -47,11 +79,9 @@
 
 -- note for desk of table int no.2 from <_modeDesignTable> argument: 0 or else = none, 1 = desk type 1(?), 2 = desk type 2(?)
 
-function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInverted, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable, _designDelAddContainedTable, _modeDesignTable, _neighDesignTable, _designDelAddTable, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual)
+function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInverted, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable, _designDelAddContainedTable, _modeDesignTable, _neighDesignTable, _designDelAddTablep_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 8 or 11)))
     -- optional args
     _freq = anythingButNil(_freq, 0); _freqInv = anythingButNil(_freqInv, 0); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1); _isOdd = anythingButNil(_isOdd, 0); _isInverted = anythingButNil(_isInverted, 0);
-    if _designDelAddCorridor == nil or _designDelAddCorridor < 0 then _designDelAddCorridor = 0; elseif _designDelAddCorridor > 0 then _designDelAddCorridor = 1; end
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     -- prepare var
     local _currentSizeOverride = 1;
@@ -60,63 +90,55 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
     --[[ if u_getSpeedMultDM greater than equal _spdIs_greaterThanEqual that will calculated with speed difficulty multiplier,
     elseif u_getSpeedMultDM lower than _spdIs_greaterThanEqual that won't calculated with speed difficulty multiplier,
     but you can now change the '_thickMult_nonSpd' value ]]
-    p_adjustPatternDelaySettings(_spdIs_greaterThanEqual or 2, _thickMult_nonSpd or 1, nil, nil);
-    _delMult = _delMult * (getBooleanNumber(_isTight) and 0.75 or 1);
+    p_adjustPatternSettings();
+    _delMult = _delMult * (p_getTightDelayPatternBool() and 0.75 or 1);
 
     p_patternEffectStart()
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     -- get delay speed, start pos, odd int checker, and rnd side rebooter
-    local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
-    if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    if _curSide == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
     local _checkOddInt = (getBooleanNumber(_isOdd) and getProtocolSides() % 2 == 1) and 1 or 0;
     local _oddValueFix = (_checkOddInt + ((getBooleanNumber(_isInverted) and getProtocolSides() % 2 == 1) and 1 or 0)) % 2;
 
     if _design == "trap" then
-        _hasContainedTable = { true, false }
-        _neighContainedTable = { 0, 0 }
-        _designDelAddContainedTable = { 0, 0 }
-        _modeDesignTable = { 2, 1, 0, 0 }
-        _neighDesignTable = { 0, 0, 0, 1 }
-        _designDelAddTable = { 0, 0, 0, 0 }
+        march31opatcommon_hasContainedTable = { true, false }
+        march31opatcommon_neighContainedTable = { 0, 0 }
+        march31opatcommon_designDelAddContainedTable = { 0, 0 }
+        march31opatcommon_modeDesignTable = { 2, 1, 0, 0 }
+        march31opatcommon_neighDesignTable = { 0, 0, 0, 1 }
+        march31opatcommon_designDelAddTable = { 0, 0, 0, 0 }
     elseif _design == "trapped" then
-        _hasContainedTable = { true, false }
-        _neighContainedTable = { 0, 0 }
-        _designDelAddContainedTable = { 0, 0 }
-        _modeDesignTable = { 2, 1, 0, 2 }
-        _neighDesignTable = { 0, 0, 0, 0 }
-        _designDelAddTable = { 0, 0, 0, 1 }
+        march31opatcommon_hasContainedTable = { true, false }
+        march31opatcommon_neighContainedTable = { 0, 0 }
+        march31opatcommon_designDelAddContainedTable = { 0, 0 }
+        march31opatcommon_modeDesignTable = { 2, 1, 0, 2 }
+        march31opatcommon_neighDesignTable = { 0, 0, 0, 0 }
+        march31opatcommon_designDelAddTable = { 0, 0, 0, 1 }
     elseif _design == "wrap" then
-        _hasContainedTable = { true, false }
-        _neighContainedTable = { 0, 0 }
-        _designDelAddContainedTable = { 1, 1 }
-        _modeDesignTable = { 1, 2, 0, 0 }
-        _neighDesignTable = { 0, 0, 0, 1 }
-        _designDelAddTable = { 1, 1, 1, 0 }
+        march31opatcommon_hasContainedTable = { true, false }
+        march31opatcommon_neighContainedTable = { 0, 0 }
+        march31opatcommon_designDelAddContainedTable = { 1, 1 }
+        march31opatcommon_modeDesignTable = { 1, 2, 0, 0 }
+        march31opatcommon_neighDesignTable = { 0, 0, 0, 1 }
+        march31opatcommon_designDelAddTable = { 1, 1, 1, 0 }
     elseif _design == "bat" then
-        _hasContainedTable = { false, false }
-        _neighContainedTable = { 0, 0 }
-        _designDelAddContainedTable = { 0, 0 }
-        _modeDesignTable = { 1, 2, 0, 2 }
-        _neighDesignTable = { 0, 0, 0, 0 }
-        _designDelAddTable = { 1, 1, 1, 1 }
-    else
-        _hasContainedTable = { false, false }
-        _neighContainedTable = { 0, 0 }
-        _designDelAddContainedTable = { 0, 0 }
-        _modeDesignTable = { 0, 0, 0, 0 }
-        _neighDesignTable = { 0, 0, 0, 0 }
-        _designDelAddTable = { 0, 0, 0, 0 }
+        march31opatcommon_hasContainedTable = { false, false }
+        march31opatcommon_neighContainedTable = { 0, 0 }
+        march31opatcommon_designDelAddContainedTable = { 0, 0 }
+        march31opatcommon_modeDesignTable = { 1, 2, 0, 2 }
+        march31opatcommon_neighDesignTable = { 0, 0, 0, 0 }
+        march31opatcommon_designDelAddTable = { 1, 1, 1, 1 }
     end
 
-    if _hasContainedTable == nil          then error("argument #6 is not a table.", 2)  elseif #_hasContainedTable < 2          then error("insufficient tables at argument #6.", 2)  end
-    if _neighContainedTable == nil        then error("argument #7 is not a table.", 2)  elseif #_neighContainedTable < 2        then error("insufficient tables at argument #7.", 2)  end
-    if _designDelAddContainedTable == nil then error("argument #8 is not a table.", 2)  elseif #_designDelAddContainedTable < 2 then error("insufficient tables at argument #8.", 2)  end
-    if _modeDesignTable == nil            then error("argument #9 is not a table.", 2)  elseif #_modeDesignTable < 4            then error("insufficient tables at argument #9.", 2)  end
-    if _neighDesignTable == nil           then error("argument #10 is not a table.", 2) elseif #_neighDesignTable < 4           then error("insufficient tables at argument #10.", 2) end
-    if _designDelAddTable == nil          then error("argument #11 is not a table.", 2) elseif #_designDelAddTable < 4          then error("insufficient tables at argument #11.", 2) end
+    if type(march31opatcommon_hasContainedTable) == "table"          then error("argument #6 is not a table.", 2)  elseif #march31opatcommon_hasContainedTable < 2          then error("insufficient tables at argument #6.", 2)  end
+    if type(march31opatcommon_neighContainedTable) == "table"        then error("argument #7 is not a table.", 2)  elseif #march31opatcommon_neighContainedTable < 2        then error("insufficient tables at argument #7.", 2)  end
+    if type(march31opatcommon_designDelAddContainedTable) == "table" then error("argument #8 is not a table.", 2)  elseif #march31opatcommon_designDelAddContainedTable < 2 then error("insufficient tables at argument #8.", 2)  end
+    if type(march31opatcommon_modeDesignTable) == "table"            then error("argument #9 is not a table.", 2)  elseif #march31opatcommon_modeDesignTable < 4            then error("insufficient tables at argument #9.", 2)  end
+    if type(march31opatcommon_neighDesignTable) == "table"           then error("argument #10 is not a table.", 2) elseif #march31opatcommon_neighDesignTable < 4           then error("insufficient tables at argument #10.", 2) end
+    if type(march31opatcommon_designDelAddTable) == "table"          then error("argument #11 is not a table.", 2) elseif #march31opatcommon_designDelAddTable < 4          then error("insufficient tables at argument #11.", 2) end
 
     -- required commons.
     local _wallPart = function(_side, _isOppositeSideAlt, _thickness)                   for i = 0, _isOppositeSideAlt, 1 do cWall(_side + i, _thickness); end                                                   end
@@ -253,111 +275,111 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
     local _freq = 0
     local _freqInv = 4
     local _neighbors = 0
-    local _modeDesignTable[1] = 0
-    local _modeDesignTable[2] = 0
-    local _modeDesignTable[3] = 0
-    local _modeDesignTable[4] = 0
-    local _neighDesignTable[1] = 0
-    local _neighDesignTable[2] = 0
-    local _neighDesignTable[3] = 0
-    local _neighDesignTable[4] = 0
-    local _designDelAddTable[1] = 0
-    local _designDelAddTable[2] = 0
-    local _designDelAddTable[3] = 0
-    local _designDelAddTable[4] = 0
+    local march31opatcommon_modeDesignTable[1] = 0
+    local march31opatcommon_modeDesignTable[2] = 0
+    local march31opatcommon_modeDesignTable[3] = 0
+    local march31opatcommon_modeDesignTable[4] = 0
+    local march31opatcommon_neighDesignTable[1] = 0
+    local march31opatcommon_neighDesignTable[2] = 0
+    local march31opatcommon_neighDesignTable[3] = 0
+    local march31opatcommon_neighDesignTable[4] = 0
+    local march31opatcommon_designDelAddTable[1] = 0
+    local march31opatcommon_designDelAddTable[2] = 0
+    local march31opatcommon_designDelAddTable[3] = 0
+    local march31opatcommon_designDelAddTable[4] = 0
     local _isOdd = 0
     local _isInverted = 0
     ]]
 
     --[ -= Starting of pattern code =- ]--
     if getBooleanNumber(_isInverted) then
-        if (getBooleanNumber(_hasContainedTable[2])) then
+        if (getBooleanNumber(march31opatcommon_hasContainedTable[2])) then
             -- set c barrage neighbors after pattern spawned
-            _barrageNPart(_curSide + ((_oddValueFix % 2) * getHalfSides()), _oddValueFix % 2, _neighContainedTable[2], customizePatternThickness((1 + _designDelAddContainedTable[2]) * _currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
-            t_applyPatDel(customizePatternDelay((4 + (_designDelAddContainedTable[2] * 2)) * _currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
+            _barrageNPart(_curSide + ((_oddValueFix % 2) * getHalfSides()), _oddValueFix % 2, march31opatcommon_neighContainedTable[2], customizePatternThickness((1 + march31opatcommon_designDelAddContainedTable[2]) * _currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay((4 + (march31opatcommon_designDelAddContainedTable[2] * 2)) * _currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
         end
         if getProtocolSides() >= 6 then
             if _freq == 0 and _freqInv > 0 then
                 for aInv = 0, _freqInv do
                     local delGapFix = (aInv > 0 and aInv < _freqInv - 1 and 0) or 1
-                    local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1 + _designDelAddTable[1] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1.5 + _designDelAddTable[3] or 0) + _designDelAddTable[4]
+                    local thickwall = 11 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1.5 + march31opatcommon_designDelAddTable[3] or 0) + march31opatcommon_designDelAddTable[4]
                     _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2,
-                         aInv == 0 and _modeDesignTable[4]   or aInv == _freqInv and _modeDesignTable[1]   or _modeDesignTable[3],
-                        (aInv == 0 and _neighDesignTable[4]  or aInv == _freqInv and _neighDesignTable[1]  or _neighDesignTable[3]) + ((aInv > 0 and aInv < _freqInv) and 1 or 0),
-                        (aInv < _freqInv - 1 and thickwall + (aInv == _freqInv - 2 and 1 or 0) or 0), (aInv == _freqInv and getBooleanNumber(_hasContainedTable[2]) and 0 or 5) + delGapFix,
-                         aInv == 0 and _designDelAddTable[4] or aInv == _freqInv and _designDelAddTable[1] or _designDelAddTable[3],
+                         aInv == 0 and march31opatcommon_modeDesignTable[4]   or aInv == _freqInv and march31opatcommon_modeDesignTable[1]   or march31opatcommon_modeDesignTable[3],
+                        (aInv == 0 and march31opatcommon_neighDesignTable[4]  or aInv == _freqInv and march31opatcommon_neighDesignTable[1]  or march31opatcommon_neighDesignTable[3]) + ((aInv > 0 and aInv < _freqInv) and 1 or 0),
+                        (aInv < _freqInv - 1 and thickwall + (aInv == _freqInv - 2 and 1 or 0) or 0), (aInv == _freqInv and getBooleanNumber(march31opatcommon_hasContainedTable[2]) and 0 or 5) + delGapFix,
+                         aInv == 0 and march31opatcommon_designDelAddTable[4] or aInv == _freqInv and march31opatcommon_designDelAddTable[1] or march31opatcommon_designDelAddTable[3],
                     true)
                 end
             else
                 for aInv = 0, _freqInv do
                     for aMain = 0, _freq do
                         p_patternEffectCycle();
-                        local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1 + _designDelAddTable[1] or 0) + (_modeDesignTable[2] > 0 and 1 + _designDelAddTable[2] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1 + (_designDelAddTable[3] * 1.5) or 0)
-                        _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignTable[4] or _modeDesignTable[3], aMain == 0 and _neighDesignTable[4] or _neighDesignTable[3], thickwall,             5 - (_modeDesignTable[2] > 0 and 1 or 0), _designDelAddTable[4], true) --end
-                        _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignTable[2],                                       _neighDesignTable[2],                                        aMain == 0 and 5 or 4, 5 + (_modeDesignTable[2] > 0 and 1 or 0), _designDelAddTable[2], true) --desk
+                        local thickwall = 11 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[2] > 0 and 1 + march31opatcommon_designDelAddTable[2] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1 + (march31opatcommon_designDelAddTable[3] * 1.5) or 0)
+                        _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and march31opatcommon_modeDesignTable[4] or march31opatcommon_modeDesignTable[3], aMain == 0 and march31opatcommon_neighDesignTable[4] or march31opatcommon_neighDesignTable[3], thickwall,             5 - (march31opatcommon_modeDesignTable[2] > 0 and (aMain > 0 and march31opatcommon_modeDesignTable[4] == 0 and 4 or 1) or 0), march31opatcommon_designDelAddTable[4], true) --end
+                        _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[2],                                       march31opatcommon_neighDesignTable[2],                                        aMain == 0 and 5 or 4, 5 + (march31opatcommon_modeDesignTable[2] > 0 and 1 or 0),                                                   march31opatcommon_designDelAddTable[2], true) --desk
                     end
-                    _bodyPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, _modeDesignTable[1], _neighDesignTable[1], 0, 5, _designDelAddTable[1], true) --start
+                    _bodyPart(_curSide, _checkOddInt, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[1], march31opatcommon_neighDesignTable[1], 0, 5, march31opatcommon_designDelAddTable[1], true) --start
                 end
             end
         else
             for aInv = 0, _freqInv do
                 for aMain = 0, _freq do
                     p_patternEffectCycle();
-                    local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1 + _designDelAddTable[1] or 0) + (_modeDesignTable[2] > 0 and 1 + _designDelAddTable[2] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1 + (_designDelAddTable[3] * 1.5) or 0)
-                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignTable[4] or _modeDesignTable[3], aMain == 0 and _neighDesignTable[4] or _neighDesignTable[3], thickwall,             5 - (_modeDesignTable[2] > 0 and 1 or 0), _designDelAddTable[4], true) --end
-                    _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignTable[2],                                       _neighDesignTable[2],                                        aMain == 0 and 5 or 4, 5 + (_modeDesignTable[2] > 0 and 1 or 0), _designDelAddTable[2], true) --desk
+                    local thickwall = 11 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[2] > 0 and 1 + march31opatcommon_designDelAddTable[2] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1 + (march31opatcommon_designDelAddTable[3] * 1.5) or 0)
+                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and march31opatcommon_modeDesignTable[4] or march31opatcommon_modeDesignTable[3], aMain == 0 and march31opatcommon_neighDesignTable[4] or march31opatcommon_neighDesignTable[3], thickwall,             5 - (march31opatcommon_modeDesignTable[2] > 0 and (aMain > 0 and march31opatcommon_modeDesignTable[4] == 0 and 4 or 1) or 0), march31opatcommon_designDelAddTable[4], true) --end
+                    _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[2],                                       march31opatcommon_neighDesignTable[2],                                        aMain == 0 and 5 or 4, 5 + (march31opatcommon_modeDesignTable[2] > 0 and 1 or 0),                                                   march31opatcommon_designDelAddTable[2], true) --desk
                 end
-                _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignTable[1], _neighDesignTable[1], 0, 5, _designDelAddTable[1], true) --start
+                _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[1], march31opatcommon_neighDesignTable[1], 0, 5, march31opatcommon_designDelAddTable[1], true) --start
             end
         end
-        if (getBooleanNumber(_hasContainedTable[1])) then
-            t_applyPatDel(customizePatternDelay((1 + (_designDelAddContainedTable[1] * 2)) * _currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
-            _barrageNPart(_curSide + ((_checkOddInt % 2) * getHalfSides()), _checkOddInt % 2, _neighContainedTable[1], customizePatternThickness((1 + _designDelAddContainedTable[1]) * _currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+        if (getBooleanNumber(march31opatcommon_hasContainedTable[1])) then
+            t_applyPatDel(customizePatternDelay((1 + (march31opatcommon_designDelAddContainedTable[1] * 2)) * _currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
+            _barrageNPart(_curSide + ((_checkOddInt % 2) * getHalfSides()), _checkOddInt % 2, march31opatcommon_neighContainedTable[1], customizePatternThickness((1 + march31opatcommon_designDelAddContainedTable[1]) * _currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             t_applyPatDel(customizePatternDelay(4 * _currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
         end
     else
-        if (getBooleanNumber(_hasContainedTable[1])) then
+        if (getBooleanNumber(march31opatcommon_hasContainedTable[1])) then
             -- set c barrage neighbors after pattern spawned
-            _barrageNPart(_curSide + ((_oddValueFix % 2) * getHalfSides()), _oddValueFix % 2, _neighContainedTable[1], customizePatternThickness((1 + _designDelAddContainedTable[1]) * _currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
-            t_applyPatDel(customizePatternDelay((4 + (_designDelAddContainedTable[1] * 2)) * _currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
+            _barrageNPart(_curSide + ((_oddValueFix % 2) * getHalfSides()), _oddValueFix % 2, march31opatcommon_neighContainedTable[1], customizePatternThickness((1 + march31opatcommon_designDelAddContainedTable[1]) * _currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+            t_applyPatDel(customizePatternDelay((4 + (march31opatcommon_designDelAddContainedTable[1] * 2)) * _currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
         end
         if getProtocolSides() >= 6 then
             if _freq == 0 and _freqInv > 0 then
                 for aInv = 0, _freqInv do
                     local delGapFix = (aInv > 0 and aInv < _freqInv - 1 and 0) or 1
-                    local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1.25 + _designDelAddTable[1] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1.5 + _designDelAddTable[3] or 0) + _designDelAddTable[4]
+                    local thickwall = 11 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1.25 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1.5 + march31opatcommon_designDelAddTable[3] or 0) + march31opatcommon_designDelAddTable[4]
                     _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2,
-                         aInv == 0 and _modeDesignTable[1]   or aInv == _freqInv and _modeDesignTable[4]   or _modeDesignTable[3],
-                        (aInv == 0 and _neighDesignTable[1]  or aInv == _freqInv and _neighDesignTable[4]  or _neighDesignTable[3]) + ((aInv > 0 and aInv < _freqInv) and 1 or 0),
-                        (aInv < _freqInv - 1 and thickwall + (aInv == _freqInv - 2 and 1 or 0) or 0), (aInv == _freqInv and getBooleanNumber(_hasContainedTable[2]) and 0 or 5) + delGapFix,
-                         aInv == 0 and _designDelAddTable[1] or aInv == _freqInv and _designDelAddTable[4] or _designDelAddTable[3],
+                         aInv == 0 and march31opatcommon_modeDesignTable[1]   or aInv == _freqInv and march31opatcommon_modeDesignTable[4]   or march31opatcommon_modeDesignTable[3],
+                        (aInv == 0 and march31opatcommon_neighDesignTable[1]  or aInv == _freqInv and march31opatcommon_neighDesignTable[4]  or march31opatcommon_neighDesignTable[3]) + ((aInv > 0 and aInv < _freqInv) and 1 or 0),
+                        (aInv < _freqInv - 1 and thickwall + (aInv == _freqInv - 2 and 1 or 0) or 0), (aInv == _freqInv and getBooleanNumber(march31opatcommon_hasContainedTable[2]) and 0 or 5) + delGapFix,
+                         aInv == 0 and march31opatcommon_designDelAddTable[1] or aInv == _freqInv and march31opatcommon_designDelAddTable[4] or march31opatcommon_designDelAddTable[3],
                     true)
                 end
             else
                 for aInv = 0, _freqInv do
                     for aMain = 0, _freq do
                         p_patternEffectCycle();
-                        local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1 + _designDelAddTable[1] or 0) + (_modeDesignTable[2] > 0 and 1 + _designDelAddTable[2] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1 + (_designDelAddTable[3] * 1.5) or 0)
-                        _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignTable[1] or _modeDesignTable[3], aMain == 0 and _neighDesignTable[1] or _neighDesignTable[3], thickwall,                 5,                                        _designDelAddTable[1], false) --start
-                        _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignTable[2],                                       _neighDesignTable[2],                                        aMain == _freq and 5 or 4, 5 + (_modeDesignTable[2] > 0 and 1 or 0), _designDelAddTable[2], false) --desk
+                        local thickwall = 11 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[2] > 0 and 1 + march31opatcommon_designDelAddTable[2] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1 + (march31opatcommon_designDelAddTable[3] * 1.5) or 0)
+                        _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and march31opatcommon_modeDesignTable[1] or march31opatcommon_modeDesignTable[3], aMain == 0 and march31opatcommon_neighDesignTable[1] or march31opatcommon_neighDesignTable[3], thickwall,                 5,                                        march31opatcommon_designDelAddTable[1], false) --start
+                        _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[2],                                       march31opatcommon_neighDesignTable[2],                                        aMain == _freq and 5 or 4, 5 + (march31opatcommon_modeDesignTable[2] > 0 and 1 or 0), march31opatcommon_designDelAddTable[2], false) --desk
                     end
-                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignTable[4], _neighDesignTable[4], 0, aInv == _freqInv and getBooleanNumber(_hasContainedTable[2]) and 0 or 5, _designDelAddTable[4], false) --end
+                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[4], march31opatcommon_neighDesignTable[4], 0, aInv == _freqInv and getBooleanNumber(march31opatcommon_hasContainedTable[2]) and 0 or 5, march31opatcommon_designDelAddTable[4], false) --end
                 end
             end
         else
             for aInv = 0, _freqInv do
                 for aMain = 0, _freq do
                     p_patternEffectCycle();
-                    local thickwall = 11 + (_modeDesignTable[1] > 0 and aMain == 0 and 1 + _designDelAddTable[1] or 0) + (_modeDesignTable[2] > 0 and 1 + _designDelAddTable[2] or 0) + (_modeDesignTable[3] > 0 and aMain > 0 and 1 + (_designDelAddTable[3] * 1.5) or 0)
-                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and _modeDesignTable[1] or _modeDesignTable[3], aMain == 0 and _neighDesignTable[1] or _neighDesignTable[3], thickwall,                 5,                                        _designDelAddTable[1], false) --start
-                    _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignTable[2],                                       _neighDesignTable[2],                                        aMain == _freq and 5 or 4, 5 + (_modeDesignTable[2] > 0 and 1 or 0), _designDelAddTable[2], false) --desk
+                    local thickwall = 11 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[2] > 0 and 1 + march31opatcommon_designDelAddTable[2] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1 + (march31opatcommon_designDelAddTable[3] * 1.5) or 0)
+                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and march31opatcommon_modeDesignTable[1] or march31opatcommon_modeDesignTable[3], aMain == 0 and march31opatcommon_neighDesignTable[1] or march31opatcommon_neighDesignTable[3], thickwall,                 5,                                        march31opatcommon_designDelAddTable[1], false) --start
+                    _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[2],                                       march31opatcommon_neighDesignTable[2],                                        aMain == _freq and 5 or 4, 5 + (march31opatcommon_modeDesignTable[2] > 0 and 1 or 0), march31opatcommon_designDelAddTable[2], false) --desk
                 end
-                _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, _modeDesignTable[4], _neighDesignTable[4], 0, aInv == _freqInv and getBooleanNumber(_hasContainedTable[2]) and 0 or 5, _designDelAddTable[4], false) --end
+                _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[4], march31opatcommon_neighDesignTable[4], 0, aInv == _freqInv and getBooleanNumber(march31opatcommon_hasContainedTable[2]) and 0 or 5, march31opatcommon_designDelAddTable[4], false) --end
             end
         end
-        if (getBooleanNumber(_hasContainedTable[2])) then
-            t_applyPatDel(customizePatternDelay((1 + (_designDelAddContainedTable[2] * 2)) * _currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
-            _barrageNPart(_curSide + ((_oddValueFix % 2) * getHalfSides()), _oddValueFix % 2, _neighContainedTable[2], customizePatternThickness((1 + _designDelAddContainedTable[2]) * _currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+        if (getBooleanNumber(march31opatcommon_hasContainedTable[2])) then
+            t_applyPatDel(customizePatternDelay((1 + (march31opatcommon_designDelAddContainedTable[2] * 2)) * _currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
+            _barrageNPart(_curSide + ((_oddValueFix % 2) * getHalfSides()), _oddValueFix % 2, march31opatcommon_neighContainedTable[2], customizePatternThickness((1 + march31opatcommon_designDelAddContainedTable[2]) * _currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             t_applyPatDel(customizePatternDelay(4 * _currentSizeOverride * _delMult * _sizeMult, p_getDelayPatternBool()));
         end
     end
@@ -365,19 +387,35 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
     p_patternEffectEnd()
 
     -- end delay (optional arg, default false)
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 8 or 11)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 8 or 11)));
 end
 pMarch31osWrapAround = pMarch31osTrapAround
+
+-- p_configTrapAroundDesign(): generates design from trap around pattern. (WORKS ONLY ON TABLES, OTHERWISE DON'T WORK)
+--          _hasContainedTable: boolean of containter, only works on table contains booleans
+--        _neighContainedTable: amount of free-neighbor containter, only works on table contains integers
+-- _designDelAddContainedTable: a design delay/thickness amount adder of containter, only works on table contains integers
+--            _modeDesignTable: 0 or else = none, 1 = body type 1(?), 2 = body type 2(?), 3 = all(?), only works on table contains integers
+--           _neighDesignTable: amount of free-neighbor body, only works on table contains integers
+--          _designDelAddThick: a design delay/thickness amount adder. 1 for add delay/thickness amount, 0 = don't, only works on table contains integers
+--          _designDelAddTable: 1 for add delay/thickness amount, 0 = don't, only works on table contains integers
+function p_configTrapAroundDesign(_hasContainedTable, _neighContainedTable, _designDelAddContainedTable, _modeDesignTable, _neighDesignTable, _designDelAddTable)
+    march31opatcommon_hasContainedTable = _hasContainedTable
+    march31opatcommon_neighContainedTable = _neighContainedTable
+    march31opatcommon_designDelAddContainedTable = _designDelAddContainedTable
+    march31opatcommon_modeDesignTable = _modeDesignTable
+    march31opatcommon_neighDesignTable = _neighDesignTable
+    march31opatcommon_designDelAddTable = _designDelAddTable
+end
 
 -- pMarch31osTrapPatternizer(): same pattern of 321 pattern, taken from patternizer.lua
 --              _freqInv: amount of times to displace to half side pos
 --           _isInverted: boolean of inverting the pattern design, not the side pos (pattern design * -1, inverted)
 --    _hasContainedTable: boolean of containter, only works on table contains booleans
 --  _neighContainedTable: amount of free-neighbor containter, only works on table contains integers
-function pMarch31osTrapPatternizer(_side, _iter, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual)
+function pMarch31osTrapPatternizer(_side, _iter, _delMult, _sizeMult)
     -- When the value is nil, the values will automatically indexed itself!
     _iter = anythingButNil(_iter, u_rndInt(0, 2)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     -- Prepare the value data.
     local _largeWallThickStat, _designMiddleThickStat, _designMiddleDelayStat = 11, 10, 4;
@@ -387,26 +425,24 @@ function pMarch31osTrapPatternizer(_side, _iter, _delMult, _sizeMult, _hasContai
     --[[ if u_getSpeedMultDM greater than equal _spdIsGreaterThanEqual that will calculated with speed difficulty multiplier,
     elseif u_getSpeedMultDM lower than _spdIsGreaterThanEqual that won't calculated with speed difficulty multiplier,
     but you can now change the '_delayMultSpdLessThan' value ]]
-    p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultSpdLessThan or 1, nil, nil);
+    p_adjustPatternSettings();
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     -- First, create the '_curDelaySpeed', '_curSide', and '_curLoopDir' value.
-    local _curDelaySpeed = (_altMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
-    if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    if _curSide == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
     local _curLoopDir = 1;
 
-    if _hasContainedTable == nil   or #_hasContainedTable < 2   then _hasContainedTable = { false, false } end
-    if _neighContainedTable == nil or #_neighContainedTable < 2 then _neighContainedTable = { 0, 0 }       end
+    if type(march31opatcommon_hasContainedTable) ~= "table"   or #march31opatcommon_hasContainedTable < 2   then march31opatcommon_hasContainedTable = { false, false } end
+    if type(march31opatcommon_neighContainedTable) ~= "table" or #march31opatcommon_neighContainedTable < 2 then march31opatcommon_neighContainedTable = { 0, 0 }       end
 
     --[ -= Starting of pattern code =- ]--
-    _hasContainedStart = getBooleanNumber(_hasContainedStart); _hasContainedEnd = getBooleanNumber(_hasContainedEnd);
-    if getBooleanNumber(_hasContainedTable[1]) then
+    if getBooleanNumber(march31opatcommon_hasContainedTable[1]) then
         -- Alright. Set the "C" barrage with neighbors.
-        cBarrageN(_curSide, _neighContainedTable[1], customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+        cBarrageN(_curSide, march31opatcommon_neighContainedTable[1], customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
         t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
     end
     if getProtocolSides() >= 6 then
@@ -448,31 +484,30 @@ function pMarch31osTrapPatternizer(_side, _iter, _delMult, _sizeMult, _hasContai
         end
     end
     cGrowWall(_curSide, math.floor(getProtocolSides() / 4), customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()))
-    if getBooleanNumber(_hasContainedTable[2]) then
+    if getBooleanNumber(march31opatcommon_hasContainedTable[2]) then
         t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
         -- Set the "C" barrage with neighbors after pattern spawned.
-        cBarrageN(_curSide, _neighContainedTable[2], customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+        cBarrageN(_curSide, march31opatcommon_neighContainedTable[2], customizePatternThickness(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
     end
     t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
     --[ -= End of pattern code =- ]--
     p_patternEffectEnd();
 
     -- And finally, add the pattern of delay 't_applyPatDel' to avoid impossible patterns. Why? Because the pattern code needs to delay after it's ends here!
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 0 or 8)));
 end
 
 -- pMarch31osAccurateBat(): the """"accurate"""" bat pattern from Super Hexagon where you have to turn left-left or right-right (guided 180 turn)
 --              _design: design mode, "hex" = hexagon affected, "all" all sides affected
 --               _isOdd: boolean of odd pattern design
 --          _isInverted: boolean of inverting the pattern design, not the side pos (pattern design * -1, inverted)
---   _hasContainedTable: boolean of containter, only works on table contains booleans
--- _neighContainedTable: amount of free-neighbor containter, only works on table contains integers
-function pMarch31osAccurateBat(_side, _design, _isOdd, _isInverted, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _thickMult_nonSpd, _spdIs_greaterThanEqual)
+--   march31opatcommon_hasContainedTable: boolean of containter, only works on table contains booleans
+-- march31opatcommon_neighContainedTable: amount of free-neighbor containter, only works on table contains integers
+function pMarch31osAccurateBat(_side, _design, _isOdd, _isInverted, _delMult, _sizeMult, march31opatcommon_hasContainedTable, march31opatcommon_neighContainedTable)
     -- optional args
     _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
     if _delMult > 1.5 then _delMult = 1.5; end
     _design = anythingButNil(_design, "hex");
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     -- prepare var
     local currentSizeOverride = 1;
@@ -481,21 +516,20 @@ function pMarch31osAccurateBat(_side, _design, _isOdd, _isInverted, _delMult, _s
     --[[ if u_getSpeedMultDM greater than equal _spdIs_greaterThanEqual that will calculated with speed difficulty multiplier,
     elseif u_getSpeedMultDM lower than _spdIs_greaterThanEqual that won't calculated with speed difficulty multiplier,
     but you can now change the '_thickMult_nonSpd' value ]]
-    p_adjustPatternDelaySettings(_spdIs_greaterThanEqual or 2, _thickMult_nonSpd or 1, nil, nil);
-    _delMult = closeValue(_delMult * (getBooleanNumber(_isTight) and 0.75 or 1), 0, 1.5);
+    p_adjustPatternSettings();
+    _delMult = closeValue(_delMult * (p_getTightDelayPatternBool() and 0.75 or 1), 0, 1.5);
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     -- get delay speed, start pos, odd int checker, and rnd side rebooter
-    local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
-    if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    if _curSide == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
     local _checkOddInt = (getBooleanNumber(_isOdd) and getProtocolSides() % 2 == 1) and 1 or 0;
 
-    if _hasContainedTable == nil   or #_hasContainedTable < 2   then _hasContainedTable = { false, false } end
-    if _neighContainedTable == nil or #_neighContainedTable < 2 then _neighContainedTable = { 0, 0 }       end
+    if type(march31opatcommon_hasContainedTable) ~= "table"   or #march31opatcommon_hasContainedTable < 2   then march31opatcommon_hasContainedTable = { false, false } end
+    if type(march31opatcommon_neighContainedTable) ~= "table" or #march31opatcommon_neighContainedTable < 2 then march31opatcommon_neighContainedTable = { 0, 0 }       end
 
     -- required commons.
     local _wallPart = function(_side, _isOppositeSideAlt, _thickness)                   for i = 0, _isOppositeSideAlt, 1 do cWall(_side + i, _thickness); end                                                   end
@@ -506,9 +540,9 @@ function pMarch31osAccurateBat(_side, _design, _isOdd, _isInverted, _delMult, _s
 
     --[ -= Starting of pattern code =- ]--
     if getBooleanNumber(_isInverted) then
-        if getBooleanNumber(_hasContainedTable[2]) then
+        if getBooleanNumber(march31opatcommon_hasContainedTable[2]) then
             -- set c barrage neighbors
-            _barrageNPart(_curSide + math.floor(getProtocolSides() / 2) + 1, (_checkOddInt + 1) % 2, _neighContainedTable[2], customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+            _barrageNPart(_curSide + math.floor(getProtocolSides() / 2) + 1, (_checkOddInt + 1) % 2, march31opatcommon_neighContainedTable[2], customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
         end
         if getProtocolSides() <= 3 then -- if sides less than equal 3 section...
@@ -554,15 +588,15 @@ function pMarch31osAccurateBat(_side, _design, _isOdd, _isInverted, _delMult, _s
                 _wallGrowPart(_curSide, _checkOddInt % 2, math.floor(getProtocolSides() / 2) - 1, customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             end
         end
-        if getBooleanNumber(_hasContainedTable[1]) then
+        if getBooleanNumber(march31opatcommon_hasContainedTable[1]) then
             t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
             -- set c barrage neighbors after pattern spawned
-            _barrageNPart(_curSide + (_checkOddInt % 2), _checkOddInt % 2, _neighContainedTable[1], customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+            _barrageNPart(_curSide + (_checkOddInt % 2), _checkOddInt % 2, march31opatcommon_neighContainedTable[1], customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
         end
     else
-        if getBooleanNumber(_hasContainedTable[1]) then
+        if getBooleanNumber(march31opatcommon_hasContainedTable[1]) then
             -- set c barrage neighbors
-            _barrageNPart(_curSide + (_checkOddInt % 2), _checkOddInt % 2, _neighContainedTable[1], customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+            _barrageNPart(_curSide + (_checkOddInt % 2), _checkOddInt % 2, march31opatcommon_neighContainedTable[1], customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             t_applyPatDel(customizePatternDelay(6 * currentSizeOverride * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
         end
         if getProtocolSides() <= 3 then -- if sides less than equal 3 section...
@@ -603,26 +637,26 @@ function pMarch31osAccurateBat(_side, _design, _isOdd, _isInverted, _delMult, _s
             _barrageNPart(_curSide + (_checkOddInt % 2), _checkOddInt % 2, 0, customizePatternThickness(3 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
             t_applyPatDel(customizePatternDelay(((getProtocolSides() / 2) + 3) * currentSizeOverride * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
         end
-        if (_hasContainedTable[2]) then
+        if (march31opatcommon_hasContainedTable[2]) then
             t_applyPatDel(customizePatternDelay(((getProtocolSides() / 2) + 3) * currentSizeOverride * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()));
             -- set c barrage neighbors after pattern spawned
-            _barrageNPart(_curSide + math.floor(getProtocolSides() / 2) + 1, (_checkOddInt + 1) % 2, _neighContainedTable[2], customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+            _barrageNPart(_curSide + math.floor(getProtocolSides() / 2) + 1, (_checkOddInt + 1) % 2, march31opatcommon_neighContainedTable[2], customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
         end
     end
     --[ -= End of pattern code =- ]--
     p_patternEffectEnd();
 
     -- end delay (optional arg, default false)
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 8 or 11)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 8 or 11)));
 end
 pMarch31osBat = pMarch31osAccurateBat;
 
 -- pMarch31osDiamond(): similiar of 321 pattern, but where you turn 2 and turn 1 instead of 321 ones
 --         _endHeadFree: neighbors amount of head free.
 --            _exDelBit: amount extra delay bit.
---   _hasContainedTable: boolean of containter, only works on table contains booleans
--- _neighContainedTable: amount of free-neighbor containter, only works on table contains integers
-function pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _hasContainedTable, _neighContainedTable, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
+--   march31opatcommon_hasContainedTable: boolean of containter, only works on table contains booleans
+-- march31opatcommon_neighContainedTable: amount of free-neighbor containter, only works on table contains integers
+function pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, march31opatcommon_hasContainedTable, march31opatcommon_neighContainedTable)
     -- When the value is nil, the values will automatically indexed itself!
     _iter = anythingButNil(_iter, 0); _exDelBit = anythingButNil(_exDelBit, 0); _sizeMult = anythingButNil(_sizeMult, 1);
     _endHeadFree = anythingButNil(_endHeadFree, 1);
@@ -636,26 +670,24 @@ function pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _ha
     --[[ if u_getSpeedMultDM greater than equal _spdIsGreaterThanEqual that will calculated with speed difficulty multiplier,
     elseif u_getSpeedMultDM lower than _spdIsGreaterThanEqual that won't calculated with speed difficulty multiplier,
     but you can now change the '_delayMultSpdLessThan' value ]]
-    p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultSpdLessThan or 1, nil, nil);
-    _delMult = _delMult * (getBooleanNumber(_isTight) and 0.75 or 1);
+    p_adjustPatternSettings();
+    _delMult = _delMult * (p_getTightDelayPatternBool() and 0.75 or 1);
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     -- First, create the '_curDelaySpeed' and '_curSide' value.
-    local _curDelaySpeed = (_altMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
-    if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    if _curSide == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
 
-    if _hasContainedTable == nil   or #_hasContainedTable < 2     then _hasContainedTable = { false, false } end
-    if _neighContainedTable == nil or #_neighContainedTable < 2   then _neighContainedTable = { 0, 0 }       end
+    if type(march31opatcommon_hasContainedTable) ~= "table"   or #march31opatcommon_hasContainedTable < 2   then march31opatcommon_hasContainedTable = { false, false } end
+    if type(march31opatcommon_neighContainedTable) ~= "table" or #march31opatcommon_neighContainedTable < 2 then march31opatcommon_neighContainedTable = { 0, 0 }       end
 
     --[ -= Starting of pattern code =- ]--
-    _hasContainedStart = getBooleanNumber(_hasContainedStart); _hasContainedEnd = getBooleanNumber(_hasContainedEnd);
-    if getBooleanNumber(_hasContainedTable[1]) then
+    if getBooleanNumber(march31opatcommon_hasContainedTable[1]) then
         -- Alright. Set the "C" barrage with neighbors.
-        cBarrageN(_curSide, _neighContainedTable[1], customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+        cBarrageN(_curSide, march31opatcommon_neighContainedTable[1], customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
         t_applyPatDel(customizePatternDelay(((_exDelBit + 2) * 2) * currentSizeOverride * _curDelaySpeed * _sizeMult, p_getDelayPatternBool()));
     end
     --spawn large walls
@@ -685,24 +717,23 @@ function pMarch31osDiamond(_side, _iter, _endHeadFree, _exDelBit, _sizeMult, _ha
         cGrowWall(_curSide, adj + 1, customizePatternThickness(_currentEndHeadThickAmountStat * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
         t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * _curDelaySpeed * _sizeMult, p_getDelayPatternBool()));
     end
-    if getBooleanNumber(_hasContainedTable[2]) then
+    if getBooleanNumber(march31opatcommon_hasContainedTable[2]) then
         -- Set the "C" barrage with neighbors after pattern spawned.
         t_applyPatDel(customizePatternDelay(((_exDelBit + 2) * 2) * currentSizeOverride * _curDelaySpeed * _sizeMult, p_getDelayPatternBool()));
-        cBarrageN(_curSide, _neighContainedTable[2], customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
+        cBarrageN(_curSide, march31opatcommon_neighContainedTable[2], customizePatternThickness(1 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
         t_applyPatDel(customizePatternDelay(2 * currentSizeOverride * _sizeMult, p_getDelayPatternBool()));
     end
     --[ -= End of pattern code =- ]--
     p_patternEffectEnd();
 
     -- And finally, add the pattern of delay 't_applyPatDel' to avoid impossible patterns. Why? Because the pattern code needs to delay after it's ends here!
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 0 or 8)));
 end
 
 -- pMarch31osInterpretInversions(): a pattern from Super Circles' Super Hexagon clone of circle version where you have to turn left-left or right-right or elsewhat. (3-spin)
-function pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
+function pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult)
     -- When the value is nil, the values will automatically indexed itself!
     _iter = anythingButNil(_iter, u_rndInt(0, 3)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     -- Prepare the value data.
     local currentSizeOverride = 1;
@@ -711,17 +742,16 @@ function pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _isTig
     --[[ if u_getSpeedMultDM greater than equal _spdIsGreaterThanEqual that will calculated with speed difficulty multiplier,
     elseif u_getSpeedMultDM lower than _spdIsGreaterThanEqual that won't calculated with speed difficulty multiplier,
     but you can now change the '_delayMultSpdLessThan' value ]]
-    p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultSpdLessThan or 1, nil, nil);
-    _delMult = _delMult * (getBooleanNumber(_isTight) and 0.75 or 1);
+    p_adjustPatternSettings();
+    _delMult = _delMult * (p_getTightDelayPatternBool() and 0.75 or 1);
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     -- First, create the '_curDelaySpeed', '_curSide', and '_curLoopDir' value.
-    local _curDelaySpeed = (_altMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
-    if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    if _curSide == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
     local _curLoopDir = 1;
 
     --[ -= Starting of pattern code =- ]--
@@ -751,16 +781,15 @@ function pMarch31osInterpretInversions(_side, _iter, _delMult, _sizeMult, _isTig
     p_patternEffectEnd();
 
     -- And finally, add the pattern of delay 't_applyPatDel' to avoid impossible patterns. Why? Because the pattern code needs to delay after it's ends here!
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 0 or 8)));
 end
 pMarch31osHexazazInversions = pMarch31osInterpretInversions;
 
 -- pMarch31osDivergencedGauntlets(): a pattern from Serponge's Super Hexagon clone (Ultra Hexagon) from Geometry Dash where you have to turn left-right or right-left. (2-spin)
-function pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult, _isTight, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
+function pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult)
     -- When the value is nil, the values will automatically indexed itself!
     _iter = anythingButNil(_iter, 1); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
-    _delMult = _delMult * (getBooleanNumber(_isTight) and 0.75 or 1);
+    _delMult = _delMult * (p_getTightDelayPatternBool() and 0.75 or 1);
 
     -- Prepare the value data.
     local currentSizeOverride = 1;
@@ -769,16 +798,15 @@ function pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult, _isTi
     --[[ if u_getSpeedMultDM greater than equal _spdIsGreaterThanEqual that will calculated with speed difficulty multiplier,
     elseif u_getSpeedMultDM lower than _spdIsGreaterThanEqual that won't calculated with speed difficulty multiplier,
     but you can now change the '_delayMultSpdLessThan' value ]]
-    p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultSpdLessThan or 1, nil, nil);
+    p_adjustPatternSettings();
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     -- First, create the '_curDelaySpeed' and '_curSide' value.
-    local _curDelaySpeed = (_altMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
-    if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    if _curSide == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
 
     --[ -= Starting of pattern code =- ]--
     for i = 0, math.floor(getProtocolSides() / 2), 1 do cWall(_curSide + i, customizePatternThickness(4 * currentSizeOverride * _sizeMult, p_getDelayPatternBool())); end
@@ -794,6 +822,6 @@ function pMarch31osDivergencedGauntlets(_side, _iter, _delMult, _sizeMult, _isTi
     p_patternEffectEnd();
 
     -- And finally, add the pattern of delay 't_applyPatDel' to avoid impossible patterns. Why? Because the pattern code needs to delay after it's ends here!
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 0 or 8)));
 end
 pMarch31osRevertingGauntlet = pMarch31osDivergencedGauntlets;
