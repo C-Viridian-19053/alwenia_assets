@@ -1,26 +1,28 @@
---2.x.x+ & 1.92 conv functs
-local u_getSpeedMultDM = u_getSpeedMultDM or getSpeedMult
-local u_rndInt = u_rndInt or math.random
-local u_rndIntUpper = u_rndIntUpper or math.random
-
 --[[
-    void pMarch31osRandomWalls(_side, _thickness, _iter, _extra, _mirrorStep, _rndMaxStep, _delMult, _sizeMult, _skipEndDelay, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
-    void pMarch31osRandomWalls(_side, _thickness, _iter) --, 0, u_rndIntUpper(2), getHalfSides(), 1, 1, false, 0, 1, 1, 2
-    void pMarch31osSnakeBarrage(_side, _thickness, _iter, _extra, _mirrorStep, _isContained, _maxDist, _delMult, _thickMult, _sizeMult, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult)
-    void pMarch31osSnakeBarrage(_side, _thickness, _iter) --, 0, (to be indexed if is nil), true, (calculated), 1, 1, 1, false, false, 0, 1
-    void pMarch31osMidCutSpiral(_side, _iter, _step, _extra, _totalThicknessMult, _delMult, _sizeMult, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult)
-    void pMarch31osMidCutSpiral(_side, _iter) --, 1, 2, 2, 1, 1, false, false, 0, 1
+    void pMarch31osRandomWalls(_side, _thickness, _iter, _extra, _mirrorStep, _rndMaxStep, _delMult, _sizeMult)
+    void pMarch31osRandomWalls(_side, _thickness, _iter) --, 0, u_rndIntUpper(2), getHalfSides(), 1, 1
+    void pMarch31osSnakeBarrage(_side, _thickness, _iter, _extra, _mirrorStep, _isContained, _maxDist, _delMult, _thickMult, _sizeMult)
+    void pMarch31osSnakeBarrage(_side, _thickness, _iter) --, 0, (to be indexed if is nil), true, (calculated), 1, 1, 1
+    void pMarch31osMidCutSpiral(_side, _iter, _step, _extra, _totalThicknessMult, _delMult, _sizeMult)
+    void pMarch31osMidCutSpiral(_side, _iter) --, 1, 2, 2, 1, 1
 ]]
 
 --[[
 [ NOTE FOR THE PARAMETERS ]
 
->>                                         _side: which side the pattern spawns on
->>                                    _thickness: the thickness of the pattern
->>                                         _iter: amount of times
->>                                      _delMult: the delay pattern multiplier of the pattern
->>                                     _sizeMult: the size pattern multiplier of the pattern
->>                                    _direction: which direction
+>>      _side: which side the pattern spawns on
+>> _thickness: the thickness of the pattern
+>>      _iter: amount of times
+>>   _delMult: the delay pattern multiplier of the pattern
+>>  _sizeMult: the size pattern multiplier of the pattern
+>> _direction: which direction
+]]
+
+--[[
+[ NOTE FOR THE OPTIONAL PARAMETERS ]
+
+// p_adjustPatternSettings(_isRebootingSide, _skipEndDelayBool, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
+
 >> [KODIPHER's PARAMETER]          _skipEndDelay: skips delay after pattern spawned
 >> [THE SUN XIX's PARAMETER]    _isRebootingSide: the boolean of rebooting side of the pattern
 >> [THE SUN XIX's PARAMETER] _endAdditionalDelay: amount of additional delay after pattern spawned, which 'march31oPatDel_AdditionalDelay' variable is
@@ -31,13 +33,12 @@ local u_rndIntUpper = u_rndIntUpper or math.random
 
 --[ Novels (Inspired from Kodipher's Inflorescence pack) ]--
 
--- pMarch31osRandomWalls: a wall with randomized side
+-- pMarch31osRandomWalls(): a wall with randomized side
 --      _extra: amount of exrea walls
 -- _mirrorStep: amount of mirror step
 -- _rndMaxStep: maximum of random displacement
-function pMarch31osRandomWalls(_side, _thickness, _iter, _extra, _mirrorStep, _rndMaxStep, _delMult, _sizeMult, _skipEndDelay, _endAdditionalDelay, _addMult, _delayMultSpdLessThan, _spdIsGreaterThanEqual)
+function pMarch31osRandomWalls(_side, _thickness, _iter, _extra, _mirrorStep, _rndMaxStep, _delMult, _sizeMult)
     _iter = anythingButNil(_iter, u_rndInt(3, 8)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
-    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
     p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultSpdLessThan or 1, _thickness or THICKNESS, nil);
@@ -53,7 +54,7 @@ function pMarch31osRandomWalls(_side, _thickness, _iter, _extra, _mirrorStep, _r
     _rndMaxStep = math.abs(_rndMaxStep)
 
     --get delay
-    local _curDelaySpeed = (_addMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1)
 
     -- spawn in loop
@@ -67,16 +68,16 @@ function pMarch31osRandomWalls(_side, _thickness, _iter, _extra, _mirrorStep, _r
     end
 
     p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or 0) + (getBooleanNumber(_skipEndDelay) and 0 or getDelaySides(getProtocolSides() / 2)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (p_getSkipEndDelayPatternBool() and 0 or getDelaySides(getProtocolSides() / 2)));
 end
 
--- pMarch31osSnakeBarrage: a snake pattern which player stay on free side
+-- pMarch31osSnakeBarrage(): a snake pattern which player stay on free side
 --       _extra: amount of exrea walls
 --  _mirrorStep: amount of mirror step
 -- _isContained: boolean of has contained
 --     _maxDist: maximum distance
 --   _thickMult: the thickness multiplier of this wall
-function pMarch31osSnakeBarrage(_side, _thickness, _iter, _extra, _mirrorStep, _isContained, _maxDist, _delMult, _thickMult, _sizeMult, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult)
+function pMarch31osSnakeBarrage(_side, _thickness, _iter, _extra, _mirrorStep, _isContained, _maxDist, _delMult, _thickMult, _sizeMult)
     _side = anythingButNil(_side, u_rndInt(0, getProtocolSides() - 1)); _iter = anythingButNil(_iter, u_rndInt(8, 16)); _extra = anythingButNil(_extra, 0);
     _delMult = anythingButNil(_delMult, 1); _thickMult = anythingButNil(_thickMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
     if _mirrorStep == nil then
@@ -84,15 +85,13 @@ function pMarch31osSnakeBarrage(_side, _thickness, _iter, _extra, _mirrorStep, _
     end
     _isContained = anythingButNil(_isContained, 1);
     _delayMultSpdLessThan = anythingButNil(_delayMultSpdLessThan, 1); _spdIsGreaterThanEqual = anythingButNil(_spdIsGreaterThanEqual, 2);
-    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
-    local _curDelaySpeed = (_addMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
-    if _side == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _side = _side + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = getBooleanNumber(_isRebootingSideStat) and _side or -256;
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    if _side == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _side = _side + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool()and _side or -256;
 
     if not _maxDist then 
         _maxDist = math.floor(getProtocolSides() / _mirrorStep) - 2 - _extra
@@ -125,15 +124,14 @@ function pMarch31osSnakeBarrage(_side, _thickness, _iter, _extra, _mirrorStep, _
     end
 
     p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or 0) + (getBooleanNumber(_skipEndDelay) and 0 or getDelaySides(getProtocolSides() / 2 + 1)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (p_getSkipEndDelayPatternBool() and 0 or getDelaySides(getProtocolSides() / 2 + 1)));
 end
 
--- pMarch31osMidCutSpiral: a cut-spiral pattern which player will spin
+-- pMarch31osMidCutSpiral(): a cut-spiral pattern which player will spin
 --         _mirrorStep: amount of mirror step
 -- _totalThicknessMult: total multiplier of thickness in this pattern
-function pMarch31osMidCutSpiral(_side, _iter, _step, _extra, _mirrorStep, _totalThicknessMult, _delMult, _sizeMult, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult)
+function pMarch31osMidCutSpiral(_side, _iter, _step, _extra, _mirrorStep, _totalThicknessMult, _delMult, _sizeMult)
     _side = anythingButNil(_side, u_rndInt(0, getProtocolSides() - 1)); _iter = anythingButNil(_iter, u_rndInt(3, 8)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
-    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     -- optional args
     _step = anythingButNil(_step, 1);
@@ -145,10 +143,9 @@ function pMarch31osMidCutSpiral(_side, _iter, _step, _extra, _mirrorStep, _total
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
-    local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
-    if _side == TARGET_PATTERN_SIDE and getBooleanNumber(_isRebootingSideStat) then _side = _side + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = getBooleanNumber(_isRebootingSideStat) and _side or -256;
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    if _side == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _side = _side + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _side or -256;
 
     --locals
     local _direction = getRandomDir()
@@ -182,5 +179,5 @@ function pMarch31osMidCutSpiral(_side, _iter, _step, _extra, _mirrorStep, _total
 
     p_patternEffectEnd();
     -- end delay (optional arg, default false)
-    t_applyPatDel((_endAdditionalDelay or 0) + (getBooleanNumber(_skipEndDelay) and 0 or getDelaySides(getProtocolSides() / 2 + 1)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (p_getSkipEndDelayPatternBool() and 0 or getDelaySides(getProtocolSides() / 2 + 1)));
 end
