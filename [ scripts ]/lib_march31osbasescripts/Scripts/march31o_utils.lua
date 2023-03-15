@@ -63,15 +63,29 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
     number table math_sum(_table_of_numbers)
 
     bool p_getDelayPatternBool()
+    bool p_getRebootingSideBool()
+    bool p_getTightDelayPatternBool()
+    bool p_getSkipEndDelayPatternBool()
+    number p_getEndAdditionalDelayPattern()
+    number p_getAddMultPattern()
+    number p_getSpdMultDMIsGreaterThanEqual()
     number p_getDelayPatternOfSpeedLessThan()
     number p_getPatternThickness()
 
     void p_setDelayPatternBool(_bool)
+    void p_setRebootingSideBool(_isRebootingSide)
+    void p_setTightDelayPatternBool(_isTight)
+    void p_setSkipEndDelayPatternBool(_skipEndDelay)
+    void p_setEndAdditionalDelayPattern(_endAdditionalDelay)
+    void p_setEndAddMultPattern(_addMult)
+    void p_setSpdMultDMIsGreaterThanEqual(_spdMultDMIsGreaterThanEqual)
     void p_setDelayPatternOfSpeedLessThan(_thickMult_amount)
     void p_setPatternThickness(_corridorThick)
 
+
     void p_resetPatternDelaySettings()
     void p_adjustPatternDelaySettings(_spdMultDMIsGreaterThanEqual, _delMultOfSpeedLessThan, _corridorThickOfSpdGreaterThanEqual, _corridorThickOfSpdLessThan)
+    void p_adjustPatternSettings(_isRebootingSide, _isTight, _skipEndDelayBool, _endAdditionalDelay, _addMult, _spdMultDMIsGreaterThanEqual, _delMultOfSpeedLessThan, _corridorThickOfSpdLessThan, _corridorThickOfSpdGreaterThanEqual)
 
     void p_setOverrideShape(_sideType, _emulatedSides)
 
@@ -354,12 +368,12 @@ if game_version >= 2.02 then
     end
 
     function os.execute(_cmd)
-        print("[me::Utils::MaliciousCommandExecution] This level attempted to execute a potentially malicious command:\n", _cmd)
+        print("[me::Utils::MaliciousCommandExecution] This level attempted to execute a potentially malicious command:\n" .. _cmd)
         return 1
     end
 end
 
--- formatted error messages """for globals""" (taken from utis.lua from lib_extbase by Syyrion)
+-- formatted error messages """for globals""" (taken from utils.lua from lib_extbase by Syyrion)
 function errorf(_level, _label, _message, ...)
     error(('[%sError] '):format(_label) .. _message:format(...), _level + 1)
 end
@@ -468,26 +482,60 @@ function math_sum(_table_of_numbers)
 end
 
 --pattern settings
-local pstr_currentResultBool = false;
-local pstr_currentDelayMultOfSpeedLessThan = 1;
+local pstr_currentResultBool, pstr_rebootingSideBool, pstr_tightDelayPatternBool, pstr_skipEndDelayBool = false, false, false, false;
+local pstr_endAdditionalDelay, pstr_addMult = 0, 1;
+local pstr_spdMultDMIsGreaterThanEqual, pstr_currentDelayMultOfSpeedLessThan = 2, 1;
 local pstr_currentThickness = THICKNESS;
 
-function p_getDelayPatternBool() return pstr_currentResultBool; end
+function p_getDelayPatternBool()            return pstr_currentResultBool;               end
+function p_getRebootingSideBool()           return pstr_rebootingSideBool;               end
+function p_getTightDelayPatternBool()       return pstr_tightDelayPatternBool;           end
+function p_getSkipEndDelayPatternBool()     return pstr_skipEndDelayBool;                end
+function p_getEndAdditionalDelayPattern()   return pstr_endAdditionalDelay;              end
+function p_getAddMultPattern()              return pstr_addMult;                         end
+function p_getSpdMultDMIsGreaterThanEqual() return pstr_spdMultDMIsGreaterThanEqual;     end
 function p_getDelayPatternOfSpeedLessThan() return pstr_currentDelayMultOfSpeedLessThan; end
-function p_getPatternThickness() return pstr_currentThickness; end
+function p_getPatternThickness()            return pstr_currentThickness;                end
 
-function p_setDelayPatternBool(_bool) pstr_currentResultBool = getBooleanNumber(_bool); end
-function p_setDelayPatternOfSpeedLessThan(_thickMult_amount) pstr_currentDelayMultOfSpeedLessThan = _thickMult_amount; end
-function p_setPatternThickness(_corridorThick) pstr_currentThickness = _corridorThick; end
+function p_setDelayPatternBool(_bool)                                   pstr_currentResultBool = getBooleanNumber(_bool);                                                                               end
+function p_setRebootingSideBool(_isRebootingSide)                       pstr_rebootingSideBool = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);                                  end
+function p_setTightDelayPatternBool(_isTight)                           pstr_tightDelayPatternBool = getBooleanNumber(_isTight);                                                                        end
+function p_setSkipEndDelayPatternBool(_skipEndDelay)                    pstr_skipEndDelayBool = getBooleanNumber(_skipEndDelay);                                                                        end
+function p_setEndAdditionalDelayPattern(_endAdditionalDelay)            pstr_endAdditionalDelay = type(_endAdditionalDelay) ~= "number" and _endAdditionalDelay or march31oPatDel_AdditionalDelay or 0; end
+function p_setEndAddMultPattern(_addMult)                               pstr_addMult = type(_addMult) ~= "number" and _addMult or march31oPatDel_AddMult or 1;                                          end
+function p_setSpdMultDMIsGreaterThanEqual(_spdMultDMIsGreaterThanEqual) pstr_spdMultDMIsGreaterThanEqual = type(_spdMultDMIsGreaterThanEqual) ~= "number" and _spdMultDMIsGreaterThanEqual or 2;        end
+function p_setDelayPatternOfSpeedLessThan(_thickMult_amount)            pstr_currentDelayMultOfSpeedLessThan = type(_thickMult_amount) ~= "number" and _thickMult_amount or 1;                          end
+function p_setPatternThickness(_corridorThick)                          pstr_currentThickness = type(_corridorThick) ~= "number" and _corridorThick or THICKNESS;                                       end
 
 function p_resetPatternDelaySettings()
-    pstr_currentResultBool = false; pstr_currentDelayMultOfSpeedLessThan = 1; pstr_currentThickness = THICKNESS;
+    p_setDelayPatternBool(false);
+    p_setDelayPatternOfSpeedLessThan(1);
+    p_setPatternThickness(THICKNESS);
 end
 
 function p_adjustPatternDelaySettings(_spdMultDMIsGreaterThanEqual, _delMultOfSpeedLessThan, _corridorThickOfSpdLessThan, _corridorThickOfSpdGreaterThanEqual)
-    if u_getSpeedMultDM() < _spdMultDMIsGreaterThanEqual then pstr_currentDelayMultOfSpeedLessThan = _delMultOfSpeedLessThan; pstr_currentResultBool = false; pstr_currentThickness = _corridorThickOfSpdLessThan or THICKNESS;
-    elseif u_getSpeedMultDM() >= _spdMultDMIsGreaterThanEqual then pstr_currentDelayMultOfSpeedLessThan = 1; pstr_currentResultBool = true; pstr_currentThickness = _corridorThickOfSpdGreaterThanEqual or _corridorThickOfSpdLessThan;
+    p_setSpdMultDMIsGreaterThanEqual(_spdMultDMIsGreaterThanEqual)
+    _delMultOfSpeedLessThan = type(_delMultOfSpeedLessThan) ~= "number" and _delMultOfSpeedLessThan or THICKNESS;
+    _corridorThickOfSpdGreaterThanEqual = type(_corridorThickOfSpdGreaterThanEqual) ~= "number" and _corridorThickOfSpdGreaterThanEqual or _corridorThickOfSpdLessThan;
+
+    if u_getSpeedMultDM() < p_getSpdMultDMIsGreaterThanEqual() then
+        p_setDelayPatternOfSpeedLessThan(_delMultOfSpeedLessThan);
+        p_setDelayPatternBool(false);
+        if _corridorThickOfSpdLessThan ~= nil p_setPatternThickness(_corridorThickOfSpdLessThan); end
+    elseif u_getSpeedMultDM() >= p_getSpdMultDMIsGreaterThanEqual() then
+        p_setDelayPatternOfSpeedLessThan(1);
+        p_setDelayPatternBool(true);
+        if _corridorThickOfSpdGreaterThanEqual ~= nil then p_setPatternThickness(_corridorThickOfSpdGreaterThanEqual); end
     end
+end
+
+function p_adjustPatternSettings(_isRebootingSide, _isTight, _skipEndDelayBool, _endAdditionalDelay, _addMult, _spdMultDMIsGreaterThanEqual, _delMultOfSpeedLessThan, _corridorThickOfSpdLessThan, _corridorThickOfSpdGreaterThanEqual)
+    p_setRebootingSideBool(_isRebootingSide);
+    p_setTightDelayPatternBool(_isTight);
+    p_setSkipEndDelayPatternBool(_skipEndDelayBool);
+    p_setEndAdditionalDelayPattern(_endAdditionalDelay);
+    p_setEndAddMultPattern(_addMult);
+    p_adjustPatternDelaySettings(_spdMultDMIsGreaterThanEqual, _delMultOfSpeedLessThan, _corridorThickOfSpdLessThan, _corridorThickOfSpdGreaterThanEqual);
 end
 
 function p_setOverrideShape(_sideType, _emulatedSide)
