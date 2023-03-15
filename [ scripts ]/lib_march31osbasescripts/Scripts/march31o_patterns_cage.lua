@@ -1,15 +1,9 @@
 --[[
+    void p_configContainedPattern(_hasContainedTable, _neighContainedTable)
+    void p_configTrapAroundDesign(_hasContainedTable, _neighContainedTable, _designDelAddContainedTable, _modeDesignTable, _neighDesignTable, _designDelAddTable)
+
     void pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInverted, _delMult, _sizeMult)
     void pMarch31osTrapAround(_side, _freq) --, 0, nil, false, false, 1, 1
-    void p_configTrapAroundDesign(_hasContainedTable, _neighContainedTable, _designDelAddContainedTable, _modeDesignTable, _neighDesignTable, _designDelAddTable)
-    void p_configTrapAroundDesign(
-                                <table contains boolean, 2 tables>,
-                                <table contains number, 2 tables>,
-                                <table contains number, but 0-1 are recommended in this delay design adder, 2 tables>,
-                                <table contains number, 4 tables>,
-                                <table contains number, 4 tables>,
-                                <table contains number, but 0-1 are recommended in this delay design adder, 4 tables>
-                                )
     void pMarch31osTrapPatternizer(_side, _iter, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable)
     void pMarch31osTrapPatternizer(_side, _iter) --, 1, 1, { false, false }, { 0, 0 }
     void pMarch31osAccurateBat(_side, _design, _isOdd, _isInverted, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable)
@@ -57,9 +51,29 @@ march31opatcommon_designDelAddTable = { 0, 0, 0, 0 }
 
 -- [ Pattern commons ] --
 
+-- p_configContainedPattern(): generates containers from fan-wrap around and bat patterns. (WORKS ONLY ON TABLES, OTHERWISE DON'T WORK)
+--          _hasContainedTable: boolean of containter, only works on table contains booleans
+--        _neighContainedTable: amount of free-neighbor containter, only works on table contains integers
 function p_configContainedPattern(_hasContainedTable, _neighContainedTable)
     march31opatcommon_hasContainedTable = type(_hasContainedTable) ~= "table" and _hasContainedTable or { false, false }
     march31opatcommon_neighContainedTable = type(_neighContainedTable) ~= "table" and _neighContainedTable or { 0, 0 }
+end
+
+-- p_configTrapAroundDesign(): generates design from trap around pattern. (WORKS ONLY ON TABLES, OTHERWISE DON'T WORK)
+--          _hasContainedTable: boolean of containter, only works on table contains booleans
+--        _neighContainedTable: amount of free-neighbor containter, only works on table contains integers
+-- _designDelAddContainedTable: a design delay/thickness amount adder of containter, only works on table contains integers
+--            _modeDesignTable: 0 or else = none, 1 = body type 1(?), 2 = body type 2(?), 3 = all(?), only works on table contains integers
+--           _neighDesignTable: amount of free-neighbor body, only works on table contains integers
+--          _designDelAddThick: a design delay/thickness amount adder. 1 for add delay/thickness amount, 0 = don't, only works on table contains integers
+--          _designDelAddTable: 1 for add delay/thickness amount, 0 = don't, only works on table contains integers
+function p_configTrapAroundDesign(_hasContainedTable, _neighContainedTable, _designDelAddContainedTable, _modeDesignTable, _neighDesignTable, _designDelAddTable)
+    march31opatcommon_hasContainedTable = _hasContainedTable
+    march31opatcommon_neighContainedTable = _neighContainedTable
+    march31opatcommon_designDelAddContainedTable = _designDelAddContainedTable
+    march31opatcommon_modeDesignTable = _modeDesignTable
+    march31opatcommon_neighDesignTable = _neighDesignTable
+    march31opatcommon_designDelAddTable = _designDelAddTable
 end
 
 --[ Additional cages ]--
@@ -390,23 +404,6 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
     t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 8 or 11)));
 end
 pMarch31osWrapAround = pMarch31osTrapAround
-
--- p_configTrapAroundDesign(): generates design from trap around pattern. (WORKS ONLY ON TABLES, OTHERWISE DON'T WORK)
---          _hasContainedTable: boolean of containter, only works on table contains booleans
---        _neighContainedTable: amount of free-neighbor containter, only works on table contains integers
--- _designDelAddContainedTable: a design delay/thickness amount adder of containter, only works on table contains integers
---            _modeDesignTable: 0 or else = none, 1 = body type 1(?), 2 = body type 2(?), 3 = all(?), only works on table contains integers
---           _neighDesignTable: amount of free-neighbor body, only works on table contains integers
---          _designDelAddThick: a design delay/thickness amount adder. 1 for add delay/thickness amount, 0 = don't, only works on table contains integers
---          _designDelAddTable: 1 for add delay/thickness amount, 0 = don't, only works on table contains integers
-function p_configTrapAroundDesign(_hasContainedTable, _neighContainedTable, _designDelAddContainedTable, _modeDesignTable, _neighDesignTable, _designDelAddTable)
-    march31opatcommon_hasContainedTable = _hasContainedTable
-    march31opatcommon_neighContainedTable = _neighContainedTable
-    march31opatcommon_designDelAddContainedTable = _designDelAddContainedTable
-    march31opatcommon_modeDesignTable = _modeDesignTable
-    march31opatcommon_neighDesignTable = _neighDesignTable
-    march31opatcommon_designDelAddTable = _designDelAddTable
-end
 
 -- pMarch31osTrapPatternizer(): same pattern of 321 pattern, taken from patternizer.lua
 --              _freqInv: amount of times to displace to half side pos
