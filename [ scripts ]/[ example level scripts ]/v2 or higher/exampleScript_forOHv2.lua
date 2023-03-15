@@ -11,6 +11,7 @@ u_execScript("march31o_patterns_swap.lua")
 u_execScript("march31o_patterns_cage.lua")
 u_execScript("march31o_patterns_novel.lua")
 u_execScript("march31o_patterns_construct.lua")
+u_execScript("march31o_patterns_personalize.lua")
 (i) - important for OH v2 or non-Steam users: copy the file in <<.../[ scripts ]/marchionne's base scripts/Scripts/>> directory and then paste on <../Open Hexagon/Packs/[pack_name]/Scripts/>
 
 >>> for OH Steam v2.0.4+ users, use:
@@ -24,6 +25,7 @@ u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "m
 u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "march31o_patterns_swap.lua")
 u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "march31o_patterns_novel.lua")
 u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "march31o_patterns_construct.lua")
+u_execDependencyScript("march31oluascr", "march31os_scr_base", "march31onne", "march31o_patterns_personalize.lua")
 (i) - important for OH Steam v2.0.4+ users: make sure your pack has a dependency on it (with good JSON syntax), see example: <.../Open Hexagon/Packs/cube/pack.json>
 ]]
 
@@ -38,6 +40,7 @@ u_execScript("march31o_patterns_cage.lua")
 u_execScript("march31o_patterns_swap.lua")
 u_execScript("march31o_patterns_novel.lua")
 u_execScript("march31o_patterns_construct.lua")
+u_execScript("march31o_patterns_personalize.lua")
 
 -- inspired taken from modern year pack, shoutouts to The Sun XIX
 
@@ -101,12 +104,12 @@ function spawnPattern(mNumbSpawn)
         mNumbSpawn = 5
     end
 
-        if mNumbSpawn == 0 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, math.random(3, 6), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
-    elseif mNumbSpawn == 1 then pMarch31osWhirlwind(_side, math.random(3, 6), 0, math.floor(getProtocolSides() / 3), 1, false, 1, 1, getRandomDir(), 0, 0, false)
+        if mNumbSpawn == 0 then pMarch31osAlternatingBarrage(_side, march31oPat_thickness, math.random(3, 6), 1, 1, getRandomDir())
+    elseif mNumbSpawn == 1 then pMarch31osWhirlwind(_side, math.random(3, 6), 0, math.floor(getProtocolSides() / 3), 1, 1, getRandomDir())
     elseif mNumbSpawn == 2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, math.random(0, 3), 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn == 3 then pMarch31osBarrageReversals(_side, march31oPat_thickness, 1, false, 1, 1, math.random(0, 1))
-    elseif mNumbSpawn == 4 then pMarch31osTunnel(_side, march31oPat_thickness * 1.75, nil, math.random(1, 3), 1, 1, 1, u_rndInt(0, 1))
-    elseif mNumbSpawn == 5 then pMarch31osWhirlwind(_side, getProtocolSides() * math.random(1, 2), 0, 1, 1, false, 1, 1, getRandomDir(), 0, 0, false);
+    elseif mNumbSpawn == 4 then pMarch31osTunnel(_side, march31oPat_thickness * 1.75, nil, math.random(1, 3), 1, 1, math.random(0, 1))
+    elseif mNumbSpawn == 5 then pMarch31osWhirlwind(_side, getProtocolSides() * math.random(1, 2), 0, 1, 1, 1, getRandomDir())
     end
 
     -- debug, remove if you don't want to use this
