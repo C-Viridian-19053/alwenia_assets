@@ -117,7 +117,7 @@ function pMarch31osExAlternatingBarrage(_side, _thickness, _iter, _isSpiral, _ha
     _isSpiral = getBooleanNumber(anythingButNil(_isSpiral, 0));
     _repeatBarrageDelay = anythingButNil(_repeatBarrageDelay, 2); _isRepeatBarrageDelaySpd = anythingButNil(_isRepeatBarrageDelaySpd, 0);
     _direction = (type(_direction) == "number" and getNeg(_direction)) or (_direction == 0 and getRandomDir()) or getRandomDir();
-    _barrageDir = (type(_direction) == "number" and getNeg(_direction)) or (_direction == 0 and getRandomDir()) or getRandomDir();
+    _barrageDir = (type(_direction) == "number" and getNeg(_direction)) or (_direction == 0 and getRandomDir()) or _direction;
 
     p_resetPatternDelaySettings();
     p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
