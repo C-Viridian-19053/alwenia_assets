@@ -1,17 +1,13 @@
---2.x.x+ & 1.92 conv functs
-local u_getSpeedMultDM = u_getSpeedMultDM or getSpeedMult
-local u_rndInt = u_rndInt or math.random
-
 --Lua 5.3+ & 5.1 conv functs
 local unpack = unpack or table.unpack
 
 --[[
     void p_constructPatternizer(_side, _array, _sizeMult, _isSpdMode)
     void p_constructPatternizer(_side, _array) --, 1, true
-    void p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _direction, _delayAmount, _delaySides, _delayWalls, _skipEndDelay, _perfectThicknessMult, _isRebootingSide, _endAdditionalDelay, _addMult)
-    void p_constructSpiral(_side, _func, _args, _freq) --, 0, 1, getRandomDir(), 1, false, 1, false, nil, false, 0, 1
-    void p_constructRepeat(_side, _func, _args, _freq, _delayAmount, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult)
-    void p_constructRepeat(_side, _func, _args, _freq) --, 1, false, false, 0, 1
+    void p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _direction, _delayAmount, _delaySides, _delayWalls, _perfectThicknessMult)
+    void p_constructSpiral(_side, _func, _args, _freq) --, 0, 1, getRandomDir(), 1, false, 1, nil
+    void p_constructRepeat(_side, _func, _args, _freq, _delayAmount)
+    void p_constructRepeat(_side, _func, _args, _freq) --, 1
 ]]
 
 --[ Pattern constructors ]--
@@ -35,14 +31,12 @@ function p_constructPatternizer(_side, _array, _sizeMult, _isSpdMode)
 end
 
 -- Inspired from Kodipher's Inflorescence pack
-function p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _direction, _delayAmount, _delaySides, _delayWalls, _skipEndDelay, _perfectThicknessMult, _isRebootingSide, _endAdditionalDelay, _addMult)
+function p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _direction, _delayAmount, _delaySides, _delayWalls, _perfectThicknessMult)
     _side = anythingButNil(_side, u_rndInt(0, getProtocolSides() - 1)); _freq = anythingButNil(_freq, 5);
-    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     --reboot side posistion
-    _isRebootingSide = anythingButNil(_isRebootingSide, 1);
-    if _side == TARGET_PATTERN_SIDE and getBooleanNumber(_is_rebooting_side) then _side = _side + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = getBooleanNumber(_is_rebooting_side) and _side or -256;
+    if _side == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _side = _side + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _side or -256;
 
     --set perfect thickness
     local _oldThickness = 0
@@ -107,18 +101,15 @@ function p_constructSpiral(_side, _func, _args, _freq, _revFreq, _step, _directi
 
     p_patternEffectEnd();
     -- end delay (optional arg, default false)
-    t_applyPatDel(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 0 or 8)));
 end
 
-function p_constructRepeat(_side, _func, _args, _freq, _delayAmount, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult)
+function p_constructRepeat(_side, _func, _args, _freq, _delayAmount)
     _side = anythingButNil(_side, u_rndInt(0, getProtocolSides() - 1)); _freq = anythingButNil(_freq, 5);
-    _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     --reboot side posistion
-    _isRebootingSide = anythingButNil(_isRebootingSide, 1);
-    if _side == TARGET_PATTERN_SIDE and getBooleanNumber(_is_rebooting_side) then _side = _side + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = getBooleanNumber(_is_rebooting_side) and _side or -256;
+    if _side == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _side = _side + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _side or -256;
 
     -- optional args
     _delayAmount = anythingButNil(_delayAmount, getDelayWalls(1));
@@ -144,6 +135,5 @@ function p_constructRepeat(_side, _func, _args, _freq, _delayAmount, _skipEndDel
 
     p_patternEffectEnd();
     -- end delay (optional arg, default false)
-    t_applyPatDel(_endAdditionalDelay or 0);
-    if not getBooleanNumber(_skipEndDelay) then t_applyPatDel(getPerfectDelay(THICKNESS) * 8) end
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 0 or 8)));
 end
