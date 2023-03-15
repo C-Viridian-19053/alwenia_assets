@@ -16,7 +16,7 @@ u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "ma
 function spawnMainPattern(mNumbSpawn)
     local _side = getRandomSide();
 
-        if mNumbSpawn ==  0 then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), false, false, 1, getRandomDir(), 0, 1, false, 1, 1, getRandomDir())
+        if mNumbSpawn ==  0 then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(2, 4), false, false, 1, nil, 0, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  1 then pMarch31osExWhirlwind(_side, u_rndInt(7, 11), 1, 0, 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 1, 1, 1, true)
     elseif mNumbSpawn ==  2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 3), 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  3 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 2), 1, 2, false, 1.2, 1, getRandomDir())
@@ -111,7 +111,7 @@ function spawnSHPattern(mNumbSpawn, mSpawnType, bIsHyper, bIsFinalEngage)
         elseif mNumbSpawn == 14 and (not bIsHyper) then pMarch31osExTunnel(_side, march31oPat_thickness, nil, 2, 1, 1, 1, 0, 0, 0, true, true)
         elseif mNumbSpawn == 15 and (bIsHyper)     then pMarch31osExTunnel(_side, march31oPat_thickness, nil, 3, 2, 1, 1, 1, 0, 0, true, true, 1, 1, 0, 0, 1, nil, 1, 1, true)
         elseif mNumbSpawn == 16 and (not bIsHyper) then pMarch31osExTunnel(_side, march31oPat_thickness, nil, 5, 1, 0.5, 1, 1, 0, 0, true, true, 2, 2)
-        elseif mNumbSpawn == 17                    then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, 4, false, false, 0, 0, 2, false, 1, 1, getRandomDir());
+        elseif mNumbSpawn == 17                    then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, 4, false, false, 0, nil, 0, 2, false, 1, 1, getRandomDir());
         end
     elseif mSpawnType == 2 then
             if mNumbSpawn ==  8                      then pMarch31osBarrageReversals(_side, march31oPat_thickness, 2, 1, false, 1, 1, u_rndInt(0, 1));
@@ -123,7 +123,7 @@ function spawnSHPattern(mNumbSpawn, mSpawnType, bIsHyper, bIsFinalEngage)
         elseif mNumbSpawn == 14 and (bIsFinalEngage) then pMarch31osBackAndForthTunnelCentral(_side, march31oPat_thickness * 2, nil, 4, 0, 0, 0, 0, 1, 1, u_rndInt(0, 1), 0, true);
         elseif mNumbSpawn == 15 and (bIsFinalEngage) then pMarch31osExTunnel(_side, march31oPat_thickness, nil, 2, 1, 1, 1, 0, 0, 0, true, true);
         elseif mNumbSpawn == 16                      then pMarch31osExTunnel(_side, march31oPat_thickness, nil, 3, 2, 1, 1, 1, 0, 0, true, true, 1, 1, 0, 0, 1, nil, 1, 1, true);
-        elseif mNumbSpawn == 17                      then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, 4, false, false, 0, 0, 2, false, 1, 1, getRandomDir());
+        elseif mNumbSpawn == 17                      then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, 4, false, false, 0, nil, 0, 2, false, 1, 1, getRandomDir());
         end
     end
 end
@@ -143,7 +143,7 @@ end
 -- exschwaison patterns
 function spawnExschPattern(mNumbSpawn)
     local _side = getRandomSide();
-        if mNumbSpawn ==  0                            then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
+        if mNumbSpawn ==  0                            then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), true, false, 0, nil, 0, 2, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  1                            then pMarch31osExWhirlwind(_side, u_rndInt(3, 6), 1, 0, 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 0, 0, 0, false)
     elseif mNumbSpawn ==  2                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 3), 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  3                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 2), 1, 2, false, 1.2, 1, getRandomDir())
@@ -171,7 +171,7 @@ end
 -- hexadorsip patterns
 function spawnHxdsHexV1Pattern(mNumbSpawn)
     local _side = getRandomSide();
-        if mNumbSpawn ==  0                            then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
+        if mNumbSpawn ==  0                            then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), true, false, 0, nil, 0, 2, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  1 and getProtocolSides() > 5 then pMarch31osWallStrip(_side, march31oPat_thickness, 1, getPolySides(2, "ceil"), 0, 1, 1, true)
     elseif mNumbSpawn ==  2                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(2, 3), 1, 1, false, 1, 1, -1)
     elseif mNumbSpawn ==  3 and getProtocolSides() > 5 then pMarch31osBackAndForthTunnelCentral(_side, march31oPat_thickness * 2, nil, u_rndInt(3, 4) * 2, 0, 0, 0, 0, 1, 1, u_rndInt(0, 1), 0, true)
@@ -196,7 +196,7 @@ end
 
 function spawnHxdsCrazyPentPattern(mNumbSpawn)
     local _side = getRandomSide();
-        if mNumbSpawn ==  0 then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 4), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
+        if mNumbSpawn ==  0 then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 4), true, false, 0, nil, 0, 2, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  1 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(2, 4), 1, 1, false, 0.65, 1, -1)
     elseif mNumbSpawn ==  2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(2, 3), 1, 1, false, 0.55, 1, -1)
     elseif mNumbSpawn ==  3 then pMarch31osBarrageReversals(_side, march31oPat_thickness, 1, 1, false, 1.3, 1, u_rndInt(0, 1))
@@ -226,7 +226,7 @@ function spawnHxdsV2Pattern(mNumbSpawn, bIsGearTeeth)
     local _side = getRandomSide();
     local _gearTeethMult = bIsGearTeeth and 1 or 0
 
-        if mNumbSpawn ==  0 then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 4), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
+        if mNumbSpawn ==  0 then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 4), true, false, 0, nil, 0, 2, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  1 then pMarch31osExTunnel(_side, march31oPat_thickness * 1.75, nil, u_rndInt(2, 3) * 2 - 1, getProtocolSides() - 2, 1, 1, u_rndInt(0, 1), 0, 0, true)
     elseif mNumbSpawn ==  2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(2, 3), 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  3 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(2, 3), 1, 2, false, 1.2, 1, getRandomDir())
@@ -258,7 +258,7 @@ end
 -- baba patterns
 function spawnBabaV1Pattern(mNumbSpawn)
     local _side = getRandomSide();
-        if mNumbSpawn ==  0                            then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), true, false, 0, 0, 2, false, 1, 1, getRandomDir())
+        if mNumbSpawn ==  0                            then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), true, false, 0, nil, 0, 2, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  1                            then pMarch31osExWhirlwind(_side, u_rndInt(7, 11), 1, 0, 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 0, 0, 0, false)
     elseif mNumbSpawn ==  2                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 3), 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  3                            then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(0, 2), 1, 2, false, 1.2, 1, getRandomDir())
@@ -300,7 +300,7 @@ end
 
 function spawnBabaV2Pattern(mNumbSpawn)
     local _side = getRandomSide();
-        if mNumbSpawn ==  0 then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), false, false, 0, 0, 2, false, 1, 1, getRandomDir())
+        if mNumbSpawn ==  0 then pMarch31osExAlternatingBarrage(_side, march31oPat_thickness, u_rndInt(3, 5), false, false, 0, nil, 0, 2, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  1 then pMarch31osExWhirlwind(_side, u_rndInt(4, 6), 0, 0, 0, getPolySides(3, "floor"), 1, true, 1, 1, getRandomDir(), 0, 0, 0, false)
     elseif mNumbSpawn ==  2 then pMarch31osBarrageSpiral(_side, march31oPat_thickness, u_rndInt(3, 6), 1, 1, false, 1, 1, getRandomDir())
     elseif mNumbSpawn ==  3 then pMarch31osBarrageLeftRights(_side, march31oPat_thickness, u_rndInt(4, 6), 1, u_rndIntUpper(2), true, 1, 1, getRandomDir())
