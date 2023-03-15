@@ -1,25 +1,20 @@
---2.x.x+ & 1.92 conv functs
-local u_getSpeedMultDM = u_getSpeedMultDM or getSpeedMult
-local u_rndInt = u_rndInt or math.random
-local u_rndIntUpper = u_rndIntUpper or math.random
-
 --[[
-    void fMarch31osSwapBarrage(_side, _corridorThickOfSLT, _corridorThickOfSGET, _delMult, _sizeMult, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
-    void fMarch31osSwapBarrage(_side, _corridorThickOfSLT, _corridorThickOfSGET) --, 1, 1, false, false, 0, 1, 1, 2
-    void fMarch31osSwapCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _delMult, _sizeMult, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
-    void fMarch31osSwapCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter) --, 1, 1, false, false, 0, 1, 1, 2
-    void fMarch31osChance(_side, _corridorThickOfSLT, _corridorThickOfSGET, _delMult, _sizeMult, _blockDir, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
-    void fMarch31osChance(_side, _corridorThickOfSLT, _corridorThickOfSGET) --, 1, 1, getRandomDir(), false, false, 0, 1, 1, 2
-    void fMarch31osBarrageNoDelay(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _delMult, _sizeMult, _direction, _isRandDir, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
-    void fMarch31osBarrageNoDelay(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter) --, 1, 1, getRandomDir(), false, false, false, 0, 1, 1, 2
+    void fMarch31osSwapBarrage(_side, _corridorThickOfSLT, _corridorThickOfSGET, _delMult, _sizeMult)
+    void fMarch31osSwapBarrage(_side, _corridorThickOfSLT, _corridorThickOfSGET) --, 1, 1
+    void fMarch31osSwapCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _delMult, _sizeMult)
+    void fMarch31osSwapCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter) --, 1, 1
+    void fMarch31osChance(_side, _corridorThickOfSLT, _corridorThickOfSGET, _delMult, _sizeMult, _blockDir)
+    void fMarch31osChance(_side, _corridorThickOfSLT, _corridorThickOfSGET) --, 1, 1, getRandomDir()
+    void fMarch31osBarrageNoDelay(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _delMult, _sizeMult, _direction, _isRandDir)
+    void fMarch31osBarrageNoDelay(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter) --, 1, 1, getRandomDir(), false
     void fMarch31osFlip(_side, _thickness, _sizeMult, _direction, _endAdditionalDelay, _skipEndDelay)
     void fMarch31osFlip(_side) --, THICKNESS, 1, getRandomDir(), 0, false
-    void fMarch31osMirrorWhirlwind(_side, _thickness, _iter, _extra, _posSpacing, _seamless, _delMult, _sizeMult, _direction, _blockDir, _is_clean, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
-    void fMarch31osMirrorWhirlwind(_side, _thickness, _iter) --, 0, 1, false, 1, 1, getRandomDir(), getRandomDir(), false, false, false, 0, 1, 1, 2
-    void fMarch31osSwapTunnelCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _isLargeWallOnce, _delMult, _sizeMult, _direction, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
-    void fMarch31osSwapTunnelCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter) --, false, 1, 1, u_rndInt(0, 1), false, false, 0, 1, 1, 2
-    void fMarch31osBackAndForthTunnel(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _variantDesign, _free, _isLargeWallOnce, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _delMult, _sizeMult, _direction, _blockDir, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
-    void fMarch31osBackAndForthTunnel(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter) --, _u_rndInt(0, 1), 0, false, THICKNESS, getSpeedWallThickness(THICKNESS), 0, 1, 1, 1, false, false, 1, 1, u_rndInt(0, 1), getRandomDir(), false, false, 0, 1, 1, 2
+    void fMarch31osMirrorWhirlwind(_side, _thickness, _iter, _extra, _posSpacing, _seamless, _delMult, _sizeMult, _direction, _blockDir, _is_clean)
+    void fMarch31osMirrorWhirlwind(_side, _thickness, _iter) --, 0, 1, false, 1, 1, getRandomDir(), getRandomDir(), false
+    void fMarch31osSwapTunnelCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _isLargeWallOnce, _delMult, _sizeMult, _direction)
+    void fMarch31osSwapTunnelCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter) --, false, 1, 1, u_rndInt(0, 1)
+    void fMarch31osBackAndForthTunnel(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _variantDesign, _free, _isLargeWallOnce, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _delMult, _sizeMult, _direction, _blockDir)
+    void fMarch31osBackAndForthTunnel(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter) --, _u_rndInt(0, 1), 0, false, THICKNESS, getSpeedWallThickness(THICKNESS), 0, 1, 1, 1, false, false, 1, 1, u_rndInt(0, 1), getRandomDir()
 ]]
 
 --[[
@@ -32,6 +27,13 @@ local u_rndIntUpper = u_rndIntUpper or math.random
 >>                                         _iter: amount of times
 >>                                      _delMult: the delay pattern multiplier of the pattern
 >>                                     _sizeMult: the size pattern multiplier of the pattern
+]]
+
+--[[
+[ NOTE FOR THE OPTIONAL PARAMETERS ]
+
+// p_adjustPatternSettings(_isRebootingSide, _skipEndDelayBool, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
+
 >> [KODIPHER's PARAMETER]          _skipEndDelay: skips delay after pattern spawned
 >> [THE SUN XIX's PARAMETER]    _isRebootingSide: the boolean of rebooting side of the pattern
 >> [THE SUN XIX's PARAMETER] _endAdditionalDelay: amount of additional delay after pattern spawned, which 'march31oPatDel_AdditionalDelay' variable is
@@ -42,43 +44,39 @@ local u_rndIntUpper = u_rndIntUpper or math.random
 
 --[ Swap patterns ]--
 
--- fMarch31osSwapBarrage: a cSwapBarrage with additional pattern delay
-function fMarch31osSwapBarrage(_side, _corridorThickOfSLT, _corridorThickOfSGET, _delMult, _sizeMult, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
+-- fMarch31osSwapBarrage(): a cSwapBarrage with additional pattern delay
+function fMarch31osSwapBarrage(_side, _corridorThickOfSLT, _corridorThickOfSGET, _delMult, _sizeMult)
     _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _corridorThickOfSLT or THICKNESS, _corridorThickOfSGET);_addMult or march31oPatDel_AddMult or 1
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
-    local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
-    if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    if _curSide == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
 
     cSwapBarrage(_curSide, _delMult * _curDelaySpeed * _sizeMult, p_getDelayPatternBool(), p_getPatternThickness() * _sizeMult);
 
     p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 8 or 11)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 8 or 11)));
 end
 
--- fMarch31osSwapCorridor: A series of cSwapCorridors, forcing you to swap and look around for new corridors going through. Has some similarity to tunnel pattern.
-function fMarch31osSwapCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _delMult, _sizeMult, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
+-- fMarch31osSwapCorridor(): A series of cSwapCorridors, forcing you to swap and look around for new corridors going through. Has some similarity to tunnel pattern.
+function fMarch31osSwapCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _delMult, _sizeMult)
     _iter = anythingButNil(_iter, u_rndInt(2, 3)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _corridorThickOfSLT or THICKNESS, _corridorThickOfSGET);_addMult or march31oPatDel_AddMult or 1
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
-    local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
-    if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    if _curSide == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
 
     for a = 0, _iter, 1 do
         p_patternEffectCycle();
@@ -90,28 +88,26 @@ function fMarch31osSwapCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET
     end
 
     p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 8 or 11)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 8 or 11)));
 end
 
 --[ Swap corridors ]--
 
 -- baba's inspired patterns
--- fMarch31osChance: a chance pattern which swap on
+-- fMarch31osChance(): a chance pattern which swap on
 -- _blockDir: which way will block on
-function fMarch31osChance(_side, _corridorThickOfSLT, _corridorThickOfSGET, _delMult, _sizeMult, _blockDir, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
+function fMarch31osChance(_side, _corridorThickOfSLT, _corridorThickOfSGET, _delMult, _sizeMult, _blockDir)
     _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1); _blockDir = anythingButNil(_blockDir, getRandomDir());
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _corridorThickOfSLT or THICKNESS, _corridorThickOfSGET);_addMult or march31oPatDel_AddMult or 1
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
-    local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
-    if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    if _curSide == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
     local _corridorBlockDir = _blockDir;
 
     rWall(_curSide, customizePatternThickness(16 * _curDelaySpeed * _delMult * _sizeMult, p_getDelayPatternBool()) + ((p_getPatternThickness() / 2) * _sizeMult));
@@ -123,27 +119,25 @@ function fMarch31osChance(_side, _corridorThickOfSLT, _corridorThickOfSGET, _del
     end
 
     p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 8 or 11)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 8 or 11)));
 end
 
--- fMarch31osBarrageNoDelay: a swap barrage w/ no delay
+-- fMarch31osBarrageNoDelay(): a swap barrage w/ no delay
 -- _isRandDir: a boolean of random direction
-function fMarch31osBarrageNoDelay(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _delMult, _sizeMult, _direction, _isRandDir, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
+function fMarch31osBarrageNoDelay(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _delMult, _sizeMult, _direction, _isRandDir)
     _iter = anythingButNil(_iter, u_rndInt(3, 6)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
     if not _direction or _direction > 1 or _direction < -1 then _direction = getRandomDir(); end
     _isRandDir = anythingButNil(_isRandDir, 0);
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _corridorThickOfSLT or THICKNESS, _corridorThickOfSGET);_addMult or march31oPatDel_AddMult or 1
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
-    local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
-    if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    if _curSide == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
     local _corridorLoopDir = _direction;
 
     _isRandDir = getBooleanNumber(_isRandDir);
@@ -165,23 +159,21 @@ function fMarch31osBarrageNoDelay(_side, _corridorThickOfSLT, _corridorThickOfSG
     end
 
     p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 0 or 8)));
 end
 
--- fMarch31osFlip: a fast-swap barrage
+-- fMarch31osFlip(): a fast-swap barrage
 function fMarch31osFlip(_side, _thickness, _sizeMult, _direction, _endAdditionalDelay, _skipEndDelay)
     _sizeMult = anythingButNil(_sizeMult, 1);
     if not _direction or _direction > 1 or _direction < -1 then _direction = getRandomDir(); end
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();_addMult or march31oPatDel_AddMult or 1
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
-    if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    if _curSide == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
 
     for a = 0, math.floor(getProtocolSides() / 2), 1 do
         p_patternEffectCycle();
@@ -195,25 +187,24 @@ function fMarch31osFlip(_side, _thickness, _sizeMult, _direction, _endAdditional
     end
 
     p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 8 or 11)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 8 or 11)));
 end
 
 --[ Swap spirals ]--
 
 -- baba's inspired patterns
--- fMarch31osMirrorWhirlwind: spiral pattern + rWall + include 'pChance' swap pattern
+-- fMarch31osMirrorWhirlwind(): spiral pattern + rWall + include 'pChance' swap pattern
 --   _extraWidth: amount of extras in this rWallEx
 --   _posSpacing: position spacing amount where to displace
 --     _seamless: boolean of spiral pattern uses seamless
 -- _isCleanStart: similarity of spiral's slope pattern. boolean of clean starts before spiral pattern spawns
 --   _isCleanEnd: similarity of spiral's slope pattern. boolean of clean starts after spiral pattern spawns
-function fMarch31osMirrorWhirlwind(_side, _thickness, _iter, _extraWidth, _posSpacing, _seamless, _delMult, _sizeMult, _direction, _blockDir, _isCleanStart, _isCleanEnd, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
+function fMarch31osMirrorWhirlwind(_side, _thickness, _iter, _extraWidth, _posSpacing, _seamless, _delMult, _sizeMult, _direction, _blockDir, _isCleanStart, _isCleanEnd)
     _iter = anythingButNil(_iter, u_rndInt(4, 7)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
     _extra = anythingButNil(_extraWidth, 0); _posSpacing = anythingButNil(_posSpacing, 1); _isCleanStart = anythingButNil(_isCleanStart, 0); _isCleanEnd = anythingButNil(_isCleanEnd, 0);
     if _direction == nil or _direction == 0 then _direction = getRandomDir(); end
     if _direction < -1 then _direction = -1 elseif _direction > 1 then _direction = 1; end
     _blockDir = anythingButNil(_blockDir, getRandomDir());
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     local currentTimesOfThickAmountForGreaterThanSquare = 2 * (getBooleanNumber(_seamless) and 1.1 or 1);
     _direction = math.floor(_direction);
@@ -223,12 +214,11 @@ function fMarch31osMirrorWhirlwind(_side, _thickness, _iter, _extraWidth, _posSp
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
-    local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
     local _curSpiralThick = 2 * (getBooleanNumber(_seamless) and 1.1 * _delMult or 1);
     if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomDir() end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
     local _spiralPosistionOffset = 0;
 
     if getBooleanNumber(_isCleanStart) then rWallEx(_curSide + _spiralPosistionOffset + (_direction * _posSpacing), _extraWidth, customizePatternThickness(3 * _delMult * _sizeMult, p_getDelayPatternBool())); end
@@ -250,29 +240,27 @@ function fMarch31osMirrorWhirlwind(_side, _thickness, _iter, _extraWidth, _posSp
     end
 
     p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 0 or 8)));
 end
 
 --[ Swap tunnels ]--
 
--- fMarch31osSwapTunnelCorridor: a pattern w/ swap-swap
+-- fMarch31osSwapTunnelCorridor(): a pattern w/ swap-swap
 -- _isLargeWallOnce: boolean of one large wall * times instead of ones
 -- according to '_direction' in this pattern, there's a block direction which way will block on
-function fMarch31osSwapTunnelCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _isLargeWallOnce, _delMult, _sizeMult, _direction, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
+function fMarch31osSwapTunnelCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _isLargeWallOnce, _delMult, _sizeMult, _direction)
     _iter = anythingButNil(_iter, u_rndInt(2, 5)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
     if not _direction or _direction > 1 or _direction < 0 then _direction = u_rndInt(0, 1); end
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _corridorThickOfSLT or THICKNESS, _corridorThickOfSGET);_addMult or march31oPatDel_AddMult or 1
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
-    local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
-    if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    if _curSide == TARGET_PATTERN_SIDE and p_getRebootingSideBool() then _curSide = _curSide + getRandomNegVal(getRebootPatternSide()) end
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
     local _tunnelBlockDir = math.floor(_direction);
 
     if (getBooleanNumber(_isLargeWallOnce)) then
@@ -292,11 +280,11 @@ function fMarch31osSwapTunnelCorridor(_side, _corridorThickOfSLT, _corridorThick
     end
 
     p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 0 or 8)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 0 or 8)));
 end
 
 -- baba's inspired patterns
--- fMarch31osBackAndForthTunnel: back and forth/double tunnel pattern + include 'pChance' swap pattern
+-- fMarch31osBackAndForthTunnel(): back and forth/double tunnel pattern + include 'pChance' swap pattern
 --          _variantDesign: 0 = central, 1 = axis
 --                   _free: amount of free corridor side
 --        _isLargeWallOnce: boolean of one large wall * times instead of ones
@@ -307,7 +295,7 @@ end
 -- _isBeforeGearTeethBegin: similiar from <<super hexagon: hyper hexagoner>>. boolean of when after gear teeth will started + additional iterations
 --   _isBeforeGearTeethEnd: reverse "_isBeforeGearTeethBegin". boolean of when after gear teeth will ended + additional iterations
 --               _blockDir: which way will block on in this pattern
-function fMarch31osBackAndForthTunnel(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _variantDesign, _free, _isLargeWallOnce, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _delMult, _sizeMult, _direction, _blockDir, _skipEndDelay, _isRebootingSide, _endAdditionalDelay, _addMult, _delayMultOfSpdLessThan, _spdIsGreaterThanEqual)
+function fMarch31osBackAndForthTunnel(_side, _corridorThickOfSLT, _corridorThickOfSGET, _iter, _variantDesign, _free, _isLargeWallOnce, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _delMult, _sizeMult, _direction, _blockDir)
     _iter = anythingButNil(_iter, u_rndInt(2, 5)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
     _free = anythingButNil(_free, 0); _variantDesign = anythingButNil(_variantDesign, 0); _modeDesign1_offset = anythingButNil(_modeDesign1_offset, 0); _modeDesign1_adjust = anythingButNil(_modeDesign1_adjust, 0);
     if not _direction or _direction > 1 or _direction < 0 then _direction = u_rndInt(0, 1); end _blockDir = anythingButNil(_blockDir, getRandomDir());
@@ -315,18 +303,16 @@ function fMarch31osBackAndForthTunnel(_side, _corridorThickOfSLT, _corridorThick
     _gearTeethSizeMult = anythingButNil(_gearTeethSizeMult, 0); _isBeforeGearTeethBegin = anythingButNil(_isBeforeGearTeethBegin, 0);
     if not _gearTeethStepDel or _gearTeethStepDel < 1 then _gearTeethStepDel = 1; end
     if not _gearTeethStepLimit or _gearTeethStepLimit < 1 then _gearTeethStepLimit = 1; end
-    _isTight = anythingButNil(_isTight, 0); _skipEndDelay = anythingButNil(_skipEndDelay, 0);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _corridorThickOfSLT or THICKNESS, _corridorThickOfSGET);_addMult or march31oPatDel_AddMult or 1
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
-    local _isRebootingSideStat = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);
-    local _curDelaySpeed = (_addMult or march31oPatDel_AddMult or 1) - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
+    local _curDelaySpeed = p_getAddMultPattern() - (getSpeedDelay(PAT_START_SPEED or u_getSpeedMultDM()) * (march31oPatDel_SDMult or 0));
     local _curSide = _side or u_rndInt(0, getProtocolSides() - 1);
     if _curSide == TARGET_PATTERN_SIDE and (_isRebootingSideStat) then _curSide = _curSide + getRandomNegVal(_variantDesign == 1 and getRebootPatternSide() or getRebootPatternHalfSide()) end
-    TARGET_PATTERN_SIDE = (_isRebootingSideStat) and _curSide or -256;
+    TARGET_PATTERN_SIDE = p_getRebootingSideBool() and _curSide or -256;
     local _tunnelLoopDir = math.floor(_direction);
     local _tunnelLoopDirGearTeeth = 0;
     local _timesOfBeforeGearTeethBegin, _timesOfAfterGearTeethEnd = 0, 0;
@@ -377,5 +363,5 @@ function fMarch31osBackAndForthTunnel(_side, _corridorThickOfSLT, _corridorThick
     end
 
     p_patternEffectEnd();
-    t_applyPatDel((_endAdditionalDelay or march31oPatDel_AdditionalDelay or 0) + (getPerfectDelay(THICKNESS) * (getBooleanNumber(_skipEndDelay) and 8 or 11)));
+    t_applyPatDel(p_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 8 or 11)));
 end
