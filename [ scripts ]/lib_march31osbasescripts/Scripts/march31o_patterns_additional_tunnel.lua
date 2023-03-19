@@ -113,7 +113,7 @@ function pMarch31osAlternatingBarrageTunnel(_side, _corridorThickOfSLT, _corrido
     if not _direction or _direction > 1 or _direction < -1 or _direction == 0 then _direction = getRandomDir(); end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -161,7 +161,7 @@ function pMarch31osRandomBarrageTunnel(_side, _corridorThickOfSLT, _corridorThic
     _isRepeat = anythingButNil(_isRepeat, 1); _isDelayDistance = anythingButNil(_isDelayDistance, 1);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -219,7 +219,7 @@ function pMarch31osJumbleTunnel(_side, _corridorThickOfSLT, _corridorThickOfSGET
     _iter = anythingButNil(_iter, u_rndInt(3, 4)); _largeWallDesign = anythingButNil(_largeWallDesign, 2); _chance = anythingButNil(_chance, getProtocolSides() - 4); _largeWalls = anythingButNil(_largeWalls, 1); _delMult = anythingButNil(_delMult, 1.4); _sizeMult = anythingButNil(_sizeMult, 1);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -264,7 +264,7 @@ function pMarch31osRandomizationLargeWallsTunnel(_side, _corridorThickOfSLT, _co
     _largeWallsDistanceMax = closeValue(anythingButNil(_largeWallsDistanceMax, getProtocolSides() - 2), 1, getProtocolSides() - 2);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -321,7 +321,7 @@ function pMarch31osTrapBarrageTunnel(_side, _corridorThickOfSLT, _corridorThickO
     if not _direction or _direction > 1 or _direction < 0 then _direction = 1; end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -375,7 +375,7 @@ function pMarch31osBarrageSpiralTunnel(_side, _corridorThickOfSLT, _corridorThic
     if not _direction or _direction > 1 or _direction < -1 or _direction == 0 then _direction = getRandomDir(); end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -428,7 +428,7 @@ function pMarch31osDoubleBarrageSpiralAcrossTunnel(_side, _corridorThickOfSLT, _
     if not _direction or _direction > 1 or _direction < -1 or _direction == 0 then _direction = getRandomDir(); end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -482,7 +482,7 @@ function pMarch31osLRTunnelShortSpiral(_side, _corridorThickOfSLT, _corridorThic
     _gearTeethSizeMult = anythingButNil(_gearTeethSizeMult, 0); _isBeforeGearTeethBegin = anythingButNil(_isBeforeGearTeethBegin, 0);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -596,7 +596,7 @@ function pMarch31osBackAndForthTunnelAxis(_side, _corridorThickOfSLT, _corridorT
     _repeatCorridorDelay = anythingButNil(_repeatCorridorDelay, 2); _isRepeatCorridorDelaySpd = anythingButNil(_isRepeatCorridorDelaySpd, 0);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -786,7 +786,7 @@ function pMarch31osBackAndForthTunnelAxisInterpolated(_side, _corridorThickOfSLT
     _repeatCorridorDelay = anythingButNil(_repeatCorridorDelay, 2); _isRepeatCorridorDelaySpd = anythingButNil(_isRepeatCorridorDelaySpd, 0);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -925,7 +925,7 @@ function pMarch31osBackAndForthTunnelCentral(_side, _corridorThickOfSLT, _corrid
     _repeatCorridorDelay = anythingButNil(_repeatCorridorDelay, 2); _isRepeatCorridorDelaySpd = anythingButNil(_isRepeatCorridorDelaySpd, 0);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
