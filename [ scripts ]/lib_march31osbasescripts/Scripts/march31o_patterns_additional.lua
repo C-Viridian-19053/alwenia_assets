@@ -88,7 +88,7 @@ function pMarch31osBarrageSpiralRev(_side, _thickness, _iter, _revFreq, _gap, _h
     if type(_holes) ~= "number" or _holes < 1 then _holes = 1; end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -136,7 +136,7 @@ function pMarch31osWallDisplacer(_side, _thickness, _iter, _delMult, _sizeMult)
     _side = anythingButNil(_side, u_rndInt(0, getProtocolSides() - 1)); _iter = anythingButNil(_iter, u_rndInt(3, 6)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -182,7 +182,7 @@ function pMarch31osDoubleBarrageSpiralAcross(_side, _thickness, _iter, _delMult,
     _iter = anythingButNil(_iter, u_rndInt(1, 3)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -213,7 +213,7 @@ function pMarch31osAbstractBarrage(_side, _thickness, _iter, _delMult, _sizeMult
     if _direction < -1 then _direction = -1 elseif _direction > 1 then _direction = 1; end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -243,7 +243,7 @@ function pMarch31osWallExFillerSpiral(_side, _thickness, _delMult, _sizeMult, _d
     if _direction < -1 then _direction = -1 elseif _direction > 1 then _direction = 1; end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -295,7 +295,7 @@ function pMarch31osCtoCIBarrage(_side, _thickness, _iter, _delMult, _sizeMult, _
     if _direction < -1 then _direction = -1 elseif _direction > 1 then _direction = 1; end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -327,7 +327,7 @@ function pMarch31osJumbleBarrage(_side, _thickness, _iter, _chance, _delMult, _s
     _chance = anythingButNil(_chance, getProtocolSides() - 2);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -354,7 +354,7 @@ function pMarch31osSprayBarrage(_side, _thickness, _iter, _delay, _extra, _delMu
     if _direction < 0 then _direction = 0 elseif _direction > 1 then _direction = 1; end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -378,7 +378,7 @@ function pMarch31osOddAltBarrage(_side, _thickness, _iter, _delMult, _sizeMult, 
     if _barrageDir < -1 then _barrageDir = -1 elseif _barrageDir > 1 then _barrageDir = 1; end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
     
@@ -418,7 +418,7 @@ function pMarch31osEvenAltBarrage(_side, _thickness, _iter, _delMult, _sizeMult,
     if _barrageDir < -1 then _barrageDir = -1 elseif _barrageDir > 1 then _barrageDir = 1; end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -459,7 +459,7 @@ function pMarch31osAltHalfBarrage(_side, _thickness, _iter, _offset, _delMult, _
     if _barrageDir < -1 then _barrageDir = -1 elseif _barrageDir > 1 then _barrageDir = 1; end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -500,7 +500,7 @@ function pMarch31osAltTrapBarrage(_side, _thickness, _iter, _gap, _delMult, _siz
     if _offsetMult == nil or _offsetMult == 0 or _offsetMult < 0 then _offsetMult = 1; end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -548,7 +548,7 @@ function pMarch31osCustomizedAltTrapBarrage(_side, _thickness, _iter, _mainDirNe
     if _offsetMult == nil or _offsetMult == 0 or _offsetMult < 0 then _offsetMult = 1; end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
