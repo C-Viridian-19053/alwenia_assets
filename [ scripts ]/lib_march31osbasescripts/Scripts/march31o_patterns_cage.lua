@@ -93,7 +93,7 @@ end
 
 -- note for desk of table int no.2 from <_modeDesignTable> argument: 0 or else = none, 1 = desk type 1(?), 2 = desk type 2(?)
 
-function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInverted, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable, _designDelAddContainedTable, _modeDesignTable, _neighDesignTable, _designDelAddTablep_getEndAdditionalDelayPattern() + (getPerfectDelay(THICKNESS) * (p_getSkipEndDelayPatternBool() and 8 or 11)))
+function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInverted, _delMult, _sizeMult, _hasContainedTable, _neighContainedTable, _designDelAddContainedTable, _modeDesignTable, _neighDesignTable, _designDelAddTable)
     -- optional args
     _freq = anythingButNil(_freq, 0); _freqInv = anythingButNil(_freqInv, 0); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1); _isOdd = anythingButNil(_isOdd, 0); _isInverted = anythingButNil(_isInverted, 0);
 
@@ -122,7 +122,7 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
         march31opatcommon_neighContainedTable = { 0, 0 }
         march31opatcommon_designDelAddContainedTable = { 0, 0 }
         march31opatcommon_modeDesignTable = { 2, 1, 0, 0 }
-        march31opatcommon_neighDesignTable = { 0, 0, 0, 1 }
+        march31opatcommon_neighDesignTable = { 0, 0, 0, getProtocolSides() < 6 and 0 or 1 }
         march31opatcommon_designDelAddTable = { 0, 0, 0, 0 }
     elseif _design == "trapped" then
         march31opatcommon_hasContainedTable = { true, false }
@@ -136,7 +136,7 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
         march31opatcommon_neighContainedTable = { 0, 0 }
         march31opatcommon_designDelAddContainedTable = { 1, 1 }
         march31opatcommon_modeDesignTable = { 1, 2, 0, 0 }
-        march31opatcommon_neighDesignTable = { 0, 0, 0, 1 }
+        march31opatcommon_neighDesignTable = { 0, 0, 0, getProtocolSides() < 6 and 0 or 1 }
         march31opatcommon_designDelAddTable = { 1, 1, 1, 0 }
     elseif _design == "bat" then
         march31opatcommon_hasContainedTable = { false, false }
@@ -147,12 +147,12 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
         march31opatcommon_designDelAddTable = { 1, 1, 1, 1 }
     end
 
-    if type(march31opatcommon_hasContainedTable) == "table"          then error("argument #6 is not a table.", 2)  elseif #march31opatcommon_hasContainedTable < 2          then error("insufficient tables at argument #6.", 2)  end
-    if type(march31opatcommon_neighContainedTable) == "table"        then error("argument #7 is not a table.", 2)  elseif #march31opatcommon_neighContainedTable < 2        then error("insufficient tables at argument #7.", 2)  end
-    if type(march31opatcommon_designDelAddContainedTable) == "table" then error("argument #8 is not a table.", 2)  elseif #march31opatcommon_designDelAddContainedTable < 2 then error("insufficient tables at argument #8.", 2)  end
-    if type(march31opatcommon_modeDesignTable) == "table"            then error("argument #9 is not a table.", 2)  elseif #march31opatcommon_modeDesignTable < 4            then error("insufficient tables at argument #9.", 2)  end
-    if type(march31opatcommon_neighDesignTable) == "table"           then error("argument #10 is not a table.", 2) elseif #march31opatcommon_neighDesignTable < 4           then error("insufficient tables at argument #10.", 2) end
-    if type(march31opatcommon_designDelAddTable) == "table"          then error("argument #11 is not a table.", 2) elseif #march31opatcommon_designDelAddTable < 4          then error("insufficient tables at argument #11.", 2) end
+    if type(march31opatcommon_hasContainedTable) ~= "table"          then error("argument #6 is not a table.", 2)  elseif #march31opatcommon_hasContainedTable < 2          then error("insufficient tables at argument #6.", 2)  end
+    if type(march31opatcommon_neighContainedTable) ~= "table"        then error("argument #7 is not a table.", 2)  elseif #march31opatcommon_neighContainedTable < 2        then error("insufficient tables at argument #7.", 2)  end
+    if type(march31opatcommon_designDelAddContainedTable) ~= "table" then error("argument #8 is not a table.", 2)  elseif #march31opatcommon_designDelAddContainedTable < 2 then error("insufficient tables at argument #8.", 2)  end
+    if type(march31opatcommon_modeDesignTable) ~= "table"            then error("argument #9 is not a table.", 2)  elseif #march31opatcommon_modeDesignTable < 4            then error("insufficient tables at argument #9.", 2)  end
+    if type(march31opatcommon_neighDesignTable) ~= "table"           then error("argument #10 is not a table.", 2) elseif #march31opatcommon_neighDesignTable < 4           then error("insufficient tables at argument #10.", 2) end
+    if type(march31opatcommon_designDelAddTable) ~= "table"          then error("argument #11 is not a table.", 2) elseif #march31opatcommon_designDelAddTable < 4          then error("insufficient tables at argument #11.", 2) end
 
     -- required commons.
     local _wallPart = function(_side, _isOppositeSideAlt, _thickness)                   for i = 0, _isOppositeSideAlt, 1 do cWall(_side + i, _thickness); end                                                   end
