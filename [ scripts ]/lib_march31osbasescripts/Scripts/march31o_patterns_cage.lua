@@ -328,7 +328,7 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
                 for aInv = 0, _freqInv do
                     for aMain = 0, _freq do
                         p_patternEffectCycle();
-                        local thickwall = 11 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[2] > 0 and 1 + march31opatcommon_designDelAddTable[2] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1 + (march31opatcommon_designDelAddTable[3] * 1.5) or 0)
+                        local thickwall = 10.5 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[2] > 0 and 1 + march31opatcommon_designDelAddTable[2] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1 + (march31opatcommon_designDelAddTable[3] * 1.5) or 0)
                         _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and march31opatcommon_modeDesignTable[4] or march31opatcommon_modeDesignTable[3], aMain == 0 and march31opatcommon_neighDesignTable[4] or march31opatcommon_neighDesignTable[3], thickwall,             5 - (march31opatcommon_modeDesignTable[2] > 0 and (aMain > 0 and march31opatcommon_modeDesignTable[4] == 0 and 4 or 1) or 0), march31opatcommon_designDelAddTable[4], true) --end
                         _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[2],                                       march31opatcommon_neighDesignTable[2],                                        aMain == 0 and 5 or 4, 5 + (march31opatcommon_modeDesignTable[2] > 0 and 1 or 0),                                                   march31opatcommon_designDelAddTable[2], true) --desk
                     end
@@ -339,7 +339,7 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
             for aInv = 0, _freqInv do
                 for aMain = 0, _freq do
                     p_patternEffectCycle();
-                    local thickwall = 11 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[2] > 0 and 1 + march31opatcommon_designDelAddTable[2] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1 + (march31opatcommon_designDelAddTable[3] * 1.5) or 0)
+                    local thickwall = 10.5 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[2] > 0 and 1 + march31opatcommon_designDelAddTable[2] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1 + (march31opatcommon_designDelAddTable[3] * 1.5) or 0)
                     _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and march31opatcommon_modeDesignTable[4] or march31opatcommon_modeDesignTable[3], aMain == 0 and march31opatcommon_neighDesignTable[4] or march31opatcommon_neighDesignTable[3], thickwall,             5 - (march31opatcommon_modeDesignTable[2] > 0 and (aMain > 0 and march31opatcommon_modeDesignTable[4] == 0 and 4 or 1) or 0), march31opatcommon_designDelAddTable[4], true) --end
                     _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[2],                                       march31opatcommon_neighDesignTable[2],                                        aMain == 0 and 5 or 4, 5 + (march31opatcommon_modeDesignTable[2] > 0 and 1 or 0),                                                   march31opatcommon_designDelAddTable[2], true) --desk
                 end
@@ -373,9 +373,9 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
                 for aInv = 0, _freqInv do
                     for aMain = 0, _freq do
                         p_patternEffectCycle();
-                        local thickwall = 11 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[2] > 0 and 1 + march31opatcommon_designDelAddTable[2] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1 + (march31opatcommon_designDelAddTable[3] * 1.5) or 0)
-                        _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and march31opatcommon_modeDesignTable[1] or march31opatcommon_modeDesignTable[3], aMain == 0 and march31opatcommon_neighDesignTable[1] or march31opatcommon_neighDesignTable[3], thickwall,                 5,                                        march31opatcommon_designDelAddTable[1], false) --start
-                        _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[2],                                       march31opatcommon_neighDesignTable[2],                                        aMain == _freq and 5 or 4, 5 + (march31opatcommon_modeDesignTable[2] > 0 and 1 or 0), march31opatcommon_designDelAddTable[2], false) --desk
+                        local thickwall = 10.75 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[2] > 0 and 1 + march31opatcommon_designDelAddTable[2] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1 + (march31opatcommon_designDelAddTable[3] * 1.5) or 0)
+                        _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and march31opatcommon_modeDesignTable[1] or march31opatcommon_modeDesignTable[3], aMain == 0 and march31opatcommon_neighDesignTable[1] or march31opatcommon_neighDesignTable[3], thickwall,                 5,                                                                                   march31opatcommon_designDelAddTable[1], false) --start
+                        _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[2],                                                        march31opatcommon_neighDesignTable[2],                                                         aMain == _freq and 5 or 4, 5 + (march31opatcommon_modeDesignTable[2] > 0 and (aMain == _freq and 0 or 1) or 0), march31opatcommon_designDelAddTable[2], false) --desk
                     end
                     _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[4], march31opatcommon_neighDesignTable[4], 0, aInv == _freqInv and getBooleanNumber(march31opatcommon_hasContainedTable[2]) and 0 or 5, march31opatcommon_designDelAddTable[4], false) --end
                 end
@@ -384,9 +384,9 @@ function pMarch31osTrapAround(_side, _freq, _freqInv, _design, _isOdd, _isInvert
             for aInv = 0, _freqInv do
                 for aMain = 0, _freq do
                     p_patternEffectCycle();
-                    local thickwall = 11 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[2] > 0 and 1 + march31opatcommon_designDelAddTable[2] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1 + (march31opatcommon_designDelAddTable[3] * 1.5) or 0)
-                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and march31opatcommon_modeDesignTable[1] or march31opatcommon_modeDesignTable[3], aMain == 0 and march31opatcommon_neighDesignTable[1] or march31opatcommon_neighDesignTable[3], thickwall,                 5,                                        march31opatcommon_designDelAddTable[1], false) --start
-                    _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[2],                                       march31opatcommon_neighDesignTable[2],                                        aMain == _freq and 5 or 4, 5 + (march31opatcommon_modeDesignTable[2] > 0 and 1 or 0), march31opatcommon_designDelAddTable[2], false) --desk
+                    local thickwall = 10.75 + (march31opatcommon_modeDesignTable[1] > 0 and aMain == 0 and 1 + march31opatcommon_designDelAddTable[1] or 0) + (march31opatcommon_modeDesignTable[2] > 0 and 1 + march31opatcommon_designDelAddTable[2] or 0) + (march31opatcommon_modeDesignTable[3] > 0 and aMain > 0 and 1 + (march31opatcommon_designDelAddTable[3] * 1.5) or 0)
+                    _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, aMain == 0 and march31opatcommon_modeDesignTable[1] or march31opatcommon_modeDesignTable[3], aMain == 0 and march31opatcommon_neighDesignTable[1] or march31opatcommon_neighDesignTable[3], thickwall,                 5,                                                                                   march31opatcommon_designDelAddTable[1], false) --start
+                    _deskPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[2],                                                        march31opatcommon_neighDesignTable[2],                                                         aMain == _freq and 5 or 4, 5 + (march31opatcommon_modeDesignTable[2] > 0 and (aMain == _freq and 0 or 1) or 0), march31opatcommon_designDelAddTable[2], false) --desk
                 end
                 _bodyPart(_curSide, (_checkOddInt + aInv) % 2, (_checkOddInt + aInv) % 2, march31opatcommon_modeDesignTable[4], march31opatcommon_neighDesignTable[4], 0, aInv == _freqInv and getBooleanNumber(march31opatcommon_hasContainedTable[2]) and 0 or 5, march31opatcommon_designDelAddTable[4], false) --end
             end
@@ -406,10 +406,10 @@ end
 pMarch31osWrapAround = pMarch31osTrapAround
 
 -- pMarch31osTrapPatternizer(): same pattern of 321 pattern, taken from patternizer.lua
---              _freqInv: amount of times to displace to half side pos
---           _isInverted: boolean of inverting the pattern design, not the side pos (pattern design * -1, inverted)
---    _hasContainedTable: boolean of containter, only works on table contains booleans
---  _neighContainedTable: amount of free-neighbor containter, only works on table contains integers
+--             _freqInv: amount of times to displace to half side pos
+--          _isInverted: boolean of inverting the pattern design, not the side pos (pattern design * -1, inverted)
+--   _hasContainedTable: boolean of containter, only works on table contains booleans
+-- _neighContainedTable: amount of free-neighbor containter, only works on table contains integers
 function pMarch31osTrapPatternizer(_side, _iter, _delMult, _sizeMult)
     -- When the value is nil, the values will automatically indexed itself!
     _iter = anythingButNil(_iter, u_rndInt(0, 2)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
