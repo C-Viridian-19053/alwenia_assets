@@ -49,7 +49,7 @@ function fMarch31osSwapBarrage(_side, _corridorThickOfSLT, _corridorThickOfSGET,
     _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -69,7 +69,7 @@ function fMarch31osSwapCorridor(_side, _corridorThickOfSLT, _corridorThickOfSGET
     _iter = anythingButNil(_iter, u_rndInt(2, 3)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -100,7 +100,7 @@ function fMarch31osChance(_side, _corridorThickOfSLT, _corridorThickOfSGET, _del
     _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1); _blockDir = anythingButNil(_blockDir, getRandomDir());
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -130,7 +130,7 @@ function fMarch31osBarrageNoDelay(_side, _corridorThickOfSLT, _corridorThickOfSG
     _isRandDir = anythingButNil(_isRandDir, 0);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -253,7 +253,7 @@ function fMarch31osSwapTunnelCorridor(_side, _corridorThickOfSLT, _corridorThick
     if not _direction or _direction > 1 or _direction < 0 then _direction = u_rndInt(0, 1); end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
@@ -305,7 +305,7 @@ function fMarch31osBackAndForthTunnel(_side, _corridorThickOfSLT, _corridorThick
     if not _gearTeethStepLimit or _gearTeethStepLimit < 1 then _gearTeethStepLimit = 1; end
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSLT, _corridorThickOfSGET);
 
     p_patternEffectStart();
 
