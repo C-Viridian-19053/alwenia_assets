@@ -2,7 +2,7 @@
 specific pattern sets are listed in below, patterns fully modfiied by me (Marchionne)
 ]]
 
--- include
+-- include useful "dependency" files
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_utils.lua")
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_common.lua")
 u_execDependencyScript("library_march31osbasescripts", "march31os_scr_base", "march31onne", "march31o_patterns_common.lua")
