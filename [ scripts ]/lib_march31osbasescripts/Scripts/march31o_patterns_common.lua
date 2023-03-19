@@ -57,7 +57,7 @@ function pMarch31osBarrage(_side, _thickness, _neighbors, _sizeMult)
     _iter = anythingButNil(_iter, u_rndInt(3, 5)); _sizeMult = anythingButNil(_sizeMult, 1); _neighbors = anythingButNil(_neighbors, 0);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -77,7 +77,7 @@ function pMarch31osRandomBarrage(_side, _thickness, _delMult, _sizeMult)
     _iter = anythingButNil(_iter, u_rndInt(2, 5)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -115,7 +115,7 @@ function pMarch31osAlternatingBarrage(_side, _thickness, _iter, _delMult, _sizeM
     _direction = (type(_direction) == "number" and getNeg(_direction)) or (_direction == 0 and getRandomDir()) or getRandomDir();
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -149,7 +149,7 @@ function pMarch31osVortexBarrageRev(_side, _thickness, _iter, _subIter, _vortaBa
     _direction = (type(_direction) == "number" and getNeg(_direction)) or (_direction == 0 and getRandomDir()) or getRandomDir();
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -203,7 +203,7 @@ function pMarch31osBarrageSpiral(_side, _thickness, _iter, _gap, _distance, _isD
     _gap = closeValue((type(_gap) == "number" and _gap or 0), 0, 999, "min");
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -235,7 +235,7 @@ function pMarch31osBarrageReversals(_side, _thickness, _iter, _gap, _isInvertAcc
     _gap = closeValue((type(_gap) == "number" and _gap or 0), 0, 999, "min");
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -270,7 +270,7 @@ function pMarch31osWallStrip(_side, _thickness, _repetitions, _mirrorStep, _extr
     _mirrorStep = anythingButNil(_mirrorStep, u_rndInt(2, 3)); _extraWidth = anythingButNil(_extraWidth, 0);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
@@ -379,7 +379,7 @@ function pMarch31osTunnel(_side, _corridorThickOfSpeedLessThan, _corridorThickOf
     _iter = anythingButNil(_iter, u_rndInt(1, 3)); _delMult = anythingButNil(_delMult, 1); _sizeMult = anythingButNil(_sizeMult, 1);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, _corridorThickOfSpeedLessThan, _corridorThickOfSpeedGEThan)
+    p_adjustPatternSettings(nil, nil, nil, nil, nil, nil, nil, _corridorThickOfSpeedLessThan, _corridorThickOfSpeedGEThan)
 
     p_patternEffectStart();
 
