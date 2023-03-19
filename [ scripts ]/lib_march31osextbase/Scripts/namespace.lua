@@ -1,3 +1,5 @@
+-- probably taken from Syyrion's extended base library
+
 Audio = {
 	music = {
 		play = setmetatable({
