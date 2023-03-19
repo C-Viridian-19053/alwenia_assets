@@ -322,7 +322,7 @@ function __2common_get_event_timeline_module()
 	local EventDo = {}
 	EventDo.__index = EventDo
 
-	function Do:new(timeline, action)
+	function EventDo:new(timeline, action)
 		return setmetatable({timeline = timeline, action = action}, Do)
 	end
 
