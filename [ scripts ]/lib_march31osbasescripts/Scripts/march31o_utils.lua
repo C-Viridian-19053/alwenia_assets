@@ -501,11 +501,11 @@ function p_setDelayPatternBool(_bool)                                   pstr_cur
 function p_setRebootingSideBool(_isRebootingSide)                       pstr_rebootingSideBool = getBooleanNumber(_isRebootingSide or march31oPatDel_isRebootingSide);                                  end
 function p_setTightDelayPatternBool(_isTight)                           pstr_tightDelayPatternBool = getBooleanNumber(_isTight);                                                                        end
 function p_setSkipEndDelayPatternBool(_skipEndDelay)                    pstr_skipEndDelayBool = getBooleanNumber(_skipEndDelay);                                                                        end
-function p_setEndAdditionalDelayPattern(_endAdditionalDelay)            pstr_endAdditionalDelay = type(_endAdditionalDelay) ~= "number" and _endAdditionalDelay or march31oPatDel_AdditionalDelay or 0; end
-function p_setEndAddMultPattern(_addMult)                               pstr_addMult = type(_addMult) ~= "number" and _addMult or march31oPatDel_AddMult or 1;                                          end
-function p_setSpdMultDMIsGreaterThanEqual(_spdMultDMIsGreaterThanEqual) pstr_spdMultDMIsGreaterThanEqual = type(_spdMultDMIsGreaterThanEqual) ~= "number" and _spdMultDMIsGreaterThanEqual or 2;        end
-function p_setDelayPatternOfSpeedLessThan(_thickMult_amount)            pstr_currentDelayMultOfSpeedLessThan = type(_thickMult_amount) ~= "number" and _thickMult_amount or 1;                          end
-function p_setPatternThickness(_corridorThick)                          pstr_currentThickness = type(_corridorThick) ~= "number" and _corridorThick or THICKNESS;                                       end
+function p_setEndAdditionalDelayPattern(_endAdditionalDelay)            pstr_endAdditionalDelay = type(_endAdditionalDelay) == "number" and _endAdditionalDelay or march31oPatDel_AdditionalDelay or 0; end
+function p_setEndAddMultPattern(_addMult)                               pstr_addMult = type(_addMult) == "number" and _addMult or march31oPatDel_AddMult or 1;                                          end
+function p_setSpdMultDMIsGreaterThanEqual(_spdMultDMIsGreaterThanEqual) pstr_spdMultDMIsGreaterThanEqual = type(_spdMultDMIsGreaterThanEqual) == "number" and _spdMultDMIsGreaterThanEqual or 2;        end
+function p_setDelayPatternOfSpeedLessThan(_thickMult_amount)            pstr_currentDelayMultOfSpeedLessThan = type(_thickMult_amount) == "number" and _thickMult_amount or 1;                          end
+function p_setPatternThickness(_corridorThick)                          pstr_currentThickness = type(_corridorThick) == "number" and _corridorThick or THICKNESS;                                       end
 
 function p_resetPatternDelaySettings()
     p_setDelayPatternBool(false);
@@ -515,13 +515,13 @@ end
 
 function p_adjustPatternDelaySettings(_spdMultDMIsGreaterThanEqual, _delMultOfSpeedLessThan, _corridorThickOfSpdLessThan, _corridorThickOfSpdGreaterThanEqual)
     p_setSpdMultDMIsGreaterThanEqual(_spdMultDMIsGreaterThanEqual)
-    _delMultOfSpeedLessThan = type(_delMultOfSpeedLessThan) ~= "number" and _delMultOfSpeedLessThan or THICKNESS;
-    _corridorThickOfSpdGreaterThanEqual = type(_corridorThickOfSpdGreaterThanEqual) ~= "number" and _corridorThickOfSpdGreaterThanEqual or _corridorThickOfSpdLessThan;
+    _corridorThickOfSpdLessThan = type(_corridorThickOfSpdLessThan) == "number" and _corridorThickOfSpdLessThan or THICKNESS;
+    _corridorThickOfSpdGreaterThanEqual = type(_corridorThickOfSpdGreaterThanEqual) == "number" and _corridorThickOfSpdGreaterThanEqual or _corridorThickOfSpdLessThan;
 
     if u_getSpeedMultDM() < p_getSpdMultDMIsGreaterThanEqual() then
         p_setDelayPatternOfSpeedLessThan(_delMultOfSpeedLessThan);
         p_setDelayPatternBool(false);
-        if _corridorThickOfSpdLessThan ~= nil p_setPatternThickness(_corridorThickOfSpdLessThan); end
+        if _corridorThickOfSpdLessThan ~= nil then p_setPatternThickness(_corridorThickOfSpdLessThan); end
     elseif u_getSpeedMultDM() >= p_getSpdMultDMIsGreaterThanEqual() then
         p_setDelayPatternOfSpeedLessThan(1);
         p_setDelayPatternBool(true);
