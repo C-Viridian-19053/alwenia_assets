@@ -372,7 +372,7 @@ end
 
 --[ Tunnels ]--
 
--- pMarch31osTunnel(): a base tunnel what forces you to circle around a very thick wall
+-- pMarch31osTunnel(): spawns a tunnel what forces you to circle around a very thick wall
 -- _corridorThickOfSpeedLessThan: amount of thickness of speed less than, same as <_thickness>
 --   _corridorThickOfSpeedGEThan: amount of thickness pf speed greater than equal, same as <_thickness>
 function pMarch31osTunnel(_side, _corridorThickOfSpeedLessThan, _corridorThickOfSpeedGEThan, _iter, _delMult, _sizeMult, _direction)
