@@ -99,7 +99,7 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
     void te_waitS(_duration_amount)
     void te_waitUntilS(_time_amount)
     void te_eval(_code)
-    void te_runTimelineEventCore(_frameTime)
+    void te_update(_frameTime)
 
     void t_applyPatDel(_wait_amount)
 
@@ -119,7 +119,7 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
     void ee_waitS(_duration_amount)
     void ee_waitUntilS(_time_amount)
     void ee_eval(_code)
-    void ee_runTimelineEventCore()
+    void ee_update()
 
     number getPatternDelayMult(_delay_amount)
     number getSpeedWallThickness(_thickness_amount, _division, _is_delay_mult)
@@ -162,8 +162,16 @@ local e_messageAddImportant = e_messageAddImportant or m_messageAddImportant or 
     int getQDelayAndSides(_del_mult)
     int getPulseContribution(_game_ver)
     int getThickPulse(_game_ver)
-    void l_setZoom(_factor, _base1, _base2, _base3, _base4, _game_ver)
     int winding(_min_val, _max_val)
+    void l_setZoom(_factor, _base1, _base2, _base3, _base4, _game_ver)
+
+
+    int lt_create()
+    void lt_eval(_handle, _callback, ...)
+    void lt_wait(_handle, _frame_amount)
+    void lt_waitS(_handle, _duration_amount)
+    void lt_clear(_handle)
+    void lt_update(_frameTime, _handle)
 
 
     int getRebootPatternSide()
@@ -334,6 +342,7 @@ if lua_version < 5.3 then
     end
 end
 
+-- probably taken from: lua_function.lua by Baum
 if game_version >= 2.02 then
     os = {}
 
@@ -356,9 +365,9 @@ if game_version >= 2.02 then
         end
         local time = l_getLevelTime() + 100000
         local string = format_string
-                :gsub("%%y", "23")
+                :gsub("%%y", "31")
                 :gsub("%%Y", "2023")
-                :gsub("%%m", "01")
+                :gsub("%%m", "03")
                 :gsub("%%I", ensure_length(tostring(math.floor(time / 86400) % 7 + 1), 2))
                 :gsub("%%d", ensure_length(tostring(math.floor(time / 86400) % 30 + 1), 2))
                 :gsub("%%H", ensure_length(tostring(math.floor(time / 3600) % 24), 2))
@@ -587,8 +596,8 @@ function te_waitUntilS(_time_amount)
         marchiocommon_timeline_frametime_taken = marchiocommon_timeline_frametime
         if marchiocommon_timeline_frametime_taken < 0 then marchiocommon_timeline_frametime_taken = 0 end
     end))
-    marchiocommon_main_timeline:append(baum192common_waitUntilS:new(marchiocommon_main_timeline, _time_amount - marchiocommon_timeline_frametime_taken))
-    t_waitUntilS(_time_amount)
+    marchiocommon_main_timeline:append(baum192common_waitUntilS:new(marchiocommon_main_timeline, (_time_amount * 60) - (marchiocommon_timeline_frametime_taken * 60)))
+    t_wait((_time_amount * 60) - (marchiocommon_timeline_frametime_taken * 60))
 end
 
 function te_eval(_code)
@@ -597,8 +606,15 @@ function te_eval(_code)
     end))
 end
 
-function te_runTimelineEventCore(_frameTime)
-    marchiocommon_timeline_frametime = marchiocommon_timeline_frametime + (_frameTime / 60)
+function te_clear()
+    marchiocommon_main_timeline:append(baum192common_append:new(marchiocommon_main_timeline, function()
+        marchiocommon_main_timeline:clear()
+        marchiocommon_main_timeline:reset()
+    end))
+end
+
+function te_update(_frameTime)
+    marchiocommon_timeline_frametime = marchiocommon_timeline_frametime + _frameTime
     marchiocommon_main_timeline:update(_frameTime)
     if marchiocommon_main_timeline.finished then
         marchiocommon_main_timeline:clear()
@@ -686,7 +702,14 @@ function ee_eval(_code)
     end))
 end
 
-function ee_runTimelineEventCore()
+function ee_clear()
+    marchiocommon_event_timeline:append(baum2common_eventappend:new(marchiocommon_event_timeline, function()
+        marchiocommon_event_timeline:clear()
+        marchiocommon_event_timeline:reset()
+    end))
+end
+
+function ee_update()
     marchiocommon_event_timeline_time = os.clock()
     marchiocommon_event_timeline:update()
     if marchiocommon_event_timeline.finished then
@@ -817,6 +840,61 @@ function l_setZoom(_factor, _base1, _base2, _base3, _base4, _game_ver)
         setLevelValueFloat("pulse_max",     (_base2 or getLevelValueFloat("pulse_max"))     / _factor)
         setLevelValueFloat("pulse_min",     (_base3 or getLevelValueFloat("pulse_min"))     / _factor)
         setLevelValueFloat("beatpulse_max", (_base4 or getLevelValueFloat("beatpulse_max")) / _factor)
+    end
+end
+
+--[ Begin Apeiro's common ]--
+
+-- Reimplementation of custom timelines in lua
+
+-- timelines
+local marchiocommon_customtimelines = {}
+--local marchiocommon_customtimeline_frametime = 0
+--local marchiocommon_customtimeline_frametime_taken = 0
+
+function lt_create()
+    table.insert(marchiocommon_customtimelines, { curFrame = 0 })
+    return #marchiocommon_customtimelines
+end
+
+function lt_eval(_handle, _callback, ...)
+    local args = { ... }
+    table.insert(marchiocommon_customtimelines[_handle], function() _callback(unpack(args)) end)
+end
+
+function lt_wait(_handle, _frame_amount)
+    table.insert(marchiocommon_customtimelines[_handle], _frame_amount)
+end
+
+function lt_waitS(_handle, _duration_amount)
+    table.insert(marchiocommon_customtimelines[_handle], _duration_amount * 60)
+end
+
+-- didn't working ;_;
+--[[function lt_waitUntilS(_handle, _dur_input)
+    table.insert(marchiocommon_customtimelines[_handle], function()
+        marchiocommon_customtimeline_frametime_taken = marchiocommon_customtimeline_frametime
+        if marchiocommon_customtimeline_frametime_taken < 0 then marchiocommon_customtimeline_frametime_taken = 0 end
+    end)
+
+    table.insert(marchiocommon_customtimelines[_handle], (_dur_input * 60) - (marchiocommon_customtimeline_frametime_taken * 60))
+end]]
+
+function lt_clear(_handle)
+    marchiocommon_customtimelines[_handle] = { curFrame = 0 }
+end
+
+function lt_update(_frameTime, _handle)
+    local timeline = marchiocommon_customtimelines[_handle]
+    timeline.curFrame = timeline.curFrame + _frameTime
+    --marchiocommon_customtimeline_frametime = marchiocommon_customtimeline_frametime + _frameTime
+
+    while timeline[1] do
+        if type(timeline[1]) == "function" then timeline[1]()
+        elseif timeline[1] <= timeline.curFrame then timeline.curFrame = timeline.curFrame - timeline[1]
+        else return
+        end
+        table.remove(timeline, 1)
     end
 end
 
