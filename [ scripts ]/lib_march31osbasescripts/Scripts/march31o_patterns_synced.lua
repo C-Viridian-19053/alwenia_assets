@@ -532,7 +532,7 @@ end
 --[ Tunnels ]--
 
 --here's a tunnel what forces you to circle around a very thick wall...but you can personalize everything
-function spMarch31osTunnel(_side, _thickness, _iter, _largeWallDesign, _dirType, _largeWalls, _isDistanceTight, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _sidedir0gap, _sidedir1gap, _sidedir0offset, _sidedir1offset, _beatDistance, _direction, _isRebootingSide)
+function spMarch31osTunnel(_side, _thickness, _iter, _largeWallDesign, _dirType, _largeWalls, _isLargeWallOnce, _gearTeethSizeMult, _gearTeethInc, _gearTeethStepDel, _gearTeethStepLimit, _isBeforeGearTeethBegin, _isAfterGearTeethEnd, _hasRepeat, _repeatDelayMult, _sidedir0gap, _sidedir1gap, _sidedir0offset, _sidedir1offset, _beatDistance, _direction, _isRebootingSide)
     _iter = anythingButNil(_iter, u_rndInt(1, 3)); _largeWallDesign = anythingButNil(_largeWallDesign, 0); _beatDistance = anythingButNil(_beatDistance, 1); _repeatDelayMult = anythingButNil(_repeatDelayMult, 1);
     _largeWalls = anythingButNil(_largeWalls, u_rndInt(2, getProtocolSides() - 1)); _gearTeethSizeMult = anythingButNil(_gearTeethSizeMult, 0); _isBeforeGearTeethBegin = anythingButNil(_isBeforeGearTeethBegin, 0); _isAfterGearTeethEnd = anythingButNil(_isAfterGearTeethEnd, 0);
     _sidedir0gap = anythingButNil(_sidedir0gap, 1); _sidedir1gap = anythingButNil(_sidedir1gap, _sidedir0gap); _sidedir0offset = anythingButNil(_sidedir0offset, 0); _sidedir1offset = anythingButNil(_sidedir1offset, _sidedir0offset);
