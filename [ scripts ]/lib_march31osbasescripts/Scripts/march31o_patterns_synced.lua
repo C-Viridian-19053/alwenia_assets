@@ -1,6 +1,3 @@
---2.x.x+ & 1.92 conv functs
-local u_rndInt = u_rndInt or math.random
-
 --[[
     void spMarch31osAlternatingBarrage(_side, _thickness, _iter, _hasContainedEnd, _gapLength, _hasRepeat, _beatDistance, _direction, _isRebootingSide)
     void spMarch31osAlternatingBarrage(_side, _thickness, _iter) --, false, 0, false, 1, getRandomDir(), false
