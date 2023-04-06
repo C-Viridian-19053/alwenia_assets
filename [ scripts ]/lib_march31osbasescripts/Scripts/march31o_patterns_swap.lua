@@ -167,7 +167,7 @@ function fMarch31osFlip(_side, _thickness, _sizeMult, _direction, _endAdditional
     _sizeMult = anythingButNil(_sizeMult, 1);
     if not _direction or _direction > 1 or _direction < -1 then _direction = getRandomDir(); end
 
-    p_resetPatternDelaySettings();_addMult or march31oPatDel_AddMult or 1
+    p_resetPatternDelaySettings();
 
     p_patternEffectStart();
 
@@ -206,11 +206,11 @@ function fMarch31osMirrorWhirlwind(_side, _thickness, _iter, _extraWidth, _posSp
     if _direction < -1 then _direction = -1 elseif _direction > 1 then _direction = 1; end
     _blockDir = anythingButNil(_blockDir, getRandomDir());
 
-    local currentTimesOfThickAmountForGreaterThanSquare = 2 * (getBooleanNumber(_seamless) and 1.1 or 1);
+    local currentTimesOfThickAmountForGreaterThanSquare = getBooleanNumber(_seamless) and 2.1 or 2;
     _direction = math.floor(_direction);
 
     p_resetPatternDelaySettings();
-    p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);_addMult or march31oPatDel_AddMult or 1
+    p_adjustPatternDelaySettings(_spdIsGreaterThanEqual or 2, _delayMultOfSpdLessThan or 1, _thickness or THICKNESS, nil);
 
     p_patternEffectStart();
 
