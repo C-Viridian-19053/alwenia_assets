@@ -559,9 +559,9 @@ function swap_chance(del_mult)
     del_mult = del_mult or 1
     local delay = neuroDelay(5.25 * del_mult)
     local t, d = sides, math.random(0, 1)
-	local ed = (d + 1) % 2
+    local ed = (d + 1) % 2
 
-	t = t - math.random(0, poly_side(2, ed) - 1)
+    t = t + math.random(0, clamp(poly_side(2, ed) - 2, 0, all_sides()))
 
     t_eval("l_setWallAngleLeft(0) l_setWallAngleRight(0) l_setWallSkewLeft(0) l_setWallSkewRight(0)")
     wall_ex(true, t, 1, 1, neuroThickness(delay))
