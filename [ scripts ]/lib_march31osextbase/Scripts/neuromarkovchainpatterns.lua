@@ -445,7 +445,7 @@ function sampah_spiral(iter, del_mult)
         if samp > 12 then wall_ex(true, t, all_sides(), 2)               end
 
         if samp == 9  or samp == 10 then wall_ex(true, t, all_sides() - poly_side(3, 0), 1) end
-        if samp == 11 or samp == 12 then dual_holed_bar(true, t)                            end
+        if samp == 11 or samp == 12 then dual_holed_bar(true, t + poly_side(2, 1))          end
         
         if a < iter then
             t = t + d
@@ -681,7 +681,7 @@ function swap_swap(iter, del_mult)
 
             if sillyChance > 75 then
                 if all_sides() > 5 then
-                    rWallEx(t + m + ((anjer + 1) % 2) + poly_side(2, 0) + odd_side(), poly_side(4, 0), THICKNESS, anjer)
+                    rWallEx(t + m + ((anjer + 1) % 2) + poly_side(2, 0) + odd_side(), clamp(poly_side(2, 0) - 1, 0, all_sides()), THICKNESS, anjer)
                 else
                     rWallEx(t + m + ((anjer + 1) % 2) + poly_side(2, 0) + odd_side(), 0, THICKNESS, 0)
                 end
@@ -819,13 +819,13 @@ function dual_tunnel_swap_rnd(iter, del_mult, is_swap)
     get_result()
 end
 
-function tunnel_once(iter, del_mult)
+function tunnel(iter, del_mult)
     del_mult = del_mult or 1
     local delay = neuroDelay(15 * del_mult)
     local t, d, m = sides, rng_dir(), 0
     
     t_eval("l_setWallAngleLeft(0) l_setWallAngleRight(0) l_setWallSkewLeft(0) l_setWallSkewRight(0)")
-    wall_base(t + d, neuroThickness(delay))
+    wall_base(t + d, neuroThickness(delay) * iter)
 
     for a = 0, iter do
         wall_ex(true, t + m, all_sides() - 1, 1)
@@ -1007,8 +1007,8 @@ pattern = {
     
     [50] = function() half_spiral(7,l_getDelayMult()) end,
     [51] = function() if all_sides() > 5 then dual_spiral(7,l_getDelayMult()) else pattern[50]() end end,
-    [52] = function() if all_sides() > 3 then tunnel_once(1,l_getDelayMult()) else pattern[59]() end end,
-    [53] = function() if all_sides() > 3 then short_tunnel(math.random(2, 5), l_getDelayMult() * 1.1) else pattern[59]() end end,
+    [52] = function() if all_sides() > 3 then tunnel(1,l_getDelayMult()) else pattern[59]() end end,
+    [53] = function() if all_sides() > 3 then short_tunnel(math.random(2, 5), l_getDelayMult() * (1.1 + (all_sides() == 7 and .5 or 0))) else pattern[59]() end end,
     [54] = function() alt_tunnel(math.random(2, 6),l_getDelayMult()) end,
     [55] = function() if all_sides() > 3 then random_tunnel(math.random(2, 4),l_getDelayMult()) else pattern[59]() end end,
     [56] = function() jumbel_tunnel(math.random(2, 3), clamp(all_sides() - 4, 0, all_sides()), l_getDelayMult()) end,
@@ -1017,7 +1017,7 @@ pattern = {
     [59] = function() strange_tunnel(math.random(2, 6), 1, l_getDelayMult()) end,
 
     -- for recursion event (from ozymandias)
-    [60] = function() tunnel_once(math.random(2), l_getDelayMult() / 2.5) end,
+    [60] = function() tunnel(math.random(2), l_getDelayMult() / 2.5) end,
     [61] = function() short_tunnel(math.random(3), l_getDelayMult() / 1.25) end,
 
     [100] = function() if all_sides() > 3 then swap_corridor(l_getDelayMult()) else pattern[math.random(2)]() end end,
