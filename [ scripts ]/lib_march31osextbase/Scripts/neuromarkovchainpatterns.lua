@@ -548,7 +548,7 @@ function swap_corridor(del_mult)
     
     wall_ex(true, t, all_sides() - 1, 1)
     t_eval("l_setWallAngleLeft(0) l_setWallAngleRight(0) l_setWallSkewLeft(0) l_setWallSkewRight(0)")
-    rWallEx(t + 1, poly_side(2, 0) - 2, neuroThickness(delay))
+    rWallEx(t + 1, clamp(poly_side(2, 0) - 2, 0, all_sides()), neuroThickness(delay))
     t_wait(delay)
     wall_ex(true, t + poly_side(2, 1), all_sides() - 1 - odd_side(), 1)
 
@@ -559,9 +559,9 @@ function swap_chance(del_mult)
     del_mult = del_mult or 1
     local delay = neuroDelay(5.25 * del_mult)
     local t, d = sides, math.random(0, 1)
-    local ed = (d + 1) % 2
+	local ed = (d + 1) % 2
 
-    t = t + math.random(0, clamp(poly_side(2, ed) - 2, 0, all_sides()))
+	t = t + math.random(0, clamp(poly_side(2, ed) - 2, 0, all_sides()))
 
     t_eval("l_setWallAngleLeft(0) l_setWallAngleRight(0) l_setWallSkewLeft(0) l_setWallSkewRight(0)")
     wall_ex(true, t, 1, 1, neuroThickness(delay))
@@ -921,20 +921,24 @@ function half_spiral(iter, del_mult)
     local delay = neuroDelay(4 * del_mult)
     local t, d, m = sides, rng_dir(), 0
 
-    t = t + math.random(poly_side(3, 1)) - 1
+    t = t + 1
 
-    for i = 0, iter do
-        t_eval("l_setWallAngleLeft(0) l_setWallAngleRight(0) l_setWallSkewLeft(0) l_setWallSkewRight(0)")
-        wall_ex(true, t + m, poly_side(3, 0) * 2, 1, neuroThickness(delay))
-        
-        if i < iter then
-            m = m + d
-        end
-
-        t_wait(delay)
+    for i = 0, iter * 2 do
+		if (i + neg0(d)) % 2 == 1 then
+            t_eval("l_setWallAngleLeft(0) l_setWallAngleRight(0) l_setWallSkewLeft(0) l_setWallSkewRight(0)")
+            wall_ex(true, t + m, poly_side(3, 0) * 2, 1, neuroThickness(delay / 2) + THICKNESS)
+            if i < iter * 2 and d > 0 then
+			    t = t + 1
+            end
+	    else
+            t_eval("l_setWallAngleLeft(0) l_setWallAngleRight(0) l_setWallSkewLeft(0) l_setWallSkewRight(0)")
+            wall_ex(true, t + m, poly_side(3, 0) * 2 - 1, 1, neuroThickness(delay / 2) + THICKNESS)
+            if i < iter * 2 and d < 0 then
+			    t = t - 1
+            end
+	    end
+        t_wait(delay / 2)
     end
-
-    get_result()
 end
 
 function dual_spiral(iter, del_mult)
@@ -1008,7 +1012,7 @@ pattern = {
     [50] = function() half_spiral(7,l_getDelayMult()) end,
     [51] = function() if all_sides() > 5 then dual_spiral(7,l_getDelayMult()) else pattern[50]() end end,
     [52] = function() if all_sides() > 3 then tunnel(1,l_getDelayMult()) else pattern[59]() end end,
-    [53] = function() if all_sides() > 3 then short_tunnel(math.random(2, 5), l_getDelayMult() * (1.1 + (all_sides() == 7 and .5 or 0))) else pattern[59]() end end,
+    [53] = function() if all_sides() > 3 then short_tunnel(math.random(2, 5), l_getDelayMult() * (1.1 + (all_sides() == 7 and .5))) else pattern[59]() end end,
     [54] = function() alt_tunnel(math.random(2, 6),l_getDelayMult()) end,
     [55] = function() if all_sides() > 3 then random_tunnel(math.random(2, 4),l_getDelayMult()) else pattern[59]() end end,
     [56] = function() jumbel_tunnel(math.random(2, 3), clamp(all_sides() - 4, 0, all_sides()), l_getDelayMult()) end,
