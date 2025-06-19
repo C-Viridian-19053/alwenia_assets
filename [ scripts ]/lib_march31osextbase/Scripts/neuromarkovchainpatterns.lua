@@ -444,8 +444,8 @@ function sampah_spiral(iter, del_mult)
         if samp < 9  then wall_ex(true, t, all_sides(), poly_side(2, 1)) end
         if samp > 12 then wall_ex(true, t, all_sides(), 2)               end
 
-        if samp == 9  or samp == 10 then wall_ex(true, t, all_sides() - poly_side(3, 0), 1) end
-        if samp == 11 or samp == 12 then dual_holed_bar(true, t + poly_side(2, 1))          end
+        if samp == 9  or samp == 10 then wall_ex(true, t + poly_side(2, 1), all_sides() - poly_side(3, 0), 1) end
+        if samp == 11 or samp == 12 then dual_holed_bar(true, t + poly_side(2, 1))                            end
         
         if a < iter then
             t = t + d
