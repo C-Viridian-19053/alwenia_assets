@@ -939,6 +939,8 @@ function half_spiral(iter, del_mult)
 	    end
         t_wait(delay / 2)
     end
+
+    sides = t;
 end
 
 function dual_spiral(iter, del_mult)
