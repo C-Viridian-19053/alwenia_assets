@@ -444,8 +444,8 @@ function sampah_spiral(iter, del_mult)
         if samp < 9  then wall_ex(true, t, all_sides(), poly_side(2, 1)) end
         if samp > 12 then wall_ex(true, t, all_sides(), 2)               end
 
-        if samp == 9  or samp == 10 then wall_ex(true, t, all_sides() - poly_side(3, 0), 1) end
-        if samp == 11 or samp == 12 then dual_holed_bar(true, t + poly_side(2, 1))          end
+        if samp == 9  or samp == 10 then wall_ex(true, t + poly_side(2, 1), all_sides() - poly_side(3, 0), 1) end
+        if samp == 11 or samp == 12 then dual_holed_bar(true, t + poly_side(2, 1))                            end
         
         if a < iter then
             t = t + d
@@ -939,6 +939,8 @@ function half_spiral(iter, del_mult)
 	    end
         t_wait(delay / 2)
     end
+
+    sides = t;
 end
 
 function dual_spiral(iter, del_mult)
@@ -1012,7 +1014,7 @@ pattern = {
     [50] = function() half_spiral(7,l_getDelayMult()) end,
     [51] = function() if all_sides() > 5 then dual_spiral(7,l_getDelayMult()) else pattern[50]() end end,
     [52] = function() if all_sides() > 3 then tunnel(1,l_getDelayMult()) else pattern[59]() end end,
-    [53] = function() if all_sides() > 3 then short_tunnel(math.random(2, 5), l_getDelayMult() * (1.1 + (all_sides() == 7 and .5))) else pattern[59]() end end,
+    [53] = function() if all_sides() > 3 then short_tunnel(math.random(2, 5), l_getDelayMult() * (1.1 + (all_sides() == 7 and .5 or 0))) else pattern[59]() end end,
     [54] = function() alt_tunnel(math.random(2, 6),l_getDelayMult()) end,
     [55] = function() if all_sides() > 3 then random_tunnel(math.random(2, 4),l_getDelayMult()) else pattern[59]() end end,
     [56] = function() jumbel_tunnel(math.random(2, 3), clamp(all_sides() - 4, 0, all_sides()), l_getDelayMult()) end,
