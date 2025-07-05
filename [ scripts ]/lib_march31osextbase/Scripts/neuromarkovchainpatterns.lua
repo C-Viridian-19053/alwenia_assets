@@ -1,3 +1,5 @@
+-- this pattern was referenced from baba's patterns (from since 1.92 release to future ones).
+
 shapes, sides, su, sa, st = l_getSides(), 0, {}, {}, {}
 t, d, m = 0, 0, 0
 
@@ -42,7 +44,7 @@ local function start_pat(available_side)
         if st[i] == 0 then
             table.insert(st, i)
         end
-		u_log('side ' .. i .. (st[i] == 1 and ' un' or ' ') .. 'expected')
+        u_log('side ' .. i .. (st[i] == 1 and ' un' or ' ') .. 'expected')
     end
 
     if #st > 1 then
@@ -194,6 +196,24 @@ function barrage_spiral_rnd_dist_dir(iter, del_mult)
     end
 
     sides = t + m
+end
+
+function barrage_spiral_rnd_dir(iter, del_mult)
+    del_mult = del_mult or 1
+    local t, d, m = sides, rng_dir(), 0
+    local theuniqueandquirkytable = { 1, rng_dir(), rng_dir() }
+
+    for a = 0, iter do
+        if theuniqueandquirkytable[(a % 3) + 1] > 0 then
+            wall_ex(true, sides, all_sides() - 1, 1, THICKNESS)
+            d = rng_dir()
+        end
+
+        if a < iter then
+            sides = sides + d
+            t_wait(neuroDelayPerfect(5.25 * del_mult))
+        end
+    end
 end
 
 function barrage_lrs(iter, dist, del_mult)
@@ -440,7 +460,7 @@ function sampah_spiral(iter, del_mult)
     t = t + d
 
     for a = 0, iter do
-        local samp = math.random(20)
+        local samp = math.random(12, 13)
         if samp < 9  then wall_ex(true, t,     all_sides(), poly_side(2, 1)) end
         if samp > 12 then wall_ex(true, t - 1, all_sides(), 2)               end
 
@@ -487,7 +507,7 @@ function jumbel_tehek(iter, del_mult)
             end
         else
             wall_ex(false, t + 1 + poly_side(2, 0), 1, 1)
-			t_eval("l_setWallAngleLeft(0) l_setWallAngleRight(0) l_setWallSkewLeft(0) l_setWallSkewRight(0)")
+            t_eval("l_setWallAngleLeft(0) l_setWallAngleRight(0) l_setWallSkewLeft(0) l_setWallSkewRight(0)")
             wall_ex(false, t + 1, 1, 1, neuroThickness(delay) + THICKNESS)
         end
 
@@ -559,9 +579,9 @@ function swap_chance(del_mult)
     del_mult = del_mult or 1
     local delay = neuroDelay(5.25 * del_mult)
     local t, d = sides, math.random(0, 1)
-	local ed = (d + 1) % 2
+    local ed = (d + 1) % 2
 
-	t = t + math.random(0, clamp(poly_side(2, ed) - 2, 0, all_sides()))
+    t = t + math.random(0, clamp(poly_side(2, ed) - 2, 0, all_sides()))
 
     t_eval("l_setWallAngleLeft(0) l_setWallAngleRight(0) l_setWallSkewLeft(0) l_setWallSkewRight(0)")
     wall_ex(true, t, 1, 1, neuroThickness(delay))
@@ -599,8 +619,8 @@ function aquarium_swap_lr(iter, del_mult)
     wall_base(t + 1, neuroThickness(delay * iter))
     wall_base(t - 1, neuroThickness(delay * iter))
 
-	for a = 0, iter do
-	    if (a + nd) % 2 == 0 then
+    for a = 0, iter do
+        if (a + nd) % 2 == 0 then
             m = m + d
             d = -d
             wall_ex(true, t + m, all_sides() - 1, 1)
@@ -786,6 +806,37 @@ function jumbel_tunnel(iter, mChance, del_mult)
     end
 end
 
+function broekn_tunnel(iter, del_mult)
+    del_mult = del_mult or 1
+    local t, d, m = sides, rng_dir(), 0
+
+	sideTable = {}
+	for i = 1, all_sides() do
+		table.insert(sideTable, i)
+	end
+	shuffle(sideTable)
+
+    wall_ex(true, sides + math.random(all_sides() - 1), 1, 1, neuroThickness(neuroDelay(5.25)) + THICKNESS)
+    t_wait(neuroDelay(5.25 * del_mult))
+
+    for a = 0, iter do
+		for i = 1, all_sides() do
+			if (sideTable[i] + a) % all_sides() + 1 == 3 and a < iter then
+				wall_ex(true, sides + i, 1, 1, neuroThickness(neuroDelay(5.25)) + THICKNESS)
+			elseif (sideTable[i] + a) % all_sides() + 1 > 3 then
+				wall_ex(false, sides + i, 1, 1, THICKNESS)
+			end
+		end
+
+        if a < iter then
+            sides = sides + d
+            t_wait(neuroDelay(5.25 * del_mult))
+        end
+    end
+	
+	get_result()
+end
+
 function dual_tunnel_swap_rnd(iter, del_mult, is_swap)
     del_mult = del_mult or 1
     local delay = neuroDelay(5 * del_mult)
@@ -924,19 +975,19 @@ function half_spiral(iter, del_mult)
     t = t + 1
 
     for i = 0, iter * 2 do
-		if (i + neg0(d)) % 2 == 1 then
+        if (i + neg0(d)) % 2 == 1 then
             t_eval("l_setWallAngleLeft(0) l_setWallAngleRight(0) l_setWallSkewLeft(0) l_setWallSkewRight(0)")
             wall_ex(true, t + m, poly_side(3, 0) * 2, 1, neuroThickness(delay / 2) + THICKNESS)
             if i < iter * 2 and d > 0 then
-			    t = t + 1
+                t = t + 1
             end
-	    else
+        else
             t_eval("l_setWallAngleLeft(0) l_setWallAngleRight(0) l_setWallSkewLeft(0) l_setWallSkewRight(0)")
             wall_ex(true, t + m, poly_side(3, 0) * 2 - 1, 1, neuroThickness(delay / 2) + THICKNESS)
             if i < iter * 2 and d < 0 then
-			    t = t - 1
+                t = t - 1
             end
-	    end
+        end
         t_wait(delay / 2)
     end
 
@@ -1007,7 +1058,7 @@ pattern = {
     [16] = function() jumbel(math.random(2, 6), all_sides()-3) end,
     [17] = function() half_alt(math.random(2, 6)) end,
     [18] = function() barrage_to_dual(math.random(2, 6)) end,
-    [19] = function() barrage_spiral_rnd_dist_dir(math.random(2, 6)) end,
+    [19] = function() barrage_spiral_rnd_dir(math.random(2, 6)) end,
     [20] = function() if all_sides() > 4 then vorta_lrs(math.random(2, 6)) else pattern[1]() end end,
     [21] = function() if all_sides() > 3 then jumbel_tehek(math.random(2, 6), l_getDelayMult()) else pattern[1]() end end,
     
@@ -1019,21 +1070,22 @@ pattern = {
     [55] = function() if all_sides() > 3 then random_tunnel(math.random(2, 4),l_getDelayMult()) else pattern[59]() end end,
     [56] = function() jumbel_tunnel(math.random(2, 3), clamp(all_sides() - 4, 0, all_sides()), l_getDelayMult()) end,
     [57] = function() diamond(l_getDelayMult()) end,
-    [58] = function() if all_sides() > 5 then dual_tunnel_swap_rnd(math.random(2, 6), l_getDelayMult() * (all_sides() > 6 and 1.5 or 1), false) else pattern[59]() end end,
+    [58] = function() if all_sides() > 5 then dual_tunnel_swap_rnd(math.random(4, 6), l_getDelayMult() * (all_sides() > 6 and 1.5 or 1), false) else pattern[59]() end end,
     [59] = function() strange_tunnel(math.random(2, 6), 1, l_getDelayMult()) end,
-
-    -- for recursion event (from ozymandias)
-    [60] = function() tunnel(math.random(2), l_getDelayMult() / 2.5) end,
-    [61] = function() short_tunnel(math.random(3), l_getDelayMult() / 1.25) end,
+    [60] = function() broekn_tunnel(math.random(4, 6), 1, l_getDelayMult()) end,
 
     [100] = function() if all_sides() > 3 then swap_corridor(l_getDelayMult()) else pattern[math.random(2)]() end end,
     [101] = function() if all_sides() > 3 then swap_lr_once(2 * l_getDelayMult()) else pattern[100]() end end,
     [102] = function() if all_sides() > 3 then swap_swap(math.random(2, 6), l_getDelayMult() * 1.25) else pattern[math.random(2)]() end end,
-    [103] = function() if all_sides() > 5 then dual_tunnel_swap_rnd(math.random(2, 6), l_getDelayMult() * (all_sides() > 6 and 1.5 or 1), true) else pattern[59]() end end,
+    [103] = function() if all_sides() > 5 then dual_tunnel_swap_rnd(math.random(4, 6), l_getDelayMult() * (all_sides() > 6 and 1.5 or 1), true) else pattern[59]() end end,
     [104] = function() if all_sides() > 3 then lr_swap_lr(l_getDelayMult()) else pattern[math.random(2)]() end end,
     [105] = function() if all_sides() > 5 then dual_spiral_swap(math.random(3),l_getDelayMult()) else pattern[50]() end end,
     [106] = function() if all_sides() > 3 then swap_chance(l_getDelayMult() * 2.5) else pattern[math.random(2)]() end end,
     [107] = function() if all_sides() > 3 then aquarium_swap_lr(2, l_getDelayMult() * (all_sides() > 4 and 2.5 or 1)) else pattern[math.random(2)]() end end,
+
+    -- for recursion event (from ozymandias)
+    [200] = function() tunnel(math.random(2), l_getDelayMult() / 2.5) end,
+    [201] = function() short_tunnel(math.random(3), l_getDelayMult() / 1.25) end,
 }
 
 markov_keys = {
@@ -1059,7 +1111,7 @@ markov_keys = {
         100, 100, 102, 102
     },
     ["incr2"] = {
-        60, 61,
+        200, 201,
         100, 102, 101, 107
     },
     ["1e"] = {
@@ -1076,8 +1128,8 @@ markov_keys = {
         51, 51, 52, 52, 57
     },
     ["4e"] = {
-        1, 2, 3, 6, 9, 10, 21,
-        50, 50,
+        1, 2, 3, 6, 9, 10, 19, 21,
+        50, 50, 60,
         101, 101, 102, 102, 103, 104, 107
     },
     ["bnos"] = {
