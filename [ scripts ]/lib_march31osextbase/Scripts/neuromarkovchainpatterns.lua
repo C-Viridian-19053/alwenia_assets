@@ -160,6 +160,23 @@ function wall_grow(r, s, g, e, t)
     return su
 end
 
+function wall_draw(r, s, min, max, t)
+    e = e or 0
+
+    if r then
+        for i = 0, all_sides() do
+            su[i] = 0
+        end
+    end
+
+    for i = -min, max, 1 do
+        su[(s + i) % all_sides()+1] = 1
+        wall_base((s + i) % all_sides()+1, t)
+    end
+
+    return su
+end
+
 function barrage_spiral(iter, del_mult)
     del_mult = del_mult or 1
     local t, d, m = sides, rng_dir(), 0
@@ -460,7 +477,7 @@ function sampah_spiral(iter, del_mult)
     t = t + d
 
     for a = 0, iter do
-        local samp = math.random(12, 13)
+        local samp = math.random(2, 18)
         if samp < 9  then wall_ex(true, t,     all_sides(), poly_side(2, 1)) end
         if samp > 12 then wall_ex(true, t - 1, all_sides(), 2)               end
 
@@ -748,7 +765,7 @@ function lr_swap_lr(del_mult)
     wall_ex(true, t, poly_side(2, 0) - 1, 1, neuroThickness(delay * 2))
     wall_ex(true, t - poly_side(2, 0), poly_side(2, 0) - 1, 1, neuroThickness(delay * 2))
     t_wait(delay)
-    wall_ex(true, t + poly_side(2, 1), all_sides() - 3, 1)
+    wall_draw(true, t + 2 - poly_side(2, 0), poly_side(2, 0) - 2, poly_side(2, 0) - 2, THICKNESS)
     t_wait(delay)
     wall_ex(true, t + 1, all_sides() - 3, 1, neuroThickness(delay * 2))
         
@@ -1133,10 +1150,10 @@ markov_keys = {
         101, 101, 102, 102, 103, 104, 107
     },
     ["bnos"] = {
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
     },
     ["cnos"] = {
-        50, 51, 52, 53, 54, 55, 56, 57, 58, 59
+        50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60
     },
     ["snos"] = {
         101, 102, 103, 104, 105, 106, 107
