@@ -788,6 +788,7 @@ function random_tunnel(iter, del_mult)
 
     sides = sides - 1; -- fix
     t = sides; -- fix
+
     for a = 0, iter do
         wall_ex(true, t + m + 1, all_sides() - 1, 1)
         oldM = m
