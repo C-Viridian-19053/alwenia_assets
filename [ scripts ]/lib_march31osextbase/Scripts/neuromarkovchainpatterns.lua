@@ -747,7 +747,7 @@ function lr_swap_lr(del_mult)
     local t = sides
     local delay = neuroDelay(5.25 * del_mult)
 
-    wall_ex(true, t + 1, all_sides() - 3, 1, neuroThickness(delay * 2) + 40)
+    wall_ex(true, t + 1, all_sides() - 3, 1, neuroThickness(delay * 2) + THICKNESS)
 
     for i = 1, 3 do
         if i % 2 == 1 then
