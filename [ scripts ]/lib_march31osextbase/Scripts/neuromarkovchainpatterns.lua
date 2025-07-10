@@ -218,10 +218,10 @@ end
 function barrage_spiral_rnd_dir(iter, del_mult)
     del_mult = del_mult or 1
     local t, d, m = sides, rng_dir(), 0
-    local theuniqueandquirkytable = { 1, rng_dir(), rng_dir() }
+    local theuniqueandquirkytable = { 1, rng_dir() }
 
     for a = 0, iter do
-        if theuniqueandquirkytable[(a % 3) + 1] > 0 then
+        if theuniqueandquirkytable[(a % 2) + 1] > 0 then
             wall_ex(true, sides, all_sides() - 1, 1, THICKNESS)
             d = rng_dir()
         end
@@ -231,6 +231,8 @@ function barrage_spiral_rnd_dir(iter, del_mult)
             t_wait(neuroDelayPerfect(5.25 * del_mult))
         end
     end
+
+    wall_ex(true, sides, all_sides() - 1, 1, THICKNESS)
 end
 
 function barrage_lrs(iter, dist, del_mult)
@@ -792,7 +794,7 @@ function random_tunnel(iter, del_mult)
     for a = 0, iter do
         wall_ex(true, t + m + 1, all_sides() - 1, 1)
         oldM = m
-        m = math.random(0, all_sides() - 2)
+        m = math.random(all_sides() - 2)
 
         delay = oldM - m
 
