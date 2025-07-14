@@ -1044,7 +1044,7 @@ function diamond(del_mult)
     local t, d, m = sides, rng_dir(), 0
 
     if odd_side() % 2 == 1 then
-        wall_grow(t - 1 + poly_side(2, 0), poly_side(4, 1), 0, neuroThickness(delay))
+        wall_grow(true, t - 1 + poly_side(2, 0), poly_side(4, 1), 0, neuroThickness(delay))
     else
         wall_ex(true, t, all_sides() - 1, 1, neuroThickness(delay))
     end
