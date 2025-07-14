@@ -806,7 +806,7 @@ function random_tunnel(iter, del_mult)
         t_wait(neuroDelay(5.25 * del_mult) * (delay / 2.25) + neuroDelayPerfect(2.25))
     end
 
-    wall_ex(true, t + m + 1, all_sides() - 1, 1) -- mark this
+    wall_ex(true, t + m + 1, all_sides() - 1, 1)
 
     sides = t + m + 1
 end
