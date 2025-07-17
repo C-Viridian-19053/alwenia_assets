@@ -235,6 +235,23 @@ function barrage_spiral_rnd_dir(iter, del_mult)
     wall_ex(true, sides, all_sides() - 1, 1, THICKNESS)
 end
 
+function barrage_rev(iter, del_mult)
+    del_mult = del_mult or 1
+    local t, d, m = sides, rng_dir(), 0
+
+    for a = 0, iter * 2 do
+        wall_ex(true, t + m, all_sides() - 1, 1, THICKNESS)
+  
+        if a < iter then
+            if a == math.ceil(iter/2) then d = -d end
+            m = m + d
+            t_wait(neuroDelayPerfect(5.25 * del_mult))
+        end
+    end
+
+    get_result()
+end
+
 function barrage_lrs(iter, dist, del_mult)
     del_mult = del_mult or 1
     local t, d, m = sides, rng_dir() * dist, 0
@@ -264,6 +281,37 @@ function barrage_tri_spiral(iter, del_mult)
         if a < iter then
             m = m + d * 2
             t_wait(neuroDelayPerfect(5.25 * (del_mult * .5 + .5)))
+        end
+    end
+
+    get_result()
+end
+
+function double_barrage_spiral_across(iter, del_mult) -- default: 6
+    del_mult = del_mult or 1
+    local t, d, m = sides, rng_dir(), 0
+
+    local function typeDirWall(dir)
+        if dir > 0 then return 1 end
+        return 0
+    end
+
+    sides = sides - all_sides() >= 6 and math.random(clamp(poly_side(2, 1) - 2)) or 0
+
+    for a = 0, iter do
+        if a % 3 == 0 then
+            wall_ex(true, sides + poly_side(2, typeDirWall(d)) - 2, poly_side(2, typeDirWall(-d)) + 2, 1)
+        else
+            if a % 3 == 2 then
+                d = -d
+                sides = sides + poly_side(2, 0) * d
+            end
+            wall_ex(true, sides + poly_side(2, typeDirWall(d)) - 1, poly_side(2, typeDirWall(-d)), 1)
+            wall_ex(false, sides,  poly_side(2, typeDirWall(d)) - 2, 1)
+        end
+
+        if a < iter then
+            t_wait(neuroDelayPerfect(5.25 * del_mult))
         end
     end
 
@@ -1083,6 +1131,8 @@ pattern = {
     [19] = function() barrage_spiral_rnd_dir(math.random(2, 6)) end,
     [20] = function() if all_sides() > 4 then vorta_lrs(math.random(2, 6)) else pattern[1]() end end,
     [21] = function() if all_sides() > 3 then jumbel_tehek(math.random(2, 6), l_getDelayMult()) else pattern[1]() end end,
+    [22] = function() if all_sides() > 5 then double_barrage_spiral_across(3 * math.random(4), l_getDelayMult()) else pattern[1]() end end,
+    [23] = function() barrage_rev(3 * math.random(2), l_getDelayMult()) end,
     
     [50] = function() half_spiral(7,l_getDelayMult()) end,
     [51] = function() if all_sides() > 5 then dual_spiral(7,l_getDelayMult()) else pattern[50]() end end,
@@ -1112,12 +1162,12 @@ pattern = {
 
 markov_keys = {
     ["basic"] = {
-        2, 2, 19, 5, 8, 15, 14, 14, 11, 17, 20, 9,
-        50, 50, 51, 51, 52, 52, 53, 53, 54,
+        2, 19, 5, 8, 15, 14, 11, 17, 20, 9,
+        50, 51, 52, 53, 54,
         100, 100, 101, 101, 102, 102, 103 
     },
     ["bar"] = {
-        2, 2, 19, 5, 8, 15, 14, 14, 11, 17, 20, 9,
+        2, 19, 5, 8, 15, 14, 11, 17, 20, 9
     },
     ["jumb"] = { 15 },
     ["tun"] = {
@@ -1146,16 +1196,16 @@ markov_keys = {
         51, 51, 52, 52, 52, 54, 55, 56, 58
     },
     ["3e"] = {
-        1, 2, 3, 4, 5, 6, 8, 9, 10, 17, 17,
+        1, 2, 3, 4, 5, 6, 8, 9, 10, 17, 17, 22,
         51, 51, 52, 52, 57
     },
     ["4e"] = {
-        1, 2, 3, 6, 9, 10, 19, 21,
+        1, 2, 3, 6, 9, 10, 19, 21, 23,
         50, 50, 60,
         101, 101, 102, 102, 103, 104, 107
     },
     ["bnos"] = {
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
     },
     ["cnos"] = {
         50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60
