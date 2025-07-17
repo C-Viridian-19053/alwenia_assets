@@ -479,7 +479,7 @@ function sampah_spiral(iter, del_mult)
     t = t + d
 
     for a = 0, iter do
-        local samp = math.random(2, 18)
+        local samp = math.random(0, 20)
         if samp < 9  then wall_ex(true, t,     all_sides(), poly_side(2, 1)) end
         if samp > 12 then wall_ex(true, t - 1, all_sides(), 2)               end
 
@@ -1044,7 +1044,7 @@ function diamond(del_mult)
     local t, d, m = sides, rng_dir(), 0
 
     if odd_side() % 2 == 1 then
-        wall_grow(true, t - 1 + poly_side(2, 0), poly_side(4, 1), 0, neuroThickness(delay))
+        wall_grow(t - 1 + poly_side(2, 0), poly_side(4, 1), 0, neuroThickness(delay))
     else
         wall_ex(true, t, all_sides() - 1, 1, neuroThickness(delay))
     end
@@ -1112,12 +1112,12 @@ pattern = {
 
 markov_keys = {
     ["basic"] = {
-        2, 2, 19, 19, 5, 5, 8, 8, 15, 15, 14, 14, 11, 11, 20, 20, 9, 9,
+        2, 2, 19, 5, 8, 15, 14, 14, 11, 17, 20, 9,
         50, 50, 51, 51, 52, 52, 53, 53, 54,
         100, 100, 101, 101, 102, 102, 103 
     },
     ["bar"] = {
-        2, 2, 19, 19, 5, 5, 8, 8, 15, 15, 14, 14, 11, 11, 20, 20, 9, 9
+        2, 2, 19, 5, 8, 15, 14, 14, 11, 17, 20, 9,
     },
     ["jumb"] = { 15 },
     ["tun"] = {
