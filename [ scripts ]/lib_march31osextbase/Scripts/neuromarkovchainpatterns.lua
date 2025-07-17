@@ -296,7 +296,7 @@ function double_barrage_spiral_across(iter, del_mult) -- default: 6
         return 0
     end
 
-    sides = sides - all_sides() >= 6 and math.random(clamp(poly_side(2, 1) - 2)) or 0
+    sides = sides - 1 -- blame
 
     for a = 0, iter do
         if a % 3 == 0 then
