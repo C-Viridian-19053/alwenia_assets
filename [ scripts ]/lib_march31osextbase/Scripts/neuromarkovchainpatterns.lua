@@ -296,7 +296,7 @@ function double_barrage_spiral_across(iter, del_mult) -- default: 6
         return 0
     end
 
-    sides = sides - 1 -- blame
+    sides = sides - 1 -- blame T_T
 
     for a = 0, iter do
         if a % 3 == 0 then
