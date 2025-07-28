@@ -243,7 +243,7 @@ function barrage_rev(iter, del_mult)
         wall_ex(true, t + m, all_sides() - 1, 1, THICKNESS)
   
         if a < iter then
-            if a == math.ceil(iter/2) then d = -d end
+            if a == iter then d = -d end
             m = m + d
             t_wait(neuroDelayPerfect(5.25 * del_mult))
         end
@@ -296,7 +296,7 @@ function double_barrage_spiral_across(iter, del_mult) -- default: 6
         return 0
     end
 
-    sides = sides - 1 -- blame fix, will be fixed soon T_T
+    sides = sides - 1
 
     for a = 0, iter do
         if a % 3 == 0 then
@@ -334,6 +334,29 @@ function alt_barrage(iter, del_mult)
     get_result()
 end
 
+function alt_barrage_rng(iter, chance, del_mult)
+    del_mult = del_mult or 1
+    local t, d, m, rng = sides, rng_dir(), 0, chance or .5
+
+    for a = 0, iter do
+        wall_ex(true, t + m, all_sides(), 2, THICKNESS)
+  
+        if a < iter then
+            if math.random() > rng then
+                m = m + d
+                d = d * -1
+                rng = chance
+            end
+
+            rng = rng * .5
+
+            t_wait(neuroDelayPerfect(5.25 * del_mult))
+        end
+   end
+
+    get_result()
+end
+
 function vorta_spi(iter, del_mult)
     del_mult = del_mult or 1
     local t, d, m = sides, rng_dir(), 0
@@ -358,7 +381,7 @@ function vorta_rev(iter, del_mult)
         vorta_wall(true, t + m)
   
         if a < iter then
-            if a == math.ceil(iter/2) then d = -d end
+            if a == iter then d = -d end
             m = m + d
             t_wait(neuroDelayPerfect(5.25 * del_mult))
         end
@@ -377,6 +400,22 @@ function vorta_lrs(iter, del_mult)
         if a < iter then
             m = m + d
             d = -d
+            t_wait(neuroDelayPerfect(5.25 * del_mult))
+        end
+    end
+
+    get_result()
+end
+
+function vorta_rnd_spi(iter, del_mult)
+    del_mult = del_mult or 1
+    local t, d, m = sides, rng_dir(), 0
+
+    for a = 0, iter do
+        vorta_wall(true, t + m)
+  
+        if a < iter then
+            m = m + rng_dir()
             t_wait(neuroDelayPerfect(5.25 * del_mult))
         end
     end
@@ -432,6 +471,31 @@ function dual_barrage_inverts(iter, del_mult)
 
         if a < iter then
             m = m + poly_side(2, 1)
+            t_wait(neuroDelayPerfect(5.25 * del_mult))
+        end
+    end
+
+    get_result()
+end
+
+function dual_barrage_rng_type_dir(iter, del_mult)
+    del_mult = del_mult or 1
+    local t, d, m = sides, rng_dir(), 0
+    local sillyChance = 50
+
+    t = t - math.random(0, 1) * 2
+
+    for a = 0, iter do
+        dual_holed_bar(true, t + m)
+        sillyChance = sillyChance * (math.random() * 1.5 + 1)
+
+        if a < iter then
+            if sillyChance > 100 then
+                m = m + poly_side(2, 0)
+                sillyChance = sillyChance / 3
+            else
+                m = m + rng_dir()
+            end
             t_wait(neuroDelayPerfect(5.25 * del_mult))
         end
     end
@@ -880,31 +944,31 @@ function broekn_tunnel(iter, del_mult)
     del_mult = del_mult or 1
     local t, d, m = sides, rng_dir(), 0
 
-	sideTable = {}
-	for i = 1, all_sides() do
-		table.insert(sideTable, i)
-	end
-	shuffle(sideTable)
+    sideTable = {}
+    for i = 1, all_sides() do
+        table.insert(sideTable, i)
+    end
+    shuffle(sideTable)
 
     wall_ex(true, sides + math.random(all_sides() - 1), 1, 1, neuroThickness(neuroDelay(5.25)) + THICKNESS)
     t_wait(neuroDelay(5.25 * del_mult))
 
     for a = 0, iter do
-		for i = 1, all_sides() do
-			if (sideTable[i] + a) % all_sides() + 1 == 3 and a < iter then
-				wall_ex(true, sides + i, 1, 1, neuroThickness(neuroDelay(5.25)) + THICKNESS)
-			elseif (sideTable[i] + a) % all_sides() + 1 > 3 then
-				wall_ex(false, sides + i, 1, 1, THICKNESS)
-			end
-		end
+        for i = 1, all_sides() do
+            if (sideTable[i] + a) % all_sides() + 1 == 3 and a < iter then
+                wall_ex(true, sides + i, 1, 1, neuroThickness(neuroDelay(5.25)) + THICKNESS)
+            elseif (sideTable[i] + a) % all_sides() + 1 > 3 then
+                wall_ex(false, sides + i, 1, 1, THICKNESS)
+            end
+        end
 
         if a < iter then
             sides = sides + d
             t_wait(neuroDelay(5.25 * del_mult))
         end
     end
-	
-	get_result()
+    
+    get_result()
 end
 
 function dual_tunnel_swap_rnd(iter, del_mult, is_swap)
@@ -1133,6 +1197,9 @@ pattern = {
     [21] = function() if all_sides() > 3 then jumbel_tehek(math.random(2, 6), l_getDelayMult()) else pattern[1]() end end,
     [22] = function() if all_sides() > 5 then double_barrage_spiral_across(3 * math.random(4), l_getDelayMult()) else pattern[1]() end end,
     [23] = function() barrage_rev(3 * math.random(2), l_getDelayMult()) end,
+    [24] = function() vorta_rnd_spi(math.random(2, 6), l_getDelayMult()) end,
+    [25] = function() dual_barrage_rng_type_dir(math.random(2, 6), l_getDelayMult()) end,
+    [26] = function() alt_barrage_rng(math.random(2, 6), l_getDelayMult()) end,
     
     [50] = function() half_spiral(7,l_getDelayMult()) end,
     [51] = function() if all_sides() > 5 then dual_spiral(7,l_getDelayMult()) else pattern[50]() end end,
@@ -1162,12 +1229,12 @@ pattern = {
 
 markov_keys = {
     ["basic"] = {
-        2, 19, 5, 8, 15, 14, 11, 17, 20, 9,
+        2, 19, 5, 8, 15, 14, 11, 17, 24, 9, 26,
         50, 51, 52, 53, 54,
-        100, 100, 101, 101, 102, 102, 103 
+        100, 100, 101, 101, 102, 102, 103
     },
     ["bar"] = {
-        2, 19, 5, 8, 15, 14, 11, 17, 20, 9
+        2, 19, 5, 8, 15, 14, 11, 17, 24, 9, 26,
     },
     ["jumb"] = { 15 },
     ["tun"] = {
@@ -1187,25 +1254,25 @@ markov_keys = {
         100, 102, 101, 107
     },
     ["1e"] = {
-        1, 2, 3, 4, 6, 7, 8, 9, 10, 12, 17, 18, 19,
+        1, 2, 3, 4, 6, 7, 8, 9, 10, 12, 18, 19,
         50, 51, 51, 52, 52, 53, 53, 54, 59,
         101, 101, 101, 106, 106
     },
     ["2e"] = {
-        1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 13, 16, 17,
+        1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 13, 16, 16, 16, 17, 17, 
         51, 51, 52, 52, 52, 54, 55, 56, 58
     },
     ["3e"] = {
-        1, 2, 3, 4, 5, 6, 8, 9, 10, 17, 22,
+        1, 2, 3, 4, 5, 6, 8, 9, 10, 17, 17, 22,
         51, 51, 52, 52, 57
     },
     ["4e"] = {
-        1, 2, 3, 6, 9, 10, 19, 21, 23,
+        1, 2, 3, 6, 9, 10, 19, 21, 23, 24, 25,
         50, 50, 60,
         101, 101, 102, 102, 103, 104, 107
     },
     ["bnos"] = {
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26
     },
     ["cnos"] = {
         50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60
@@ -1233,7 +1300,7 @@ function spawn_markov_patterns(events)
             increvent.cur = 0
             increvent.limit = u_rndInt(10, 15)
             pat_event_selected = pat_event[u_rndIntUpper(#pat_event)]
-            e_messageAddImportant("event: " .. pat_event_selected, 120)
+            e_messageAddImportant("event: " .. pat_event_selected, 80)
                 if pat_event_selected == "barrage hell"      then get_markov_keys(markov_keys["bar"])
             elseif pat_event_selected == "jumble up"         then get_markov_keys(markov_keys["jumb"])
             elseif pat_event_selected == "tunnel town"       then get_markov_keys(markov_keys["tun"])
