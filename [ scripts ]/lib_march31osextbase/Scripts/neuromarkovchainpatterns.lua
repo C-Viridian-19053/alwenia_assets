@@ -508,13 +508,13 @@ function even_alt(iter, del_mult)
     local t, d, m = sides, math.random(0, 1), 0
 
     for a = 0, iter do
-        if (a + d) % 2 == 1 then 
-            vorta_wall(true, t)
+        if (a + neg0(d)) % 2 == 1 then 
+            --t = t + 1 * (a == 0 and 1 or 0)
+            wall_ex(true, t, poly_side(2, 0), 1)
         else
-            t = t + rng_dir() * (a == 0 and 1 or 0)
-            mirror_wall(true, t + poly_side(2, 0) - 1 + odd_side(), 2, 0)
+            t = t + d * (a == 0 and 1 or 0)
+            wall_ex(true, t + poly_side(2, 0), poly_side(2, 1), 1)
         end
-        
         if a < iter then
             t_wait(neuroDelayPerfect(5.25 * del_mult))
         end
