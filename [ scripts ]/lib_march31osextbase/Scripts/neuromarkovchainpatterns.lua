@@ -907,7 +907,6 @@ function random_tunnel(iter, del_mult)
         wall_ex(true, t + m + 1, all_sides() - 1, 1)
         oldM = m
 
-        -- no repeats, sorry
         repeat m = math.random(0, all_sides() - 2)
         until  m ~= oldM
 
