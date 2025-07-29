@@ -1199,7 +1199,7 @@ pattern = {
     [23] = function() barrage_rev(3 * math.random(2), l_getDelayMult()) end,
     [24] = function() vorta_rnd_spi(math.random(2, 6), l_getDelayMult()) end,
     [25] = function() dual_barrage_rng_type_dir(math.random(2, 6), l_getDelayMult()) end,
-    [26] = function() alt_barrage_rng(math.random(2, 6), l_getDelayMult()) end,
+    [26] = function() alt_barrage_rng(math.random(2, 6), .5, l_getDelayMult()) end,
     
     [50] = function() half_spiral(7,l_getDelayMult()) end,
     [51] = function() if all_sides() > 5 then dual_spiral(7,l_getDelayMult()) else pattern[50]() end end,
