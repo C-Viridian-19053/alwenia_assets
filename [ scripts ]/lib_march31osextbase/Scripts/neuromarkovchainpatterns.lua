@@ -967,8 +967,9 @@ function broekn_tunnel(iter, del_mult)
     end
 
     wall_ex(true, sides + math.random(all_sides() - 2), 1, 1, neuroThickness(neuroDelay(5.25)) + THICKNESS)
+    t_wait(neuroDelay(5.25 * del_mult))
     
-    get_result()
+    --get_result()
 end
 
 function dual_tunnel_swap_rnd(iter, del_mult, is_swap)
