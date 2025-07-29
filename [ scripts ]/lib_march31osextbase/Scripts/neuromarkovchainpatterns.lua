@@ -950,7 +950,7 @@ function broekn_tunnel(iter, del_mult)
     end
     shuffle(sideTable)
 
-    wall_ex(true, sides + math.random(all_sides() - 1), 1, 1, neuroThickness(neuroDelay(5.25)) + THICKNESS)
+    wall_ex(true, sides + math.random(all_sides() - 2), 1, 1, neuroThickness(neuroDelay(5.25)) + THICKNESS)
     t_wait(neuroDelay(5.25 * del_mult))
 
     for a = 0, iter do
@@ -962,11 +962,11 @@ function broekn_tunnel(iter, del_mult)
             end
         end
 
-        if a < iter then
-            sides = sides + d
-            t_wait(neuroDelay(5.25 * del_mult))
-        end
+        sides = sides + d
+        t_wait(neuroDelay(5.25 * del_mult))
     end
+
+    wall_ex(true, sides + math.random(all_sides() - 2), 1, 1, neuroThickness(neuroDelay(5.25)) + THICKNESS)
     
     get_result()
 end
