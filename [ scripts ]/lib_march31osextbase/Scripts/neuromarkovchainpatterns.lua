@@ -906,7 +906,10 @@ function random_tunnel(iter, del_mult)
     for a = 0, iter do
         wall_ex(true, t + m + 1, all_sides() - 1, 1)
         oldM = m
-        m = math.random(all_sides() - 2)
+
+        -- no repeats, sorry
+        repeat m = math.random(0, all_sides() - 2)
+        until  m ~= oldM
 
         delay = oldM - m
 
