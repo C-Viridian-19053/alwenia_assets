@@ -834,7 +834,7 @@ function swap_swap(iter, del_mult)
                 if all_sides() > 5 then
                     rWallEx(t + m + ((anjer + 1) % 2) + poly_side(2, 0) + odd_side(), clamp(poly_side(2, 0) - 2, 0, all_sides()), THICKNESS, anjer)
                 else
-                    rWallEx(t + m + ((anjer + 1) % 2) + poly_side(2, 0) + odd_side(), 0, THICKNESS, 0)
+                    rWallEx(t + m + ((anjer + 1) % 2) + poly_side(2, 0) + odd_side(), 0, THICKNESS, anjer)
                 end
                 if all_sides() % 2 == 1 then
                     oldm = m
