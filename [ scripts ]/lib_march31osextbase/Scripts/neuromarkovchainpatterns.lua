@@ -1066,20 +1066,20 @@ function alt_tunnel(iter, del_mult)
     local prevention_d_change, der = d, rng_dir()
     
     t_eval("l_setWallAngleLeft(0) l_setWallAngleRight(0) l_setWallSkewLeft(0) l_setWallSkewRight(0)")
-    wall_ex(true, t + 1 - neg0(d * der), all_sides() == 4 and 1 or poly_side(2, 0), 1, neuroThickness(delay) * iter)
+    wall_ex(true, t + 1 - neg0(d), all_sides() == 4 and 1 or poly_side(2, 0), 1, neuroThickness(delay) * iter)
     
     for i = 0, iter do
         if i < iter then
-            wall_ex(true, t + m - 2, all_sides(), 2)
+            wall_ex(true, t + m + ((prevention_d_change > 0 and 1 or 3) * odd_side()), all_sides(), 2)
             m = m + d
             d = -d
             t_wait(delay)
         end
     end
 
-    wall_ex(true, t + 1 - neg0(prevention_d_change * der), all_sides() == 4 and 1 or poly_side(2, 0), 1)
+    wall_ex(true, t + 1 - neg0(prevention_d_change), all_sides() == 4 and 1 or poly_side(2, 0), 1)
     
-    sides = sides - neg0(prevention_d_change * der) -- i hate myself ;_;
+    sides = sides - neg0(prevention_d_change) -- i hate myself ;_;
 
     get_result()
 end
