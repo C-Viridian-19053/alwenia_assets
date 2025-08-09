@@ -964,8 +964,10 @@ function broekn_tunnel(iter, del_mult)
             end
         end
 
-        sides = sides + d
-        t_wait(neuroDelay(5.25 * del_mult))
+        if a < iter then
+            sides = sides + d
+            t_wait(neuroDelay(5.25 * del_mult))
+        end
     end
 
     wall_ex(true, sides + math.random(all_sides() - 2), 1, 1, neuroThickness(neuroDelay(5.25)) + THICKNESS)
