@@ -218,9 +218,13 @@ end
 function barrage_spiral_rnd_dir(iter, del_mult)
     del_mult = del_mult or 1
     local t, d, m = sides, rng_dir(), 0
-    local theuniqueandquirkytable = { 1, rng_dir() }
+    local theuniqueandquirkytable = {}
 
     for a = 0, iter do
+        if a % 2 == 0 then
+            theuniqueandquirkytable = { 1, rng_dir() }
+        end
+
         if theuniqueandquirkytable[(a % 2) + 1] > 0 then
             wall_ex(true, sides, all_sides() - 1, 1, THICKNESS)
             d = rng_dir()
