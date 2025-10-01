@@ -513,7 +513,7 @@ function even_alt(iter, del_mult)
 
     for a = 0, iter do
         if (a + neg0(d)) % 2 == 1 then 
-            --t = t + 1 * (a == 0 and 1 or 0)
+            --tunggu, apa? o_o
             wall_ex(true, t, poly_side(2, 0), 1)
         else
             t = t + d * (a == 0 and 1 or 0)
