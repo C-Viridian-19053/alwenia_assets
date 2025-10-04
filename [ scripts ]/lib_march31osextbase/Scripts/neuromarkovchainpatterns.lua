@@ -943,6 +943,8 @@ function jumbel_tunnel(iter, mChance, del_mult)
         
         t_wait(neuroDelay(5.25 * del_mult))
     end
+
+    wall_ex(true, t + 1, 1, 1)
 end
 
 function broekn_tunnel(iter, del_mult)
