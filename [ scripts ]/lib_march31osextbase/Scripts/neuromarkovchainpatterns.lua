@@ -2,9 +2,9 @@
 note: some of these patterns was HEAVILY. RECREATED. from baba's patterns (from since 1.92 release to future ones).
       this pattern logic was ORIGINALLY made by Distance/Babadrake.
 
-the reason why i lowkey recreated Distance/Baba's markov chain pattern logic WITHOUT synced logic ones IN Open Hexagon.
+the reason why i lowkey* recreated Distance/Baba's markov chain pattern logic WITHOUT synced logic ones IN Open Hexagon.
 
-- first of all, i lowkey attempted to recreate his new pattern logic with my tables or some shit like that
+- first of all, i lowkey* attempted to recreate his new pattern logic with my tables or some shit like that
   without synced logic or the actual "markov chain" logic ones, but the ending of the pattern has a
   *serveral* routes -- so these routes are slowly selected by a random.
 - second of all, i tested it- but why does. my recreation. works af? because my recreation made 
@@ -14,7 +14,9 @@ the reason why i lowkey recreated Distance/Baba's markov chain pattern logic WIT
   baba's OH steam pack release (newxagon to simplism) in order to make accurate or not.
 
 so apologize for my English mistakes when making my proper info.
-i slowly translated from Indonesian to English on Google Translate
+i slowly translated from Indonesian to English on Google Translate.
+
+*lowkey meaning "diam-diam" in Indonesian
 ]]
 
 -- global variables
