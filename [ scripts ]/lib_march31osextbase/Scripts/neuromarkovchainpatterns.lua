@@ -1,5 +1,23 @@
--- this pattern was referenced from baba's patterns (from since 1.92 release to future ones).
+--[[
+note: some of these patterns was HEAVILY. RECREATED. from baba's patterns (from since 1.92 release to future ones).
+      this pattern logic was ORIGINALLY made by Distance/Babadrake.
 
+the reason why i lowkey recreated Distance/Baba's markov chain pattern logic WITHOUT synced logic ones IN Open Hexagon.
+
+- first of all, i lowkey attempted to recreate his new pattern logic with my tables or some shit like that
+  without synced logic or the actual "markov chain" logic ones, but the ending of the pattern has a
+  *serveral* routes -- so these routes are slowly selected by a random.
+- second of all, i tested it- but why does. my recreation. works af? because my recreation made 
+  me too much fun after all.
+- and last of all, i tried to sample these distance/baba's patterns from since
+  baba's OH 1.92 release pack (zircronium remix to remix pack) to
+  baba's OH steam pack release (newxagon to simplism) in order to make accurate or not.
+
+so apologize for my English mistakes when making my proper info.
+i slowly translated from Indonesian to English on Google Translate
+]]
+
+-- global variables
 shapes, sides, su, sa, st = l_getSides(), 0, {}, {}, {}
 t, d, m = 0, 0, 0
 
@@ -22,7 +40,9 @@ function neuroThickness(mDelay, mMult)
 end
 ---
 
--- utils
+--[[
+    * UTILS
+]]
 function all_sides()      return shapes                            end
 function odd_side(offset) return (all_sides() + (offset or 0)) % 2 end
 function rng_dir()        return (math.random(0, 1) - 0.5) * 2     end
@@ -36,7 +56,7 @@ function neg(value)  if value >  0 then return 1 elseif value < 0 then return -1
 function negn(value) if value >= 0 then return 1 else                  return -1 end          end
 function neg0(value) if value >= 0 then return 1 else                  return 0  end          end
 
--- friking obselete
+-- TODO: friking obselete and doesnt work, will remove?
 local function start_pat(available_side)
     st = type(available_side) == 'table' and available_side or { 1 }
 
@@ -53,6 +73,7 @@ local function start_pat(available_side)
         sides = sides + (st[1] - 1)
     end
 end
+--
 
 local function get_result()
     sa = {}
@@ -70,7 +91,9 @@ local function get_result()
     end
 end
 
--- common
+--[[
+    * COMMONS
+]]
 function wall_base(s, t) w_wall(s or 0, t or THICKNESS) end
 
 function wall_ex(r, s, e, m, t)
@@ -177,6 +200,11 @@ function wall_draw(r, s, min, max, t)
     return su
 end
 
+--[[
+    * PATTERNS
+]]
+
+--[[ SAMPLED DISTANCE/BABA'S PATTERNS ]]--
 function barrage_spiral(iter, del_mult)
     del_mult = del_mult or 1
     local t, d, m = sides, rng_dir(), 0
@@ -1183,6 +1211,11 @@ function diamond(del_mult)
     --get_result()
 end
 
+--[[
+    * PATTERN LOGIC SYSTEMS
+]]
+
+--[[ PATTERN SETS ]]--
 pattern = {
     [1]  = function() alt_barrage(math.random(5, 6)) end,
     [2]  = function() barrage_spiral(math.random(2, 3)) end,
@@ -1237,6 +1270,7 @@ pattern = {
     [201] = function() short_tunnel(math.random(3), l_getDelayMult() / 1.25) end,
 }
 
+--[[ PATTERN KEYS ]]--
 markov_keys = {
     ["basic"] = {
         2, 19, 5, 8, 15, 14, 11, 17, 24, 9, 26,
@@ -1304,6 +1338,7 @@ increvent = {
 pat_event = { "barrage hell", "jumble up", "tunnel town", "dizzy...", "?????", "recursion", "first era", "second era", "third era", "final era", "barrage-nostalgia", "cage-nostalgia", "swap-nostalgia" }
 pat_event_selected = pat_event[u_rndIntUpper(#pat_event)]
 
+--[[ PATTERN LOGIC MANAGER ]] --
 function spawn_markov_patterns(events)
     if events then
         if increvent.cur > increvent.limit then
