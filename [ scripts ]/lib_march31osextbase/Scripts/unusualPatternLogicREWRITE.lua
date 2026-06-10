@@ -1056,13 +1056,9 @@ function run_pat_logic(freq, events_enable, override_table)
                 wall_ex(true, side_pos + 1, 1, 1, get_thick_sync(.5) * clamp(freq_left - freq_halts, 0, 999) + THICKNESS)
             end
 
-            if freq_left == 0 then
-                wall_ex(true, side_pos + 1, 1, 1)
-            end
-
             if timesFix > (is_pattern_guess_end_del_before() == 2 and 0 or -1) and timesFix < (freq_targ - freq_halts) - clamp(is_pattern_guess_end_del() - 1, 0, 1) then
                 for i = 1, all_sides() - 3 do
-                    wall_ex(false, side_pos + math.random(all_sides()), 1, 1)
+                    wall_ex(i == 1, side_pos + math.random(all_sides()), 1, 1)
                 end
             end
         end
@@ -1431,7 +1427,7 @@ function run_pat_logic(freq, events_enable, override_table)
                     wall_ex_2(true, side_pos + (poly_side(2, 1) * neg0(-pdir)), all_sides() - (odd_side() * neg0(-pdir) + 2), 1)
                 else
                     wall_ex_2(true, side_pos + (poly_side(2, 0) * neg0(-pdir)) - 1, odd_side() * neg0(-pdir), 1)
-                    wall_ex_2(true, side_pos + (poly_side(2, 0) * neg0(-pdir)) + 1, all_sides() - (odd_side() * neg0(-pdir) + 4), 1)
+                    wall_ex_2(true, side_pos + (poly_side(2, 1) * neg0(-pdir)) + 1, all_sides() - (odd_side() * neg0(-pdir) + 4), 1)
                 end
 
                 options.dir2 = -options.dir2
@@ -1448,7 +1444,7 @@ function run_pat_logic(freq, events_enable, override_table)
                     wall_ex_2(true, side_pos + (poly_side(2, 1) * neg0(-pdir)), all_sides() - (odd_side() * neg0(-pdir) + 2), 1)
                 else
                     wall_ex_2(true, side_pos + (poly_side(2, 0) * neg0(-pdir)) - 1, odd_side() * neg0(-pdir), 1)
-                    wall_ex_2(true, side_pos + (poly_side(2, 0) * neg0(-pdir)) + 1, all_sides() - (odd_side() * neg0(-pdir) + 4), 1)
+                    wall_ex_2(true, side_pos + (poly_side(2, 1) * neg0(-pdir)) + 1, all_sides() - (odd_side() * neg0(-pdir) + 4), 1)
                 end
             end
         end
