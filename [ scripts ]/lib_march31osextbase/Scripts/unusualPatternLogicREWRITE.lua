@@ -349,7 +349,7 @@ local options = {}
 local rng, chance = 0, 0
 local freq_left, freq_targ = -999, 0
 local pat_freq_left, pat_freq_targ = 0, 0
-local type_end_delay, type_end_delay_old = 5, 0
+local type_end_delay, type_end_delay_old = 0, 0
 local freq_halts = 0
 local is_time_signature = false
 
@@ -1056,9 +1056,9 @@ function run_pat_logic(freq, events_enable, override_table)
                 wall_ex(true, side_pos + 1, 1, 1, get_thick_sync(.5) * clamp(freq_left - freq_halts, 0, 999) + THICKNESS)
             end
 
-            if timesFix > (is_pattern_guess_end_del_before() == 2 and 0 or -1) and timesFix < (freq_targ - freq_halts) then
+            if timesFix > (is_pattern_guess_end_del_before() == 2 and 0 or -1) and timesFix < (freq_targ - freq_halts) - clamp(is_pattern_guess_end_del() - 1, 0, 1) then
                 for i = 1, all_sides() - 3 do
-                    wall_base(side_pos + math.random(2, all_sides() + 1))
+                    wall_ex(i == 1, side_pos + math.random(all_sides()), 1, 1)
                 end
             end
         end
