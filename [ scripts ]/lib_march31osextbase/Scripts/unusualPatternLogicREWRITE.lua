@@ -685,6 +685,96 @@ function run_pat_logic(freq, events_enable, override_table)
 				side_pos = side_pos + pdir
 			end
         end
+    elseif pat_num == 22 then -- vorta rev
+        if prepare_values() then
+        end
+        if get_del(.5, true) then
+			if freq_left >= freq_halts then
+				if freq_left == math.floor(freq_targ / 2) + 1 then
+					pdir = -pdir
+				end
+				vorta_wall(true, side_pos)
+				side_pos = side_pos + pdir
+			end
+        end
+    elseif pat_num == 23 then -- vorta spi rnd
+        if prepare_values() then
+        end
+        if get_del(.5, true) then
+			if freq_left >= freq_halts then
+				vorta_wall(true, side_pos)
+				side_pos = side_pos + rng_dir()
+			end
+        end
+    elseif pat_num == 24 then -- vorta lr
+        if prepare_values() then
+        end
+        if get_del(.5, true) then
+			if freq_left >= freq_halts then
+				vorta_wall(true, side_pos)
+				side_pos = side_pos + pdir
+				pdir = -pdir
+			end
+        end
+    elseif pat_num == 31 then -- semi-holed bar spi
+        if prepare_values() then
+            side_pos = side_pos - math.random(0, 1) * 2
+        end
+        if get_del(.5, true) then
+			if freq_left >= freq_halts then
+				dual_holed_bar(true, side_pos)
+				side_pos = side_pos + pdir
+			end
+        end
+    elseif pat_num == 32 then -- semi-holed bar rng spi
+        if prepare_values() then
+            side_pos = side_pos - math.random(0, 1) * 2
+        end
+        if get_del(.5, true) then
+			if freq_left >= freq_halts then
+				dual_holed_bar(true, side_pos)
+				side_pos = side_pos + rng_dir()
+			end
+        end
+    elseif pat_num == 33 then -- semi-holed bar lr
+        if prepare_values() then
+            side_pos = side_pos - math.random(0, 1) * 2
+        end
+        if get_del(.5, true) then
+			if freq_left >= freq_halts then
+				dual_holed_bar(true, side_pos)
+				side_pos = side_pos + pdir
+				pdir = -pdir
+			end
+        end
+    elseif pat_num == 34 then -- semi-holed bar inv
+        if prepare_values() then
+            side_pos = side_pos - math.random(0, 1) * 2
+        end
+        if get_del(.5, true) then
+			if freq_left >= freq_halts then
+				dual_holed_bar(true, side_pos)
+				side_pos = side_pos + (pdir * poly_side(2, 0))
+			end
+        end
+    elseif pat_num == 35 then -- semi-holed bar spi
+        if prepare_values() then
+            side_pos = side_pos - math.random(0, 1) * 2
+            options = { chance = 50 }
+        end
+        if get_del(.5, true) then
+			if freq_left >= freq_halts then
+				dual_holed_bar(true, side_pos)
+				options.chance = options.chance * (math.random() * 1.5 + 1)
+				
+				if options.chance > 100 then
+					side_pos = side_pos + poly_side(2, 0)
+					options.chance = options.chance / 3
+				else
+					side_pos = side_pos + rng_dir()
+				end
+            end
+        end
 -- misc
     elseif pat_num == 41 then -- jumbled
         if prepare_values() then
@@ -828,6 +918,8 @@ function run_pat_logic(freq, events_enable, override_table)
 				rng_dir(),
 				(is_pattern_guess_end_del() == 2 and 0) or 1,
 				clamp(is_pattern_guess_end_del() - 1, -1, 1),
+				start_pos = math.random(1, poly_side(2, 1) - 2),
+				end_pos = math.random(1, (all_sides() - 2) - poly_side(2, 1)),
 				pat_freq_left = 1,
 				pattern_change = 0,
 			}
@@ -858,9 +950,29 @@ function run_pat_logic(freq, events_enable, override_table)
 			
 			if freq_left > 0 - options[3] - options[2] and options.pattern_change == 0 then
 				if math.random() >= .5 and timesFix > 0 then
-					vorta_wall(true, side_pos + (neg0(options[1]) * 2), THICKNESS)
+					if all_sides() > 6 then
+						if options[1] > 0 then
+							wall_draw(true,  side_pos, 0, options.start_pos)
+							wall_draw(false, side_pos + poly_side(2, 1), 0, options.end_pos)
+						else
+							wall_draw(true,  side_pos + options.start_pos + 1, 0, options.start_pos)
+							wall_draw(false, side_pos + poly_side(2, 1) + options.end_pos + 1, 0, (all_sides() - 2) - (poly_side(2, 1) + 1))
+						end
+					else
+						vorta_wall(true, side_pos + (neg0(options[1]) * 2), THICKNESS)
+					end
 				else
-					dual_holed_bar(true, side_pos + (neg0(options[1]) * poly_side(2, 1)), THICKNESS)
+					if all_sides() > 6 then
+						if options[1] > 0 then
+							wall_draw(true,  side_pos, 0, options.start_pos)
+							wall_draw(false, side_pos + poly_side(2, 1) + options.end_pos + 1, 0, (all_sides() - 2) - (poly_side(2, 1) + 1))
+						else
+							wall_draw(true,  side_pos + options.start_pos + 1, 0, options.start_pos)
+							wall_draw(false, side_pos + poly_side(2, 1), 0, options.end_pos)
+						end
+					else
+						dual_holed_bar(true, side_pos + (neg0(options[1]) * poly_side(2, 1)), THICKNESS)
+					end
 				end
 			end
 			
@@ -1528,7 +1640,7 @@ function run_pat_logic(freq, events_enable, override_table)
 		type_end_delay = math.random(0, 5)
 		freq_halts = type_end_delay < 3 and 1 or 0
 		pat_num_old = pat_num
-		pat_num = rnd_table_select(override_table or {1,2,3,4,5,21,11,12,13,14,21,  51,61,  101,102,103,104,105,106,131,  153,154,155,156,157,158,159,160,161,162})
+		pat_num = rnd_table_select(override_table or {1,2,3,4,5,11,12,13,14,22,31,32,33,41,42,  51,61,  101,102,103,104,105,106,131,  153,154,155,156,157,158,159,160,161,162})
 		cons("shapes: " .. tostring(math.floor(l_getSides() / GLOBAL_SIDE_SEGMENT)))
 		cons("sides used: " .. tostring(side_pos))
 
