@@ -502,7 +502,7 @@ function run_pat_logic(freq, events_enable, override_table)
 
 -- start off a barrage pallete
 	if pat_num == 1 then
-		if prepare_values() then -- barrage spiral, doubled tempo, no override shape
+		if prepare_values() then -- barrage spiral, 0.5 mult tempo, no override shape
 		end
 
 		if get_del(.5, true) then
@@ -512,7 +512,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				side_pos = side_pos + pdir;
 			end
 		end
-	elseif pat_num == 2 then -- random distance
+	elseif pat_num == 2 then -- random distance barrage, 0.5 mult tempo, no override shape
         if prepare_values() then
             options = { 1, rng_dir() }
         end
@@ -534,31 +534,32 @@ function run_pat_logic(freq, events_enable, override_table)
 
             side_pos = side_pos + pdir
         end
-	elseif pat_num == 3 then -- spiral rng
+	elseif pat_num == 3 then -- spiral rng barrage, 0.5 mult tempo, no override shape
 		if prepare_values() then
 		end
 		if get_del(.5, true) then
 			local timesFix = math.abs((freq_targ - 1) - freq_left)
 			if freq_left >= freq_halts then
-				wall_ex(true, side_pos, all_sides() - 1, 1, 40)
-				side_pos = side_pos + rng_dir() * clamp(poly_side(4, 0) * math.random(-3, 2), 1, 2);
+				wall_ex(true, side_pos, all_sides() - 1, 1)
+				side_pos = side_pos + rng_dir();
 			end
 		end
-	elseif pat_num == 4 then -- lr
+	elseif pat_num == 4 then -- lr barrage, 0.5 mult tempo, no override shape
 		if prepare_values() then
 		end
 		if get_del(.5, true) then
 			local timesFix = math.abs((freq_targ - 1) - freq_left)
 			if freq_left >= freq_halts then
-				wall_ex(true, side_pos, all_sides() - 1, 1, 40)
-				side_pos = side_pos + pdir * clamp(poly_side(4, 0) * math.random(-3, 2), 1, 2);
+				wall_ex(true, side_pos, all_sides() - 1, 1)
+				side_pos = side_pos + pdir;
 				pdir = -pdir;
 			end
 		end
-	elseif pat_num == 5 then -- inv
+	elseif pat_num == 5 then -- inv barrage, 1 mult tempo, no override shape
 		if prepare_values() then
 			options = {
 				beat_mult = (is_time_signature and (math.ceil(freq / 2) * 2) / freq) or 1,
+				bar_type = math.random(2),
 			}
 			if is_time_signature then
 				freq_left = math.floor(freq / 2)
@@ -568,15 +569,26 @@ function run_pat_logic(freq, events_enable, override_table)
 			end
             freq_left = freq_left + (is_pattern_guess_end_del() == 2 and 1 or 0)
             freq_targ = freq_left
+			if options.bar_type > 1 then
+				pdir = 1
+			end
 		end
 		if get_del(1 * options.beat_mult, true) then
-			wall_ex(true, side_pos, all_sides() - 1, 1, 40)
-			side_pos = side_pos + (pdir * poly_side(2, 0));
+			if options.bar_type > 1 then
+				if pdir > 0 then
+					wall_ex(true, side_pos, all_sides() - 1, 1)
+				else
+					wall_ex(true, side_pos - ((poly_side(2, 0) - 2) * 1) - 2, ((poly_side(2, 0) - 2) * 2 * 1) + 3, 1)
+				end
+			else
+				wall_ex(true, side_pos, all_sides() - 1, 1)
+				side_pos = side_pos + (pdir * poly_side(2, 0));
+			end
 			pdir = -pdir;
 		end
 -- alternating barrage-based pallete
 	elseif pat_num == 11 then
-		if prepare_values() then -- alternating barrage swap(?), doubled tempo, no override shape
+		if prepare_values() then -- alternating barrage swap(?), 0.5 mult tempo, no override shape
             if odd_side() == 0 then
                 side_pos = side_pos + 1
             end
@@ -675,7 +687,7 @@ function run_pat_logic(freq, events_enable, override_table)
 			end
         end
 -- start off a vorta barrage pallete
-    elseif pat_num == 21 then  -- vorta spiral, doubled tempo, no override shape
+    elseif pat_num == 21 then  -- vorta spiral, 0.5 mult tempo, no override shape
         if prepare_values() then
         end
 
@@ -829,7 +841,7 @@ function run_pat_logic(freq, events_enable, override_table)
 		end
 
 -- tunnel palletes
-	elseif pat_num == 101 then -- disgraceful tunnel, doubled tempo, no override shape
+	elseif pat_num == 101 then -- disgraceful tunnel, 0.5 mult tempo, no override shape
 		-- SPHAGETTI CODE!!!!! HORRAYY!!!! konto
 		if prepare_values() then
 			freq_left = (freq * 2) + clamp((is_pattern_guess_end_del() - 1), 0, 1)
@@ -883,7 +895,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				wall_ex_2(true, side_pos - ((bar_side() - options.large_walls) * neg0(options.dirs[2])), all_sides() - 2, 1)
 			end
 		end
-	elseif pat_num == 102 then -- short tunnel, doubled tempo, no override shape
+	elseif pat_num == 102 then -- short tunnel, 0.5 mult tempo, no override shape
 		if prepare_values() then
 			freq_halts = (is_pattern_guess_end_del() == 0 and 2) or (is_pattern_guess_end_del() == 1 and 1) or 0
 			options = {
@@ -912,7 +924,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				pdir = -pdir
 			end
 		end
-	elseif pat_num == 103 then -- random ahh double tunnel, doubled tempo
+	elseif pat_num == 103 then -- random ahh double tunnel, 0.5 mult tempo
 		if prepare_values() then
 			options = {
 				rng_dir(),
@@ -982,7 +994,7 @@ function run_pat_logic(freq, events_enable, override_table)
 			
 			options[1] = -options[1]
 		end
-    elseif pat_num == 104 then
+    elseif pat_num == 104 then -- alternating tunnel, 0.5 mult tempo, no override shape
         if prepare_values() then
 			options = { pdir, side_pos, math.random(poly_side(2, 0)), is_pattern_guess_end_del() == 2 and 1 or 0 }
         end
@@ -1002,7 +1014,7 @@ function run_pat_logic(freq, events_enable, override_table)
                 side_pos = side_pos - neg0(options[1]) -- i hate myself ;_;
             end
         end
-	elseif pat_num == 105 then
+	elseif pat_num == 105 then -- random tunnel, 0.5 mult tempo, no override shape
 		if prepare_values() then
             options = { 
 				offsets = { 0, 0, 0 },
@@ -1045,7 +1057,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				--end
 			--end
 		end
-    elseif pat_num == 106 then
+    elseif pat_num == 106 then -- jumbled tunnel, 0.5 mult tempo, no override shape
         if prepare_values() then
         end
 
@@ -1056,9 +1068,13 @@ function run_pat_logic(freq, events_enable, override_table)
                 wall_ex(true, side_pos + 1, 1, 1, get_thick_sync(.5) * clamp(freq_left - freq_halts, 0, 999) + THICKNESS)
             end
 
+            if freq_left == freq_halts then -- whyyyyyy
+                wall_ex(true, side_pos + 1, 1, 1, THICKNESS)
+            end
+
             if timesFix > (is_pattern_guess_end_del_before() == 2 and 0 or -1) and timesFix < (freq_targ - freq_halts) - clamp(is_pattern_guess_end_del() - 1, 0, 1) then
                 for i = 1, all_sides() - 3 do
-                    wall_ex(i == 1, side_pos + math.random(all_sides()), 1, 1)
+                    wall_ex(false, side_pos + math.random(all_sides()), 1, 1)
                 end
             end
         end
@@ -1093,7 +1109,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				wall_ex_2(false, side_pos + options.dir1 + 1, all_sides() - 3, 1)
 			end
 		end
-	elseif pat_num == 150 then -- disgraceful tunnel, doubled tempo, no override shape
+	elseif pat_num == 150 then -- disgraceful tunnel, 0.5 mult tempo, no override shape
 		-- SPHAGETTI CODE!!!!! HORRAYY!!!! konto
 		if prepare_values() then
 			options = {
@@ -1163,7 +1179,7 @@ function run_pat_logic(freq, events_enable, override_table)
 		end
 
 -- starting swap palletes
-    elseif pat_num == 151 then -- simple swap, singled tempo, NO TIME SIGNATURE ALLOWED, no override shape
+    elseif pat_num == 151 then -- simple swap, 1 mult tempo, NO TIME SIGNATURE ALLOWED, no override shape
         if prepare_values() then
             freq_left = 2
             pdir = math.random(0, poly_side(2, 0) - 2)
@@ -1188,7 +1204,7 @@ function run_pat_logic(freq, events_enable, override_table)
                 wall_grow(true, side_pos - 1, pdir + 1, 0)
             end
         end
-    elseif pat_num == 152 then -- simple swap v2, doubled tempo, NO TIME SIGNATURE ALLOWED, no override shape
+    elseif pat_num == 152 then -- simple swap v2, 0.5 mult tempo, NO TIME SIGNATURE ALLOWED, no override shape
         if prepare_values() then
             freq_left = 2
 			options = {
@@ -1211,7 +1227,7 @@ function run_pat_logic(freq, events_enable, override_table)
                 if is_pattern_guess_end_del() == 2 then side_pos = side_pos + poly_side(2, 0) end
             end
         end
-    elseif pat_num == 153 then -- random swap corridor, doubled tempo, no override shape
+    elseif pat_num == 153 then -- random swap corridor, 0.5 mult tempo, no override shape
         if prepare_values() then
 			--freq_halts = is_pattern_guess_end_del() == 0 and 2 or 1
 			freq_left = freq + (is_pattern_guess_end_del() == 2 and 1 or 0)
@@ -1286,7 +1302,7 @@ function run_pat_logic(freq, events_enable, override_table)
 			end
 			deco_left = deco_left + 1
         end
-	elseif pat_num == 155 then -- distance's old random barrage no delay pattern, singled tempo, no override shape
+	elseif pat_num == 155 then -- distance's old random barrage no delay pattern, 1 mult tempo, no override shape
         if prepare_values() then
 			options = {
 				beat_mult = (is_time_signature and (math.ceil(freq / 2) * 2) / freq) or 1,
@@ -1309,7 +1325,7 @@ function run_pat_logic(freq, events_enable, override_table)
                 wall_ex(true, side_pos, all_sides() - 1, 1)
 			end
         end
-	elseif pat_num == 156 then -- theepie's back-and-forth tunnel swap pattern, singled tempo, no override shape
+	elseif pat_num == 156 then -- theepie's back-and-forth tunnel swap pattern, 1 mult tempo, no override shape
         if prepare_values() then
 			options = {
 				beat_mult = (math.ceil(freq / 2) * 2) / freq,
@@ -1333,7 +1349,7 @@ function run_pat_logic(freq, events_enable, override_table)
             wall_ex(true, side_pos + (neg0(pdir) * 2), all_sides() - 1, 1)
             pdir = -pdir
         end
-	elseif pat_num == 157 then -- vipre's spiral swap pattern based on speedruns, singled tempo, no override shape
+	elseif pat_num == 157 then -- vipre's spiral swap pattern based on speedruns, 1 mult tempo, no override shape
         if prepare_values() then
 			if is_time_signature then
 				freq_left = math.floor(freq / 2)
@@ -1370,7 +1386,7 @@ function run_pat_logic(freq, events_enable, override_table)
             deco_left = 0
 			options = {
 				rep_limits = { clamp(math.floor(((freq or 8) - 2) / 2) - 1, 0, 999), 2, clamp(math.ceil(((freq or 8) - 2) / 2) - 1, 0, 999) },
-				rngs = 2, --math.random(3),
+				rngs = math.random(3),
 				dir2 = -1,
 			}
 			options.rep_limits[options.rngs] = options.rep_limits[options.rngs] + is_pattern_guess_end_del()
@@ -1448,7 +1464,7 @@ function run_pat_logic(freq, events_enable, override_table)
                 end
             end
         end
-    elseif pat_num == 159 then -- aquarium long lr swapped, singled tempo, no override shape
+    elseif pat_num == 159 then -- aquarium long lr swapped, 1 mult tempo, no override shape
         if prepare_values() then
 			if is_time_signature then
 				freq_left = math.floor(freq / 2)
@@ -1484,7 +1500,7 @@ function run_pat_logic(freq, events_enable, override_table)
                 wall_ex(true, side_pos, all_sides() - 1, 1)
             end
         end
-    elseif pat_num == 160 then -- swap spiral corridor, doubled tempo, no override shape
+    elseif pat_num == 160 then -- swap spiral corridor, 0.5 mult tempo, no override shape
         if prepare_values() then
             options = {
 				r_wall_ex = function(s, ex, thick, ...)
@@ -1568,7 +1584,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				pdir = pdir * -1 + poly_side(2, 0)
 			end
         end
-	elseif pat_num == 162 then -- distance's soup sand pack pattern: tunnel swap chain, singled tempo, no override shape
+	elseif pat_num == 162 then -- distance's soup sand pack pattern: tunnel swap chain, 1 mult tempo, no override shape
         if prepare_values() then
 			options = {
 				beat_mult = (is_time_signature and (math.ceil(freq / 2) * 2) / freq) or 1,
