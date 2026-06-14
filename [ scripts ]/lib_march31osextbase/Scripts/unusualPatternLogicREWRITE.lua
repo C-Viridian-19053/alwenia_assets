@@ -349,7 +349,7 @@ local options = {}
 local rng, chance = 0, 0
 local freq_left, freq_targ = -999, 0
 local pat_freq_left, pat_freq_targ = 0, 0
-local type_end_delay, type_end_delay_old = 0, 0
+local type_end_delay, type_end_delay_old = 5, 0
 local freq_halts = 0
 local is_time_signature = false
 
@@ -586,7 +586,7 @@ function run_pat_logic(freq, events_enable, override_table)
 			end
 			pdir = -pdir;
 		end
--- alternating barrage-based pallete
+-- alternating barrage-based pallete barrage, 1 mult tempo, no override shape
 	elseif pat_num == 11 then
 		if prepare_values() then -- alternating barrage swap(?), 0.5 mult tempo, no override shape
             if odd_side() == 0 then
@@ -612,7 +612,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				end
 			end
 		end
-    elseif pat_num == 12 then -- alt half
+    elseif pat_num == 12 then -- alt half barrage, 1 mult tempo, no override shape
         if prepare_values() then
             pdir = neg0(rng_dir())
         end
@@ -630,7 +630,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				end
 			end
         end
-    elseif pat_num == 13 then -- odd alt
+    elseif pat_num == 13 then -- odd alt barrage, 1 mult tempo, no override shape
         if prepare_values() then
             pdir = 1
 			options = { 0 }
@@ -661,11 +661,11 @@ function run_pat_logic(freq, events_enable, override_table)
 				pdir = -pdir
 			end
         end
-    elseif pat_num == 14 or pat_num == 14.1 or pat_num == 14.2 then -- alt trap
+    elseif pat_num == 14 or pat_num == 14.1 or pat_num == 14.2 then -- alt trap barrage, 1 mult tempo, no override shape
         if prepare_values() then
             pdir = 1
 			options = {
-				alg = pat_num >= 14.1 and 1 or 0,
+				alg = (pat_num == 14.1 and 2) or (pat_num == 14.2 and 1) or 0, -- 14: original, 14.1: Tau628's based 1, 14.2: Tau628's based 2
 				alg_dir = rng_dir(),
 			}
         end
@@ -697,7 +697,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				side_pos = side_pos + pdir
 			end
         end
-    elseif pat_num == 22 then -- vorta rev
+    elseif pat_num == 22 then -- vorta rev barrage, 1 mult tempo, no override shape
         if prepare_values() then
         end
         if get_del(.5, true) then
@@ -709,7 +709,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				side_pos = side_pos + pdir
 			end
         end
-    elseif pat_num == 23 then -- vorta spi rnd
+    elseif pat_num == 23 then -- vorta spi rnd barrage, 1 mult tempo, no override shape
         if prepare_values() then
         end
         if get_del(.5, true) then
@@ -718,7 +718,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				side_pos = side_pos + rng_dir()
 			end
         end
-    elseif pat_num == 24 then -- vorta lr
+    elseif pat_num == 24 then -- vorta lr barrage, 1 mult tempo, no override shape
         if prepare_values() then
         end
         if get_del(.5, true) then
@@ -728,7 +728,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				pdir = -pdir
 			end
         end
-    elseif pat_num == 31 then -- semi-holed bar spi
+    elseif pat_num == 31 then -- semi-holed bar spi, 1 mult tempo, no override shape
         if prepare_values() then
             side_pos = side_pos - math.random(0, 1) * 2
         end
@@ -738,7 +738,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				side_pos = side_pos + pdir
 			end
         end
-    elseif pat_num == 32 then -- semi-holed bar rng spi
+    elseif pat_num == 32 then -- semi-holed bar rng spi, 1 mult tempo, no override shape
         if prepare_values() then
             side_pos = side_pos - math.random(0, 1) * 2
         end
@@ -748,7 +748,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				side_pos = side_pos + rng_dir()
 			end
         end
-    elseif pat_num == 33 then -- semi-holed bar lr
+    elseif pat_num == 33 then -- semi-holed bar lr, 1 mult tempo, no override shape
         if prepare_values() then
             side_pos = side_pos - math.random(0, 1) * 2
         end
@@ -759,7 +759,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				pdir = -pdir
 			end
         end
-    elseif pat_num == 34 then -- semi-holed bar inv
+    elseif pat_num == 34 then -- semi-holed bar inv, 1 mult tempo, no override shape
         if prepare_values() then
             side_pos = side_pos - math.random(0, 1) * 2
         end
@@ -769,7 +769,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				side_pos = side_pos + (pdir * poly_side(2, 0))
 			end
         end
-    elseif pat_num == 35 then -- semi-holed bar spi
+    elseif pat_num == 35 then -- semi-holed bar spi, 1 mult tempo, no override shape
         if prepare_values() then
             side_pos = side_pos - math.random(0, 1) * 2
             options = { chance = 50 }
@@ -788,7 +788,7 @@ function run_pat_logic(freq, events_enable, override_table)
             end
         end
 -- misc
-    elseif pat_num == 41 then -- jumbled
+    elseif pat_num == 41 then -- jumbled barrage, 1 mult tempo, no override shape
         if prepare_values() then
         end
         if get_del(.5, true) then
@@ -798,17 +798,17 @@ function run_pat_logic(freq, events_enable, override_table)
                 end
             end
         end
-    elseif pat_num == 42 then -- spray
+    elseif pat_num == 42 then -- spray barrage, 1 mult tempo, no override shape
         if prepare_values() then
         end
         if get_del(.5, true) then
             if freq_left >= freq_halts and freq_left < freq_targ - ((is_pattern_guess_end_del_before() == 2 and 1 or 0)) then
-                wall_ex(true, side_pos + math.random(all_sides()), math.random(all_sides() - 1), 1)
+                wall_ex(true, side_pos + math.random(all_sides()), math.random(all_sides() - 3), 1)
             end
         end
 
 -- spiral palletes
-	elseif pat_num == 51 then  -- double spiral, fourth times tempo..., no override shape
+	elseif pat_num == 51 then  -- double spiral, 0.25 mult tempo..., no override shape
 		if prepare_values() then
 			options = {
 				beat_mult = ((GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 140 * (all_sides() / 6)) and 2 or 1,
@@ -824,7 +824,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				side_pos = side_pos + pdir;
 			end
 		end
-	elseif pat_num == 61 then  -- single spiral tau based, fourth times tempo..., no override shape
+	elseif pat_num == 61 then  -- single spiral tau based, 0.25 mult tempo..., no override shape
 		if prepare_values() then
 			options = {
 				beat_mult = ((GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 140 * (all_sides() / 6)) and 2 or 1,
@@ -1474,9 +1474,9 @@ function run_pat_logic(freq, events_enable, override_table)
             freq_left = freq_left + (is_pattern_guess_end_del() == 2 and 1 or 0)
             freq_targ = freq_left
             options = {
-				rng_dir() * 2,
+				2,
 				math.random(0, 1),
-				0,
+				rng_dir(),
 				beat_mult = (is_time_signature and (math.ceil(freq / 2) * 2) / freq) or 1,
 			}
 
@@ -1492,12 +1492,12 @@ function run_pat_logic(freq, events_enable, override_table)
             end
 
             if (timesFix + options[2]) % 2 == 0 then
-                options[1] = options[1] + options[1]
-                options[1] = -options[1]
                 wall_ex(true, side_pos + options[1], all_sides() - 1, 1)
+                options[1] = (options[1] * options[3])
+                options[3] = -options[3]
             else
-                options[1] = options[1] + options[1]
                 wall_ex(true, side_pos, all_sides() - 1, 1)
+                options[1] = (options[1] * options[3])
             end
         end
     elseif pat_num == 160 then -- swap spiral corridor, 0.5 mult tempo, no override shape
@@ -1671,8 +1671,8 @@ function run_pat_logic(freq, events_enable, override_table)
 
 		-- sides
 		if all_sides() < 6 and pat_num == 103 then pat_num = 101 end
-		if all_sides() < 6 and pat_num == 159 then pat_num = 156 end -- todo: fix the dual bug how
-		if all_sides() < 6 and pat_num == 160 then pat_num = 156 end -- todo: fix the dual bug how
+		if all_sides() < 6 and pat_num == 156 then pat_num = 159 end
+		if all_sides() < 6 and pat_num == 160 then pat_num = 159 end
 		if all_sides() < 6 and pat_num == 161 then pat_num = 102 end
 
 		cons("pat_num: " .. pat_num)
