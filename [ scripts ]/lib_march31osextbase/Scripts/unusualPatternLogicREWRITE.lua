@@ -1336,7 +1336,7 @@ function run_pat_logic(freq, events_enable, override_table)
             freq_left = freq_left + (is_pattern_guess_end_del() == 2 and 1 or 0)
             freq_targ = freq_left
 			if pdir > 0 then
-				side_pos = side_pos - (poly_side(2, 1) - 1)
+				side_pos = side_pos - 2
 			end
         end
         if get_del(1 * options.beat_mult, true) then
