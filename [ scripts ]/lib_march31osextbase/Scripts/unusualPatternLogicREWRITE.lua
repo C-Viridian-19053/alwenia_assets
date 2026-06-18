@@ -349,7 +349,7 @@ local options = {}
 local rng, chance = 0, 0
 local freq_left, freq_targ = -999, 0
 local pat_freq_left, pat_freq_targ = 0, 0
-local type_end_delay, type_end_delay_old = 5, 0
+local type_end_delay, type_end_delay_old = 0, 0
 local freq_halts = 0
 local is_time_signature = false
 
@@ -846,7 +846,7 @@ function run_pat_logic(freq, events_enable, override_table)
 		if prepare_values() then
 			freq_left = (freq * 2) + clamp((is_pattern_guess_end_del() - 1), 0, 1)
             freq_targ = freq_left
-			freq_halts = ((is_pattern_guess_end_del() == 2 and 0) or (is_pattern_guess_end_del() == 1 and 2) or 4)
+			freq_halts = ((is_pattern_guess_end_del() == 2 and 0) or (is_pattern_guess_end_del() == 1 and 2) or 3)
 			options = {
 				available_tables = {},
 				tables_passed = 1,
@@ -1092,11 +1092,9 @@ function run_pat_logic(freq, events_enable, override_table)
 		if get_del(.5, true) then
 			local timesFix = math.abs((freq_targ - 1) - freq_left)
 
-			if freq_left > freq_halts  then
-				wall_ex_2(true,  side_pos,     0, 1, get_thick_sync(.5) + THICKNESS)
-				wall_ex_2(false, side_pos + 3, 0, 1, get_thick_sync(.5) + THICKNESS)
-			end
-			
+			wall_ex_2(true,  side_pos,     0, 1, get_thick_sync(.5) * clamp(freq_left, 0, 1) + THICKNESS)
+			wall_ex_2(false, side_pos + 3, 0, 1, get_thick_sync(.5) * clamp(freq_left, 0, 1) + THICKNESS)
+
 			if timesFix % 4 == 2 and options.dir1 == 1 then
 				side_pos = side_pos + rng_dir()
 			elseif timesFix % 4 ~= 3 then
@@ -1361,11 +1359,7 @@ function run_pat_logic(freq, events_enable, override_table)
             freq_targ = freq_left
 			options = {
 				beat_mult = (is_time_signature and (math.ceil(freq / 2) * 2) / freq) or 1,
-				thick = u_rndIntUpper(2) == 2 and all_sides() > 5,
 			}
-			--if pdir > 0 then
-				--side_pos = side_pos - 1
-			--end
         end
         if get_del(1 * options.beat_mult, true) then
             wall_ex_2(true, side_pos, all_sides() - 2, 1, THICKNESS)
@@ -1373,7 +1367,7 @@ function run_pat_logic(freq, events_enable, override_table)
 			if freq_left > 0 then
 				wall_base(side_pos - (1 * pdir), get_thick_sync(clamp(freq_left, 0, 1) * options.beat_mult) + THICKNESS)
 				wall_base(side_pos + (2 * pdir), get_thick_sync(clamp(freq_left, 0, 1) * options.beat_mult) + THICKNESS)
-				if options.thick then
+				if (u_rndIntUpper(2) == 2 and all_sides() > 5) then
 					wall_base(side_pos + (3 * pdir), get_thick_sync(clamp(freq_left, 0, 1) * options.beat_mult) + THICKNESS)
 				end
 			end
@@ -1673,7 +1667,9 @@ function run_pat_logic(freq, events_enable, override_table)
 		if all_sides() < 6 and pat_num == 103 then pat_num = 101 end
 		if all_sides() < 6 and pat_num == 156 then pat_num = 159 end
 		if all_sides() < 6 and pat_num == 160 then pat_num = 159 end
-		if all_sides() < 6 and pat_num == 161 then pat_num = 102 end
+		if all_sides() < 6 and pat_num == 161 then pat_num = 153 end
+
+		if all_sides() < 5 and pat_num == 157 then pat_num = 153 end
 
 		cons("pat_num: " .. pat_num)
 
