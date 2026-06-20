@@ -945,7 +945,9 @@ function run_pat_logic(freq, events_enable, override_table)
 			options.pat_freq_left = options.pat_freq_left - 1
 			if options.pat_freq_left < 0 then
 				options.pat_freq_left = math.random(0, 2)
-				options.pattern_change = math.random(0, 1)
+				if pat_num == 103.9 then
+					options.pattern_change = math.random(0, 1)
+				end
 			end
 
 			if options.pattern_change == 1 and freq_left > 1 - options[3] - options[2] then
