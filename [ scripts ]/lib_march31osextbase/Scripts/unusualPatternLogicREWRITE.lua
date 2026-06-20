@@ -924,7 +924,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				pdir = -pdir
 			end
 		end
-	elseif pat_num == 103 or pat_num == 103.1 or pat_num == 103.9 then -- random ahh double tunnel, 0.5 mult tempo, no override shape (.0 is central, .1 is axis)
+	elseif pat_num == 103 or pat_num == 103.1 or pat_num == 103.8 or pat_num == 103.9 then -- random ahh double tunnel, 0.5 mult tempo, no override shape (.0 is central, .1 is axis, .8 is random, .9 is random plus spiral randomly appearance)
 		if prepare_values() then
 			options = {
 				rng_dir(),
@@ -1661,7 +1661,7 @@ function run_pat_logic(freq, events_enable, override_table)
 		type_end_delay = math.random(0, 5)
 		freq_halts = type_end_delay < 3 and 1 or 0
 		pat_num_old = pat_num
-		pat_num = rnd_table_select(override_table or {1,2,3,4,5,11,12,13,14,22,31,32,33,41,42,  51,61,  101,102,103,103.1,103.9,104,105,106,131,  153,154,155,156,157,158,159,160,161,162})
+		pat_num = rnd_table_select(override_table or {1,2,3,4,5,11,12,13,14,22,31,32,33,41,42,  51,61,  101,102,103,103.1,103.8,103.9,104,105,106,131,  153,154,155,156,157,158,159,160,161,162})
 		cons("shapes: " .. tostring(math.floor(l_getSides() / GLOBAL_SIDE_SEGMENT)))
 		cons("sides used: " .. tostring(side_pos))
 
