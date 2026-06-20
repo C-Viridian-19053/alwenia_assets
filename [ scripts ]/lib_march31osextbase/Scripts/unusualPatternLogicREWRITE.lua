@@ -924,7 +924,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				pdir = -pdir
 			end
 		end
-	elseif pat_num == 103 then -- random ahh double tunnel, 0.5 mult tempo
+	elseif pat_num == 103 or pat_num == 103.1 or pat_num == 103.9 then -- random ahh double tunnel, 0.5 mult tempo, no override shape (.0 is central, .1 is axis)
 		if prepare_values() then
 			options = {
 				rng_dir(),
@@ -934,8 +934,10 @@ function run_pat_logic(freq, events_enable, override_table)
 				end_pos = math.random(1, (all_sides() - 2) - poly_side(2, 1)),
 				pat_freq_left = 1,
 				pattern_change = 0,
+				min_limit = (pat_num == 103 and 0) or (pat_num == 103.1 and 11) or .5,
+				times_fix_dec = (pat_num == 103.1 and -1) or 0,
 			}
-            side_pos = side_pos + neg0(all_sides() ~= 5 and options[1] or 0) * poly_side(2, 0)
+            side_pos = side_pos + neg0(all_sides() ~= 5 and options[1] or 0) * ((pat_num == 103 and 2) or poly_side(2, 0))
 		end
 		if get_del(.5, true) then
 			local timesFix = math.abs((freq_targ - 1) - freq_left)
@@ -945,30 +947,29 @@ function run_pat_logic(freq, events_enable, override_table)
 				options.pat_freq_left = math.random(0, 2)
 				options.pattern_change = math.random(0, 1)
 			end
-			
+
 			if options.pattern_change == 1 and freq_left > 1 - options[3] - options[2] then
-				--pat_freq_left = 0
 				side_pos = side_pos + rng_dir()
 			end
-			
+
 			if freq_left > 1 - options[3] - options[2] then
 				wall_ex_2(true,  side_pos,                   0, 1, get_thick_sync(.5) + THICKNESS)
 				wall_ex_2(false, side_pos + poly_side(2, 1), 0, 1, get_thick_sync(.5) + THICKNESS)
 			end
-			
+
 			if freq_left == 1 - options[3] - options[2] then
 				options.pattern_change = 0
 			end
-			
+
 			if freq_left > 0 - options[3] - options[2] and options.pattern_change == 0 then
-				if math.random() >= .5 and timesFix > 0 then
+				if math.random() >= options.min_limit and timesFix > options.times_fix_dec then
 					if all_sides() > 6 then
 						if options[1] > 0 then
 							wall_draw(true,  side_pos, 0, options.start_pos)
 							wall_draw(false, side_pos + poly_side(2, 1), 0, options.end_pos)
 						else
-							wall_draw(true,  side_pos + options.start_pos + 1, 0, options.start_pos)
-							wall_draw(false, side_pos + poly_side(2, 1) + options.end_pos + 1, 0, (all_sides() - 2) - (poly_side(2, 1) + 1))
+							wall_draw(true,  side_pos + options.start_pos + 1, 0, poly_side(2, 1) - options.start_pos - 1)
+							wall_draw(false, side_pos + poly_side(2, 1) + options.end_pos + 1, 0, poly_side(2, 0) - options.end_pos - 1)
 						end
 					else
 						vorta_wall(true, side_pos + (neg0(options[1]) * 2), THICKNESS)
@@ -977,9 +978,9 @@ function run_pat_logic(freq, events_enable, override_table)
 					if all_sides() > 6 then
 						if options[1] > 0 then
 							wall_draw(true,  side_pos, 0, options.start_pos)
-							wall_draw(false, side_pos + poly_side(2, 1) + options.end_pos + 1, 0, (all_sides() - 2) - (poly_side(2, 1) + 1))
+							wall_draw(false, side_pos + poly_side(2, 1) + options.end_pos + 1, 0, poly_side(2, 0) - options.end_pos - 1)
 						else
-							wall_draw(true,  side_pos + options.start_pos + 1, 0, options.start_pos)
+							wall_draw(true,  side_pos + options.start_pos + 1, 0, poly_side(2, 1) - options.start_pos - 1)
 							wall_draw(false, side_pos + poly_side(2, 1), 0, options.end_pos)
 						end
 					else
@@ -987,11 +988,11 @@ function run_pat_logic(freq, events_enable, override_table)
 					end
 				end
 			end
-			
+
 			if (timesFix == 0 or timesFix == freq_targ - (2 - options[3]) + options[2]) and all_sides() == 5 then
 				wall_ex(false, side_pos + poly_side(2, 1) + 1, 1, 1)
 			end
-			
+
 			options[1] = -options[1]
 		end
     elseif pat_num == 104 then -- alternating tunnel, 0.5 mult tempo, no override shape
@@ -1082,21 +1083,21 @@ function run_pat_logic(freq, events_enable, override_table)
 		if prepare_values() then
 			options = {
 				dir1 = math.random(2),
-				(is_pattern_guess_end_del() == 2 and 1) or 0,
-				(is_pattern_guess_end_del() == 0 and 1) or 0,
-				pat_freq_left = 1,
-				pattern_change = 0,
 			}
 			side_pos = side_pos - (1 + options.dir1)
 		end
 		if get_del(.5, true) then
 			local timesFix = math.abs((freq_targ - 1) - freq_left)
 
-			wall_ex_2(true,  side_pos,     0, 1, get_thick_sync(.5) * clamp(freq_left, 0, 1) + THICKNESS)
-			wall_ex_2(false, side_pos + 3, 0, 1, get_thick_sync(.5) * clamp(freq_left, 0, 1) + THICKNESS)
+			if freq_left > freq_halts then
+				wall_ex_2(true,  side_pos,     0, 1, get_thick_sync(.5) + THICKNESS)
+				wall_ex_2(false, side_pos + 3, 0, 1, get_thick_sync(.5) + THICKNESS)
+			end
 
 			if timesFix % 4 == 2 and options.dir1 == 1 then
-				side_pos = side_pos + rng_dir()
+				if freq_left > freq_halts then
+					side_pos = side_pos + rng_dir()
+				end
 			elseif timesFix % 4 ~= 3 then
 				wall_ex_2(true, side_pos + options.dir1 + 1, all_sides() - 2, 1)
 			end
@@ -1650,7 +1651,7 @@ function run_pat_logic(freq, events_enable, override_table)
 		type_end_delay = math.random(0, 5)
 		freq_halts = type_end_delay < 3 and 1 or 0
 		pat_num_old = pat_num
-		pat_num = rnd_table_select(override_table or {1,2,3,4,5,11,12,13,14,22,31,32,33,41,42,  51,61,  101,102,103,104,105,106,131,  153,154,155,156,157,158,159,160,161,162})
+		pat_num = rnd_table_select(override_table or {1,2,3,4,5,11,12,13,14,22,31,32,33,41,42,  51,61,  101,102,103,103.1,103.9,104,105,106,131,  153,154,155,156,157,158,159,160,161,162})
 		cons("shapes: " .. tostring(math.floor(l_getSides() / GLOBAL_SIDE_SEGMENT)))
 		cons("sides used: " .. tostring(side_pos))
 
@@ -1665,6 +1666,7 @@ function run_pat_logic(freq, events_enable, override_table)
 
 		-- sides
 		if all_sides() < 6 and pat_num == 103 then pat_num = 101 end
+		if all_sides() < 4 and pat_num == 101 then pat_num = 102 end
 		if all_sides() < 6 and pat_num == 156 then pat_num = 159 end
 		if all_sides() < 6 and pat_num == 160 then pat_num = 159 end
 		if all_sides() < 6 and pat_num == 161 then pat_num = 153 end
