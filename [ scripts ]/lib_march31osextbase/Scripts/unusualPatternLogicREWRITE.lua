@@ -935,7 +935,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				pat_freq_left = 1,
 				pattern_change = 0,
 				min_limit = (pat_num == 103 and 0) or (pat_num == 103.1 and 11) or .5,
-				times_fix_dec = (pat_num == 103.1 and -1) or 0,
+				times_fix_dec = (pat_num == 103 and -1) or 0,
 			}
             side_pos = side_pos + neg0(all_sides() ~= 5 and options[1] or 0) * ((pat_num == 103 and 2) or poly_side(2, 0))
 		end
