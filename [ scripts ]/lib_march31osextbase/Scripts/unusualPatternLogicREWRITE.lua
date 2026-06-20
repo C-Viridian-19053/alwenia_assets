@@ -937,7 +937,15 @@ function run_pat_logic(freq, events_enable, override_table)
 				min_limit = (pat_num == 103 and 0) or (pat_num == 103.1 and 11) or .5,
 				times_fix_dec = (pat_num == 103 and -1) or 0,
 			}
-            side_pos = side_pos + neg0(all_sides() ~= 5 and options[1] or 0) * ((pat_num == 103 and 2) or poly_side(2, 0))
+			if pat_num == 103 then
+				if all_sides() ~= 5 then
+					side_pos = side_pos + clamp((poly_side(2, 0) - 2) * options[1], 0, all_sides())
+				else
+					side_pos = side_pos + (2 + neg0(options[1]))
+				end
+			else
+				side_pos = side_pos + neg0(all_sides() ~= 5 and options[1] or 0) * poly_side(2, 0)
+			end
 		end
 		if get_del(.5, true) then
 			local timesFix = math.abs((freq_targ - 1) - freq_left)
@@ -966,7 +974,7 @@ function run_pat_logic(freq, events_enable, override_table)
 			if freq_left > 0 - options[3] - options[2] and options.pattern_change == 0 then
 				if math.random() >= options.min_limit and timesFix > options.times_fix_dec then
 					if all_sides() > 6 then
-						if options[1] > 0 then
+						if options[1] < 0 then
 							wall_draw(true,  side_pos, 0, options.start_pos)
 							wall_draw(false, side_pos + poly_side(2, 1), 0, options.end_pos)
 						else
@@ -991,7 +999,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				end
 			end
 
-			if (timesFix == 0 or timesFix == freq_targ - (2 - options[3]) + options[2]) and all_sides() == 5 then
+			if all_sides() == 5 then
 				wall_ex(false, side_pos + poly_side(2, 1) + 1, 1, 1)
 			end
 
@@ -1667,7 +1675,7 @@ function run_pat_logic(freq, events_enable, override_table)
 		if is_time_signature and pat_num == 152 then pat_num = 153 end
 
 		-- sides
-		if all_sides() < 6 and pat_num == 103 then pat_num = 101 end
+		if all_sides() < 5 and pat_num == 103 then pat_num = 101 end
 		if all_sides() < 4 and pat_num == 101 then pat_num = 102 end
 		if all_sides() < 6 and pat_num == 156 then pat_num = 159 end
 		if all_sides() < 6 and pat_num == 160 then pat_num = 159 end
