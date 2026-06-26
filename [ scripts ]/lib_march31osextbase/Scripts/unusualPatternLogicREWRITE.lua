@@ -1869,7 +1869,7 @@ function run_pat_logic(freq, events_enable, override_table)
                 end
             elseif freq_left == 6 then
                 if get_del(.5 * beat_mult, true) then
-                    wall_grow(true, side_pos + poly_side(2, 1) + 2, poly_side(4, 0), 0, get_thick_sync(-.25 / 2) * beat_mult)
+                    wall_grow(true, side_pos + poly_side(2, 1) + (poly_side(2, 0) - 1), poly_side(4, 0), 0, get_thick_sync(-.25 / 2) * beat_mult)
                     if odd_side() % 2 == 1 then
                         wall_grow(true, side_pos - 1, poly_side(4, 1), 0, get_thick_sync(.25) * beat_mult)
                     else
@@ -1887,7 +1887,7 @@ function run_pat_logic(freq, events_enable, override_table)
                 end
             elseif freq_left == 3 then
                 if get_del(.25 * beat_mult, true) then
-                    wall_grow(true, side_pos + poly_side(2, 1) + 2, poly_side(4, 0), 0, get_thick_sync(.275) * beat_mult)
+                    wall_grow(true, side_pos + poly_side(2, 1) + (poly_side(2, 0) - 1), poly_side(4, 0), 0, get_thick_sync(.275) * beat_mult)
                 end
             elseif freq_left == 2 then
                 if get_del(.25 * beat_mult, true) then
