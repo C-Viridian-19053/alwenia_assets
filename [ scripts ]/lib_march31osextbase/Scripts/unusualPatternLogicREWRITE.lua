@@ -490,6 +490,82 @@ function reset_event()
 end
 
 function run_pat_logic(freq, events_enable, override_table)
+	-- variable preparations
+	if freq_left <= 0 then
+		if pat_num ~= 0 then --TODO: set 0 if the misbehave these pattern number bug fixers
+			-- end pattern manager
+			type_end_delay_old = type_end_delay
+			cons("type_end_delay: " .. type_end_delay)
+			if type_end_delay == 5 then
+				get_result()
+			elseif type_end_delay == 3 or type_end_delay == 4 then
+				get_result()
+				side_pos = side_pos + (rng_dir() * clamp(math.random(0, 2), 0, 1));
+			else
+				side_pos = math.random(all_sides()) - 1
+			end
+
+			-- pattern selector --
+			type_end_delay = math.random(0, 5)
+		end
+
+		-- set freq
+		if type(freq) ~= "number" then
+			freq = math.random(4, 6)
+			is_time_signature = false
+			if type(freq) == "table" then
+				freq_tables = freq -- insert 'freq' if it's table
+				freq = freq_tables[(pat_times % #freq_tables) + 1]
+			end
+		end
+
+		freq_halts = type_end_delay < 3 and 1 or 0
+		pat_num_old = pat_num
+		pat_num = rnd_table_select(override_table or {-3,-3,-2,-2,-1,-1,  1,2,3,4,5,11,12,13,14,22,31,32,33,41,42,  51,61,  101,102,103,103.1,103.8,103.9,104,105,106,131,  151,152,153,154,155,156,157,158,159,160,161,162,  201,202,203})
+		cons("shapes: " .. tostring(math.floor(l_getSides() / GLOBAL_SIDE_SEGMENT)))
+		cons("sides used: " .. tostring(side_pos))
+
+		-- pattern end delay bug preventer --
+		--[[
+		if type_end_delay >= 3 and pat_num_old == 67 then pat_num = 1 end -- for overriding sides
+		]]
+
+		-- for time signature or smth
+		if is_time_signature and pat_num < 0 then pat_num = 0 end
+
+		if is_time_signature and pat_num == 151 then pat_num = 0 end
+		if is_time_signature and pat_num == 152 then pat_num = 0 end
+
+		if is_time_signature and (pat_num == 201 or pat_num == 202 or pat_num == 203) then pat_num = 0 end
+
+		if not is_time_signature and pat_num == 101 then pat_num = 0 end
+
+		-- sides
+		if all_sides() < 5 and math.floor(pat_num) == 103 then pat_num = 0 end
+		if all_sides() < 4 and pat_num == 101 then pat_num = 0 end
+		if all_sides() < 6 and pat_num == 156 then pat_num = 0 end
+		if all_sides() < 6 and pat_num == 160 then pat_num = 0 end
+		if all_sides() < 6 and pat_num == 161 then pat_num = 0 end
+
+		if all_sides() < 5 and pat_num == 157 then pat_num = 0 end
+
+		if pat_num == 0 then
+			cons("no patterns loaded (pattern number bugfix misbehavior expected)")
+			pat_num = 1
+		end
+		cons("pat_num: " .. pat_num)
+		-- preparing utiliies --
+		pdir = rng_dir()
+		freq_left = freq + (type_end_delay == 5 and 1 or 0)
+		freq_targ = freq_left
+		cons("pattern direction: " .. tostring(pdir))
+		is_prep = true
+		is_wall = true
+		pat_event_cur = pat_event_cur + 1
+		lgc_event_cur = lgc_event_cur + 1
+		pat_times = pat_times + 1
+	end
+
 	-- event manager
 	local incrementTimerStats = incrementTimer - getLevelTimeAndSyncToDM()
 	if incrementTimerStats < 0 and events_enable then
@@ -963,8 +1039,13 @@ function run_pat_logic(freq, events_enable, override_table)
 			end
 
 			if freq_left > 1 - options[3] - options[2] then
-				wall_ex_2(true,  side_pos,                   0, 1, get_thick_sync(.5) + THICKNESS)
-				wall_ex_2(false, side_pos + poly_side(2, 1), 0, 1, get_thick_sync(.5) + THICKNESS)
+				wall_ex_2(true,  side_pos,                   0, 1, get_thick_sync(.5))
+				wall_ex_2(false, side_pos + poly_side(2, 1), 0, 1, get_thick_sync(.5))
+			end
+
+			if all_sides() > 6 then
+				wall_ex_2(true,  side_pos,                   0, 1, THICKNESS)
+				wall_ex_2(false, side_pos + poly_side(2, 1), 0, 1, THICKNESS)
 			end
 
 			if freq_left == 1 - options[3] - options[2] then
@@ -975,10 +1056,10 @@ function run_pat_logic(freq, events_enable, override_table)
 				if math.random() >= options.min_limit and timesFix > options.times_fix_dec then
 					if all_sides() > 6 then
 						if options[1] < 0 then
-							wall_draw(true,  side_pos, 0, options.start_pos)
+							wall_draw(false, side_pos, 0, options.start_pos)
 							wall_draw(false, side_pos + poly_side(2, 1), 0, options.end_pos)
 						else
-							wall_draw(true,  side_pos + options.start_pos + 1, 0, poly_side(2, 1) - options.start_pos - 1)
+							wall_draw(false, side_pos + options.start_pos + 1, 0, poly_side(2, 1) - options.start_pos - 1)
 							wall_draw(false, side_pos + poly_side(2, 1) + options.end_pos + 1, 0, poly_side(2, 0) - options.end_pos - 1)
 						end
 					else
@@ -987,10 +1068,10 @@ function run_pat_logic(freq, events_enable, override_table)
 				else
 					if all_sides() > 6 then
 						if options[1] > 0 then
-							wall_draw(true,  side_pos, 0, options.start_pos)
+							wall_draw(false, side_pos, 0, options.start_pos)
 							wall_draw(false, side_pos + poly_side(2, 1) + options.end_pos + 1, 0, poly_side(2, 0) - options.end_pos - 1)
 						else
-							wall_draw(true,  side_pos + options.start_pos + 1, 0, poly_side(2, 1) - options.start_pos - 1)
+							wall_draw(false, side_pos + options.start_pos + 1, 0, poly_side(2, 1) - options.start_pos - 1)
 							wall_draw(false, side_pos + poly_side(2, 1), 0, options.end_pos)
 						end
 					else
@@ -1152,7 +1233,7 @@ function run_pat_logic(freq, events_enable, override_table)
 					wall_ex(i == min, i + side_pos + options[1] + options[4] - 1, 1, 1)
 				end
 
-				if math.random(0, 1) then
+				if math.random(0, 1) == 1 then
 					pdir = -pdir
 				end
 				options[2] = math.random(bar_side(2))
@@ -1628,72 +1709,314 @@ function run_pat_logic(freq, events_enable, override_table)
 			options.patternChange = options.patternChange + 1
         end
 
-	elseif pat_num == 666 then
-	elseif pat_num == 666 then
-	elseif pat_num == 666 then
-	end
 
-	-- variable preparations
-	if freq_left <= 0 then
-		-- end pattern manager
-		type_end_delay_old = type_end_delay
-		cons("type_end_delay: " .. type_end_delay)
-		if type_end_delay == 5 then
-			get_result()
-		elseif type_end_delay == 3 or type_end_delay == 4 then
-			get_result()
-			side_pos = side_pos + (rng_dir() * clamp(math.random(0, 2), 0, 1));
-		else
-			side_pos = math.random(all_sides()) - 1
+	elseif pat_num == 201 then
+        if prepare_values() then
+            freq_left = all_sides() >= 6 and 12 or 9
+            beat_mult = GLOBAL_TEMPO > 128 and 2 or 1
+            deco_left = 0
+            options = { 3 / poly_side(2, 0) }
+        end
+        
+        if all_sides() < 6 then
+            if freq_left == 9 then
+                if get_del(.75 * beat_mult, true) then
+                    wall_ex(true, side_pos, all_sides() - 1, 1)
+                end
+            elseif freq_left == 8 then
+                if get_del(.5 * beat_mult, true) then
+                    wall_ex(true,  side_pos + poly_side(2, 1) + 1, 1, 1, get_thick_sync(-.275 / 2) * beat_mult)
+                    wall_ex(true,  side_pos + poly_side(2, 1) + 1, 1, 1, get_thick_sync(1.25)      * beat_mult)
+                    wall_ex(false, side_pos + poly_side(2, 1) + 0, 1, 1, get_thick_sync(.275)      * beat_mult)
+                    wall_ex(false, side_pos + poly_side(2, 1) + 2, 1, 1, get_thick_sync(.275)      * beat_mult)
+                end
+            elseif freq_left == 7 then
+                if get_del(.5 * beat_mult, true) then
+                    wall_ex(true, side_pos + 1, 1 + odd_side(), 1, get_thick_sync(.275) * beat_mult)
+                end
+            elseif freq_left == 6 then
+                if get_del(.25 * beat_mult, true) then
+                    wall_grow(true, side_pos + poly_side(2, 1) + 1, 1, 0, get_thick_sync(.275) * beat_mult)
+                end
+            elseif freq_left == 5 then
+                if get_del(0, true) then
+					side_pos = side_pos - 1
+                end
+            elseif freq_left == 4 then
+				if get_del(1.25 * beat_mult, true) then
+					wall_ex(true, side_pos, 1, 1, get_thick_sync(1) * beat_mult)
+					wall_ex(true, side_pos - 1, 1, 1, get_thick_sync(.55) * beat_mult)
+					wall_ex(true, side_pos + 1, 1, 1, get_thick_sync(.55) * beat_mult)
+				end
+			elseif freq_left == 3 then
+				if get_del(.25 * beat_mult, true) then
+					wall_ex(true, side_pos + 2, 1 + odd_side(), 1, get_thick_sync(.55) * beat_mult)
+				end
+			elseif freq_left == 2 then
+				if get_del(.5 * beat_mult, true) then
+					wall_ex(false, side_pos + 1, 1, 1, get_thick_sync(.55) * beat_mult)
+					wall_ex(false, side_pos + 3 + odd_side(), 1, 1, get_thick_sync(.55) * beat_mult)
+				end
+			elseif freq_left == 1 then
+				if get_del(is_pattern_guess_end_del() == 2 and 0 or is_pattern_guess_end_del() == 1 and .5 or 1, true) then
+				end
+			end
+        else
+            if freq_left == 12 then
+                if get_del(.75 * beat_mult, true) then
+                    wall_ex(true, side_pos, all_sides() - 1, 1)
+                end
+            elseif freq_left == 11 then
+                if get_del(.5 * beat_mult, true) then
+                    wall_grow(true, side_pos + poly_side(2, 1) + (poly_side(2, 0) - 1), poly_side(4, 0), 0, get_thick_sync(-.25 / 2) * beat_mult)
+                    if odd_side() % 2 == 1 then
+                        wall_grow(true, side_pos - 1, poly_side(4, 1), 0, get_thick_sync(.25) * beat_mult)
+                    else
+                        wall_ex(true, side_pos + poly_side(2, 1), all_sides() - 1, 1, get_thick_sync(.25) * beat_mult)
+                    end
+                    wall_ex(true, side_pos - 1, 1, 1, get_thick_sync(1.25) * beat_mult)
+                end
+            elseif freq_left == 10 then
+                if get_del((.25 / 2) * beat_mult, true) then
+                    wall_ex(true, side_pos - 1 - odd_side() + poly_side(2, 1), odd_side() + 1, 1, get_thick_sync((.25 / 2) + .5) * beat_mult)
+                end
+            elseif freq_left == 9 then
+                if get_del(.5 * beat_mult, true) then
+                    wall_grow(true, side_pos - 1 - odd_side() + poly_side(2, 1), 1, odd_side(), get_thick_sync(.25) * beat_mult)
+                end
+            elseif freq_left == 8 then
+                if get_del(.25 * beat_mult, true) then
+                    wall_grow(true, side_pos + poly_side(2, 1) + (poly_side(2, 0) - 1), poly_side(4, 0), 0, get_thick_sync(.275) * beat_mult)
+                end
+            elseif freq_left == 7 then
+                if get_del(0, true) then
+					side_pos = side_pos - 1
+                end
+            elseif freq_left == 6 then
+                if get_del((.25 / 2) * (poly_side(2, 0) + 2) * beat_mult * options[1], true) then
+                    wall_grow(true, side_pos, poly_side(2, 0) - 1, 0, get_thick_sync(.25 / 2) * beat_mult * options[1]);
+                    for amount001 = 0, poly_side(2, 0) - 2, 1 do
+                        wall_grow(true, side_pos, poly_side(2, 0) - (amount001 + 2), 0, get_thick_sync((.25 / 2) * (4 + (amount001 * 3))) * beat_mult * options[1]);
+                    end
+                end
+            elseif freq_left == 5 then
+                if get_del(.25 * beat_mult * options[1], true) then
+                    wall_ex(true, side_pos + poly_side(2, 0), odd_side() + 1, 1, get_thick_sync((.25 / 2) * ((poly_side(2, 0) + poly_side(2, 0) + 1 + poly_side(10, 0) + poly_side(4, 0)))) * beat_mult * options[1]);
+                end
+            elseif freq_left == 4 then
+                if get_del(.5 * beat_mult * options[1], false) then
+                    wall_ex(false, side_pos + poly_side(2, 0) + (odd_side()) + 1 + deco_left, 1, 1, get_thick_sync((.25 / 2) * ( (poly_side(2, 0) + (poly_side(2, 0) + 1) + (poly_side(2, 0) - 3) - (deco_left * 3)))) * beat_mult * options[1]);
+                    wall_ex(false, side_pos + poly_side(2, 0)                - 1 - deco_left, 1, 1, get_thick_sync((.25 / 2) * ( (poly_side(2, 0) + (poly_side(2, 0) + 1) + (poly_side(2, 0) - 3) - (deco_left * 3)))) * beat_mult * options[1]);
+                    if deco_left >= poly_side(2, 0) - 3 then
+                        freq_left = freq_left - 1
+                    else
+                        deco_left = deco_left + 1
+                    end
+                end
+            elseif freq_left == 3 then
+                if get_del(.5 * beat_mult * options[1], true) then
+                    wall_ex(true, side_pos + 1, all_sides() - 1, 1, get_thick_sync(.55) * beat_mult * options[1])
+                end
+            elseif freq_left == 2 then
+                if get_del(0, true) then
+                    for i = 0, poly_side(2, 0) - 3 do
+                        wall_grow(false, side_pos + poly_side(2, 0) - 1, (poly_side(2, 0) - 3) - i, 0, get_thick_sync(.275 / 2) * (i + 1) * beat_mult * options[1])
+                        wall_grow(false, side_pos + poly_side(2, 1) + 1, (poly_side(2, 0) - 3) - i, 0, get_thick_sync(.275 / 2) * (i + 1) * beat_mult * options[1])
+                    end
+                end
+            elseif freq_left == 1 then
+                if get_del(is_pattern_guess_end_del() == 2 and 0 or is_pattern_guess_end_del() == 1 and .5 or 1, true) then
+                end
+            end
+        end
+    elseif pat_num == 202 then
+        if prepare_values() then
+            freq_left = all_sides() < 6 and 5 or 7
+            beat_mult = GLOBAL_TEMPO > 150 and 2 or 1
+            options = {
+                del_fix = GLOBAL_TEMPO > 150 and 2 or 4
+            }
+        end
+        
+        if all_sides() < 6 then
+            if freq_left == 5 then
+                if get_del(.75 * (beat_mult), true) then
+                    wall_ex(true, side_pos, all_sides() - 1, 1)
+                end
+            elseif freq_left == 4 then
+                if get_del(.5 * beat_mult, true) then
+                    wall_ex(true,  side_pos + poly_side(2, 1) + 1, 1, 1, get_thick_sync(-.275 / 2) * beat_mult)
+                    wall_ex(true,  side_pos + poly_side(2, 1) + 1, 1, 1, get_thick_sync(1.25)      * beat_mult)
+                    wall_ex(false, side_pos + poly_side(2, 1) + 0, 1, 1, get_thick_sync(.275)      * beat_mult)
+                    wall_ex(false, side_pos + poly_side(2, 1) + 2, 1, 1, get_thick_sync(.275)      * beat_mult)
+                end
+            elseif freq_left == 3 then
+                if get_del(.5 * beat_mult, true) then
+                    wall_ex(true,  side_pos + 1, 1 + odd_side(), 1, get_thick_sync(.275) * beat_mult)
+                end
+            elseif freq_left == 2 then
+                if get_del(.25 * beat_mult, true) then
+                    wall_grow(true, side_pos + poly_side(2, 1) + 1, 1, 0, get_thick_sync(.275) * beat_mult)
+                end
+            elseif freq_left == 1 then
+                if get_del(is_pattern_guess_end_del() == 2 and 0 or is_pattern_guess_end_del() == 1 and .5 or 1, true) then
+                end
+            end
+        else
+            if freq_left == 7 then
+                if get_del(.75 + (.5 / options.del_fix) * beat_mult, true) then
+                    wall_ex(true, side_pos, all_sides() - 1, 1)
+                end
+            elseif freq_left == 6 then
+                if get_del(.5 * beat_mult, true) then
+                    wall_grow(true, side_pos + poly_side(2, 1) + 2, poly_side(4, 0), 0, get_thick_sync(-.25 / 2) * beat_mult)
+                    if odd_side() % 2 == 1 then
+                        wall_grow(true, side_pos - 1, poly_side(4, 1), 0, get_thick_sync(.25) * beat_mult)
+                    else
+                        wall_ex(true, side_pos + poly_side(2, 1), all_sides() - 1, 1, get_thick_sync(.25) * beat_mult)
+                    end
+                    wall_ex(true, side_pos - 1, 1, 1, get_thick_sync(1.25) * beat_mult)
+                end
+            elseif freq_left == 5 then
+                if get_del((.25 / 2) * beat_mult, true) then
+                    wall_ex(true, side_pos - 1 - odd_side() + poly_side(2, 1), odd_side() + 1, 1, get_thick_sync((.25 / 2) + .5) * beat_mult)
+                end
+            elseif freq_left == 4 then
+                if get_del(.5 * beat_mult, true) then
+                    wall_grow(true, side_pos - 1 - odd_side() + poly_side(2, 1), 1, odd_side(), get_thick_sync(.25) * beat_mult)
+                end
+            elseif freq_left == 3 then
+                if get_del(.25 * beat_mult, true) then
+                    wall_grow(true, side_pos + poly_side(2, 1) + 2, poly_side(4, 0), 0, get_thick_sync(.275) * beat_mult)
+                end
+            elseif freq_left == 2 then
+                if get_del(.25 * beat_mult, true) then
+                    if odd_side() % 2 == 1 then
+                        wall_grow(true, side_pos - 1, poly_side(4, 1), 0, get_thick_sync(.275) * beat_mult)
+                    else
+                        wall_ex(true, side_pos + poly_side(2, 1), all_sides() - 1, 1, get_thick_sync(.275) * beat_mult)
+                    end
+                end
+            elseif freq_left == 1 then
+                if get_del(is_pattern_guess_end_del() == 2 and 0 or is_pattern_guess_end_del() == 1 and .5 or 1, true) then
+                end
+            end
+        end
+    elseif pat_num == 203 then
+        if prepare_values() then
+            freq_left = all_sides() < 6 and 4 or 6
+            deco_left = 0
+            side_pos = side_pos + poly_side(2, 0) - 1
+            beat_mult = 3 / poly_side(2, 0)
+        end
+        
+        if all_sides() < 6 then
+            if freq_left == 4 then
+                if get_del(1.25, true) then
+                    wall_ex(true, side_pos, 1, 1, get_thick_sync(1))
+                    wall_ex(true, side_pos - 1, 1, 1, get_thick_sync(.55))
+                    wall_ex(true, side_pos + 1, 1, 1, get_thick_sync(.55))
+                end
+            elseif freq_left == 3 then
+                if get_del(.25, true) then
+                    wall_ex(true, side_pos + 2, 1 + odd_side(), 1, get_thick_sync(.55))
+                end
+            elseif freq_left == 2 then
+                if get_del(.5, true) then
+                    wall_ex(false, side_pos + 1, 1, 1, get_thick_sync(.55))
+                    wall_ex(false, side_pos + 3 + odd_side(), 1, 1, get_thick_sync(.55))
+                end
+            elseif freq_left == 1 then
+                if get_del(is_pattern_guess_end_del() == 2 and 0 or is_pattern_guess_end_del() == 1 and .5 or 1, true) then
+                end
+            end
+        else
+            if freq_left == 6 then
+                if get_del((.25 / 2) * (poly_side(2, 0) + 3) * beat_mult, true) then
+                    wall_grow(true, side_pos, poly_side(2, 0) - 1, 0, get_thick_sync(.25 / 2) * beat_mult);
+                    for amount001 = 0, poly_side(2, 0) - 2, 1 do
+                        wall_grow(true, side_pos, poly_side(2, 0) - (amount001 + 2), 0, get_thick_sync((.25 / 2) * (4 + (amount001 * 3))) * beat_mult);
+                    end
+                end
+            elseif freq_left == 5 then
+                if get_del(.25 * beat_mult, true) then
+                    wall_ex(true, side_pos + poly_side(2, 0), odd_side() + 1, 1, get_thick_sync((.25 / 2) * ((poly_side(2, 0) + poly_side(2, 0) + 1 + poly_side(10, 0) + poly_side(4, 0)))) * beat_mult);
+                end
+            elseif freq_left == 4 then
+                if get_del(.5 * beat_mult, false) then
+                    wall_ex(false, side_pos + poly_side(2, 0) + (odd_side()) + 1 + deco_left, 1, 1, get_thick_sync((.25 / 2) * ( (poly_side(2, 0) + (poly_side(2, 0) + 1) + (poly_side(2, 0) - 3) - (deco_left * 3)))) * beat_mult);
+                    wall_ex(false, side_pos + poly_side(2, 0)                - 1 - deco_left, 1, 1, get_thick_sync((.25 / 2) * ( (poly_side(2, 0) + (poly_side(2, 0) + 1) + (poly_side(2, 0) - 3) - (deco_left * 3)))) * beat_mult);
+                    if deco_left >= poly_side(2, 0) - 3 then
+                        freq_left = freq_left - 1
+                    else
+                        deco_left = deco_left + 1
+                    end
+                end
+            elseif freq_left == 3 then
+                if get_del(.5 * beat_mult, true) then
+                    wall_ex(true, side_pos + 1, all_sides() - 1, 1, get_thick_sync(.55) * beat_mult)
+                end
+            elseif freq_left == 2 then
+                if get_del(0, true) then
+                    for i = 0, poly_side(2, 0) - 3 do
+                        wall_grow(false, side_pos + poly_side(2, 0) - 1, (poly_side(2, 0) - 3) - i, 0, get_thick_sync(.275 / 2) * (i + 1) * beat_mult)
+                        wall_grow(false, side_pos + poly_side(2, 1) + 1, (poly_side(2, 0) - 3) - i, 0, get_thick_sync(.275 / 2) * (i + 1) * beat_mult)
+                    end
+                end
+            elseif freq_left == 1 then
+                if get_del(is_pattern_guess_end_del() == 2 and 0 or is_pattern_guess_end_del() == 1 and .5 or 1, true) then
+                end
+            end
+        end
+
+	elseif pat_num == -1 then
+		if prepare_values() then
+			freq_left = 1
+			freq_targ = freq_left
+			options = {
+				adj = 2 + ((poly_side(2, 1) - 2) * math.random(0, 1)),
+			}
+            if odd_side() == 1 and options.adj == 2 then
+                side_pos = side_pos + 1
+            end
 		end
 
-		is_time_signature = true
-		-- set freq
-		if type(freq) == "nil" then
-			freq = math.random(3, 6)
-			is_time_signature = false
-		elseif type(freq) == "table" then
-			freq_tables = freq -- insert 'freq' if it's table
-			freq = freq_tables[(pat_times % #freq_tables) + 1]
+		if get_del(1, true) then
+			wall_ex(true, side_pos, all_sides(), options.adj, THICKNESS * .666)
+		end
+	elseif pat_num == -2 then
+		if prepare_values() then
+			freq_left = math.random(2) * 2 + 2
+			freq_targ = freq_left
+			options = {
+				adj = 2 + ((poly_side(2, 1) - 2) * math.random(0, 1)),
+				thk = math.random(0, 1),
+			}
+            if odd_side() == 1 and options.adj == 2 then
+                side_pos = side_pos + 1
+            end
 		end
 
-		-- pattern selector --
-		type_end_delay = math.random(0, 5)
-		freq_halts = type_end_delay < 3 and 1 or 0
-		pat_num_old = pat_num
-		pat_num = rnd_table_select(override_table or {1,2,3,4,5,11,12,13,14,22,31,32,33,41,42,  51,61,  101,102,103,103.1,103.8,103.9,104,105,106,131,  153,154,155,156,157,158,159,160,161,162})
-		cons("shapes: " .. tostring(math.floor(l_getSides() / GLOBAL_SIDE_SEGMENT)))
-		cons("sides used: " .. tostring(side_pos))
+		if get_del(.25, true) then
+			if freq_left > 1 then
+				wall_ex(true, side_pos, all_sides(), options.adj, get_thick_sync(.275) * options.thk + (THICKNESS * .666))
+			end
+		end
+	elseif pat_num == -3 then
+		if prepare_values() then
+			freq_left = 1
+			freq_targ = freq_left
+		end
 
-		-- pattern end delay bug preventer --
-		--[[
-		if type_end_delay >= 3 and pat_num_old == 67 then pat_num = 1 end -- for overriding sides
+		if get_del(1, true) then
+			local rngB = math.random(2)
+				if rngB == 1 then wall_ex(true, side_pos, all_sides() - 1, 1, THICKNESS * .666)
+			elseif rngB == 2 then dual_holed_bar(true, side_pos, THICKNESS * .666)
+			end
+		end
 
-		]]
-		-- for time signature or smth
-		if is_time_signature and pat_num == 151 then pat_num = 153 end
-		if is_time_signature and pat_num == 152 then pat_num = 153 end
-
-		-- sides
-		if all_sides() < 5 and pat_num == 103 then pat_num = 101 end
-		if all_sides() < 4 and pat_num == 101 then pat_num = 102 end
-		if all_sides() < 6 and pat_num == 156 then pat_num = 159 end
-		if all_sides() < 6 and pat_num == 160 then pat_num = 159 end
-		if all_sides() < 6 and pat_num == 161 then pat_num = 153 end
-
-		if all_sides() < 5 and pat_num == 157 then pat_num = 153 end
-
-		cons("pat_num: " .. pat_num)
-
-		-- preparing utiliies --
-		pdir = rng_dir()
-		freq_left = (freq or math.random(4, 6)) + (type_end_delay == 5 and 1 or 0)
-		freq_targ = freq_left
-		cons("pattern direction: " .. tostring(pdir))
-		is_prep = true
-		is_wall = true
-		pat_event_cur = pat_event_cur + 1
-		lgc_event_cur = lgc_event_cur + 1
-		pat_times = pat_times + 1
+	elseif pat_num == 666 then
+	elseif pat_num == 666 then
+	elseif pat_num == 666 then
 	end
 end
