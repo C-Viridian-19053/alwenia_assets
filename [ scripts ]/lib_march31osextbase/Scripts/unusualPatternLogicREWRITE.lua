@@ -509,6 +509,7 @@ function run_pat_logic(freq, events_enable, override_table)
 			type_end_delay = math.random(0, 5)
 		end
 
+		is_time_signature = true;
 		-- set freq
 		if type(freq) ~= "number" then
 			freq = math.random(4, 6)
@@ -774,7 +775,7 @@ function run_pat_logic(freq, events_enable, override_table)
         end
         if get_del(.5, true) then
 			if freq_left >= freq_halts then
-				if freq_left == math.ceil((freq_targ - freq_halts) / 2) + 1 then
+				if freq_left == math.ceil((freq_targ - freq_halts) / 2) then
 					pdir = -pdir
 				end
 				vorta_wall(true, side_pos)
