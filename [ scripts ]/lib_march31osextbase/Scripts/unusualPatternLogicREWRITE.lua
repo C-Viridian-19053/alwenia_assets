@@ -531,28 +531,24 @@ function run_pat_logic(freq, events_enable, override_table)
 		]]
 
 		-- for time signature or smth
-		if is_time_signature and pat_num < 0 then pat_num = 0 end
+		if is_time_signature and pat_num < 0 then pat_num = 1 end
+		if pat_num < 0 then type_end_delay = 0; end
 
-		if is_time_signature and pat_num == 151 then pat_num = 0 end
-		if is_time_signature and pat_num == 152 then pat_num = 0 end
+		if is_time_signature and pat_num == 151 then pat_num = 153 end
+		if is_time_signature and pat_num == 152 then pat_num = 153 end
 
-		if is_time_signature and (pat_num == 201 or pat_num == 202 or pat_num == 203) then pat_num = 0 end
+		if is_time_signature and (pat_num == 201 or pat_num == 202 or pat_num == 203) then pat_num = 1 end
 
-		if not is_time_signature and pat_num == 101 then pat_num = 0 end
+		if not is_time_signature and pat_num == 101 then pat_num = 150 end
 
 		-- sides
-		if all_sides() < 5 and math.floor(pat_num) == 103 then pat_num = 0 end
-		if all_sides() < 4 and pat_num == 101 then pat_num = 0 end
-		if all_sides() < 6 and pat_num == 156 then pat_num = 0 end
-		if all_sides() < 6 and pat_num == 160 then pat_num = 0 end
-		if all_sides() < 6 and pat_num == 161 then pat_num = 0 end
+		if all_sides() < 5 and math.floor(pat_num) == 103 then pat_num = 101 end
+		if all_sides() < 4 and pat_num == 101 then pat_num = 102 end
+		if all_sides() < 6 and pat_num == 156 then pat_num = 159 end
+		if all_sides() < 6 and pat_num == 160 then pat_num = 153 end
+		--if all_sides() < 6 and pat_num == 161 then pat_num = 0 end
 
-		if all_sides() < 5 and pat_num == 157 then pat_num = 0 end
-
-		if pat_num == 0 then
-			cons("no patterns loaded (pattern number bugfix misbehavior expected)")
-			pat_num = 1
-		end
+		if all_sides() < 5 and pat_num == 157 then pat_num = 153 end
 		cons("pat_num: " .. pat_num)
 		-- preparing utiliies --
 		pdir = rng_dir()
@@ -778,7 +774,7 @@ function run_pat_logic(freq, events_enable, override_table)
         end
         if get_del(.5, true) then
 			if freq_left >= freq_halts then
-				if freq_left == math.floor(freq_targ / 2) + 1 then
+				if freq_left == math.ceil((freq_targ - freq_halts) / 2) + 1 then
 					pdir = -pdir
 				end
 				vorta_wall(true, side_pos)
@@ -917,7 +913,7 @@ function run_pat_logic(freq, events_enable, override_table)
 		end
 
 -- tunnel palletes
-	elseif pat_num == 101 then -- disgraceful tunnel, 0.5 mult tempo, no override shape
+	elseif pat_num == 101 then -- disgraceful tunnel, 0.5 mult tempo, no override shape, time signature only
 		-- SPHAGETTI CODE!!!!! HORRAYY!!!! konto
 		if prepare_values() then
 			freq_left = (freq * 2) + clamp((is_pattern_guess_end_del() - 1), 0, 1)
@@ -1199,7 +1195,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				wall_ex_2(false, side_pos + options.dir1 + 1, all_sides() - 3, 1)
 			end
 		end
-	elseif pat_num == 150 then -- disgraceful tunnel, 0.5 mult tempo, no override shape
+	elseif pat_num == 150 then -- disgraceful tunnel, 0.5 mult tempo, no override shape, no time signature allowed (sorta)
 		-- SPHAGETTI CODE!!!!! HORRAYY!!!! konto
 		if prepare_values() then
 			options = {
@@ -1451,6 +1447,7 @@ function run_pat_logic(freq, events_enable, override_table)
             freq_targ = freq_left
 			options = {
 				beat_mult = (is_time_signature and (math.ceil(freq / 2) * 2) / freq) or 1,
+				thick_rnd = u_rndIntUpper(2) == 2 and true or false,
 			}
         end
         if get_del(1 * options.beat_mult, true) then
@@ -1459,7 +1456,7 @@ function run_pat_logic(freq, events_enable, override_table)
 			if freq_left > 0 then
 				wall_base(side_pos - (1 * pdir), get_thick_sync(clamp(freq_left, 0, 1) * options.beat_mult) + THICKNESS)
 				wall_base(side_pos + (2 * pdir), get_thick_sync(clamp(freq_left, 0, 1) * options.beat_mult) + THICKNESS)
-				if (u_rndIntUpper(2) == 2 and all_sides() > 5) then
+				if (options.thick_rnd and all_sides() > 5) then
 					wall_base(side_pos + (3 * pdir), get_thick_sync(clamp(freq_left, 0, 1) * options.beat_mult) + THICKNESS)
 				end
 			end
@@ -1475,6 +1472,11 @@ function run_pat_logic(freq, events_enable, override_table)
 				rngs = math.random(3),
 				dir2 = -1,
 			}
+			if not is_time_signature then
+				options.rep_limits[1] = math.random(3)
+				options.rep_limits[2] = math.random(3)
+				options.rep_limits[3] = math.random(3)
+			end
 			options.rep_limits[options.rngs] = options.rep_limits[options.rngs] + is_pattern_guess_end_del()
 			if options.rep_limits[1] % 2 == 0 then
 				pdir = 1
@@ -1545,8 +1547,8 @@ function run_pat_logic(freq, events_enable, override_table)
                 if options.dir2 > 0 then
                     wall_ex_2(true, side_pos + (poly_side(2, 1) * neg0(-pdir)), all_sides() - (odd_side() * neg0(-pdir) + 2), 1)
                 else
-                    wall_ex_2(true, side_pos + (poly_side(2, 0) * neg0(-pdir)) - 1, odd_side() * neg0(-pdir), 1)
-                    wall_ex_2(true, side_pos + (poly_side(2, 1) * neg0(-pdir)) + 1, all_sides() - (odd_side() * neg0(-pdir) + 4), 1)
+                    wall_ex_2(true,  side_pos + (poly_side(2, 0) * neg0(-pdir)) - 1, odd_side() * neg0(-pdir), 1)
+                    wall_ex_2(false, side_pos + (poly_side(2, 1) * neg0(-pdir)) + 1, all_sides() - (odd_side() * neg0(-pdir) + 4), 1)
                 end
             end
         end
