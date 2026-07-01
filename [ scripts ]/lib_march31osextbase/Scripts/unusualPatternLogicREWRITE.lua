@@ -666,12 +666,13 @@ function run_pat_logic(freq, events_enable, override_table)
                 side_pos = side_pos + 1
             end
             pdir = 1
+			options = { bar_dir = 1 }
 		end
 
 		if get_del(.5, true) then
 			local timesFix = math.abs((freq_targ - 1) - freq_left)
 			if freq_left >= freq_halts then
-				wall_ex(true, side_pos + pdir, math.floor(all_sides() / 2) + (pdir * 0.5 - 0.5) + 4, 2)
+				wall_ex(true, side_pos + pdir, math.floor(all_sides() / 2) + (options.bar_dir * 0.5 - 0.5) + 4, 2)
 				if odd_side() == 0 then
 					if math.random(0, 1) == 0 then
 						side_pos = side_pos + rng_dir()
@@ -681,6 +682,7 @@ function run_pat_logic(freq, events_enable, override_table)
 					end
 				else
 					side_pos = side_pos + (pdir * (all_sides() > 5 and poly_side(2, 0) or 1))
+					options.bar_dir = -options.bar_dir
 					pdir = -pdir
 				end
 			end
@@ -883,11 +885,18 @@ function run_pat_logic(freq, events_enable, override_table)
 -- spiral palletes
 	elseif pat_num == 51 then  -- double spiral, 0.25 mult tempo..., no override shape
 		if prepare_values() then
+			if (GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) <= 140 * (all_sides() / 6) then
+				freq = freq + 2
+			end
 			options = {
 				beat_mult = ((GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 140 * (all_sides() / 6)) and 2 or 1,
 				end_del_fix_whyy = is_pattern_guess_end_del() == 2 and 1 or 0,
 			}
-			freq_left = (freq * (2 / options.beat_mult)) + (clamp((is_pattern_guess_end_del() - 1), 0, 1) * clamp(2 - options.beat_mult, 0, 1)) -- 2 is 1, otherwise 0
+			freq_left = (freq * (2 / options.beat_mult)) +
+				(
+					clamp((is_pattern_guess_end_del() - 1), 0, 1) * -- 2 is 1, otherwise 0
+					(clamp(2 - options.beat_mult, 0, 1))
+				)
 			freq_halts = ((is_pattern_guess_end_del() == 2 and 0) or (is_pattern_guess_end_del() == 1 and 2) or 4) / options.beat_mult
 		end
 		if get_del(.25 * options.beat_mult, true) then
@@ -899,6 +908,9 @@ function run_pat_logic(freq, events_enable, override_table)
 		end
 	elseif pat_num == 61 then  -- single spiral tau based, 0.25 mult tempo..., no override shape
 		if prepare_values() then
+			if (GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) <= 140 * (all_sides() / 6) then
+				freq = freq + 2
+			end
 			options = {
 				beat_mult = ((GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 140 * (all_sides() / 6)) and 2 or 1,
 			}
@@ -1036,13 +1048,8 @@ function run_pat_logic(freq, events_enable, override_table)
 			end
 
 			if freq_left > 1 - options[3] - options[2] then
-				wall_ex_2(true,  side_pos,                   0, 1, get_thick_sync(.5))
-				wall_ex_2(false, side_pos + poly_side(2, 1), 0, 1, get_thick_sync(.5))
-			end
-
-			if all_sides() > 6 then
-				wall_ex_2(true,  side_pos,                   0, 1, THICKNESS)
-				wall_ex_2(false, side_pos + poly_side(2, 1), 0, 1, THICKNESS)
+				wall_ex_2(true,  side_pos,                   0, 1, get_thick_sync(.5) + THICKNESS)
+				wall_ex_2(false, side_pos + poly_side(2, 1), 0, 1, get_thick_sync(.5) + THICKNESS)
 			end
 
 			if freq_left == 1 - options[3] - options[2] then
@@ -1053,7 +1060,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				if math.random() >= options.min_limit and timesFix > options.times_fix_dec then
 					if all_sides() > 6 then
 						if options[1] < 0 then
-							wall_draw(false, side_pos, 0, options.start_pos)
+							wall_draw(true,  side_pos, 0, options.start_pos)
 							wall_draw(false, side_pos + poly_side(2, 1), 0, options.end_pos)
 						else
 							wall_draw(false, side_pos + options.start_pos + 1, 0, poly_side(2, 1) - options.start_pos - 1)
@@ -1064,6 +1071,8 @@ function run_pat_logic(freq, events_enable, override_table)
 					end
 				else
 					if all_sides() > 6 then
+						wall_ex_2(true,  side_pos,                   0, 1, THICKNESS)
+						wall_ex_2(false, side_pos + poly_side(2, 1), 0, 1, THICKNESS)
 						if options[1] > 0 then
 							wall_draw(false, side_pos, 0, options.start_pos)
 							wall_draw(false, side_pos + poly_side(2, 1) + options.end_pos + 1, 0, poly_side(2, 0) - options.end_pos - 1)
