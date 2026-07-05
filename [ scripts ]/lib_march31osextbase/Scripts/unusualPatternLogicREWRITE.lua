@@ -349,7 +349,7 @@ local options = {}
 local rng, chance = 0, 0
 local freq_left, freq_targ = -999, 0
 local pat_freq_left, pat_freq_targ = 0, 0
-local type_end_delay, type_end_delay_old = 0, 0
+local type_end_delay, type_end_delay_old = 5, 0
 local freq_halts = 0
 local is_time_signature = false
 
@@ -522,7 +522,7 @@ function run_pat_logic(freq, events_enable, override_table)
 
 		freq_halts = type_end_delay < 3 and 1 or 0
 		pat_num_old = pat_num
-		pat_num = rnd_table_select(override_table or {-3,-3,-2,-2,-1,-1,  1,2,3,4,5,11,12,13,14,22,31,32,33,41,42,  51,61,  101,102,103,103.1,103.8,103.9,104,105,106,131,  151,152,153,154,155,156,157,158,159,160,161,162,  201,202,203})
+		pat_num = rnd_table_select(override_table or {-3,-3,-2,-2,-1,-1,  1,1.1,2,3,4,5,11,12,13,14,22,31,32,33,41,42,901,902,  51,61,  101,102,103,103.1,103.8,103.9,104,105,106,131,  151,152,153,154,155,156,157,158,159,160,161,162,  201,202,203})
 		cons("shapes: " .. tostring(math.floor(l_getSides() / GLOBAL_SIDE_SEGMENT)))
 		cons("sides used: " .. tostring(side_pos))
 
@@ -534,6 +534,8 @@ function run_pat_logic(freq, events_enable, override_table)
 		-- for time signature or smth
 		if is_time_signature and pat_num < 0 then pat_num = 1 end
 		if pat_num < 0 then type_end_delay = 0; end
+
+		if (GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 150 * (6 / all_sides()) and pat_num == 1.1 then pat_num = 1 end
 
 		if is_time_signature and pat_num == 151 then pat_num = 153 end
 		if is_time_signature and pat_num == 152 then pat_num = 153 end
@@ -547,7 +549,7 @@ function run_pat_logic(freq, events_enable, override_table)
 		if all_sides() < 4 and pat_num == 101 then pat_num = 102 end
 		if all_sides() < 6 and pat_num == 156 then pat_num = 159 end
 		if all_sides() < 6 and pat_num == 160 then pat_num = 153 end
-		--if all_sides() < 6 and pat_num == 161 then pat_num = 0 end
+		if all_sides() < 6 and pat_num == 161 then pat_num = 153 end
 
 		if all_sides() < 5 and pat_num == 157 then pat_num = 153 end
 		cons("pat_num: " .. pat_num)
@@ -579,6 +581,19 @@ function run_pat_logic(freq, events_enable, override_table)
 		end
 
 		if get_del(.5, true) then
+			local timesFix = math.abs((freq_targ - 1) - freq_left)
+			if freq_left >= freq_halts then
+				wall_ex(true, side_pos, all_sides() - 1, 1, THICKNESS)
+				side_pos = side_pos + pdir;
+			end
+		end
+	elseif pat_num == 1.1 then
+		if prepare_values() then -- DM barrage spiral, 0.25 mult tempo, no override shape
+			freq_left = (freq * 2) + (clamp((is_pattern_guess_end_del() - 1), 0, 1) * clamp(2 - 1, 0, 1)) -- 2 is 1, otherwise 0
+			freq_halts = ((is_pattern_guess_end_del() == 2 and 0) or (is_pattern_guess_end_del() == 1 and 2) or 4) - 1
+		end
+
+		if get_del(.25, true) then
 			local timesFix = math.abs((freq_targ - 1) - freq_left)
 			if freq_left >= freq_halts then
 				wall_ex(true, side_pos, all_sides() - 1, 1, THICKNESS)
@@ -660,13 +675,13 @@ function run_pat_logic(freq, events_enable, override_table)
 			pdir = -pdir;
 		end
 -- alternating barrage-based pallete barrage, 1 mult tempo, no override shape
-	elseif pat_num == 11 then
+	elseif pat_num == 11 or pat_num == 11.8 or pat_num == 11.9 then
 		if prepare_values() then -- alternating barrage swap(?), 0.5 mult tempo, no override shape
             if odd_side() == 0 then
                 side_pos = side_pos + 1
             end
             pdir = 1
-			options = { bar_dir = 1 }
+			options = { bar_dir = 1, large_wall_pos = rng_dir() }
 		end
 
 		if get_del(.5, true) then
@@ -684,6 +699,15 @@ function run_pat_logic(freq, events_enable, override_table)
 					side_pos = side_pos + (pdir * (all_sides() > 5 and poly_side(2, 0) or 1))
 					options.bar_dir = -options.bar_dir
 					pdir = -pdir
+				end
+				options.large_wall_pos = options.large_wall_pos + negn(options.large_wall_pos)
+				if pat_num > 11 then
+					if freq_left >= freq_halts and timesFix % 2 == 1 then
+						wall_ex_2(false,
+							(pat_num == 11.9 and math.random(all_sides())) or 
+							(pat_num == 11.8 and options.large_wall_pos) or 0,
+						0, 1, (freq_left >= freq_halts and get_thick_sync(.5) or 0) + THICKNESS)
+					end
 				end
 			end
 		end
@@ -736,7 +760,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				pdir = -pdir
 			end
         end
-    elseif pat_num == 14 or pat_num == 14.1 or pat_num == 14.2 then -- alt trap barrage, 1 mult tempo, no override shape
+    elseif pat_num == 14 or pat_num == 14.1 or pat_num == 14.2 or pat_num == 14.3 then -- alt trap barrage, 1 mult tempo, no override shape
         if prepare_values() then
             pdir = 1
 			options = {
@@ -755,7 +779,11 @@ function run_pat_logic(freq, events_enable, override_table)
 					if pat_num == 14.2 then
 						side_pos = side_pos - options.alg_dir
 					end
-					if pat_num >= 14.1 then
+					if pat_num == 14.3 then
+						wall_base(side_pos - 2, THICKNESS)
+						wall_base(side_pos + 2, THICKNESS)
+					end
+					if pat_num >= 14.1 and pat_num < 14.3 then
 						options.alg_dir = -options.alg_dir
 					end
 				end
@@ -881,11 +909,32 @@ function run_pat_logic(freq, events_enable, override_table)
                 wall_ex(true, side_pos + math.random(all_sides()), math.random(all_sides() - 3), 1)
             end
         end
+	elseif pat_num == 902 then -- yyac's barrage, 0.5 mult tempo, no override shape
+		if prepare_values() then
+			pdir = 0
+            options = {
+				barrage_gap = function(side, gap, thick)
+					wall_ex_2(true, side + gap - 1, bar_side(1) - gap, 1, thick or THICKNESS)
+				end,
+			}
+		end
+
+		if get_del(.5, true) then
+			local timesFix = math.abs((freq_targ - 1) - freq_left)
+			if freq_left >= freq_halts then
+				local _half = ((math.ceil(timesFix * .5) + pdir) % 2)
+				if timesFix % 2 == 0 then
+					options.barrage_gap(side_pos + (_half * poly_side(2, 0)), _half * odd_side() + 1)
+				else
+					options.barrage_gap(side_pos - 1 + (_half * poly_side(2, 0)), _half * odd_side() + 3)
+				end
+			end
+		end
 
 -- spiral palletes
 	elseif pat_num == 51 then  -- double spiral, 0.25 mult tempo..., no override shape
 		if prepare_values() then
-			if (GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) <= 140 * (all_sides() / 6) then
+			if (GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 140 * (all_sides() / 6) then
 				freq = freq + 2
 			end
 			options = {
@@ -908,7 +957,7 @@ function run_pat_logic(freq, events_enable, override_table)
 		end
 	elseif pat_num == 61 then  -- single spiral tau based, 0.25 mult tempo..., no override shape
 		if prepare_values() then
-			if (GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) <= 140 * (all_sides() / 6) then
+			if (GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 140 * (all_sides() / 6) then
 				freq = freq + 2
 			end
 			options = {
@@ -1084,10 +1133,10 @@ function run_pat_logic(freq, events_enable, override_table)
 						dual_holed_bar(true, side_pos + (neg0(options[1]) * poly_side(2, 1)), THICKNESS)
 					end
 				end
-			end
 
-			if all_sides() == 5 then
-				wall_ex(false, side_pos + poly_side(2, 1) + 1, 1, 1)
+				if all_sides() == 5 then
+					wall_ex(false, side_pos + poly_side(2, 1) + 1, 1, 1)
+				end
 			end
 
 			options[1] = -options[1]
@@ -1175,6 +1224,31 @@ function run_pat_logic(freq, events_enable, override_table)
                     wall_ex(false, side_pos + math.random(all_sides()), 1, 1)
                 end
             end
+        end
+    elseif pat_num == 107 then -- yyac's tunnel cap, 0.5 mult tempo, no override shape
+        if prepare_values() then
+			options = { end_pat_fix = is_pattern_guess_end_del() == 2 and 1 or 0 }
+			--pdir = 1
+			if pdir > 0 then
+				side_pos = side_pos + (poly_side(2, 1) - 2)
+			end
+        end
+
+        if get_del(.5, true) then
+            local timesFix = math.abs((freq_targ - 1) - freq_left)
+
+            if is_wall_avail() then
+                wall_ex(true, side_pos, 1, 1, get_thick_sync(.5) * clamp(freq_left - freq_halts, 0, 999) + THICKNESS)
+            end
+
+            if freq_left > freq_halts - 1 + options.end_pat_fix then
+                if pdir > 0 then
+					wall_grow(true, side_pos, poly_side(2, 1) - 2, 0)
+				else
+					wall_grow(true, side_pos + poly_side(2, 0), poly_side(2, 0) - 2, odd_side())
+				end
+                pdir = -pdir
+			end
         end
 	elseif pat_num == 131 then -- pipe
 		if prepare_values() then
@@ -1653,8 +1727,8 @@ function run_pat_logic(freq, events_enable, override_table)
             local timesFix = math.abs((freq_targ - 1) - freq_left)
 
             if is_wall_avail() then
-                wall_ex(true, side_pos,                   poly_side(2, 0)          - 2, 1, get_thick_sync(.5 * (freq_left - freq_halts)) + THICKNESS)
-                wall_ex(true, side_pos + poly_side(2, 0), poly_side(2, odd_side()) - 2, 1, get_thick_sync(.5 * (freq_left - freq_halts)) + THICKNESS)
+                wall_ex(true, side_pos,                   poly_side(2, 0)          - 2, 1, get_thick_sync(.5 * clamp(freq_left - freq_halts, 0, 999)) + THICKNESS)
+                wall_ex(true, side_pos + poly_side(2, 0), poly_side(2, odd_side()) - 2, 1, get_thick_sync(.5 * clamp(freq_left - freq_halts, 0, 999)) + THICKNESS)
             end
 
 			if freq_left >= freq_halts then
@@ -1981,6 +2055,38 @@ function run_pat_logic(freq, events_enable, override_table)
             end
         end
 
+	elseif pat_num == 901 then -- wen's half stairs diff 1, 1 mult tempo, no override shape allowed
+		if prepare_values() then
+			if is_time_signature then
+				freq_left = math.floor(freq / 2)
+			else
+				freq_left = freq
+			end
+            freq_left = freq_left + (is_pattern_guess_end_del() == 2 and 1 or 0)
+            freq_targ = freq_left
+            options = {
+				beat_mult = (is_time_signature and (math.ceil(freq / 2) * 2) / freq) or 1,
+			}
+		end
+
+		if get_del(1 * options.beat_mult, true) then
+            local timesFix = math.abs((freq_targ - 1) - freq_left)
+
+			if freq_left >= (freq_halts - 1) then
+				wall_draw(true, side_pos + (timesFix * 2 * pdir), poly_side(4, 1), all_sides() - poly_side(4, 1)) -- scr_wallHalf
+				
+				if freq_left > (freq_halts - 1) then
+					if all_sides() > 5 then
+						wall_ex_2(true,  side_pos + (timesFix * 2 * pdir), 0, 1, get_thick_sync(1 * options.beat_mult) + THICKNESS)
+					end
+				else
+					if all_sides() > 5 then
+						wall_ex_2(false, side_pos + (timesFix * 2 * pdir), 0, 1, THICKNESS)
+					end
+				end
+			end
+		end
+
 	elseif pat_num == -1 then
 		if prepare_values() then
 			freq_left = 1
@@ -2024,6 +2130,31 @@ function run_pat_logic(freq, events_enable, override_table)
 			local rngB = math.random(2)
 				if rngB == 1 then wall_ex(true, side_pos, all_sides() - 1, 1, THICKNESS * .666)
 			elseif rngB == 2 then dual_holed_bar(true, side_pos, THICKNESS * .666)
+			end
+		end
+	elseif pat_num == -4 then
+		if prepare_values() then
+			freq_left = bar_side(1) * 2 + 2
+			freq_targ = freq_left
+			options = {
+				addenum = 0,
+				passed = 0,
+			}
+			if pdir < 0 then
+				side_pos = side_pos + 0
+			else
+				side_pos = side_pos - 2
+			end
+		end
+
+		if get_del(.25, true) then
+			if freq_left > 1 then
+				wall_draw(true, side_pos, math.min(options.addenum, 0), math.max(options.addenum, 0), THICKNESS * .666)
+
+				if options.passed % 2 == 1 then
+					options.addenum = options.addenum + pdir;
+				end
+				options.passed = options.passed + 1
 			end
 		end
 
