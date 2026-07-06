@@ -547,6 +547,7 @@ function run_pat_logic(freq, events_enable, override_table)
 		-- sides
 		if all_sides() < 5 and math.floor(pat_num) == 103 then pat_num = 101 end
 		if all_sides() < 4 and pat_num == 101 then pat_num = 102 end
+		if all_sides() < 5 and pat_num == 107 then pat_num = 104 end
 		if all_sides() < 6 and pat_num == 156 then pat_num = 159 end
 		if all_sides() < 6 and pat_num == 160 then pat_num = 153 end
 		if all_sides() < 6 and pat_num == 161 then pat_num = 153 end
@@ -764,7 +765,7 @@ function run_pat_logic(freq, events_enable, override_table)
         if prepare_values() then
             pdir = 1
 			options = {
-				alg = (pat_num == 14.1 and 2) or (pat_num == 14.2 and 1) or 0, -- 14: original, 14.1: Tau628's based 1, 14.2: Tau628's based 2
+				alg = (pat_num == 14.1 and poly_side(2, 0) - 1) or (pat_num == 14.2 and 1) or 0, -- 14: original, 14.1: Tau628's based 1, 14.2: Tau628's based 2
 				alg_dir = rng_dir(),
 			}
         end
@@ -774,8 +775,8 @@ function run_pat_logic(freq, events_enable, override_table)
 				if timesFix % 2 == 0 then
 					wall_ex_2(true, side_pos, all_sides() - 2, 1)
 				else
-					wall_ex_2(true,  side_pos - (1 + clamp(options.alg * options.alg_dir, 0, 1)), options.alg, 1)
-					wall_ex_2(false, side_pos - (3 + clamp(options.alg * options.alg_dir, 0, 1)), all_sides() - (4 + options.alg), 1, 0)
+					wall_ex_2(true,  side_pos - (1 + clamp(options.alg * options.alg_dir, 0, options.alg)), options.alg, 1)
+					wall_ex_2(false, side_pos - (3 + clamp(options.alg * options.alg_dir, 0, options.alg)), all_sides() - (4 + options.alg), 1, 0)
 					if pat_num == 14.2 then
 						side_pos = side_pos - options.alg_dir
 					end
@@ -2072,12 +2073,12 @@ function run_pat_logic(freq, events_enable, override_table)
 		if get_del(1 * options.beat_mult, true) then
             local timesFix = math.abs((freq_targ - 1) - freq_left)
 
-			if freq_left >= (freq_halts - 1) then
+			if freq_left >= freq_halts then
 				wall_draw(true, side_pos + (timesFix * 2 * pdir), poly_side(4, 1), all_sides() - poly_side(4, 1)) -- scr_wallHalf
 				
-				if freq_left > (freq_halts - 1) then
+				if freq_left > freq_halts then
 					if all_sides() > 5 then
-						wall_ex_2(true,  side_pos + (timesFix * 2 * pdir), 0, 1, get_thick_sync(1 * options.beat_mult) + THICKNESS)
+						wall_ex_2(false, side_pos + (timesFix * 2 * pdir), 0, 1, get_thick_sync(1 * options.beat_mult) + THICKNESS)
 					end
 				else
 					if all_sides() > 5 then
