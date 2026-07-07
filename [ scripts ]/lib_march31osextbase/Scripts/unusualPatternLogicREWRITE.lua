@@ -703,7 +703,7 @@ function run_pat_logic(freq, events_enable, override_table)
 				end
 				options.large_wall_pos = options.large_wall_pos + negn(options.large_wall_pos)
 				if pat_num > 11 then
-					if freq_left >= freq_halts and timesFix % 2 == 1 then
+					if freq_left > freq_halts and timesFix % 2 == 1 then
 						wall_ex_2(false,
 							(pat_num == 11.9 and math.random(all_sides())) or 
 							(pat_num == 11.8 and options.large_wall_pos) or 0,
@@ -2073,10 +2073,10 @@ function run_pat_logic(freq, events_enable, override_table)
 		if get_del(1 * options.beat_mult, true) then
             local timesFix = math.abs((freq_targ - 1) - freq_left)
 
-			if freq_left >= freq_halts then
+			--if freq_left >= 0 then
 				wall_draw(true, side_pos + (timesFix * 2 * pdir), poly_side(4, 1), all_sides() - poly_side(4, 1)) -- scr_wallHalf
 				
-				if freq_left > freq_halts then
+				if freq_left > 0 then
 					if all_sides() > 5 then
 						wall_ex_2(false, side_pos + (timesFix * 2 * pdir), 0, 1, get_thick_sync(1 * options.beat_mult) + THICKNESS)
 					end
@@ -2085,7 +2085,7 @@ function run_pat_logic(freq, events_enable, override_table)
 						wall_ex_2(false, side_pos + (timesFix * 2 * pdir), 0, 1, THICKNESS)
 					end
 				end
-			end
+			--end
 		end
 
 	elseif pat_num == -1 then
