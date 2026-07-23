@@ -493,6 +493,19 @@ function run_pat_logic(freq, events_enable, override_table)
 	-- variable preparations
 	if freq_left <= 0 then
 		if pat_num ~= 0 then --TODO: set 0 if the misbehave these pattern number bug fixers
+			-- pattern pallete event reset --
+			if pat_event_cur == pat_event_max then
+				pat_selected = palletes["basic"]
+			end
+			-- pattern logic event reset  --
+			if lgc_event_cur == lgc_event_max then
+				-- if the incongruence logic event ends, enable 'logic_event_after_incgr' to prevent pattern logic end manager bug
+				if logic_rnd == 1 then
+					logic_event_after_incgr = true;
+				end
+				-- resets
+				logic_rnd = 0 -- dont delete
+			end
 			-- end pattern manager
 			type_end_delay_old = type_end_delay
 			cons("type_end_delay: " .. type_end_delay)
@@ -502,6 +515,19 @@ function run_pat_logic(freq, events_enable, override_table)
 				get_result()
 				side_pos = side_pos + (rng_dir() * clamp(math.random(0, 2), 0, 1));
 			else
+				if logic_rnd == 1 then
+					if min_shapes ~= max_shapes then -- important: to prevent softlock/freeze, use proper side range like 4-7
+						while raw_shapes == last_shape do
+							raw_shapes = math.random(min_shapes, max_shapes)
+						end
+
+						last_shape = raw_shapes
+					end
+				else
+					temp_shape = raw_shapes;
+					raw_shapes = cur_shapes;
+				end
+				l_setSides(raw_shapes * GLOBAL_SIDE_SEGMENT)
 				side_pos = math.random(all_sides()) - 1
 			end
 
@@ -537,12 +563,14 @@ function run_pat_logic(freq, events_enable, override_table)
 
 		if (GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 150 * (6 / all_sides()) and pat_num == 1.1 then pat_num = 1 end
 
+		if is_time_signature and (pat_num == 62 or pat_num == 63) then pat_num = 51 end
+
 		if is_time_signature and pat_num == 151 then pat_num = 153 end
 		if is_time_signature and pat_num == 152 then pat_num = 153 end
 
 		if is_time_signature and (pat_num == 201 or pat_num == 202 or pat_num == 203) then pat_num = 1 end
 
-		if not is_time_signature and pat_num == 101 then pat_num = 150 end
+		if not is_time_signature and pat_num == 101 then pat_num = 150.3 end
 
 		-- sides
 		if all_sides() < 5 and math.floor(pat_num) == 103 then pat_num = 101 end
@@ -931,12 +959,138 @@ function run_pat_logic(freq, events_enable, override_table)
 				end
 			end
 		end
+	elseif pat_num == 62 then
+		if prepare_values() then
+			pdir = rng_dir()
+			freq_left = (all_sides() == 4 and 6) or math.random(3, 5) * 2 + 2
+			freq_targ = freq_left
+			deco_left = 0
+			beat_div = (GLOBAL_TEMPO < 90 and 2) or 1
+			theck_ness = (GLOBAL_TEMPO < 90 and get_thick_sync(.25 / beat_div)) or THICKNESS
+			if pdir < 0 and all_sides() > 4 then
+				side_pos = side_pos - 2
+			end
+		end
+		if all_sides() == 4 then
+			if freq_left == 6 then
+				if get_del(0, false) then
+					if deco_left >= 3 then
+						freq_left = freq_left - 1
+					elseif deco_left == 0 then
+						wall_ex(true, side_pos - 0, all_sides() - 1, 1, theck_ness)
+						if pdir < 0 then
+							side_pos = side_pos - 2
+						end
+						deco_left = deco_left + 1
+					else
+						wall_ex(true, side_pos, 1, 1, get_thick_sync(1 / beat_div) + theck_ness)
+						side_pos = side_pos + pdir
+						deco_left = deco_left + 1
+					end
+				end
+			elseif freq_left == 5 then
+				if get_del(1 / beat_div, true) then
+					-- preventing bug
+					deco_left = 0
+					side_pos = side_pos + (pdir * 1)
+				end
+			elseif freq_left == 4 then
+				if get_del(1 / beat_div, true) then
+					wall_ex(true, side_pos, 1, 1, get_thick_sync(2 / beat_div))
+					side_pos = side_pos - pdir
+				end
+			elseif freq_left == 3 then
+				if get_del(1 / beat_div, true) then
+					wall_ex(true, side_pos, 1, 1, get_thick_sync(1 / beat_div))
+					side_pos = side_pos - 1
+				end
+			elseif freq_left == 2 then
+				if get_del(1 / beat_div * (is_pattern_guess_end_del() == 2 and 0 or is_pattern_guess_end_del() == 1 and .5 or 1), true) then
+					wall_ex(true, side_pos - 0, all_sides() - 1, 1, theck_ness)
+				end
+			elseif freq_left == 1 then
+				if get_del(0, true) then
+					--end_pattern()
+				end
+			end
+		else
+			if freq_left == freq_targ then
+				if get_del(0, false) then
+					if deco_left >= all_sides() - 1 then
+						freq_left = freq_left - 1
+						side_pos = side_pos + ((all_sides() - 1) * pdir)
+					else
+						wall_ex(true, side_pos + (pdir * deco_left), 1, 1, get_thick_sync(.25 / beat_div) * (deco_left + 1))
+						deco_left = deco_left + 1
+					end
+				end
+			elseif freq_left == freq_targ - 1 then
+				if get_del((.25 / beat_div) * (all_sides() - 2), true) then
+					-- preventing bug
+					deco_left = 0
+				end
+			elseif freq_left == freq_targ - 2 then
+				if get_del(0.25 / beat_div, true) then
+					wall_ex(true, side_pos, 1, 1, get_thick_sync(.5 / beat_div))
+					side_pos = side_pos + pdir
+				end
+			elseif freq_left == 2 then
+				if get_del(0.25 / beat_div, false) then
+					if deco_left >= all_sides() - 1 then
+						freq_left = freq_left - 1
+						wall_ex(true, side_pos + 1, all_sides() - 1, 1, get_thick_sync(.275 / beat_div))
+					else
+						wall_ex(true, side_pos, 1, 1, get_thick_sync(.275 / beat_div) * ((all_sides() - 1) - deco_left))
+						side_pos = side_pos + pdir
+						deco_left = deco_left + 1
+					end
+				end
+			elseif freq_left > 2 and freq_left < freq_targ - 2 then
+				if get_del(0.25 / beat_div, true) then
+					wall_ex(true, side_pos, 1, 1, get_thick_sync(.5 / beat_div))
+					side_pos = side_pos + pdir
+				end
+			elseif freq_left == 1 then
+				if get_del(is_pattern_guess_end_del() == 2 and 0 or is_pattern_guess_end_del() == 1 and .5 or 1, true) then
+					--end_pattern()
+				end
+			end
+		end
+	elseif pat_num == 63 then
+		if prepare_values() then
+			pdir = rng_dir()
+			options = {
+				all_sides() > 5 and poly_side(2, 0) or 1,
+				all_sides() > 5 and poly_side(2, 0) + 1 or 1,
+				is_pattern_guess_end_del() == 1 and 1 or 0,
+			}
+			freq_left = math.random(3, 6) * 2 + options[3]
+			freq_targ = freq_left
+			if pdir < 0 then
+				side_pos = side_pos + 1
+			end
+		end
+		if freq_left > (is_pattern_guess_end_del() == 1 and 1 or 2) then
+			if get_del(.25, true) then
+				wall_ex(true, side_pos, options[2], options[1], get_thick_sync(.275))
+				if freq_left == freq_targ - 1 then
+					wall_ex(false, side_pos + pdir, options[2], options[1], get_thick_sync(.275))
+				elseif freq_left == (is_pattern_guess_end_del() == 1 and 1 or 2) then
+					wall_ex(false, side_pos - pdir, options[2], options[1], get_thick_sync(.275))
+				end
+				side_pos = side_pos + pdir
+			end
+		else
+			if get_del((is_pattern_guess_end_del() == 2) and 0 or .5, true) then
+				side_pos = side_pos - (pdir * 2)
+			end
+		end
 
 -- spiral palletes
 	elseif pat_num == 51 then  -- double spiral, 0.25 mult tempo..., no override shape
 		if prepare_values() then
-			if (GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 140 * (all_sides() / 6) then
-				freq = freq + 2
+			if (GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 140 * (all_sides() / 6) and is_pattern_guess_end_del() > 1 then
+				freq = freq + 1
 			end
 			options = {
 				beat_mult = ((GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 140 * (all_sides() / 6)) and 2 or 1,
@@ -958,8 +1112,8 @@ function run_pat_logic(freq, events_enable, override_table)
 		end
 	elseif pat_num == 61 then  -- single spiral tau based, 0.25 mult tempo..., no override shape
 		if prepare_values() then
-			if (GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 140 * (all_sides() / 6) then
-				freq = freq + 2
+			if (GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 140 * (all_sides() / 6) and is_pattern_guess_end_del() > 1 then
+				freq = freq + 1
 			end
 			options = {
 				beat_mult = ((GLOBAL_TEMPO * GLOBAL_TEMPO_DM_STATE) > 140 * (all_sides() / 6)) and 2 or 1,
@@ -1251,6 +1405,34 @@ function run_pat_logic(freq, events_enable, override_table)
                 pdir = -pdir
 			end
         end
+	elseif pat_num == 108 then
+		if prepare_values() then
+			options = {
+				beat_mult = (is_time_signature and (math.ceil(freq / 2) * 2) / freq) or 1,
+			}
+			if is_time_signature then
+				freq_left = math.floor(freq / 2)
+			else
+				freq_left = freq
+			end
+            freq_left = freq_left + (is_pattern_guess_end_del() == 2 and 1 or 0)
+            freq_targ = freq_left
+
+			if pdir > 0 then
+				side_pos = side_pos + poly_side(2, 1)
+			end
+		end
+		if get_del(options.beat_mult, true) then
+			if is_wall_avail() then
+				wall_ex(true, side_pos, poly_side(2, 0) - 1, 1, get_thick_sync(options.beat_mult * freq_left) + THICKNESS)
+			end
+			for i = 0, all_sides() - 2 do
+				local tete = freq_left > 0 and freq_left < freq_targ - 1 and clamp(i, 0, all_sides() - poly_side(2, 0) - 1) or 0
+				wall_ex(i == 0, side_pos + (i * pdir) + 3 + (neg0(-pdir) * (poly_side(2, 1) - 2)) + (poly_side(2, 0) - 3), 1, 1, THICKNESS * (tete + 1))
+			end
+
+			pdir = -pdir
+        end
 	elseif pat_num == 131 then -- pipe
 		if prepare_values() then
 			options = {
@@ -1285,7 +1467,7 @@ function run_pat_logic(freq, events_enable, override_table)
 		if prepare_values() then
 			options = {
 				0, -- current offset
-				bar_side(2), -- distance
+				((pat_num > 150.2 and pat_num < 150.6) and math.random(bar_side(2))) or bar_side(2), -- distance
 				0, -- offset
 				pdir * .5 + .5, -- QUOS
 				0, -- remaining
@@ -1314,10 +1496,16 @@ function run_pat_logic(freq, events_enable, override_table)
 					wall_ex(i == min, i + side_pos + options[1] + options[4] - 1, 1, 1)
 				end
 
-				if math.random(0, 1) == 1 then
+				if pat_num == 150 or pat_num == 150.3 or pat_num == 150.7 then
 					pdir = -pdir
+				elseif pat_num == 150.2 or pat_num == 150.5 or pat_num == 150.9 then
+					if math.random(0, 1) == 1 then
+						pdir = -pdir
+					end
 				end
-				options[2] = math.random(bar_side(2))
+				if pat_num >= 150.7 then
+					options[2] = math.random(bar_side(2))
+				end
 				options[4] = pdir * .5 + .5
 
 				if freq_left >= freq_halts * 2 then
